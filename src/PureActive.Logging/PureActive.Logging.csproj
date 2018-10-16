@@ -12,7 +12,7 @@
     <RepositoryUrl>https://github.com/SteveBush/PureActive</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>logging, extensions</PackageTags>
-    <PackageReleaseNotes>PureActive.Logging $BuildVersion$</PackageReleaseNotes>
+    <PackageReleaseNotes>PureActive.Logging</PackageReleaseNotes>
   </PropertyGroup>
 
 </Project>

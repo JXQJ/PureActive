@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="020840e0-7958-4fc7-acb2-8791cfa8d12a" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>PublishNuGet</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowPersonalBuildTriggering" value="false" />
+      <option name="buildConfigurationType" value="DEPLOYMENT" />
+      <option name="maximumNumberOfBuilds" value="1" />
+    </options>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_38" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="clean" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_24" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="restore" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_25" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="build" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_26" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="publish" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_27" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="test" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="dotNetCoverage.tool" value="dotcover" />
+          <param name="paths" value="test/PureActive.Logging.UnitTests/PureActive.Logging.UnitTests.csproj" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_35" name="" type="dotnet.cli">
+        <parameters>
+          <param name="args" value="--include-symbols" />
+          <param name="command" value="pack" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_36" name="" type="jb.nuget.publish">
+        <parameters>
+          <param name="nuget.path" value="%teamcity.tool.NuGet.CommandLine.DEFAULT%" />
+          <param name="nuget.publish.files" value="src/PureActive.Logging/bin/Release/*.nupkg" />
+          <param name="nuget.publish.source" value="http://teamcity.bushchang.com/httpAuth/app/nuget/feed/PureActive/default/v2" />
+          <param name="secure:nuget.api.key" value="credentialsJSON:13985445-4ece-4d66-abc3-6a47c940114a" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers />
+    <build-extensions>
+      <extension id="BUILD_EXT_1" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="github_oauth_user" value="SteveBush" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="credentialsJSON:c5aa2568-d2d2-4b21-aa33-1894d2534cce" />
+        </parameters>
+      </extension>
+      <extension id="JetBrains.AssemblyInfo" type="JetBrains.AssemblyInfo">
+        <parameters>
+          <param name="assembly-format" value="%system.build.number%" />
+        </parameters>
+      </extension>
+      <extension id="BUILD_EXT_2" type="NuGetPackagesIndexer">
+        <parameters>
+          <param name="feed" value="PureActive/default" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+

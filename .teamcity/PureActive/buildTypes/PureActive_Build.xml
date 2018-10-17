@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="8287d837-e2a8-445c-9435-84728676c7d7" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
+  <name>Build</name>
+  <description />
+  <settings>
+    <options>
+      <option name="allowExternalStatus" value="true" />
+      <option name="buildNumberPattern" value="%build.counter%%build.vcs.number.1%" />
+    </options>
+    <parameters />
+    <build-runners>
+      <runner id="RUNNER_24" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="restore" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_25" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="build" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_26" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="publish" />
+          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_27" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="test" />
+          <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="dotNetCoverage.tool" value="dotcover" />
+          <param name="paths" value="test/PureActive.Logging.UnitTests/PureActive.Logging.UnitTests.csproj" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+      <runner id="RUNNER_28" name="" type="dotnet-tools-dupfinder">
+        <parameters>
+          <param name="dotnet-tools-dupfinder.discard_cost" value="70" />
+          <param name="dotnet-tools-dupfinder.exclude_files" value="**/AssemblyInfo.cs" />
+          <param name="dotnet-tools-dupfinder.hashing.discard_literals" value="true" />
+          <param name="dotnet-tools-dupfinder.include_files" value="src/**/*.cs" />
+          <param name="jetbrains.resharper-clt.clt-path" value="%teamcity.tool.jetbrains.resharper-clt.DEFAULT%" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
+    </build-runners>
+    <vcs-settings>
+      <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />
+    </vcs-settings>
+    <requirements />
+    <build-triggers>
+      <build-trigger id="vcsTrigger" type="vcsTrigger">
+        <parameters>
+          <param name="branchFilter" value="+:*" />
+          <param name="enableQueueOptimization" value="true" />
+          <param name="quietPeriodMode" value="DO_NOT_USE" />
+        </parameters>
+      </build-trigger>
+    </build-triggers>
+    <build-extensions>
+      <extension id="BUILD_EXT_1" type="commit-status-publisher">
+        <parameters>
+          <param name="github_authentication_type" value="token" />
+          <param name="github_host" value="https://api.github.com" />
+          <param name="github_oauth_user" value="SteveBush" />
+          <param name="publisherId" value="githubStatusPublisher" />
+          <param name="secure:github_access_token" value="credentialsJSON:c5aa2568-d2d2-4b21-aa33-1894d2534cce" />
+        </parameters>
+      </extension>
+    </build-extensions>
+    <cleanup />
+  </settings>
+</build-type>
+

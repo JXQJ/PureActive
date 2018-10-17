@@ -5,7 +5,6 @@
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />
-      <option name="buildNumberPattern" value="%build.counter%%build.vcs.number.1%" />
     </options>
     <parameters />
     <build-runners>

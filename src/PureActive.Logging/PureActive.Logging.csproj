@@ -14,6 +14,7 @@
     <PackageTags>logging, extensions</PackageTags>
     <PackageReleaseNotes>PureActive.Logging</PackageReleaseNotes>
     <Copyright>© BushChang Corporation. All rights reserved.</Copyright>
+    <PackageIconUrl>https://github.com/SteveBush/PureActive/blob/master/art/PureActive.gif</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>

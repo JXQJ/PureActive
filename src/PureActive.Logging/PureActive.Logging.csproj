@@ -15,7 +15,7 @@
     <PackageReleaseNotes>PureActive.Logging</PackageReleaseNotes>
     <Copyright>© BushChang Corporation. All rights reserved.</Copyright>
     <PackageIconUrl>https://raw.githubusercontent.com/SteveBush/PureWebAssets/master/icon/PureActive.gif</PackageIconUrl>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

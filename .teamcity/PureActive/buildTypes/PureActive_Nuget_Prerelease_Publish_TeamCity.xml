@@ -11,18 +11,18 @@
     </options>
     <parameters />
     <build-runners>
+      <runner id="RUNNER_24" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="restore" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
       <runner id="RUNNER_38" name="Clean" type="dotnet.cli">
         <parameters>
           <param name="command" value="clean" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="PureActive.sln" />
-          <param name="teamcity.step.mode" value="default" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_24" name="" type="dotnet.cli">
-        <parameters>
-          <param name="command" value="restore" />
           <param name="paths" value="PureActive.sln" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>

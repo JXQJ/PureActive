@@ -19,7 +19,7 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_38" name="Clean" type="dotnet.cli">
+      <runner id="RUNNER_38" name="Clean Release" type="dotnet.cli">
         <parameters>
           <param name="command" value="clean" />
           <param name="configuration" value="Release" />

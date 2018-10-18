@@ -40,16 +40,6 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_28" name="" type="dotnet-tools-dupfinder">
-        <parameters>
-          <param name="dotnet-tools-dupfinder.discard_cost" value="70" />
-          <param name="dotnet-tools-dupfinder.exclude_files" value="**/AssemblyInfo.cs" />
-          <param name="dotnet-tools-dupfinder.hashing.discard_literals" value="true" />
-          <param name="dotnet-tools-dupfinder.include_files" value="src/**/*.cs" />
-          <param name="jetbrains.resharper-clt.clt-path" value="%teamcity.tool.jetbrains.resharper-clt.DEFAULT%" />
-          <param name="teamcity.step.mode" value="default" />
-        </parameters>
-      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />

@@ -15,7 +15,6 @@
     <PackageReleaseNotes>PureActive.Logging</PackageReleaseNotes>
     <Copyright>© BushChang Corporation. All rights reserved.</Copyright>
     <PackageIconUrl>https://raw.githubusercontent.com/SteveBush/PureWebAssets/master/icon/PureActive.gif</PackageIconUrl>
-    <Version>1.0.3.0</Version>
     <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), 'NuGetOutput'))</PackageOutputPath>
   </PropertyGroup>
   <ItemGroup>
@@ -28,10 +27,8 @@
     </PackageReference>
   </ItemGroup>
 
-  <Target Name="BeforeClean" BeforeTargets="Clean">
+  <Target Name="FreshClean" BeforeTargets="Clean">
     <RemoveDir Directories="$(PackageOutputPath)"/>
-    <RemoveDir Directories="$(OutDir)"/>
-    <RemoveDir Directories="$(BaseIntermediateOutputPath)"/>
   </Target>
 
 </Project>

@@ -54,17 +54,6 @@
         </parameters>
       </build-trigger>
     </build-triggers>
-    <build-extensions>
-      <extension id="BUILD_EXT_1" type="commit-status-publisher">
-        <parameters>
-          <param name="github_authentication_type" value="token" />
-          <param name="github_host" value="https://api.github.com" />
-          <param name="github_oauth_user" value="SteveBush" />
-          <param name="publisherId" value="githubStatusPublisher" />
-          <param name="secure:github_access_token" value="credentialsJSON:c5aa2568-d2d2-4b21-aa33-1894d2534cce" />
-        </parameters>
-      </extension>
-    </build-extensions>
     <cleanup />
   </settings>
 </build-type>

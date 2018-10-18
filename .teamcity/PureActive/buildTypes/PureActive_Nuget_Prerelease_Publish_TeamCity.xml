@@ -11,7 +11,7 @@
     </options>
     <parameters />
     <build-runners>
-      <runner id="RUNNER_38" name="" type="dotnet.cli">
+      <runner id="RUNNER_38" name="Clean" type="dotnet.cli">
         <parameters>
           <param name="command" value="clean" />
           <param name="configuration" value="Release" />

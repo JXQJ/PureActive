@@ -16,6 +16,14 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
+      <runner id="RUNNER_39" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="clean" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
       <runner id="RUNNER_25" name="" type="dotnet.cli">
         <parameters>
           <param name="command" value="build" />
@@ -37,14 +45,6 @@
           <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
           <param name="paths" value="test/PureActive.Logging.UnitTests/PureActive.Logging.UnitTests.csproj" />
-          <param name="teamcity.step.mode" value="default" />
-        </parameters>
-      </runner>
-      <runner id="RUNNER_39" name="" type="dotnet.cli">
-        <parameters>
-          <param name="command" value="clean" />
-          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="PureActive.sln" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>

@@ -36,10 +36,9 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_26" name="" type="dotnet.cli">
+      <runner id="RUNNER_26" name="Publish" type="dotnet.cli">
         <parameters>
           <param name="command" value="publish" />
-          <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
           <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
           <param name="teamcity.step.mode" value="default" />

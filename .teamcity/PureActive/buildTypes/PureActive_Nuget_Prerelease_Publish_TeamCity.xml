@@ -82,7 +82,7 @@
           <param name="command" value="pack" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.Extensions.csproj" />
+          <param name="paths" value="src/PureActive.Logging.Extensions/PureActive.Logging.Extensions.csproj" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>

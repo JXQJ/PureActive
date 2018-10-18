@@ -33,13 +33,6 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_26" name="" type="dotnet.cli">
-        <parameters>
-          <param name="command" value="publish" />
-          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
-          <param name="teamcity.step.mode" value="default" />
-        </parameters>
-      </runner>
       <runner id="RUNNER_27" name="" type="dotnet.cli">
         <parameters>
           <param name="command" value="test" />

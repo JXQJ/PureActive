@@ -8,6 +8,7 @@
       <option name="allowPersonalBuildTriggering" value="false" />
       <option name="artifactRules" value="src\PureActive.Logging.Extensions\bin =&gt; src\PureActive.Logging.Extensions\bin&#xA;src\PureActive.Logging.Extensions\packages =&gt; src\PureActive.Logging.Extensions\packages" />
       <option name="buildConfigurationType" value="DEPLOYMENT" />
+      <option name="buildNumberPattern" value="%GitAssemblyInformationalVersion%" />
       <option name="cleanBuild" value="true" />
       <option name="maximumNumberOfBuilds" value="1" />
     </options>

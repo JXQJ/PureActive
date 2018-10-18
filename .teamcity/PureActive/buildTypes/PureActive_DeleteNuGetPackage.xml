@@ -14,7 +14,7 @@
         <parameters>
           <param name="command" value="nuget-delete" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="nuget.packageId" value="http://teamcity.bushchang.com/httpAuth/app/nuget/feed/PureActive/default/v2" />
+          <param name="nuget.packageId" value="PureActive.Logging 1.0.2" />
           <param name="nuget.packageSource" value="http://teamcity.bushchang.com/httpAuth/app/nuget/feed/PureActive/default/v2" />
           <param name="secure:nuget.apiKey" value="credentialsJSON:13985445-4ece-4d66-abc3-6a47c940114a" />
           <param name="teamcity.step.mode" value="default" />

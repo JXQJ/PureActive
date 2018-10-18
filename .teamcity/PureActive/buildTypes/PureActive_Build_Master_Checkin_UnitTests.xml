@@ -40,6 +40,14 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
+      <runner id="RUNNER_39" name="" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="clean" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
     </build-runners>
     <vcs-settings>
       <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PureActive.Logging\PureActive.Logging.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
   </ItemGroup>
 
 </Project>

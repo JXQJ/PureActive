@@ -57,6 +57,15 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
+      <runner id="RUNNER_42" name="Publish Release (1)" type="dotnet.cli">
+        <parameters>
+          <param name="command" value="publish" />
+          <param name="configuration" value="Release" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
+          <param name="paths" value="PureActive.sln" />
+          <param name="teamcity.step.mode" value="default" />
+        </parameters>
+      </runner>
       <runner id="RUNNER_27" name="Unit Tests with Code Coverage" type="dotnet.cli">
         <parameters>
           <param name="command" value="test" />

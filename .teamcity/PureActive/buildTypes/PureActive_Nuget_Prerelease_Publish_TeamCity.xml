@@ -77,7 +77,7 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_35" name="NuGet Pack Logging.Extensions" type="dotnet.cli">
+      <runner id="RUNNER_35" name="NuGet Pack" type="dotnet.cli">
         <parameters>
           <param name="command" value="pack" />
           <param name="configuration" value="Release" />

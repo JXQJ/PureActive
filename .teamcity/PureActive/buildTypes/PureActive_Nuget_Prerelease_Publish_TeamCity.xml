@@ -42,7 +42,7 @@
           <param name="command" value="publish" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="paths" value="ureActive.sln" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>

@@ -17,7 +17,7 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_39" name="" type="dotnet.cli">
+      <runner id="RUNNER_39" name="Clean" type="dotnet.cli">
         <parameters>
           <param name="command" value="clean" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />

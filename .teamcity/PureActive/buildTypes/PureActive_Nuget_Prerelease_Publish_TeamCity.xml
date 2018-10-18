@@ -44,10 +44,9 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_27" name="" type="dotnet.cli">
+      <runner id="RUNNER_27" name="Unit Tests with Code Coverage" type="dotnet.cli">
         <parameters>
           <param name="command" value="test" />
-          <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
           <param name="dotNetCoverage.tool" value="dotcover" />

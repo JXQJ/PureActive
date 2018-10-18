@@ -4,6 +4,7 @@
   <description />
   <settings>
     <options>
+      <option name="allowExternalStatus" value="true" />
       <option name="allowPersonalBuildTriggering" value="false" />
       <option name="buildConfigurationType" value="DEPLOYMENT" />
       <option name="maximumNumberOfBuilds" value="1" />

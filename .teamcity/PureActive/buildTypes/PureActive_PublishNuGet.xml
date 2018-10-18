@@ -57,7 +57,6 @@
       </runner>
       <runner id="RUNNER_35" name="" type="dotnet.cli">
         <parameters>
-          <param name="args" value="--include-symbols" />
           <param name="command" value="pack" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />

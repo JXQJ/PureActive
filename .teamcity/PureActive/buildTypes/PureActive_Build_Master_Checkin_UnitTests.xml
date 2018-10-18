@@ -37,7 +37,7 @@
           <param name="command" value="test" />
           <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="test/PureActive.Logging.UnitTests/PureActive.Logging.UnitTests.csproj" />
+          <param name="paths" value="test" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>

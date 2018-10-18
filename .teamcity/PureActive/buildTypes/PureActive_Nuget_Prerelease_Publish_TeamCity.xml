@@ -42,7 +42,7 @@
           <param name="command" value="publish" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="paths" value="PureActive.sln" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
@@ -57,19 +57,19 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_35" name="NuGet Pack" type="dotnet.cli">
+      <runner id="RUNNER_35" name="NuGet Pack Logging.Extensions" type="dotnet.cli">
         <parameters>
           <param name="command" value="pack" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
-          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.csproj" />
+          <param name="paths" value="src/PureActive.Logging/PureActive.Logging.Extensions.csproj" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_36" name="" type="jb.nuget.publish">
+      <runner id="RUNNER_36" name="NuGet Publish Logging.Extensions" type="jb.nuget.publish">
         <parameters>
           <param name="nuget.path" value="%teamcity.tool.NuGet.CommandLine.DEFAULT%" />
-          <param name="nuget.publish.files" value="src/PureActive.Logging/NuGetOutput/*.nupkg" />
+          <param name="nuget.publish.files" value="src/PureActive.Logging.Extensions/packages/*.nupkg" />
           <param name="nuget.publish.source" value="http://teamcity.bushchang.com/httpAuth/app/nuget/feed/PureActive/default/v2" />
           <param name="secure:nuget.api.key" value="credentialsJSON:13985445-4ece-4d66-abc3-6a47c940114a" />
           <param name="teamcity.step.mode" value="default" />

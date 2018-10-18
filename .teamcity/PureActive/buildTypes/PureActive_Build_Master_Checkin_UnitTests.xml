@@ -5,7 +5,6 @@
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />
-      <option name="artifactRules" value="src\PureActive.Logging\bin =&gt; src\PureActive.Logging\bin" />
     </options>
     <parameters />
     <build-runners>

@@ -6,6 +6,9 @@
     <options>
       <option name="allowExternalStatus" value="true" />
     </options>
+    <disabled-settings>
+      <setting-ref ref="RUNNER_27" />
+    </disabled-settings>
     <parameters />
     <build-runners>
       <runner id="RUNNER_24" name="" type="dotnet.cli">

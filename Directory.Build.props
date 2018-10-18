@@ -6,4 +6,12 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+
+  <PropertyGroup>
+    <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), 'NuGetOutput'))</PackageOutputPath>
+   </PropertyGroup>
+
+  <Target Name="FreshClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(PackageOutputPath)"/>
+  </Target>
 </Project>

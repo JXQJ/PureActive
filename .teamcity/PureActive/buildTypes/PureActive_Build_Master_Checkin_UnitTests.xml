@@ -87,6 +87,13 @@
           <param name="withBuildAnchor" value="false" />
         </parameters>
       </extension>
+      <extension id="BUILD_EXT_6" type="VcsLabeling">
+        <parameters>
+          <param name="labelingPattern" value="checkin-build-%system.build.number%" />
+          <param name="successfulOnly" value="true" />
+          <param name="vcsRootId" value="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />
+        </parameters>
+      </extension>
     </build-extensions>
     <cleanup />
   </settings>

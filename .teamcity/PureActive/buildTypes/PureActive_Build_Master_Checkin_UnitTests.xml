@@ -9,9 +9,10 @@
     </options>
     <parameters />
     <build-runners>
-      <runner id="RUNNER_24" name="" type="dotnet.cli">
+      <runner id="RUNNER_24" name="NuGet Restore" type="dotnet.cli">
         <parameters>
           <param name="command" value="restore" />
+          <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
           <param name="paths" value="PureActive.sln" />
           <param name="teamcity.step.mode" value="default" />
         </parameters>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Authors>SteveBu</Authors>
     <Company>BushChang</Company>
     <Description>PureActive Logging Extensions</Description>
@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://github.com/SteveBush/PureActive</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SteveBush/PureActive</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>PureActive, logging, extensions</PackageTags>
+    <PackageTags>PureActive logging extensions</PackageTags>
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
     <Copyright>© BushChang Corporation. All rights reserved.</Copyright>
     <PackageIconUrl>https://raw.githubusercontent.com/SteveBush/PureWebAssets/master/icon/PureActive.gif</PackageIconUrl>

@@ -57,7 +57,6 @@
       </runner>
       <runner id="RUNNER_35" name="" type="dotnet.cli">
         <parameters>
-          <param name="args" value="--include-symbols" />
           <param name="command" value="pack" />
           <param name="configuration" value="Release" />
           <param name="dotNetCoverage.dotCover.home.path" value="%teamcity.tool.JetBrains.dotCover.CommandLineTools.DEFAULT%" />
@@ -88,11 +87,6 @@
           <param name="github_oauth_user" value="SteveBush" />
           <param name="publisherId" value="githubStatusPublisher" />
           <param name="secure:github_access_token" value="credentialsJSON:c5aa2568-d2d2-4b21-aa33-1894d2534cce" />
-        </parameters>
-      </extension>
-      <extension id="JetBrains.AssemblyInfo" type="JetBrains.AssemblyInfo">
-        <parameters>
-          <param name="assembly-format" value="%system.build.number%" />
         </parameters>
       </extension>
       <extension id="BUILD_EXT_2" type="NuGetPackagesIndexer">

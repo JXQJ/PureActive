@@ -2,7 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="b4d57677-7929-486e-adc2-a6a3c258da12" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
   <name>PureActive</name>
   <parameters>
-    <param name="BUILD_GIT_BRANCH" value="%teamcity.build.vcs.branch.PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster% " />
+    <param name="env.BUILD_GIT_BRANCH" value="%teamcity.build.vcs.branch.PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster% " />
   </parameters>
   <project-extensions>
     <extension id="PROJECT_EXT_3" type="IssueTracker">

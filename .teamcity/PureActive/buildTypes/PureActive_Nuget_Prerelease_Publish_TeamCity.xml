@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <build-type xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" uuid="020840e0-7958-4fc7-acb2-8791cfa8d12a" xsi:noNamespaceSchemaLocation="http://www.jetbrains.com/teamcity/schemas/2018.1/project-config.xsd">
-  <name>PublishTeamCity</name>
-  <description />
+  <name>Nuget_Prerelease_Publish_TeamCity</name>
+  <description>Build and NuGet publish to TeamCity NuGet repository</description>
   <settings>
     <options>
       <option name="allowExternalStatus" value="true" />

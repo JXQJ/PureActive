@@ -33,7 +33,7 @@
           <param name="teamcity.step.mode" value="default" />
         </parameters>
       </runner>
-      <runner id="RUNNER_27" name="" type="dotnet.cli">
+      <runner id="RUNNER_27" name="Unit Tests" type="dotnet.cli">
         <parameters>
           <param name="command" value="test" />
           <param name="dotNetCoverage.dotCover.filters" value="-:xunit*.*" />

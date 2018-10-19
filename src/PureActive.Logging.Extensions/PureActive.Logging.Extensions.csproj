@@ -21,6 +21,8 @@
     <Title>PureActive Logging Extensions</Title>
     <TargetFramework>netstandard2.0</TargetFramework>
     <NuspecProperties>$(NuspecProperties);owners=SteveBu</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);RepositoryBranch=refs/heads/master</NuspecProperties>
+    <NuspecProperties>$(NuspecProperties);RepositoryCommit=06c6d6cf64aacb0b086fe011295d06a57269cc00</NuspecProperties>
   </PropertyGroup>
   
   <ItemGroup>

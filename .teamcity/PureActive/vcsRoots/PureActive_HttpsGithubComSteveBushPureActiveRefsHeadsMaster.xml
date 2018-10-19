@@ -8,6 +8,7 @@
   <param name="ignoreKnownHosts" value="true" />
   <param name="secure:password" value="credentialsJSON:c5aa2568-d2d2-4b21-aa33-1894d2534cce" />
   <param name="submoduleCheckout" value="CHECKOUT" />
+  <param name="teamcity:branchSpec" value="+:refs/heads/*" />
   <param name="url" value="https://github.com/SteveBush/PureActive" />
   <param name="useAlternates" value="true" />
   <param name="username" value="SteveBush" />

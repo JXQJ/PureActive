@@ -13,7 +13,7 @@
     <PackageLicenseUrl>https://github.com/SteveBush/PureActive/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/SteveBush/PureActive</PackageProjectUrl>
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
-    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageTags>PureActive logging extensions</PackageTags>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/SteveBush/PureActive</RepositoryUrl>

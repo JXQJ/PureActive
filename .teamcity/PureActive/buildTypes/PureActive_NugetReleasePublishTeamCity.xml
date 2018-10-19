@@ -97,7 +97,7 @@
       </runner>
     </build-runners>
     <vcs-settings>
-      <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsMaster" />
+      <vcs-entry-ref root-id="PureActive_HttpsGithubComSteveBushPureActiveRefsHeadsRelease" />
     </vcs-settings>
     <requirements />
     <build-triggers />

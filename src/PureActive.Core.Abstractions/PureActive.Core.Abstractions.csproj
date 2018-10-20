@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Core.Abstractions.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Core Abstractions</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveCore256.png</PackageIconUrl>
+    <PackageId>PureActive.Core.Abstractions</PackageId>
+    <PackageTags>PureActive core abstractions</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Core Abstractions</Title>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
+
+</Project>

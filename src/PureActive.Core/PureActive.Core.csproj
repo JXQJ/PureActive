@@ -1,18 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PureActive.Logging.Abstractions.snk</AssemblyOriginatorKeyFile>
-    <Description>PureActive Logging Abstractions</Description>
+    <AssemblyOriginatorKeyFile>PureActive.Core.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Core</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveLogging256.png</PackageIconUrl>
-    <PackageId>PureActive.Logging.Abstractions</PackageId>
-    <PackageTags>PureActive logging abstractions</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveCore256.png</PackageIconUrl>
+    <PackageId>PureActive.Core</PackageId>
+    <PackageTags>PureActive core</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Logging Abstractions</Title>
+    <Title>PureActive Core Libaries</Title>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
@@ -20,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -16,10 +16,8 @@
     <Copyright>© 2018 BushChang Corporation. All rights reserved.</Copyright>
     <NuspecProperties>$(NuspecProperties);owners=SteveBu</NuspecProperties>
     <Owners>SteveBu</Owners>
-    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveLogging256.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/PureActive/PureActive/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/PureActive/PureActive</PackageProjectUrl>
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/PureActive/PureActive</RepositoryUrl>

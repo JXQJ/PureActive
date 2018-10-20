@@ -2,13 +2,13 @@
 
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>PureActive.Logging.Extensions.snk</AssemblyOriginatorKeyFile>
-    <Authors>SteveBu</Authors>
+    <Authors>Steve Bush</Authors>
     <Company>BushChang</Company>
     <Copyright>© 2018 BushChang Corporation. All rights reserved.</Copyright>
     <Description>PureActive Logging Extensions</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Owners>SteveBu</Owners>
-    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActive64.png</PackageIconUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveLogging64.png</PackageIconUrl>
     <PackageId>PureActive.Logging.Extensions</PackageId>
     <PackageLicenseUrl>https://github.com/PureActive/PureActive/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/PureActive/PureActive</PackageProjectUrl>

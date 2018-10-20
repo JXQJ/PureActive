@@ -14,8 +14,8 @@
     <Authors>Steve Bush</Authors>
     <Company>BushChang</Company>
     <Copyright>© 2018 BushChang Corporation. All rights reserved.</Copyright>
-    <NuspecProperties>$(NuspecProperties);owners=SteveBu</NuspecProperties>
-    <Owners>SteveBu</Owners>
+    <NuspecProperties>$(NuspecProperties);owners=PureActive</NuspecProperties>
+    <Owners>PureActive</Owners>
     <PackageLicenseUrl>https://github.com/PureActive/PureActive/blob/master/LICENSE</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/PureActive/PureActive</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

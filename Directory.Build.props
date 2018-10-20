@@ -9,6 +9,7 @@
 
   <PropertyGroup>
     <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), 'packages'))</PackageOutputPath>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
    </PropertyGroup>
 
   <Target Name="FreshClean" BeforeTargets="Clean">

@@ -1,7 +1,6 @@
-using System;
 using Xunit;
 
-namespace PureActive.Logging.Provider.Serilog.UnitTests
+namespace PureActive.Logger.Provider.Serilog.UnitTests
 {
     public class SerilogProviderUnitTests
     {

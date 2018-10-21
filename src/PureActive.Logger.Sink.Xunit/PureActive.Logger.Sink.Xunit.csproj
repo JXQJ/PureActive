@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Logger.Sink.Xunit.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Xunit Logger Sink</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveLogging256.png</PackageIconUrl>
+    <PackageId>PureActive.Logger.Sink.Xunit</PackageId>
+    <PackageTags>PureActive.Logger.Sink.Xunit</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Xunit Logger Sink</Title>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+  </PropertyGroup>
+
+</Project>

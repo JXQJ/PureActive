@@ -1,15 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PureActive.Logging.Provider.Serilog.snk</AssemblyOriginatorKeyFile>
-    <Description>PureActive Serilog Logging Provider</Description>
+    <AssemblyOriginatorKeyFile>PureActive.Logger.Provider.Serilog.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Serilog Logger Provider</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveLogging256.png</PackageIconUrl>
-    <PackageId>PureActive.Logging.Provider.Serilog</PackageId>
-    <PackageTags>PureActive logging provider Serilog</PackageTags>
+    <PackageId>PureActive.Logger.Provider.Serilog</PackageId>
+    <PackageTags>PureActive logger provider Serilog</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Serilog Logging Provider</Title>
+    <Title>PureActive Serilog Logger Provider</Title>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>

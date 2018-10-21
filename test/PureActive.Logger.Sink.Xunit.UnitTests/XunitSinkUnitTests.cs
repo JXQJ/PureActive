@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 
-namespace PureActive.Logging.Provider.Xunit.UnitTests
+namespace PureActive.Logging.Sink.Xunit.UnitTests
 {
-    public class XunitProviderUnitTests
+    public class XunitSinkUnitTests
     {
         [Fact]
         public void Test1()

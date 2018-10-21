@@ -3,16 +3,14 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>PureActive.Samples.ConsoleApp.snk</AssemblyOriginatorKeyFile>
     <Description>PureActive Sample Console Application</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveSamples256.png</PackageIconUrl>
     <PackageId>PureActive.Samples.ConsoleApp</PackageId>
     <PackageTags>PureActive samples console</PackageTags>
     <SignAssembly>true</SignAssembly>
     <Title>PureActive Sample Console Application</Title>
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
-  </PropertyGroup>
 
-  <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>

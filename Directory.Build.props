@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <PackageOutputPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory), 'packages'))</PackageOutputPath>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb;.xml;*.json</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
     <Authors>Steve Bush</Authors>
     <Company>BushChang</Company>

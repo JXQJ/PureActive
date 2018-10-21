@@ -5,6 +5,9 @@ namespace PureActive.Logging.Provider.Serilog
 {
     public class SerilogLoggingProvider : IPureLoggingProvider
     {
+        public SerilogLoggingProvider()
+        {
 
+        }
     }
 }

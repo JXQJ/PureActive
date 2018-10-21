@@ -2,7 +2,7 @@
 using Serilog.Core;
 using Serilog.Events;
 
-namespace PureActive.Logger.Provider.Serilog
+namespace PureActive.Logger.Provider.Serilog.Enrichers
 {
     /// <summary>
     ///     Adds a readable stack trace to all exceptions.

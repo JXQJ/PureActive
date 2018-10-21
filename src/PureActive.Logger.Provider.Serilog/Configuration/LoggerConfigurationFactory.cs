@@ -5,17 +5,17 @@ using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
+using PureActive.Logger.Provider.Serilog.Enrichers;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using Serilog;
 using Serilog.AspNetCore;
-using Serilog.Configuration;
 using Serilog.Events;
 using Serilog.ExtensionMethods;
 using Serilog.Formatting;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 
-namespace PureActive.Logger.Provider.Serilog
+namespace PureActive.Logger.Provider.Serilog.Configuration
 {
     /// <summary>
     ///     Creates a logger configuration.

@@ -21,32 +21,8 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
     /// </summary>
     public static class LoggerConfigurationFactory
     {
-        public enum XUnitSerilogFormatter
-        {
-            None,
-            JsonFormatter,
-            CompactJsonFormatter,
-            RenderedJsonFormatter,
-            RenderedCompactJsonFormatter,
-        }
 
-        public static ITextFormatter GetXUnitSerilogFormatter(XUnitSerilogFormatter xUnitSerilogFormatter)
-        {
-            switch (xUnitSerilogFormatter)
-            {
-                case XUnitSerilogFormatter.JsonFormatter:
-                    return new JsonFormatter();
-                case XUnitSerilogFormatter.CompactJsonFormatter:
-                    return new CompactJsonFormatter();
-                case XUnitSerilogFormatter.RenderedJsonFormatter:
-                    return new JsonFormatter(null, true);
-                case XUnitSerilogFormatter.RenderedCompactJsonFormatter:
-                    return new RenderedCompactJsonFormatter();
-                case XUnitSerilogFormatter.None:
-                default:
-                    return null;
-            }
-        }
+
 
         public static LoggerConfiguration CreateDefaultLoggerConfiguration(IPureLoggerSettings loggerSettings)
         {

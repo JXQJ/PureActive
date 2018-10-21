@@ -1,5 +1,4 @@
 ﻿using System;
-using Destructurama;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Configuration;
@@ -55,7 +54,6 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                 .ReadFrom.Configuration(loggerSettings.Configuration)
                 .MinimumLevel.ControlledBy(loggerSettings.Default.LoggingLevelSwitch)
                 .Enrich.FromLogContext()
-                .Destructure.UsingAttributes()
                 .Enrich.With(new AsyncFriendlyStackTraceEnricher())
                 .WriteTo.Console(levelSwitch:loggerSettings.Console.LoggingLevelSwitch); // Always write to the console
 

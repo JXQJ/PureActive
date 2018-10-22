@@ -4,7 +4,7 @@ using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Interfaces
 {
-    public interface IPureLogProviderSettings
+    public interface ISerilogLogProviderSettings
     {
         LoggingLevelSwitch LoggingLevelSwitch { get; }
 

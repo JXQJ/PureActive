@@ -11,7 +11,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         [Fact]
         public void TestCreateLogger()
         {
-            var loggerSettings = new PureLoggerSettings(LogEventLevel.Debug);
+            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug);
 
             var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings);
 

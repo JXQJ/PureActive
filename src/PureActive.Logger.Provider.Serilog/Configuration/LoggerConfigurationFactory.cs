@@ -18,10 +18,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
     /// </summary>
     public static class LoggerConfigurationFactory
     {
-
-
-
-        public static LoggerConfiguration CreateDefaultLoggerConfiguration(IPureLoggerSettings loggerSettings)
+        public static LoggerConfiguration CreateDefaultLoggerConfiguration(ISerilogLoggerSettings loggerSettings)
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(loggerSettings.Configuration)
@@ -40,7 +37,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
             IConfigurationRoot configurationRoot,
             IFileSystem fileSystem,
             string logFileName,
-            IPureLoggerSettings loggerSettings,
+            ISerilogLoggerSettings loggerSettings,
             Func<LogEvent, bool> includeLogEvent)
         {
             var loggerConfiguration = CreateDefaultLoggerConfiguration(loggerSettings);
@@ -106,7 +103,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
             return telemetry;
         }
 
-        public static ILoggerFactory CreateSerilogFactory(IPureLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
+        public static ILoggerFactory CreateSerilogFactory(ISerilogLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
         {
             if (loggerConfiguration == null)
                 loggerConfiguration = CreateDefaultLoggerConfiguration(loggerSettings);

@@ -2,16 +2,16 @@
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
-using PureActive.Logger.Sink.Xunit.Extensions;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Extensions.Logging;
+using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
 using Serilog.Formatting;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 using Xunit.Abstractions;
 
-namespace PureActive.Logger.Sink.Xunit.Sink
+namespace PureActive.Serilog.Sink.Xunit
 {
     public class XunitLoggingSink
     {
@@ -41,7 +41,7 @@ namespace PureActive.Logger.Sink.Xunit.Sink
             }
         }
         
-        public static LoggerConfiguration CreateXUnitLoggerConfiguration(ITestOutputHelper testOutputHelper, IPureLoggerSettings loggerSettings, XUnitSerilogFormatter xUnitSerilogFormatter)
+        public static LoggerConfiguration CreateXUnitLoggerConfiguration(ITestOutputHelper testOutputHelper, ISerilogLoggerSettings loggerSettings, XUnitSerilogFormatter xUnitSerilogFormatter)
         {
             if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
@@ -62,7 +62,7 @@ namespace PureActive.Logger.Sink.Xunit.Sink
             return loggerConfiguration;
         }
 
-        public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper, IPureLoggerSettings loggerSettings,
+        public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper, ISerilogLoggerSettings loggerSettings,
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.None)
         {
             if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));

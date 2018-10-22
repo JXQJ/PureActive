@@ -1,5 +1,5 @@
 ﻿using System;
-using PureActive.Logger.Sink.Xunit.Sink;
+using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;
@@ -7,7 +7,7 @@ using Serilog.Events;
 using Serilog.Formatting;
 using Xunit.Abstractions;
 
-namespace PureActive.Logger.Sink.Xunit.Extensions
+namespace PureActive.Serilog.Sink.Xunit.Extensions
 {
     public static class XUnitLoggerConfigurationExtensions
     {

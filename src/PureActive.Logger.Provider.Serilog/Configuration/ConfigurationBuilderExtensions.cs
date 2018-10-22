@@ -32,6 +32,6 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         }
 
         public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config, LogLevel initialMinimumLevel) =>
-            AddLoggerSettings(config, PureLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLevel));
+            AddLoggerSettings(config, SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLevel));
     }
 }

@@ -5,7 +5,7 @@ using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Types
 {
-    public class PureLogProviderSettings : IPureLogProviderSettings
+    public class SerilogLogProviderSettings : ISerilogLogProviderSettings
     {
         public LoggingLevelSwitch LoggingLevelSwitch { get; internal set; }
 
@@ -21,7 +21,7 @@ namespace PureActive.Logger.Provider.Serilog.Types
             set => LoggingLevelSwitch.MinimumLevel = LogLevelToLogEventLevel(value);
         }
 
-        public PureLogProviderSettings(LogEventLevel minimumLevel)
+        public SerilogLogProviderSettings(LogEventLevel minimumLevel)
         {
             LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevel);
         }

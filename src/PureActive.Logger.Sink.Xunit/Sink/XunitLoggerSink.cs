@@ -10,7 +10,6 @@ using Serilog.Formatting;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 using Xunit.Abstractions;
-using Microsoft.Extensions.Logging.Debug;
 
 namespace PureActive.Logger.Sink.Xunit.Sink
 {

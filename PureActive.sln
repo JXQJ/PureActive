@@ -41,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Sink.Xuni
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Sink.Xunit.UnitTests", "test\PureActive.Logger.Sink.Xunit.UnitTests\PureActive.Logger.Sink.Xunit.UnitTests.csproj", "{E5717D08-7A01-4C4F-B4DF-8553703C5FDA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.ApplicationInsights", "src\PureActive.Logger.Provider.ApplicationInsights\PureActive.Logger.Provider.ApplicationInsights.csproj", "{BB8DB1A7-AB86-4F65-AC95-29546B0A0416}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Logger.Provider.ApplicationInsights", "src\PureActive.Logger.Provider.ApplicationInsights\PureActive.Logger.Provider.ApplicationInsights.csproj", "{BB8DB1A7-AB86-4F65-AC95-29546B0A0416}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.ApplicationInsights.UnitTests", "test\PureActive.Logger.Provider.ApplicationInsights.UnitTests\PureActive.Logger.Provider.ApplicationInsights.UnitTests.csproj", "{E31BB884-D272-44CD-984C-253786927B68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Logger.Provider.ApplicationInsights.UnitTests", "test\PureActive.Logger.Provider.ApplicationInsights.UnitTests\PureActive.Logger.Provider.ApplicationInsights.UnitTests.csproj", "{E31BB884-D272-44CD-984C-253786927B68}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

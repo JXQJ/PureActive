@@ -10,9 +10,6 @@ using Serilog;
 using Serilog.AspNetCore;
 using Serilog.Events;
 using Serilog.ExtensionMethods;
-using Serilog.Formatting;
-using Serilog.Formatting.Compact;
-using Serilog.Formatting.Json;
 
 namespace PureActive.Logger.Provider.Serilog.Configuration
 {

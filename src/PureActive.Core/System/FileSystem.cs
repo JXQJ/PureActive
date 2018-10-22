@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions.Internal;
 using PureActive.Core.Abstractions.System;
 
 namespace PureActive.Core.System
@@ -28,6 +29,14 @@ namespace PureActive.Core.System
         public FileSystem(string appFolderName, IOperatingSystem operatingSystem)
         {
             AppFolderName = appFolderName ?? throw new ArgumentNullException(nameof(appFolderName));
+            OperatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+        }
+
+        public FileSystem(Type type, IOperatingSystem operatingSystem)
+        {
+            if (type == null) throw new ArgumentNullException(nameof(type));
+
+            AppFolderName = TypeNameHelper.GetTypeDisplayName(type);
             OperatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 

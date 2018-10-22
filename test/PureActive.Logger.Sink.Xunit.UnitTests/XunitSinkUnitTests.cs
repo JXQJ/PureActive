@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 
 namespace PureActive.Logging.Sink.Xunit.UnitTests

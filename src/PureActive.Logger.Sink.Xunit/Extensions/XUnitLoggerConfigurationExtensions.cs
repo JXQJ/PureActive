@@ -38,7 +38,7 @@ namespace PureActive.Logger.Sink.Xunit.Extensions
 
    
             return sinkConfiguration.Sink(
-                (ILogEventSink) new XUnitLogEventSink(testOutputHelper, outputTemplate, formatProvider),
+                new XUnitLogEventSink(testOutputHelper, outputTemplate, formatProvider),
                 restrictedToMinimumLevel, levelSwitch);
         }
 
@@ -64,7 +64,7 @@ namespace PureActive.Logger.Sink.Xunit.Extensions
                 throw new ArgumentNullException(nameof(sinkConfiguration));
 
             return sinkConfiguration.Sink(
-                (ILogEventSink)new XUnitLogEventSink(testOutputHelper, formatter),
+                new XUnitLogEventSink(testOutputHelper, formatter),
                 restrictedToMinimumLevel, levelSwitch);
         }
     }

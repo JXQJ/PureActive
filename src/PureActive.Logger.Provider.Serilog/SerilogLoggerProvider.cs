@@ -6,11 +6,6 @@ namespace PureActive.Logger.Provider.Serilog
 {
     public class SerilogLoggerProvider : IPureLoggerProvider
     {
-        public SerilogLoggerProvider()
-        {
-
-        }
-
         public void Dispose()
         {
             throw new NotImplementedException();

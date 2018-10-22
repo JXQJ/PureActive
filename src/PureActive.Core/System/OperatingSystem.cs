@@ -7,17 +7,12 @@ namespace PureActive.Core.System
 {
     public class OperatingSystem : IOperatingSystem
     {
-        public OperatingSystem()
-        {
-
-        }
-
         public bool IsLinux()
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public bool IsOSX()
+        public bool IsOsx()
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         }

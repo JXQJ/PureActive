@@ -3,7 +3,7 @@
     public interface IOperatingSystem
     {
         bool IsWindows();
-        bool IsOSX();
+        bool IsOsx();
         bool IsLinux();
     }
 }

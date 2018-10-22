@@ -36,7 +36,6 @@ namespace PureActive.Logger.Sink.Xunit.Sink
                     return new JsonFormatter(null, true);
                 case XUnitSerilogFormatter.RenderedCompactJsonFormatter:
                     return new RenderedCompactJsonFormatter();
-                case XUnitSerilogFormatter.None:
                 default:
                     return null;
             }

@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace PureActive.Logging.Sink.Xunit.UnitTests
+namespace PureActive.Logger.Sink.Xunit.UnitTests
 {
     public class XunitSinkUnitTests
     {

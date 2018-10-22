@@ -29,7 +29,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             Test = new PureLogProviderSettings(initialMinimumLogEventLevelTest);
 
             // TODO: Read AppInsights from settings
-            AppInsights = new PureLogProviderSettings(LogEventLevel.Information);
+            AppInsights = new PureLogProviderSettings(initialMinimumLogEventLevelAppInsights);
 
             Configuration = DefaultLoggerSettingsConfiguration(initialMinimumLogEventLevelDefault);
         }
@@ -44,7 +44,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
         }
 
         public PureLoggerSettings(LogEventLevel initialMinimumLogEventLevelDefault):
-            this(initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault)
+            this(initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, LogEventLevel.Information)
         {
 
         }

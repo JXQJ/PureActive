@@ -7,7 +7,9 @@ namespace PureActive.Logger.Provider.Serilog.Interfaces
         ISerilogLogProviderSettings Default { get; }
         ISerilogLogProviderSettings File { get; }
         ISerilogLogProviderSettings Console { get; }
-        ISerilogLogProviderSettings Test { get; }
+        ISerilogLogProviderSettings TestConsole { get; }
+
+        ISerilogLogProviderSettings TestCorrelator { get; }
 
         ISerilogLogProviderSettings AppInsights { get; }
 

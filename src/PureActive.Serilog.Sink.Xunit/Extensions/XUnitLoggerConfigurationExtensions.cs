@@ -1,5 +1,4 @@
 ﻿using System;
-using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog;
 using Serilog.Configuration;
 using Serilog.Core;

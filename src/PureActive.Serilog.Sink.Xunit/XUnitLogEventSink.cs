@@ -7,7 +7,7 @@ using Serilog.Formatting;
 using Serilog.Formatting.Display;
 using Xunit.Abstractions;
 
-namespace PureActive.Serilog.Sink.Xunit.Sink
+namespace PureActive.Serilog.Sink.Xunit
 {
     public class XUnitLogEventSink : ILogEventSink
     {

@@ -52,28 +52,42 @@ namespace PureActive.Serilog.Sink.Xunit
 
             if (jsonFormatter != null)
             {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter, loggerSettings.Test.MinimumLevel, loggerSettings.Test.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter, loggerSettings.TestConsole.MinimumLevel, loggerSettings.TestConsole.LoggingLevelSwitch);
             }
             else
             {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, loggerSettings.Test.MinimumLevel, XUnitLoggerConfigurationExtensions.DefaultOutputTemplate, null, loggerSettings.Test.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.XUnit(testOutputHelper, loggerSettings.TestConsole.MinimumLevel, XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
+                    null, loggerSettings.TestConsole.LoggingLevelSwitch);
             }
+
+            // Configuration switch to TestCorrelator
+            loggerConfiguration.WriteTo.TestCorrelator(loggerSettings.TestCorrelator.MinimumLevel, loggerSettings.TestCorrelator.LoggingLevelSwitch);
 
             return loggerConfiguration;
         }
 
-        public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper, ISerilogLoggerSettings loggerSettings,
-            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.None)
+        public static IPureLoggerFactory CreateXUnitSerilogFactory(ISerilogLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration)
         {
-            if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
+            if (loggerConfiguration == null) throw new ArgumentNullException(nameof(loggerConfiguration));
 
-            var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings, CreateXUnitLoggerConfiguration(testOutputHelper, loggerSettings, xUnitSerilogFormatter));
+            var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings, loggerConfiguration);
 
             loggerFactory.AddDebug();
 
             return new PureLoggerFactory(loggerFactory);
         }
 
+        public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,
+            ISerilogLoggerSettings loggerSettings,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.None)
+        {
+            if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));
+            if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
+
+            var loggerConfiguration = CreateXUnitLoggerConfiguration(testOutputHelper, loggerSettings, xUnitSerilogFormatter);
+
+            return CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
+        }
     }
 }

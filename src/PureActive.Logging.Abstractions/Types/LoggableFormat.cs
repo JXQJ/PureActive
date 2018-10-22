@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PureActive.Logging.Abstractions.Interfaces
+namespace PureActive.Logging.Abstractions.Types
 {
     [Flags]
     public enum LoggableFormat : byte
@@ -16,12 +16,12 @@ namespace PureActive.Logging.Abstractions.Interfaces
     public static class LoggableFormatUtils
     {
         public static bool IsWithParents(this LoggableFormat loggableFormat) =>
-            (loggableFormat & LoggableFormat.WithParents) > 0 ? true : false;
+            (loggableFormat & LoggableFormat.WithParents) > 0;
 
         public static bool IsToString(this LoggableFormat loggableFormat) =>
-            (loggableFormat & LoggableFormat.ToString) > 0 ? true : false;
+            (loggableFormat & LoggableFormat.ToString) > 0;
 
         public static bool IsToLog(this LoggableFormat loggableFormat) =>
-            (loggableFormat & LoggableFormat.ToLog) > 0 ? true : false;
+            (loggableFormat & LoggableFormat.ToLog) > 0;
     }
 }

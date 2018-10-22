@@ -2,8 +2,7 @@
 
 namespace PureActive.Logging.Abstractions.Interfaces
 {
-    public interface IPureLogger : ILogger
+    public interface IPureLoggerProvider : ILoggerProvider
     {
-
     }
 }

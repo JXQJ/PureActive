@@ -3,7 +3,6 @@ using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Logging;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Xunit.Abstractions;
 

@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using PureActive.Serilog.Sink.Xunit.Sink;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
 using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
-using PureActive.Logger.Provider.Serilog.Interfaces;
-using PureActive.Logging.Abstractions.Interfaces;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
 

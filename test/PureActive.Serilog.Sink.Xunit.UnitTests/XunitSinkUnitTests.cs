@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Logging;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
@@ -42,7 +41,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         [Fact]
         public void XunitSink_Create_TestCorrelator()
         {
-            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var logger = CreateLogger(LogEventLevel.Debug);
 
             using (TestCorrelator.CreateContext())
             {
@@ -58,7 +57,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         [Fact]
         public void XunitSink_Create_RenderedCompactJsonFormatter()
         {
-            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var logger = CreateLogger(LogEventLevel.Debug);
 
             logger.LogDebug("Create_XUnit_Sink_RenderedCompactJsonFormatter");
         }
@@ -66,7 +65,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         [Fact]
         public void XunitSink_Logger_TestCorrelator_Param_Int()
         {
-            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var logger = CreateLogger(LogEventLevel.Debug);
 
             using (TestCorrelator.CreateContext())
             {

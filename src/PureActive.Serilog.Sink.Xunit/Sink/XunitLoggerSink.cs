@@ -11,19 +11,19 @@ using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 using Xunit.Abstractions;
 
-namespace PureActive.Serilog.Sink.Xunit
+namespace PureActive.Serilog.Sink.Xunit.Sink
 {
+    public enum XUnitSerilogFormatter
+    {
+        None,
+        JsonFormatter,
+        CompactJsonFormatter,
+        RenderedJsonFormatter,
+        RenderedCompactJsonFormatter,
+    }
+
     public class XunitLoggingSink
     {
-        public enum XUnitSerilogFormatter
-        {
-            None,
-            JsonFormatter,
-            CompactJsonFormatter,
-            RenderedJsonFormatter,
-            RenderedCompactJsonFormatter,
-        }
-
         public static ITextFormatter GetXUnitSerilogFormatter(XUnitSerilogFormatter xUnitSerilogFormatter)
         {
             switch (xUnitSerilogFormatter)

@@ -1,7 +1,12 @@
 using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Settings;
+using PureActive.Logger.Provider.Serilog.Types;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Extensions.Logging;
+using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
 using Xunit;
@@ -18,16 +23,26 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
             _testOutputHelper = testOutputHelper ?? throw new ArgumentNullException(nameof(testOutputHelper));
         }
 
-
-        [Fact]
-        public void Create_XUnit_Sink_TestCorrelator()
+        private IPureLogger CreateLogger(LogEventLevel logEventLevel,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
-            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug);
-            var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings,
-                XunitLoggingSink.XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var loggerSettings = new SerilogLoggerSettings(logEventLevel);
+            var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings, xUnitSerilogFormatter);
 
             var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
-            var logger = loggerFactory.CreateLogger<XunitSinkUnitTests>();
+
+            var logger = new PureSeriLogger(loggerFactory.CreateLogger<XunitSinkUnitTests>());
+
+            logger.Should().NotBeNull("CreateLogger should always succeed");
+
+            return logger;
+        }
+
+
+        [Fact]
+        public void XunitSink_Create_TestCorrelator()
+        {
+            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
 
             using (TestCorrelator.CreateContext())
             {
@@ -41,15 +56,34 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         }
 
         [Fact]
-        public void Create_XUnit_Sink_RenderedCompactJsonFormatter()
+        public void XunitSink_Create_RenderedCompactJsonFormatter()
         {
-            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug);
-            var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(_testOutputHelper, loggerSettings, 
-                XunitLoggingSink.XUnitSerilogFormatter.RenderedCompactJsonFormatter);
-
-            var logger = loggerFactory.CreateLogger<XunitSinkUnitTests>();
+            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
 
             logger.LogDebug("Create_XUnit_Sink_RenderedCompactJsonFormatter");
+        }
+
+        [Fact]
+        public void XunitSink_Logger_TestCorrelator_Param_Int()
+        {
+            var logger = CreateLogger(LogEventLevel.Debug, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+
+            using (TestCorrelator.CreateContext())
+            {
+                const int count = 15;
+
+                var dictionary = new Dictionary<string, LogEventPropertyValue>()
+                {
+                    {"Count", new ScalarValue(count)}
+                };
+
+                logger.LogInformation("{Count}", count);
+
+                TestCorrelator.GetLogEventsFromCurrentContext()
+                    .Should().ContainSingle()
+                    .Which.MessageTemplate.Render(dictionary)
+                    .Should().Be(count.ToString());
+            }
         }
     }
 }

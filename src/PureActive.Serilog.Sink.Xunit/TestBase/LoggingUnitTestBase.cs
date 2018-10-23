@@ -1,11 +1,13 @@
 ﻿using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
+using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Extensions.Logging;
+using PureActive.Serilog.Sink.Xunit.Sink;
 using Xunit.Abstractions;
 
-namespace PureActive.Serilog.Sink.Xunit.Testing
+namespace PureActive.Serilog.Sink.Xunit.TestBase
 {
     public abstract class LoggingUnitTestBase<T>
     {
@@ -15,7 +17,7 @@ namespace PureActive.Serilog.Sink.Xunit.Testing
         protected readonly ITestOutputHelper TestOutputHelper;
 
         protected LoggingUnitTestBase(ITestOutputHelper testOutputHelper, LogLevel initialMinimumLevel = LogLevel.Debug, 
-            XunitLoggingSink.XUnitSerilogFormatter xUnitSerilogFormatter = XunitLoggingSink.XUnitSerilogFormatter.RenderedCompactJsonFormatter)
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
             TestOutputHelper = testOutputHelper;
             LoggerSettings = new SerilogLoggerSettings(initialMinimumLevel);
@@ -26,7 +28,7 @@ namespace PureActive.Serilog.Sink.Xunit.Testing
 
             LoggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(LoggerSettings, loggerConfiguration);
 
-            Logger = new PureLogger(LoggerFactory?.CreateLogger<T>());
+            Logger = new PureSeriLogger(LoggerFactory?.CreateLogger<T>());
         }
     }
 }

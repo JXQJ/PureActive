@@ -4,7 +4,6 @@ using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Logging;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
 using Serilog.Formatting;

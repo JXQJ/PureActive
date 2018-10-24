@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Logging;
 
 namespace PureActive.Logger.Provider.Serilog.Types
 {

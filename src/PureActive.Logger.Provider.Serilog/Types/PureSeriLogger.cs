@@ -1,14 +1,15 @@
 ﻿using System;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using ILoggerMsft = Microsoft.Extensions.Logging.ILogger;
 
-namespace PureActive.Logging.Extensions.Logging
+namespace PureActive.Logger.Provider.Serilog.Types
 {
-    public class PureLogger : IPureLogger
+    public class PureSeriLogger : IPureLogger
     {
-        ILogger WrappedLogger { get;}
+        public ILoggerMsft WrappedLogger { get; }
 
-        public PureLogger(ILogger logger)
+        public PureSeriLogger(ILoggerMsft logger)
         {
             WrappedLogger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
@@ -21,7 +22,15 @@ namespace PureActive.Logging.Extensions.Logging
         public bool IsEnabled(LogLevel logLevel) => WrappedLogger.IsEnabled(logLevel);
 
         public IDisposable BeginScope<TState>(TState state) => WrappedLogger.BeginScope(state);
-
-
     }
+
+    public class PureSeriLogger<T> : PureSeriLogger, IPureLogger<T>
+    {
+        public PureSeriLogger(ILoggerMsft logger) :base (logger)
+        {
+
+        }
+    }
+
+
 }

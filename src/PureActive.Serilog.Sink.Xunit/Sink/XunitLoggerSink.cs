@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
+using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Logging;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
 using Serilog.Formatting;
@@ -11,19 +11,19 @@ using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 using Xunit.Abstractions;
 
-namespace PureActive.Serilog.Sink.Xunit
+namespace PureActive.Serilog.Sink.Xunit.Sink
 {
+    public enum XUnitSerilogFormatter
+    {
+        None,
+        JsonFormatter,
+        CompactJsonFormatter,
+        RenderedJsonFormatter,
+        RenderedCompactJsonFormatter,
+    }
+
     public class XunitLoggingSink
     {
-        public enum XUnitSerilogFormatter
-        {
-            None,
-            JsonFormatter,
-            CompactJsonFormatter,
-            RenderedJsonFormatter,
-            RenderedCompactJsonFormatter,
-        }
-
         public static ITextFormatter GetXUnitSerilogFormatter(XUnitSerilogFormatter xUnitSerilogFormatter)
         {
             switch (xUnitSerilogFormatter)
@@ -75,7 +75,7 @@ namespace PureActive.Serilog.Sink.Xunit
 
             loggerFactory.AddDebug();
 
-            return new PureLoggerFactory(loggerFactory);
+            return new PureSeriLoggerFactory(loggerFactory);
         }
 
         public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,

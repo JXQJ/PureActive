@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Extensions.Logging;
 
-namespace PureActive.Logging.Extensions.Logging
+namespace PureActive.Logger.Provider.Serilog.Types
 {
-    public class PureLoggerFactory : IPureLoggerFactory
+    public class PureSeriLoggerFactory : IPureLoggerFactory
     {
-        ILoggerFactory WrappedLoggerFactory { get;}
+        ILoggerFactory WrappedLoggerFactory { get; }
 
-        public PureLoggerFactory(ILoggerFactory loggerFactory)
+        public PureSeriLoggerFactory(ILoggerFactory loggerFactory)
         {
             WrappedLoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
         }
@@ -35,12 +38,12 @@ namespace PureActive.Logging.Extensions.Logging
 
         public IPureLogger CreatePureLogger(string categoryName)
         {
-            return new PureLogger(WrappedLoggerFactory.CreateLogger(categoryName));
+            return new PureSeriLogger(WrappedLoggerFactory.CreateLogger(categoryName));
         }
 
         public IPureLogger<T> CreatePureLogger<T>()
         {
-            return new PureLogger<T>(WrappedLoggerFactory.CreateLogger<T>());
+            return new PureSeriLogger<T>(WrappedLoggerFactory.CreateLogger<T>());
         }
     }
 }

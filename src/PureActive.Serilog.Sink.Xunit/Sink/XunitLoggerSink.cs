@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
+using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Extensions.Logging;
 using PureActive.Serilog.Sink.Xunit.Extensions;
@@ -75,7 +76,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             loggerFactory.AddDebug();
 
-            return new PureLoggerFactory(loggerFactory);
+            return new PureSeriLoggerFactory(loggerFactory);
         }
 
         public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,

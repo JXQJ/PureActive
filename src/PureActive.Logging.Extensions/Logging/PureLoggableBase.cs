@@ -12,9 +12,7 @@ namespace PureActive.Logging.Extensions.Logging
         public PureLoggableBase(IPureLoggerFactory loggerFactory)
         {
             LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
-            Logger = new PureLogger(loggerFactory.CreateLogger<T>());
+            Logger = loggerFactory.CreatePureLogger<T>();
         }
-
-
     }
 }

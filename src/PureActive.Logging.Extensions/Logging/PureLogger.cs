@@ -6,7 +6,7 @@ namespace PureActive.Logging.Extensions.Logging
 {
     public class PureLogger : IPureLogger
     {
-        ILogger WrappedLogger { get;}
+        public ILogger WrappedLogger { get;}
 
         public PureLogger(ILogger logger)
         {
@@ -21,7 +21,14 @@ namespace PureActive.Logging.Extensions.Logging
         public bool IsEnabled(LogLevel logLevel) => WrappedLogger.IsEnabled(logLevel);
 
         public IDisposable BeginScope<TState>(TState state) => WrappedLogger.BeginScope(state);
-
-
     }
+
+    public class PureLogger<T> : PureLogger, IPureLogger<T>
+    {
+        public PureLogger(ILogger logger) : base(logger)
+        {
+
+        }
+    }
+
 }

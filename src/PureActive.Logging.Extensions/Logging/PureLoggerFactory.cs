@@ -20,12 +20,27 @@ namespace PureActive.Logging.Extensions.Logging
 
         public ILogger CreateLogger(string categoryName)
         {
-            return WrappedLoggerFactory.CreateLogger(categoryName);
+            return CreatePureLogger(categoryName);
+        }
+
+        public ILogger<T> CreateLogger<T>()
+        {
+            return CreatePureLogger<T>();
         }
 
         public void AddProvider(ILoggerProvider provider)
         {
             WrappedLoggerFactory.AddProvider(provider);
+        }
+
+        public IPureLogger CreatePureLogger(string categoryName)
+        {
+            return new PureLogger(WrappedLoggerFactory.CreateLogger(categoryName));
+        }
+
+        public IPureLogger<T> CreatePureLogger<T>()
+        {
+            return new PureLogger<T>(WrappedLoggerFactory.CreateLogger<T>());
         }
     }
 }

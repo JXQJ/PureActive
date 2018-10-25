@@ -4,14 +4,14 @@ namespace PureActive.Logger.Provider.Serilog.Interfaces
 {
     public interface ISerilogLoggerSettings
     {
-        ISerilogLogProviderSettings Default { get; }
-        ISerilogLogProviderSettings File { get; }
-        ISerilogLogProviderSettings Console { get; }
-        ISerilogLogProviderSettings TestConsole { get; }
+        ISerilogLogLevel Default { get; }
+        ISerilogLogLevel File { get; }
+        ISerilogLogLevel Console { get; }
+        ISerilogLogLevel TestConsole { get; }
 
-        ISerilogLogProviderSettings TestCorrelator { get; }
+        ISerilogLogLevel TestCorrelator { get; }
 
-        ISerilogLogProviderSettings AppInsights { get; }
+        ISerilogLogLevel AppInsights { get; }
 
         IConfiguration Configuration { get; }
     }

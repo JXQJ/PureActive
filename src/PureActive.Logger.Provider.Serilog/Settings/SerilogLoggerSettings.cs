@@ -11,12 +11,12 @@ namespace PureActive.Logger.Provider.Serilog.Settings
 {
     public class SerilogLoggerSettings: ISerilogLoggerSettings
     {
-        public ISerilogLogProviderSettings Default { get; internal set; }
-        public ISerilogLogProviderSettings File { get; }
-        public ISerilogLogProviderSettings Console { get; }
-        public ISerilogLogProviderSettings TestConsole { get; }
-        public ISerilogLogProviderSettings TestCorrelator { get; }
-        public ISerilogLogProviderSettings AppInsights { get; }
+        public ISerilogLogLevel Default { get; internal set; }
+        public ISerilogLogLevel File { get; }
+        public ISerilogLogLevel Console { get; }
+        public ISerilogLogLevel TestConsole { get; }
+        public ISerilogLogLevel TestCorrelator { get; }
+        public ISerilogLogLevel AppInsights { get; }
 
         public IConfiguration Configuration { get; }
 
@@ -25,26 +25,26 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             LogEventLevel initialMinimumLogEventLevelConsole, LogEventLevel initialMinimumLogEventLevelTestConsole, LogEventLevel initialMinimumLogEventLevelTestCorrelator,
             LogEventLevel initialMinimumLogEventLevelAppInsights)
         {
-            Default = new SerilogLogProviderSettings(initialMinimumLogEventLevelDefault);
-            File = new SerilogLogProviderSettings(initialMinimumLogEventLevelFile);
-            Console = new SerilogLogProviderSettings(initialMinimumLogEventLevelConsole);
-            TestConsole = new SerilogLogProviderSettings(initialMinimumLogEventLevelTestConsole);
-            TestCorrelator = new SerilogLogProviderSettings(initialMinimumLogEventLevelTestCorrelator);
+            Default = new SerilogLogLevel(initialMinimumLogEventLevelDefault);
+            File = new SerilogLogLevel(initialMinimumLogEventLevelFile);
+            Console = new SerilogLogLevel(initialMinimumLogEventLevelConsole);
+            TestConsole = new SerilogLogLevel(initialMinimumLogEventLevelTestConsole);
+            TestCorrelator = new SerilogLogLevel(initialMinimumLogEventLevelTestCorrelator);
 
             // TODO: Read AppInsights from settings
-            AppInsights = new SerilogLogProviderSettings(initialMinimumLogEventLevelAppInsights);
+            AppInsights = new SerilogLogLevel(initialMinimumLogEventLevelAppInsights);
 
             Configuration = DefaultLoggerSettingsConfiguration(initialMinimumLogEventLevelDefault);
         }
 
         public SerilogLoggerSettings(LogLevel initialMinimumLogLevelDefault, LogLevel initialMinimumLogLevelFile, LogLevel initialMinimumLogLevelConsole, 
             LogLevel initialMinimumLogLevelTestConsole, LogLevel initialMinimumLogLevelTestCorrelator, LogLevel initialMinimumLogLevelAppInsights) :
-            this(SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelDefault), 
-                SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelFile),
-                SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelConsole), 
-                SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelTestConsole),
-                SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelTestCorrelator),
-                SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelAppInsights))
+            this(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelDefault), 
+                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelFile),
+                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelConsole), 
+                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelTestConsole),
+                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelTestCorrelator),
+                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelAppInsights))
         {
 
         }
@@ -57,7 +57,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
         }
 
         public SerilogLoggerSettings(LogLevel initialMinimumLogLevelDefault) :
-            this(SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLogLevelDefault))
+            this(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelDefault))
         { 
     
         }
@@ -80,14 +80,14 @@ namespace PureActive.Logger.Provider.Serilog.Settings
                 Enum.TryParse(minimumLevelString, true, out initialMinimumLevel);
             }
 
-            Default = new SerilogLogProviderSettings(initialMinimumLevel);
-            File = new SerilogLogProviderSettings(initialMinimumLevel);
-            Console = new SerilogLogProviderSettings(initialMinimumLevel);
-            TestConsole = new SerilogLogProviderSettings(initialMinimumLevel);
-            TestCorrelator = new SerilogLogProviderSettings(initialMinimumLevel);
+            Default = new SerilogLogLevel(initialMinimumLevel);
+            File = new SerilogLogLevel(initialMinimumLevel);
+            Console = new SerilogLogLevel(initialMinimumLevel);
+            TestConsole = new SerilogLogLevel(initialMinimumLevel);
+            TestCorrelator = new SerilogLogLevel(initialMinimumLevel);
 
             // TODO: Read AppInsights from settings
-            AppInsights = new SerilogLogProviderSettings(LogEventLevel.Information);
+            AppInsights = new SerilogLogLevel(LogEventLevel.Information);
         }
 
         public static IConfiguration DefaultLoggerSettingsConfiguration(LogEventLevel initialMinimumLevel)
@@ -101,7 +101,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
 
         public static IConfiguration DefaultLoggerSettingsConfiguration(LogLevel initialMinimumLevel)
         {
-            return DefaultLoggerSettingsConfiguration(SerilogLogProviderSettings.LogLevelToLogEventLevel(initialMinimumLevel));
+            return DefaultLoggerSettingsConfiguration(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLevel));
         }
     }
 }

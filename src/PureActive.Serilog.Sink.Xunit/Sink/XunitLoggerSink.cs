@@ -7,7 +7,6 @@ using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
-using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;

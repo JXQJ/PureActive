@@ -5,7 +5,6 @@ using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Sink;
-using Serilog.Events;
 using Xunit.Abstractions;
 
 namespace PureActive.Serilog.Sink.Xunit.TestBase

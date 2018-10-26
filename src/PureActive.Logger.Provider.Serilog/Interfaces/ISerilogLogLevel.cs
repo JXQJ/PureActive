@@ -1,15 +1,15 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using PureActive.Logging.Abstractions.Interfaces;
 using Serilog.Core;
 using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Interfaces
 {
-    public interface ISerilogLogProviderSettings
+    public interface ISerilogLogLevel : IPureLogLevel
     {
         LoggingLevelSwitch LoggingLevelSwitch { get; }
 
-        LogLevel MinimumLogLevel { get; set; }
-
         LogEventLevel MinimumLevel { get; set; }
+
+        LogEventLevel InitialLevel { get; set; }
     }
 }

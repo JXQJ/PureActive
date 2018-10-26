@@ -5,9 +5,9 @@ using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Types
 {
-    public class SerilogLogProviderSettings : ISerilogLogProviderSettings
+    public class SerilogLogLevel : ISerilogLogLevel
     {
-        public LoggingLevelSwitch LoggingLevelSwitch { get; internal set; }
+        public LoggingLevelSwitch LoggingLevelSwitch { get; }
 
         public LogEventLevel MinimumLevel
         {
@@ -15,54 +15,35 @@ namespace PureActive.Logger.Provider.Serilog.Types
             set => LoggingLevelSwitch.MinimumLevel = value;
         }
 
+        public LogEventLevel InitialLevel { get; set; }
+
         public LogLevel MinimumLogLevel
         {
-            get => LogEventLevelToLogLevel(LoggingLevelSwitch.MinimumLevel);
-            set => LoggingLevelSwitch.MinimumLevel = LogLevelToLogEventLevel(value);
+            get => SerilogToMsftLogLevel(LoggingLevelSwitch.MinimumLevel);
+            set => LoggingLevelSwitch.MinimumLevel = MsftToSerilogLogLevel(value);
         }
 
-        public SerilogLogProviderSettings(LogEventLevel minimumLevel)
+        public LogLevel InitialLogLevel
         {
-            LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevel);
+            get => SerilogToMsftLogLevel(InitialLevel);
+            set => InitialLevel = MsftToSerilogLogLevel(value);
         }
 
-        /*
-         * public enum LogEventLevel
-           {
-           /// <summary>
-           /// Anything and everything you might want to know about
-           /// a running block of code.
-           /// </summary>
-           Verbose,
-           /// <summary>
-           /// Internal system events that aren't necessarily
-           /// observable from the outside.
-           /// </summary>
-           Debug,
-           /// <summary>
-           /// The lifeblood of operational intelligence - things
-           /// happen.
-           /// </summary>
-           Information,
-           /// <summary>Service is degraded or endangered.</summary>
-           Warning,
-           /// <summary>
-           /// Functionality is unavailable, invariants are broken
-           /// or data is lost.
-           /// </summary>
-           Error,
-           /// <summary>
-           /// If you have a pager, it goes off when one of these
-           /// occurs.
-           /// </summary>
-           Fatal,
-           }
-           
-         */
-
-        public static LogEventLevel LogLevelToLogEventLevel(LogLevel logLevel)
+        public SerilogLogLevel(LogEventLevel minimumLevelSerilog)
         {
-            switch (logLevel)
+            InitialLevel = minimumLevelSerilog;
+            LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevelSerilog);
+        }
+
+        public SerilogLogLevel(LogLevel minimumLevelMsft) :
+            this(MsftToSerilogLogLevel(minimumLevelMsft))
+        {
+
+        }
+
+        public static LogEventLevel MsftToSerilogLogLevel(LogLevel logLevelMsft)
+        {
+            switch (logLevelMsft)
             {
                 case LogLevel.Critical:
                     return LogEventLevel.Fatal;
@@ -75,6 +56,7 @@ namespace PureActive.Logger.Provider.Serilog.Types
 
                 case LogLevel.Information:
                     return LogEventLevel.Information;
+
                 case LogLevel.Debug:
                     return LogEventLevel.Debug;
 
@@ -85,9 +67,9 @@ namespace PureActive.Logger.Provider.Serilog.Types
             }
         }
 
-        public static LogLevel LogEventLevelToLogLevel(LogEventLevel logEventLevel)
+        public static LogLevel SerilogToMsftLogLevel(LogEventLevel logEventLevelSerilog)
         {
-            switch (logEventLevel)
+            switch (logEventLevelSerilog)
             {
                 case LogEventLevel.Debug:
                     return LogLevel.Debug;

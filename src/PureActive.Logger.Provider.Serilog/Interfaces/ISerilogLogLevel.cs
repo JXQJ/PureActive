@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using PureActive.Logging.Abstractions.Interfaces;
+﻿using PureActive.Logging.Abstractions.Interfaces;
 using Serilog.Core;
 using Serilog.Events;
 

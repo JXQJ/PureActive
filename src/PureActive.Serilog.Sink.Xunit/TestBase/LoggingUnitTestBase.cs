@@ -3,7 +3,9 @@ using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Sink;
+using Serilog.Events;
 using Xunit.Abstractions;
 
 namespace PureActive.Serilog.Sink.Xunit.TestBase
@@ -19,7 +21,7 @@ namespace PureActive.Serilog.Sink.Xunit.TestBase
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
             TestOutputHelper = testOutputHelper;
-            LoggerSettings = new SerilogLoggerSettings(initialMinimumLevel);
+            LoggerSettings = new SerilogLoggerSettings(initialMinimumLevel, LoggingOutputFlags.Testing);
 
             var loggerConfiguration =
                 XunitLoggingSink.CreateXUnitLoggerConfiguration(testOutputHelper, LoggerSettings,

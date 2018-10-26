@@ -4,6 +4,7 @@ using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
 using Serilog.Events;
@@ -52,10 +53,10 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
             var jsonFormatter = GetXUnitSerilogFormatter(xUnitSerilogFormatter);
 
             var testConsoleLoggerSetting =
-                loggerSettings.GetOrRegisterSerilogLogLevel("TestConsole", LogEventLevel.Information);
+                loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.XUnitConsole);
 
             var testCorrelatorLoggerSetting =
-                loggerSettings.GetOrRegisterSerilogLogLevel("TestCorrelator", LogEventLevel.Information);
+                loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.TestCorrelator);
 
             if (jsonFormatter != null)
             {

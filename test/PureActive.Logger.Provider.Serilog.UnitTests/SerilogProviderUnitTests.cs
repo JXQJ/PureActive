@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Settings;
+using PureActive.Logging.Abstractions.Types;
 using Serilog.Events;
 using Xunit;
 
@@ -11,8 +12,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         [Fact]
         public void TestCreateLogger()
         {
-            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug);
-
+            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug, LoggingOutputFlags.Testing);
             var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings);
 
             var logger = loggerFactory.CreateLogger<SerilogProviderUnitTests>();

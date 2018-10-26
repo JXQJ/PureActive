@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
 using PureActive.Logger.Provider.Serilog.Enrichers;
 using PureActive.Logger.Provider.Serilog.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using Serilog;
 using Serilog.AspNetCore;
 using Serilog.Events;
@@ -22,10 +23,10 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(loggerSettings.Configuration)
-                .MinimumLevel.ControlledBy(loggerSettings.GetOrRegisterSerilogLogLevel("Default", LogEventLevel.Information).LoggingLevelSwitch)
+                .MinimumLevel.ControlledBy(loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Default).LoggingLevelSwitch)
                 .Enrich.FromLogContext()
                 .Enrich.With(new AsyncFriendlyStackTraceEnricher())
-                .WriteTo.Console(levelSwitch:loggerSettings.GetOrRegisterSerilogLogLevel("Console", LogEventLevel.Information).LoggingLevelSwitch); // Always write to the console
+                .WriteTo.Console(levelSwitch:loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Console).LoggingLevelSwitch); // Always write to the console
 
             return loggerConfiguration;
         }
@@ -44,7 +45,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
 
             // Write to disk if requested
             var rollingFilePath = fileSystem.LogFolderPath() + logFileName;
-            loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch:loggerSettings.GetOrRegisterSerilogLogLevel("File", LogEventLevel.Information).LoggingLevelSwitch);
+            loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch:loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.RollingFile).LoggingLevelSwitch);
 
             // Write to application insights if requested
             var appInsightsKey = configurationRoot?.GetSection("ApplicationInsights")?["InstrumentationKey"];
@@ -53,7 +54,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                 loggerConfiguration.WriteTo.ApplicationInsightsTraces
                 (
                     appInsightsKey,
-                    loggerSettings.GetOrRegisterSerilogLogLevel("AppInsights", LogEventLevel.Information).MinimumLevel,
+                    loggerSettings.GetOrRegisterSerilogLogLevel(LoggingOutputFlags.AppInsights, LogEventLevel.Information).MinimumLevel,
                     null /*formatProvider*/,
                     (logEvent, formatProvider) =>
                         ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
@@ -25,7 +26,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         private IPureLogger CreateLogger(LogEventLevel logEventLevel,
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
-            var loggerSettings = new SerilogLoggerSettings(logEventLevel);
+            var loggerSettings = new SerilogLoggerSettings(logEventLevel, LoggingOutputFlags.Testing);
             var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings, xUnitSerilogFormatter);
 
             var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);

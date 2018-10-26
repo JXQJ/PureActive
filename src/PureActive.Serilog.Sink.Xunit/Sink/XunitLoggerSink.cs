@@ -6,6 +6,7 @@ using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using Serilog;
+using Serilog.Events;
 using Serilog.Formatting;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
@@ -50,18 +51,24 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             var jsonFormatter = GetXUnitSerilogFormatter(xUnitSerilogFormatter);
 
+            var testConsoleLoggerSetting =
+                loggerSettings.GetOrRegisterSerilogLogLevel("TestConsole", LogEventLevel.Information);
+
+            var testCorrelatorLoggerSetting =
+                loggerSettings.GetOrRegisterSerilogLogLevel("TestCorrelator", LogEventLevel.Information);
+
             if (jsonFormatter != null)
             {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter, loggerSettings.TestConsole.MinimumLevel, loggerSettings.TestConsole.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter, testConsoleLoggerSetting.MinimumLevel, testConsoleLoggerSetting.LoggingLevelSwitch);
             }
             else
             {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, loggerSettings.TestConsole.MinimumLevel, XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
-                    null, loggerSettings.TestConsole.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.XUnit(testOutputHelper, testConsoleLoggerSetting.MinimumLevel, XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
+                    null, testConsoleLoggerSetting.LoggingLevelSwitch);
             }
 
             // Configuration switch to TestCorrelator
-            loggerConfiguration.WriteTo.TestCorrelator(loggerSettings.TestCorrelator.MinimumLevel, loggerSettings.TestCorrelator.LoggingLevelSwitch);
+            loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
 
             return loggerConfiguration;
         }

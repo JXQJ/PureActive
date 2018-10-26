@@ -1,68 +1,39 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Types;
+using PureActive.Logging.Abstractions.Interfaces;
 using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Settings
 {
     public class SerilogLoggerSettings: ISerilogLoggerSettings
     {
-        public ISerilogLogLevel Default { get; internal set; }
-        public ISerilogLogLevel File { get; }
-        public ISerilogLogLevel Console { get; }
-        public ISerilogLogLevel TestConsole { get; }
-        public ISerilogLogLevel TestCorrelator { get; }
-        public ISerilogLogLevel AppInsights { get; }
-
         public IConfiguration Configuration { get; }
 
-        
-        public SerilogLoggerSettings(LogEventLevel initialMinimumLogEventLevelDefault, LogEventLevel initialMinimumLogEventLevelFile, 
-            LogEventLevel initialMinimumLogEventLevelConsole, LogEventLevel initialMinimumLogEventLevelTestConsole, LogEventLevel initialMinimumLogEventLevelTestCorrelator,
-            LogEventLevel initialMinimumLogEventLevelAppInsights)
+        public LogEventLevel DefaultLogEventLevel { get; set; }
+
+        public LogLevel DefaultLogLevel
         {
-            Default = new SerilogLogLevel(initialMinimumLogEventLevelDefault);
-            File = new SerilogLogLevel(initialMinimumLogEventLevelFile);
-            Console = new SerilogLogLevel(initialMinimumLogEventLevelConsole);
-            TestConsole = new SerilogLogLevel(initialMinimumLogEventLevelTestConsole);
-            TestCorrelator = new SerilogLogLevel(initialMinimumLogEventLevelTestCorrelator);
-
-            // TODO: Read AppInsights from settings
-            AppInsights = new SerilogLogLevel(initialMinimumLogEventLevelAppInsights);
-
-            Configuration = DefaultLoggerSettingsConfiguration(initialMinimumLogEventLevelDefault);
+            get => SerilogLogLevel.SerilogToMsftLogLevel(DefaultLogEventLevel);
+            set => DefaultLogEventLevel = SerilogLogLevel.MsftToSerilogLogLevel(value);
         }
 
-        public SerilogLoggerSettings(LogLevel initialMinimumLogLevelDefault, LogLevel initialMinimumLogLevelFile, LogLevel initialMinimumLogLevelConsole, 
-            LogLevel initialMinimumLogLevelTestConsole, LogLevel initialMinimumLogLevelTestCorrelator, LogLevel initialMinimumLogLevelAppInsights) :
-            this(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelDefault), 
-                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelFile),
-                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelConsole), 
-                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelTestConsole),
-                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelTestCorrelator),
-                SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelAppInsights))
+        private readonly Dictionary<string, ISerilogLogLevel> _serilogLogLevels = new Dictionary<string, ISerilogLogLevel>();
+        private readonly object _objectLock = new object();
+
+        public SerilogLoggerSettings(LogEventLevel defaultLogEventLevel)
         {
-
+            DefaultLogEventLevel = defaultLogEventLevel;
+            Configuration = DefaultLoggerSettingsConfiguration(defaultLogEventLevel);
         }
 
-        public SerilogLoggerSettings(LogEventLevel initialMinimumLogEventLevelDefault):
-            this(initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, 
-                initialMinimumLogEventLevelDefault, initialMinimumLogEventLevelDefault, LogEventLevel.Information)
-        {
-
-        }
-
-        public SerilogLoggerSettings(LogLevel initialMinimumLogLevelDefault) :
-            this(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLogLevelDefault))
-        { 
-    
-        }
-        
-        public SerilogLoggerSettings() : this(LogEventLevel.Information)
+        public SerilogLoggerSettings(LogLevel defaultLogLevel) : 
+            this(SerilogLogLevel.MsftToSerilogLogLevel(defaultLogLevel))
         {
 
         }
@@ -73,21 +44,16 @@ namespace PureActive.Logger.Provider.Serilog.Settings
 
             var minimumLevelString = configuration.GetSection("Serilog:MinimumLevel")?["Default"];
 
-            var initialMinimumLevel = LogEventLevel.Information;
+            var minimumLogEventLevel = LogEventLevel.Information;
 
             if (minimumLevelString != null)
             {
-                Enum.TryParse(minimumLevelString, true, out initialMinimumLevel);
+                Enum.TryParse(minimumLevelString, true, out minimumLogEventLevel);
             }
 
-            Default = new SerilogLogLevel(initialMinimumLevel);
-            File = new SerilogLogLevel(initialMinimumLevel);
-            Console = new SerilogLogLevel(initialMinimumLevel);
-            TestConsole = new SerilogLogLevel(initialMinimumLevel);
-            TestCorrelator = new SerilogLogLevel(initialMinimumLevel);
+            DefaultLogEventLevel = minimumLogEventLevel;
 
-            // TODO: Read AppInsights from settings
-            AppInsights = new SerilogLogLevel(LogEventLevel.Information);
+            // TODO: Figure out which loggers to register from configuration
         }
 
         public static IConfiguration DefaultLoggerSettingsConfiguration(LogEventLevel initialMinimumLevel)
@@ -103,5 +69,65 @@ namespace PureActive.Logger.Provider.Serilog.Settings
         {
             return DefaultLoggerSettingsConfiguration(SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLevel));
         }
+
+        public ISerilogLogLevel RegisterSerilogLogLevel(string key, LogEventLevel logEventLevel)
+        {
+            lock (_objectLock)
+            {
+                if (_serilogLogLevels.TryGetValue(key, out var serilogLogLevel))
+                {
+                    serilogLogLevel.MinimumLevel = logEventLevel;
+                }
+                else
+                {
+                    serilogLogLevel = new SerilogLogLevel(logEventLevel);
+                    _serilogLogLevels.Add(key, serilogLogLevel);
+                }
+
+                return serilogLogLevel;
+            }
+        }
+
+        public ISerilogLogLevel RegisterSerilogLogLevel(string key, LogLevel logLevel) =>
+            RegisterSerilogLogLevel(key, SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
+
+  
+
+        public IPureLogLevel RegisterLogLevel(string key, LogLevel logLevel) => RegisterSerilogLogLevel(key, logLevel);
+        public IPureLogLevel RegisterLogLevel(string key, LogEventLevel logEventLevel) => RegisterSerilogLogLevel(key, logEventLevel);
+
+        public ISerilogLogLevel GetSerilogLogLevel(string key)
+        {
+            lock (_objectLock)
+            {
+                return _serilogLogLevels[key];
+            }
+        }
+        public IPureLogLevel GetLogLevel(string key) => GetSerilogLogLevel(key);
+
+        public ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogEventLevel logEventLevel)
+        {
+            lock (_objectLock)
+            {
+                if (!_serilogLogLevels.TryGetValue(key, out var serilogLogLevel))
+                {
+                    serilogLogLevel = new SerilogLogLevel(logEventLevel);
+                    _serilogLogLevels.Add(key, serilogLogLevel);
+                }
+
+                return serilogLogLevel;
+            }
+        }
+
+        public ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogLevel logLevel) => 
+            GetOrRegisterSerilogLogLevel(key, SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
+     
+        public IPureLogLevel GetOrRegisterLogLevel(string key, LogLevel logLevel) =>
+            GetOrRegisterSerilogLogLevel(key, logLevel);
+
+        public IPureLogLevel GetOrRegisterDefaultLogLevel(string key) => GetOrRegisterSerilogLogLevel(key, DefaultLogEventLevel);
+  
+        public ISerilogLogLevel GetOrRegisterSerilogLogDefaultLevel(string key) => 
+            GetOrRegisterSerilogLogLevel(key, DefaultLogEventLevel);
     }
 }

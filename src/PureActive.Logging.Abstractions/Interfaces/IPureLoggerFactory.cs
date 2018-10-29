@@ -4,6 +4,8 @@ namespace PureActive.Logging.Abstractions.Interfaces
 {
     public interface IPureLoggerFactory : ILoggerFactory
     {
+        ILoggerFactory WrappedLoggerFactory { get; }
+
         /// <summary>
         /// Creates a new <see cref="T:PureActive.Logging.Abstractions.Interfaces.IPureLogger" /> instance.
         /// </summary>

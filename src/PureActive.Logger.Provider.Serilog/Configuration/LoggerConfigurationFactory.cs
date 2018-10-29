@@ -6,6 +6,8 @@ using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
 using PureActive.Logger.Provider.Serilog.Enrichers;
 using PureActive.Logger.Provider.Serilog.Interfaces;
+using PureActive.Logger.Provider.Serilog.Types;
+using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using Serilog;
 using Serilog.AspNetCore;
@@ -116,6 +118,12 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                 Log.Logger = logger;
 
             return  new SerilogLoggerFactory(logger, useStaticLogger);
+        }
+
+        public static IPureLoggerFactory CreatePureSeriLoggerFactory(ISerilogLoggerSettings loggerSettings,
+            LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
+        {
+            return new PureSeriLoggerFactory(CreateSerilogFactory(loggerSettings, loggerConfiguration, useStaticLogger));
         }
     }
 }

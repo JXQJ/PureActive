@@ -6,7 +6,7 @@ namespace PureActive.Logger.Provider.Serilog.Types
 {
     public class PureSeriLoggerFactory : IPureLoggerFactory
     {
-        ILoggerFactory WrappedLoggerFactory { get; }
+        public ILoggerFactory WrappedLoggerFactory { get; }
 
         public PureSeriLoggerFactory(ILoggerFactory loggerFactory)
         {

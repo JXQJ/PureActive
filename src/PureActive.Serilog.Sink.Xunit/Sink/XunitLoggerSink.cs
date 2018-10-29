@@ -2,10 +2,10 @@
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
-using PureActive.Logger.Provider.Serilog.Types;
-using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Extensions;
+using PureActive.Serilog.Sink.Xunit.Interfaces;
+using PureActive.Serilog.Sink.Xunit.Types;
 using Serilog;
 using Serilog.Formatting;
 using Serilog.Formatting.Compact;
@@ -23,7 +23,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
         RenderedCompactJsonFormatter,
     }
 
-    public class XunitLoggingSink
+    public static class XunitLoggingSink
     {
         public static ITextFormatter GetXUnitSerilogFormatter(XUnitSerilogFormatter xUnitSerilogFormatter)
         {
@@ -73,7 +73,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
             return loggerConfiguration;
         }
 
-        public static IPureLoggerFactory CreateXUnitSerilogFactory(ISerilogLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration)
+        public static IPureTestLoggerFactory CreateXUnitSerilogFactory(ISerilogLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration)
         {
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
             if (loggerConfiguration == null) throw new ArgumentNullException(nameof(loggerConfiguration));
@@ -82,10 +82,10 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             loggerFactory.AddDebug();
 
-            return new PureSeriLoggerFactory(loggerFactory);
+            return new PureTestLoggerFactory(loggerFactory);
         }
 
-        public static IPureLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,
+        public static IPureTestLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,
             ISerilogLoggerSettings loggerSettings,
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.None)
         {

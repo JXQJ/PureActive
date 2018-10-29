@@ -13,7 +13,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         public void TestCreateLogger()
         {
             var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug, LoggingOutputFlags.Testing);
-            var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings);
+            var loggerFactory = LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings);
 
             var logger = loggerFactory.CreateLogger<SerilogProviderUnitTests>();
 

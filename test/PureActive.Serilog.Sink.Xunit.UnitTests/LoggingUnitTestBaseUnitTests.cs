@@ -22,7 +22,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         [Fact]
         public void LoggingUnitTestBase_Constructor()
         {
-            LoggerFactory.Should().NotBeNull("initialized in constructor");
+            TestLoggerFactory.Should().NotBeNull("initialized in constructor");
             LoggerSettings.Should().NotBeNull("initialized in constructor");
             Logger.Should().NotBeNull("initialized in constructor");
             TestOutputHelper.Should().NotBeNull("initialized in constructor");

@@ -6,7 +6,6 @@ using Xunit.Abstractions;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
 using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
-using PureActive.Core.System;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
 

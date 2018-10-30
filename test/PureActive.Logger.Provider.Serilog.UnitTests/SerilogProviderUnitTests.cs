@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
@@ -6,7 +5,6 @@ using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logging.Abstractions.Types;
 using Serilog.Events;
 using Xunit;
-using OperatingSystem = PureActive.Core.System.OperatingSystem;
 
 namespace PureActive.Logger.Provider.Serilog.UnitTests
 {

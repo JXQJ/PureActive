@@ -13,5 +13,7 @@ namespace PureActive.Logging.Abstractions.Types
         TestCorrelator = 1 << 4,
 
         Testing = (XUnitConsole | TestCorrelator),
+        AppConsoleFile = (Console | RollingFile),
+        AppFull = (AppConsoleFile | AppInsights)
     }
 }

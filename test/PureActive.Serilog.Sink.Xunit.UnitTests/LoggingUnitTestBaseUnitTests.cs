@@ -6,6 +6,7 @@ using Xunit.Abstractions;
 using FluentAssertions;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
 using Microsoft.VisualStudio.TestPlatform.CoreUtilities.Extensions;
+using PureActive.Core.System;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
 
@@ -13,8 +14,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
 {
     public class LoggingUnitTestBaseUnitTests : LoggingUnitTestBase<LoggingUnitTestBaseUnitTests>
     {
-        public LoggingUnitTestBaseUnitTests(ITestOutputHelper testOutputHelper) :
-            base(testOutputHelper)
+        public LoggingUnitTestBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

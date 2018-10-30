@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using PureActive.Core.Abstractions.System;
+using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Types;
@@ -17,12 +19,14 @@ namespace PureActive.Logger.Provider.Serilog.Settings
         public LoggingOutputFlags LoggingOutputFlags { get; set; }
 
         public IConfiguration Configuration { get; }
+        private readonly IFileSystem _fileSystem;
 
         private readonly Dictionary<string, ISerilogLogLevel> _serilogLogLevels = new Dictionary<string, ISerilogLogLevel>();
         private readonly object _objectLock = new object();
 
-        public SerilogLoggerSettings(LogEventLevel defaultLogEventLevel, LoggingOutputFlags loggingOutputFlags)
+        public SerilogLoggerSettings(IFileSystem fileSystem, LogEventLevel defaultLogEventLevel, LoggingOutputFlags loggingOutputFlags)
         {
+            _fileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
             LoggingOutputFlags = loggingOutputFlags;
             Configuration = DefaultLoggerSettingsConfiguration(defaultLogEventLevel);
 
@@ -55,10 +59,16 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             }
         }
 
-        public SerilogLoggerSettings(LogLevel defaultLogLevel, LoggingOutputFlags loggingOutputFlags) : 
-            this(SerilogLogLevel.MsftToSerilogLogLevel(defaultLogLevel), loggingOutputFlags)
+        public SerilogLoggerSettings(IFileSystem fileSystem, LogLevel defaultLogLevel, LoggingOutputFlags loggingOutputFlags) : 
+            this(fileSystem, SerilogLogLevel.MsftToSerilogLogLevel(defaultLogLevel), loggingOutputFlags)
         {
 
+        }
+
+        public SerilogLoggerSettings(IFileSystem fileSystem, IConfiguration configuration, LoggingOutputFlags loggingOutputFlags)
+            : this(fileSystem, ParseConfigurationLogLevel(configuration), loggingOutputFlags)
+        {
+            Configuration = configuration ?? throw new ArgumentException(nameof(configuration));
         }
 
         private static LogEventLevel ParseConfigurationLogLevel(IConfiguration configuration)
@@ -75,11 +85,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             return minimumLogEventLevel;
         }
 
-        public SerilogLoggerSettings(IConfiguration configuration, LoggingOutputFlags loggingOutputFlags)
-            :this(ParseConfigurationLogLevel(configuration), loggingOutputFlags)
-        {
-            Configuration = configuration ?? throw new ArgumentException(nameof(configuration));
-        }
+    
 
         public static IConfiguration DefaultLoggerSettingsConfiguration(LogEventLevel initialMinimumLevel)
         {
@@ -164,7 +170,9 @@ namespace PureActive.Logger.Provider.Serilog.Settings
 
         public IPureLogLevel GetOrRegisterDefaultLogLevel(LoggingOutputFlags loggingOutputFlag) =>
             GetOrRegisterDefaultLogLevel(loggingOutputFlag.ToString());
-  
+
+        public string LogFolderPath => _fileSystem?.LogFolderPath();
+   
         public IPureLogLevel RegisterLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel) =>
             RegisterLogLevel(loggingOutputFlag.ToString(), logEventLevel);
 

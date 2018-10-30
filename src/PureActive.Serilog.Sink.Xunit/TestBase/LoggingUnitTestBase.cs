@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using PureActive.Core.Abstractions.System;
+using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logging.Abstractions.Interfaces;
@@ -16,11 +18,12 @@ namespace PureActive.Serilog.Sink.Xunit.TestBase
         protected readonly IPureLogger Logger;
         protected readonly ITestOutputHelper TestOutputHelper;
 
-        protected LoggingUnitTestBase(ITestOutputHelper testOutputHelper, LogLevel initialMinimumLevel = LogLevel.Debug, 
+        protected LoggingUnitTestBase(IFileSystem fileSystem, ITestOutputHelper testOutputHelper,
+            LogLevel initialMinimumLevel = LogLevel.Debug,
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
             TestOutputHelper = testOutputHelper;
-            LoggerSettings = new SerilogLoggerSettings(initialMinimumLevel, LoggingOutputFlags.Testing);
+            LoggerSettings = new SerilogLoggerSettings(fileSystem, initialMinimumLevel, LoggingOutputFlags.Testing);
 
             var loggerConfiguration =
                 XunitLoggingSink.CreateXUnitLoggerConfiguration(testOutputHelper, LoggerSettings,
@@ -29,6 +32,40 @@ namespace PureActive.Serilog.Sink.Xunit.TestBase
             TestLoggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(LoggerSettings, loggerConfiguration);
 
             Logger = TestLoggerFactory?.CreatePureLogger<T>();
+        }
+
+        protected LoggingUnitTestBase(string appFolderName, IOperatingSystem operatingSystem, ITestOutputHelper testOutputHelper,
+            LogLevel initialMinimumLevel = LogLevel.Debug,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
+            : this(new FileSystem(appFolderName, operatingSystem), testOutputHelper, initialMinimumLevel,
+                xUnitSerilogFormatter)
+        {
+
+        }
+
+        protected LoggingUnitTestBase(IOperatingSystem operatingSystem, ITestOutputHelper testOutputHelper,
+            LogLevel initialMinimumLevel = LogLevel.Debug,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
+            : this(new FileSystem(typeof(T), operatingSystem), testOutputHelper, initialMinimumLevel,
+                xUnitSerilogFormatter)
+        {
+
+        }
+
+        protected LoggingUnitTestBase(string appFolderName, ITestOutputHelper testOutputHelper,
+            LogLevel initialMinimumLevel = LogLevel.Debug,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
+            : this(new FileSystem(appFolderName), testOutputHelper, initialMinimumLevel,
+                xUnitSerilogFormatter)
+        {
+
+        }
+
+        protected LoggingUnitTestBase(ITestOutputHelper testOutputHelper, LogLevel initialMinimumLevel = LogLevel.Debug,
+            XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
+            : this(new FileSystem(typeof(T)), testOutputHelper, initialMinimumLevel,xUnitSerilogFormatter)
+        {
+
         }
     }
 }

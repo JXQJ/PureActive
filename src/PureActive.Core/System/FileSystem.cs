@@ -40,6 +40,21 @@ namespace PureActive.Core.System
             OperatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
         }
 
+        public FileSystem(Type type) : this(type, new OperatingSystem())
+        {
+
+        }
+
+        public FileSystem(string appFolderName) : this(appFolderName, new OperatingSystem())
+        {
+
+        }
+
+        public FileSystem(IConfigurationRoot configuration) : this(configuration, new OperatingSystem())
+        {
+
+        }
+
         /// <summary>
         ///     Creates a new temporary file, and returns the corresponding
         ///     stream. The file is deleted when the stream is closed.

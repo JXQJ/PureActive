@@ -27,8 +27,14 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                 .ReadFrom.Configuration(loggerSettings.Configuration)
                 .MinimumLevel.ControlledBy(loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Default).LoggingLevelSwitch)
                 .Enrich.FromLogContext()
-                .Enrich.With(new AsyncFriendlyStackTraceEnricher())
-                .WriteTo.Console(levelSwitch:loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Console).LoggingLevelSwitch); // Always write to the console
+                .Enrich.With(new AsyncFriendlyStackTraceEnricher());
+
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.Console))
+            {
+                loggerConfiguration.WriteTo.Console(levelSwitch: loggerSettings
+                    .GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Console)
+                    .LoggingLevelSwitch); // Always write to the console
+            }
 
             return loggerConfiguration;
         }
@@ -45,22 +51,31 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         {
             var loggerConfiguration = CreateDefaultLoggerConfiguration(loggerSettings);
 
-            // Write to disk if requested
-            var rollingFilePath = fileSystem.LogFolderPath() + logFileName;
-            loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch:loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.RollingFile).LoggingLevelSwitch);
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.RollingFile))
+            {
+                // Write to disk if requested
+                var rollingFilePath = fileSystem.LogFolderPath() + logFileName;
+                loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch: loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.RollingFile).LoggingLevelSwitch);
+            }
 
-            // Write to application insights if requested
-            var appInsightsKey = configurationRoot?.GetSection("ApplicationInsights")?["InstrumentationKey"];
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.AppInsights))
+            {
 
-            if (appInsightsKey != null)
-                loggerConfiguration.WriteTo.ApplicationInsightsTraces
-                (
-                    appInsightsKey,
-                    loggerSettings.GetOrRegisterSerilogLogLevel(LoggingOutputFlags.AppInsights, LogEventLevel.Information).MinimumLevel,
-                    null /*formatProvider*/,
-                    (logEvent, formatProvider) =>
-                        ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)
-                );
+                // Write to application insights if requested
+                var appInsightsKey = configurationRoot?.GetSection("ApplicationInsights")?["InstrumentationKey"];
+
+                if (appInsightsKey != null)
+                    loggerConfiguration.WriteTo.ApplicationInsightsTraces
+                    (
+                        appInsightsKey,
+                        loggerSettings
+                            .GetOrRegisterSerilogLogLevel(LoggingOutputFlags.AppInsights, LogEventLevel.Information)
+                            .MinimumLevel,
+                        null /*formatProvider*/,
+                        (logEvent, formatProvider) =>
+                            ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)
+                    );
+            }
 
             return loggerConfiguration;
         }

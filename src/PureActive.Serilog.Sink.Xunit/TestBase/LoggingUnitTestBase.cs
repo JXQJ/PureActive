@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
-using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Interfaces;

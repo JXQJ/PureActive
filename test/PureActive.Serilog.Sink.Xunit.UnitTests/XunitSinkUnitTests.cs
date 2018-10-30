@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Settings;
-using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Sink;
@@ -31,27 +30,49 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
 
             var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
 
-            var logger = new PureSeriLogger(loggerFactory.CreateLogger<XunitSinkUnitTests>());
+            var logger = loggerFactory.CreatePureLogger<XunitSinkUnitTests>();
 
             logger.Should().NotBeNull("CreateLogger should always succeed");
 
             return logger;
         }
 
-
         [Fact]
         public void XunitSink_Create_TestCorrelator()
+        {
+            var loggerSettings = new SerilogLoggerSettings(LogEventLevel.Debug, LoggingOutputFlags.TestCorrelator);
+            var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
+            var logger = loggerFactory.CreatePureLogger<XunitSinkUnitTests>();
+
+            logger.Should().NotBeNull("CreateLogger should always succeed");
+
+            using (TestCorrelator.CreateContext())
+            {
+                logger.LogInformation("Test: XunitSink_Create_TestCorrelator");
+
+                TestCorrelator.GetLogEventsFromCurrentContext()
+                    .Should().ContainSingle()
+                    .Which.MessageTemplate.Text
+                    .Should().Be("Test: XunitSink_Create_TestCorrelator");
+            }
+
+        }
+
+
+        [Fact]
+        public void XunitSink_String_TestCorrelator()
         {
             var logger = CreateLogger(LogEventLevel.Debug);
 
             using (TestCorrelator.CreateContext())
             {
-                logger.LogInformation("Test: Create_XUnit_Sink_TestCorrelator");
+                logger.LogInformation("Test: XunitSink_String_TestCorrelator");
 
                 TestCorrelator.GetLogEventsFromCurrentContext()
                     .Should().ContainSingle()
                     .Which.MessageTemplate.Text
-                    .Should().Be("Test: Create_XUnit_Sink_TestCorrelator");
+                    .Should().Be("Test: XunitSink_String_TestCorrelator");
             }
         }
 

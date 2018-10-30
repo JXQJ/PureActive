@@ -49,26 +49,34 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             var loggerConfiguration = LoggerConfigurationFactory.CreateDefaultLoggerConfiguration(loggerSettings);
 
-            var jsonFormatter = GetXUnitSerilogFormatter(xUnitSerilogFormatter);
-
-            var testConsoleLoggerSetting =
-                loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.XUnitConsole);
-
-            var testCorrelatorLoggerSetting =
-                loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.TestCorrelator);
-
-            if (jsonFormatter != null)
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.XUnitConsole))
             {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter, testConsoleLoggerSetting.MinimumLevel, testConsoleLoggerSetting.LoggingLevelSwitch);
-            }
-            else
-            {
-                loggerConfiguration.WriteTo.XUnit(testOutputHelper, testConsoleLoggerSetting.MinimumLevel, XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
-                    null, testConsoleLoggerSetting.LoggingLevelSwitch);
+                var jsonFormatter = GetXUnitSerilogFormatter(xUnitSerilogFormatter);
+
+                var testConsoleLoggerSetting =
+                    loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.XUnitConsole);
+
+                if (jsonFormatter != null)
+                {
+                    loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter,
+                        testConsoleLoggerSetting.MinimumLevel, testConsoleLoggerSetting.LoggingLevelSwitch);
+                }
+                else
+                {
+                    loggerConfiguration.WriteTo.XUnit(testOutputHelper, testConsoleLoggerSetting.MinimumLevel,
+                        XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
+                        null, testConsoleLoggerSetting.LoggingLevelSwitch);
+                }
             }
 
-            // Configuration switch to TestCorrelator
-            loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.TestCorrelator))
+            {
+                var testCorrelatorLoggerSetting =
+                    loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.TestCorrelator);
+
+                // Configuration switch to TestCorrelator
+                loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
+            }
 
             return loggerConfiguration;
         }

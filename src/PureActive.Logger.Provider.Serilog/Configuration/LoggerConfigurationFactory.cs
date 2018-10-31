@@ -143,7 +143,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         public static IPureLoggerFactory CreatePureSeriLoggerFactory(ISerilogLoggerSettings loggerSettings,
             LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
         {
-            return new PureSeriLoggerFactory(CreateSerilogFactory(loggerSettings, loggerConfiguration, useStaticLogger));
+            return new PureSeriLoggerFactory(CreateSerilogFactory(loggerSettings, loggerConfiguration, useStaticLogger), loggerSettings);
         }
     }
 }

@@ -38,27 +38,30 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             }
         }
 
+        private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)
+        {
+            var fileSystem = new FileSystem(typeof(SerilogProviderUnitTests));
+
+            var loggerSettings = new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile);
+            var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
+
+            return LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
+        }
+
         [Fact]
         public void SerilogProvider_CreateLogger_AppConsoleFile()
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var fileSystem = new FileSystem(typeof(SerilogProviderUnitTests));
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile, logFileName);
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
 
-            var loggerSettings = new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile);
-            var loggerConfiguration =
-                LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
-
-            var loggerFactory = LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
-
-            var logger = loggerFactory.CreateLogger<SerilogProviderUnitTests>();
-
-            var msg = "Test";
+            const string msg = "Test";
             logger.LogDebug(msg);
 
             // Dispose Logger Factory so we can access log file
             loggerFactory.Dispose();
 
-            AssertLogFileEntry(loggerSettings, LogLevel.Debug, msg, logFileName);
+            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, msg, logFileName);
         }
     }
 }

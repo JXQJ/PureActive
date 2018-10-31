@@ -90,7 +90,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             loggerFactory.AddDebug();
 
-            return new PureTestLoggerFactory(loggerFactory);
+            return new PureTestLoggerFactory(loggerFactory, loggerSettings);
         }
 
         public static IPureTestLoggerFactory CreateXUnitSerilogFactory(ITestOutputHelper testOutputHelper,

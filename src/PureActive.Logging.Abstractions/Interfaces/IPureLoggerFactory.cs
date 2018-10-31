@@ -16,5 +16,7 @@ namespace PureActive.Logging.Abstractions.Interfaces
         IPureLogger<T> CreatePureLogger<T>();
 
         ILogger<T> CreateLogger<T>();
+
+        IPureLoggerSettings PureLoggerSettings { get; }
     }
 }

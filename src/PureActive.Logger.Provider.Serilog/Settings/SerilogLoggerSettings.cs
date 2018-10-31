@@ -106,7 +106,7 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             {
                 if (_serilogLogLevels.TryGetValue(key, out var serilogLogLevel))
                 {
-                    serilogLogLevel.MinimumLevel = logEventLevel;
+                    serilogLogLevel.MinimumLogEventLevel = logEventLevel;
                 }
                 else
                 {

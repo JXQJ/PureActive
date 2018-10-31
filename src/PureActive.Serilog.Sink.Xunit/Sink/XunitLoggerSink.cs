@@ -59,11 +59,11 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
                 if (jsonFormatter != null)
                 {
                     loggerConfiguration.WriteTo.XUnit(testOutputHelper, jsonFormatter,
-                        testConsoleLoggerSetting.MinimumLevel, testConsoleLoggerSetting.LoggingLevelSwitch);
+                        testConsoleLoggerSetting.MinimumLogEventLevel, testConsoleLoggerSetting.LoggingLevelSwitch);
                 }
                 else
                 {
-                    loggerConfiguration.WriteTo.XUnit(testOutputHelper, testConsoleLoggerSetting.MinimumLevel,
+                    loggerConfiguration.WriteTo.XUnit(testOutputHelper, testConsoleLoggerSetting.MinimumLogEventLevel,
                         XUnitLoggerConfigurationExtensions.DefaultOutputTemplate,
                         null, testConsoleLoggerSetting.LoggingLevelSwitch);
                 }
@@ -75,7 +75,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
                     loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.TestCorrelator);
 
                 // Configuration switch to TestCorrelator
-                loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLogEventLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
             }
 
             return loggerConfiguration;

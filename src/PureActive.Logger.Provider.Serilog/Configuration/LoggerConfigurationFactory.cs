@@ -64,7 +64,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                     appInsightsKey,
                     loggerSettings
                         .GetOrRegisterSerilogLogLevel(LoggingOutputFlags.AppInsights, LogEventLevel.Information)
-                        .MinimumLevel,
+                        .MinimumLogEventLevel,
                     null /*formatProvider*/,
                     (logEvent, formatProvider) =>
                         ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)

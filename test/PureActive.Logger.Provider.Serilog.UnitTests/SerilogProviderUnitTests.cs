@@ -35,17 +35,36 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             {
                 if (foundFile.Name.StartsWith(partialName))
                 {
-                    if (File.Exists(foundFile.FullName))
-                    {
-                        using (var sr = new StreamReader(foundFile.FullName))
-                        {
-                            var logContents = sr.ReadToEnd();
+                    if (!File.Exists(foundFile.FullName)) continue;
 
-                            testAction(logContents, logLevel);
-                        }
+                    using (var sr = new StreamReader(foundFile.FullName))
+                    {
+                        var logContents = sr.ReadToEnd();
+
+                        testAction(logContents, logLevel);
                     }
                 }
             }
+        }
+
+
+        [Fact]
+        public void SerilogProvider_CreateLoggers_AppConsoleFile()
+        {
+            var logFileName = FileExtensions.GetRandomFileName("", ".log");
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile, logFileName);
+            
+            // Validate IPureLoggerFactory Interface
+            loggerFactory.Should().NotBeNull();
+            loggerFactory.PureLoggerSettings.Should().NotBeNull();
+            loggerFactory.WrappedLoggerFactory.Should().NotBeNull();
+
+            // Validate creation of loggers
+            var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
+            pureLogger.Should().NotBeNull();
+
+            var logger = loggerFactory.CreateLogger<SerilogProviderUnitTests>();
+            logger.Should().NotBeNull();
         }
 
         [Fact]

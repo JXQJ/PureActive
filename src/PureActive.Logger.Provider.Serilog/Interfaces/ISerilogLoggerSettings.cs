@@ -12,16 +12,6 @@ namespace PureActive.Logger.Provider.Serilog.Interfaces
 
         IPureLogLevel RegisterLogLevel(string key, LogEventLevel logEventLevel);
 
-        //ISerilogLogLevel GetSerilogLogLevel(string key);
-
-        //ISerilogLogLevel RegisterSerilogLogLevel(string key, LogEventLevel logEventLevel);
-        //ISerilogLogLevel RegisterSerilogLogLevel(string key, LogLevel logLevel);
-
-        //ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogLevel logLevel);
-        //ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogEventLevel logEventLevel);
-
-        //ISerilogLogLevel GetOrRegisterSerilogLogDefaultLevel(string key);
-
         IPureLogLevel RegisterLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel);
 
         ISerilogLogLevel GetSerilogLogLevel(LoggingOutputFlags loggingOutputFlag);

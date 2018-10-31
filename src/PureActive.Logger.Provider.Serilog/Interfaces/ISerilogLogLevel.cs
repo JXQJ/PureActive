@@ -8,8 +8,8 @@ namespace PureActive.Logger.Provider.Serilog.Interfaces
     {
         LoggingLevelSwitch LoggingLevelSwitch { get; }
 
-        LogEventLevel MinimumLevel { get; set; }
+        LogEventLevel MinimumLogEventLevel { get; set; }
 
-        LogEventLevel InitialLevel { get; set; }
+        LogEventLevel InitialLogEventLevel { get; set; }
     }
 }

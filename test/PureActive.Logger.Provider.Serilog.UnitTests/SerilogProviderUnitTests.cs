@@ -19,13 +19,13 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         {
             var fileSystem = new FileSystem(typeof(SerilogProviderUnitTests));
 
-            var loggerSettings = new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile);
+            var loggerSettings = new SerilogLoggerSettings(fileSystem, logEventLevel, loggingOutputFlags);
             var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
 
             return LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
         }
 
-        private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string msg, string logFileName, Action<string, LogLevel> testAction)
+        private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string logFileName, Action<string, LogLevel> testAction)
         {
             string partialName = Path.GetFileNameWithoutExtension(logFileName);
             DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo(loggerSettings.LogFolderPath);
@@ -80,7 +80,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             // Dispose Logger Factory so we can access log file
             loggerFactory.Dispose();
 
-            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, msg, logFileName, 
+            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, logFileName, 
                 (logContents, logLevel) =>
                 {
                     logContents.Should().EndWith($"{msg}\r\n");
@@ -103,7 +103,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             // Dispose Logger Factory so we can access log file
             loggerFactory.Dispose();
 
-            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Critical, msg, logFileName,
+            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Critical, logFileName,
                 (logContents, logLevel) =>
                 {
                     logContents.Should().EndWith($"{msg}\r\n");

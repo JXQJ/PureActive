@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.System;
-using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
-using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using Serilog.Events;
 using Xunit;

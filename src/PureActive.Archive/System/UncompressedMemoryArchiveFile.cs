@@ -1,4 +1,4 @@
-﻿namespace PureActive.Core.System
+﻿namespace PureActive.Archive.System
 {
     /// <summary>
     ///     An uncompressed memory-backed archive file.

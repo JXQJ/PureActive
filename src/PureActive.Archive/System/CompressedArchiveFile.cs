@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.IO.Compression;
-using PureActive.Core.Extensions;
+using PureActive.Archive.Extensions;
 
-namespace PureActive.Core.System
+namespace PureActive.Archive.System
 {
     /// <summary>
     ///     Implementation of IRepositoryFile, backed by a ZipArchiveEntry.

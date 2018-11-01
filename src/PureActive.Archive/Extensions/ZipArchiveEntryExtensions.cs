@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 
-namespace PureActive.Core.Extensions
+namespace PureActive.Archive.Extensions
 {
     /// <summary>
     ///     Extension methods for the ZipArchiveEntry class.

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
+using PureActive.Archive.Abstractions.System;
 using PureActive.Core.Abstractions.System;
 
-namespace PureActive.Core.System
+namespace PureActive.Archive.System
 {
     /// <summary>
     ///     An archive file.

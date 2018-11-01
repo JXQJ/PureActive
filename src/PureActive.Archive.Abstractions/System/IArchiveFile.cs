@@ -1,4 +1,4 @@
-﻿namespace PureActive.Core.Abstractions.System
+﻿namespace PureActive.Archive.Abstractions.System
 {
     /// <summary>
     ///     An file in a repository.

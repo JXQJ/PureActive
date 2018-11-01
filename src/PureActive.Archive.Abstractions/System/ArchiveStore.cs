@@ -1,4 +1,4 @@
-﻿namespace PureActive.Core.Abstractions.System
+﻿namespace PureActive.Archive.Abstractions.System
 {
     /// <summary>
     ///     The backing store of an archive.

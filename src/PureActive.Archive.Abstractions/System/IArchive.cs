@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace PureActive.Core.Abstractions.System
+namespace PureActive.Archive.Abstractions.System
 {
     /// <summary>
     ///     An archive of files.

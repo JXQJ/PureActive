@@ -1,36 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO.Compression;
 using System.Linq;
+using PureActive.Archive.Abstractions.System;
 using PureActive.Core.Abstractions.System;
-using PureActive.Core.Extensions;
 
-namespace PureActive.Core.System
+namespace PureActive.Archive.System
 {
     /// <summary>
-    ///     An archive of files, backed by a ZipArchive.
+    ///     An uncompressed archive stored in memory.
     /// </summary>
-    public class CompressedArchive : IArchive
+    public class UncompressedMemoryArchive : IArchive
     {
         /// <summary>
-        ///     The underlying zip archive.
-        /// </summary>
-        private readonly ZipArchive _zipArchive;
-
-        /// <summary>
-        ///     The contents of the archive.
+        ///     The files in the archive.
         /// </summary>
         private IList<IArchiveFile> _contents;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public CompressedArchive(ZipArchive zipArchive, int stripInitialFolders)
+        public UncompressedMemoryArchive(IDictionary<string, byte[]> files)
         {
-            _zipArchive = zipArchive;
-            _contents = zipArchive.Entries
-                .Where(entry => entry.IsFile())
-                .Select(entry => new CompressedArchiveFile(entry, stripInitialFolders))
+            _contents = files
+                .Select(kvp => new UncompressedMemoryArchiveFile(kvp.Key, kvp.Value))
                 .Cast<IArchiveFile>()
                 .ToList();
         }
@@ -55,7 +47,6 @@ namespace PureActive.Core.System
         public void Dispose()
         {
             _contents = null;
-            _zipArchive.Dispose();
         }
     }
 }

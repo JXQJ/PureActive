@@ -1,23 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.IO.Compression;
-using PureActive.Core.Abstractions.System;
 
-namespace PureActive.Core.System
+namespace PureActive.Archive.Abstractions.System
 {
     /// <summary>
     ///     Creates archive files.
     /// </summary>
-    public class ArchiveFactory : IArchiveFactory
+    public interface IArchiveFactory
     {
         /// <summary>
         ///     Creates an uncompressed archive.
         /// </summary>
         /// <param name="files">The set of files to include.</param>
-        public IArchive CreateUncompressedArchive(
-            IDictionary<string, byte[]> files)
-        {
-            return new UncompressedMemoryArchive(files);
-        }
+        IArchive CreateUncompressedArchive(
+            IDictionary<string, byte[]> files);
 
         /// <summary>
         ///     Creates a compressed archive.
@@ -27,11 +23,8 @@ namespace PureActive.Core.System
         ///     The number of folders
         ///     to strip from the path of all entries in the archive.
         /// </param>
-        public IArchive CreateCompressedArchive(
+        IArchive CreateCompressedArchive(
             ZipArchive zipArchive,
-            int stripInitialFolders)
-        {
-            return new CompressedArchive(zipArchive, stripInitialFolders);
-        }
+            int stripInitialFolders);
     }
 }

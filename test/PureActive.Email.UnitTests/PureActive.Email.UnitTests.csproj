@@ -17,8 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
-    <ProjectReference Include="..\..\src\PureActive.Hosting\PureActive.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Email.Office365\PureActive.Email.Office365.csproj" />
   </ItemGroup>
 
 </Project>

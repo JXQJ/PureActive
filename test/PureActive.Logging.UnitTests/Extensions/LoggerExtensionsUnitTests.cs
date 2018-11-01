@@ -5,7 +5,7 @@ namespace PureActive.Logging.UnitTests.Extensions
     public class LoggerExtensionsUnitTests
     {
         [Fact]
-        public void Test1()
+        public void LoggerExtensions_()
         {
 
         }

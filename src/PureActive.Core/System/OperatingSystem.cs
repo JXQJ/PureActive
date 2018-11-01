@@ -12,7 +12,7 @@ namespace PureActive.Core.System
             return RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
         }
 
-        public bool IsOsx()
+        public bool IsOSX()
         {
             return RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         }

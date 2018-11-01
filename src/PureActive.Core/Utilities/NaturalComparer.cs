@@ -24,7 +24,8 @@ namespace PureActive.Core.Utilities
 
         public override int Compare(string x, string y)
         {
-            if (x == y) return 0;
+            if (x == y || string.IsNullOrEmpty(x) || string.IsNullOrEmpty(y)) return 0;
+
             if (!_table.TryGetValue(x, out var x1))
             {
                 x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");

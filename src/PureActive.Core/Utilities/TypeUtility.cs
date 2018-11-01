@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace PureActive.Core.Utilities
@@ -14,14 +15,18 @@ namespace PureActive.Core.Utilities
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
-        public static Hashtable GetProperties(Type[] types)
+        public static Hashtable GetProperties(IEnumerable<Type> types)
         {
             Hashtable properties = new Hashtable();
 
-            foreach (Type type in types)
+            foreach (var type in types)
             {
+                if (type == null)
+                    continue;
+
                 Hashtable entry = GetProperties(type);
-                if (entry != null)
+
+                if (entry != null && !string.IsNullOrEmpty(type.FullName))
                 {
                     properties.Add(type.FullName, entry);
                 }
@@ -73,16 +78,16 @@ namespace PureActive.Core.Utilities
                         }
 
                         // Ignore delegates and MethodInfos
-                        if ((method.ReturnType == typeof(global::System.Delegate)) ||
-                            (method.ReturnType == typeof(global::System.MulticastDelegate)) ||
-                            (method.ReturnType == typeof(global::System.Reflection.MethodInfo)))
+                        if ((method.ReturnType == typeof(Delegate)) ||
+                            (method.ReturnType == typeof(MulticastDelegate)) ||
+                            (method.ReturnType == typeof(MethodInfo)))
                         {
                             continue;
                         }
 
                         // Same for DeclaringType
-                        if ((method.DeclaringType == typeof(global::System.Delegate)) ||
-                            (method.DeclaringType == typeof(global::System.MulticastDelegate)))
+                        if ((method.DeclaringType == typeof(Delegate)) ||
+                            (method.DeclaringType == typeof(MulticastDelegate)))
                         {
                             continue;
                         }

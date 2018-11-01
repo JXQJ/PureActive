@@ -14,6 +14,7 @@ namespace PureActive.Logging.Abstractions.Types
 
         Testing = (XUnitConsole | TestCorrelator),
         AppConsoleFile = (Console | RollingFile),
-        AppFull = (AppConsoleFile | AppInsights)
+        AppFull = (AppConsoleFile | AppInsights),
+        TestingAppConsoleFile = (Console | RollingFile | Testing),
     }
 }

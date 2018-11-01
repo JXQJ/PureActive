@@ -171,7 +171,9 @@ namespace PureActive.Logger.Provider.Serilog.Settings
             GetOrRegisterDefaultLogLevel(loggingOutputFlag.ToString());
 
         public string LogFolderPath => _fileSystem?.LogFolderPath();
-   
+
+        public string TestLogFolderPath => _fileSystem?.TestLogFolderPath();
+
         public IPureLogLevel RegisterLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel) =>
             RegisterLogLevel(loggingOutputFlag.ToString(), logEventLevel);
 

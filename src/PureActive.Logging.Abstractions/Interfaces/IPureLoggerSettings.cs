@@ -20,5 +20,8 @@ namespace PureActive.Logging.Abstractions.Interfaces
         IPureLogLevel GetOrRegisterDefaultLogLevel(LoggingOutputFlags loggingOutputFlag);
 
         string LogFolderPath { get; }
+
+        string TestLogFolderPath { get; }
+
     }
 }

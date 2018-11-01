@@ -52,7 +52,10 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
             if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.RollingFile))
             {
                 // Write to disk if requested
-                var rollingFilePath = loggerSettings.LogFolderPath + logFileName;
+                var rollingFilePath = loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.Testing) ? 
+                    loggerSettings.TestLogFolderPath + logFileName : 
+                    loggerSettings.LogFolderPath + logFileName;
+
                 loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch: loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.RollingFile).LoggingLevelSwitch);
             }
 

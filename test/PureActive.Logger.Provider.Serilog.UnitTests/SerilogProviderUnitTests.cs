@@ -28,7 +28,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string logFileName, Action<string, LogLevel> testAction)
         {
             string partialName = Path.GetFileNameWithoutExtension(logFileName);
-            DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo(loggerSettings.LogFolderPath);
+            DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo(loggerSettings.TestLogFolderPath);
             FileInfo[] filesInDir = hdDirectoryInWhichToSearch.GetFiles("*" + partialName + "*.*");
 
             foreach (FileInfo foundFile in filesInDir)
@@ -52,7 +52,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         public void SerilogProvider_CreateLoggers_AppConsoleFile()
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile, logFileName);
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
             
             // Validate IPureLoggerFactory Interface
             loggerFactory.Should().NotBeNull();
@@ -71,7 +71,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         public void SerilogProvider_CreateLogger_AppConsoleFile_LogLevel()
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile, logFileName);
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
             var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
 
             const string msg = "Test";
@@ -83,7 +83,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, logFileName, 
                 (logContents, logLevel) =>
                 {
-                    logContents.Should().EndWith($"{msg}\r\n");
+                    logContents.Should().EndWith($"{msg}{Environment.NewLine}");
                     logContents.Should().Contain($"[{logLevel}]");
                 }
             );
@@ -94,7 +94,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         public void SerilogProvider_CreateLogger_AppConsoleFile_BadLogLevel()
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.AppConsoleFile, logFileName);
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
             var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
 
             const string msg = "Test";
@@ -106,7 +106,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Critical, logFileName,
                 (logContents, logLevel) =>
                 {
-                    logContents.Should().EndWith($"{msg}\r\n");
+                    logContents.Should().EndWith($"{msg}{Environment.NewLine}");
                     logContents.Should().NotContain($"[{logLevel}]");
                 }
             );

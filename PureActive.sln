@@ -45,11 +45,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Serilog.Sink.Xunit", "src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj", "{D0F2ED72-F3B5-4FBA-BC19-F906EB009DB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Archive", "src\PureActive.Archive\PureActive.Archive.csproj", "{0CA3B18B-972B-4328-8B7F-2218F556D827}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Archive", "src\PureActive.Archive\PureActive.Archive.csproj", "{0CA3B18B-972B-4328-8B7F-2218F556D827}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Archive.Abstractions", "src\PureActive.Archive.Abstractions\PureActive.Archive.Abstractions.csproj", "{6D560731-C7E0-443E-951C-60D50DD50AFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Archive.Abstractions", "src\PureActive.Archive.Abstractions\PureActive.Archive.Abstractions.csproj", "{6D560731-C7E0-443E-951C-60D50DD50AFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Archive.UnitTests", "test\PureActive.Archive.UnitTests\PureActive.Archive.UnitTests.csproj", "{2946210A-56DD-4D6D-A541-7ABDC71F0C90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Archive.UnitTests", "test\PureActive.Archive.UnitTests\PureActive.Archive.UnitTests.csproj", "{2946210A-56DD-4D6D-A541-7ABDC71F0C90}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Hosting", "src\PureActive.Hosting\PureActive.Hosting.csproj", "{D147644E-C736-42F8-AA9D-02931D5D510B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Hosting.Abstractions", "src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj", "{3F90F386-E454-46B7-B242-04CCAB6B1C2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Hosting.UnitTests", "test\PureActive.Hosting.UnitTests\PureActive.Hosting.UnitTests.csproj", "{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +127,18 @@ Global
 		{2946210A-56DD-4D6D-A541-7ABDC71F0C90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2946210A-56DD-4D6D-A541-7ABDC71F0C90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2946210A-56DD-4D6D-A541-7ABDC71F0C90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D147644E-C736-42F8-AA9D-02931D5D510B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D147644E-C736-42F8-AA9D-02931D5D510B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D147644E-C736-42F8-AA9D-02931D5D510B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D147644E-C736-42F8-AA9D-02931D5D510B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F90F386-E454-46B7-B242-04CCAB6B1C2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F90F386-E454-46B7-B242-04CCAB6B1C2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F90F386-E454-46B7-B242-04CCAB6B1C2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F90F386-E454-46B7-B242-04CCAB6B1C2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +160,9 @@ Global
 		{0CA3B18B-972B-4328-8B7F-2218F556D827} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{6D560731-C7E0-443E-951C-60D50DD50AFE} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{2946210A-56DD-4D6D-A541-7ABDC71F0C90} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{D147644E-C736-42F8-AA9D-02931D5D510B} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{3F90F386-E454-46B7-B242-04CCAB6B1C2F} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

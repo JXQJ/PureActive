@@ -1,4 +1,4 @@
-﻿namespace PureActive.Core.Abstractions.System
+﻿namespace PureActive.Hosting.Abstractions.System
 {
     public enum ServiceHostStatus
     {

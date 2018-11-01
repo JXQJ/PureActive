@@ -248,6 +248,7 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Converts a hex string to a byte value
         /// </summary>
+        /// <param name="source">source hex string to convert</param>
         /// <param name="value">Byte value as output parameter</param>
         /// <returns>True if successful</returns>
         public static bool TryParseHex(string source, out byte value)
@@ -275,6 +276,7 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Converts a hex string to an Int16 value
         /// </summary>
+        /// <param name="source">source hex string to convert</param>
         /// <param name="value">Int16 value as output parameter</param>
         /// <returns>True if successful</returns>
         public static bool TryParseHex(string source, out Int16 value)
@@ -304,6 +306,7 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Converts a hex string to an Int32 value
         /// </summary>
+        /// <param name="source">source hex string to convert</param>
         /// <param name="value">Int32 value as output parameter</param>
         /// <returns>True if successful</returns>
         public static bool TryParseHex(string source, out Int32 value)
@@ -329,7 +332,7 @@ namespace PureActive.Core.Utilities
             if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 || value7 < 0)
                 return false;
 
-            value = (Int32)((value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7);
+            value = ((value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7);
 
             return true;
         }
@@ -337,6 +340,7 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Converts a hex string to an UInt16 value
         /// </summary>
+        /// <param name="source">source hex string to convert</param>
         /// <param name="value">UInt16 value as output parameter</param>
         /// <returns>True if successful</returns>
         public static bool TryParseHex(string source, out UInt16 value)
@@ -366,6 +370,7 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Converts a hex string to an UInt32 value
         /// </summary>
+        /// <param name="source">source hex string to convert</param>
         /// <param name="value">UInt32 value as output parameter</param>
         /// <returns>True if successful</returns>
         public static bool TryParseHex(string source, out UInt32 value)

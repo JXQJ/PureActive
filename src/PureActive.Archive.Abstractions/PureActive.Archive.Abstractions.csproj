@@ -14,4 +14,8 @@
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

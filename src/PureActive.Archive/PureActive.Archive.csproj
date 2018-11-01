@@ -16,7 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PureActive.Archive.Abstractions\PureActive.Archive.Abstractions.csproj" />
-    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

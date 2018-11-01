@@ -3,9 +3,11 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PureActive.Core.Abstractions.System;
 using PureActive.Logger.Provider.Serilog.Enrichers;
 using PureActive.Logger.Provider.Serilog.Interfaces;
+using PureActive.Logger.Provider.Serilog.Types;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using Serilog;
 using Serilog.AspNetCore;
 using Serilog.Events;
@@ -22,10 +24,16 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         {
             var loggerConfiguration = new LoggerConfiguration()
                 .ReadFrom.Configuration(loggerSettings.Configuration)
-                .MinimumLevel.ControlledBy(loggerSettings.GetOrRegisterSerilogLogLevel("Default", LogEventLevel.Information).LoggingLevelSwitch)
+                .MinimumLevel.ControlledBy(loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Default).LoggingLevelSwitch)
                 .Enrich.FromLogContext()
-                .Enrich.With(new AsyncFriendlyStackTraceEnricher())
-                .WriteTo.Console(levelSwitch:loggerSettings.GetOrRegisterSerilogLogLevel("Console", LogEventLevel.Information).LoggingLevelSwitch); // Always write to the console
+                .Enrich.With(new AsyncFriendlyStackTraceEnricher());
+
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.Console))
+            {
+                loggerConfiguration.WriteTo.Console(levelSwitch: loggerSettings
+                    .GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.Console)
+                    .LoggingLevelSwitch); // Always write to the console
+            }
 
             return loggerConfiguration;
         }
@@ -34,32 +42,50 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         ///     Creates a logger for Serilog.
         /// </summary>
         public static LoggerConfiguration CreateLoggerConfiguration(
-            IConfigurationRoot configurationRoot,
-            IFileSystem fileSystem,
+            string appInsightsKey,
             string logFileName,
             ISerilogLoggerSettings loggerSettings,
             Func<LogEvent, bool> includeLogEvent)
         {
             var loggerConfiguration = CreateDefaultLoggerConfiguration(loggerSettings);
 
-            // Write to disk if requested
-            var rollingFilePath = fileSystem.LogFolderPath() + logFileName;
-            loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch:loggerSettings.GetOrRegisterSerilogLogLevel("File", LogEventLevel.Information).LoggingLevelSwitch);
+            if (loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.RollingFile))
+            {
+                // Write to disk if requested
+                var rollingFilePath = loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.Testing) ? 
+                    loggerSettings.TestLogFolderPath + logFileName : 
+                    loggerSettings.LogFolderPath + logFileName;
 
-            // Write to application insights if requested
-            var appInsightsKey = configurationRoot?.GetSection("ApplicationInsights")?["InstrumentationKey"];
+                loggerConfiguration.WriteTo.RollingFile(rollingFilePath, levelSwitch: loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.RollingFile).LoggingLevelSwitch);
+            }
 
-            if (appInsightsKey != null)
+            if (appInsightsKey != null && loggerSettings.LoggingOutputFlags.HasFlag(LoggingOutputFlags.AppInsights))
+            {
+                // Write to application insights if requested
                 loggerConfiguration.WriteTo.ApplicationInsightsTraces
                 (
                     appInsightsKey,
-                    loggerSettings.GetOrRegisterSerilogLogLevel("AppInsights", LogEventLevel.Information).MinimumLevel,
+                    loggerSettings
+                        .GetOrRegisterSerilogLogLevel(LoggingOutputFlags.AppInsights, LogEventLevel.Information)
+                        .MinimumLogEventLevel,
                     null /*formatProvider*/,
                     (logEvent, formatProvider) =>
                         ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)
                 );
+            }
 
             return loggerConfiguration;
+        }
+
+        public static LoggerConfiguration CreateLoggerConfiguration(
+            IConfigurationRoot configurationRoot,
+            string logFileName,
+            ISerilogLoggerSettings loggerSettings,
+            Func<LogEvent, bool> includeLogEvent)
+        {
+            return CreateLoggerConfiguration(
+                configurationRoot?.GetSection("ApplicationInsights")?["InstrumentationKey"], 
+                logFileName, loggerSettings, includeLogEvent);
         }
 
         /// <summary>
@@ -115,6 +141,12 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                 Log.Logger = logger;
 
             return  new SerilogLoggerFactory(logger, useStaticLogger);
+        }
+
+        public static IPureLoggerFactory CreatePureSeriLoggerFactory(ISerilogLoggerSettings loggerSettings,
+            LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
+        {
+            return new PureSeriLoggerFactory(CreateSerilogFactory(loggerSettings, loggerConfiguration, useStaticLogger), loggerSettings);
         }
     }
 }

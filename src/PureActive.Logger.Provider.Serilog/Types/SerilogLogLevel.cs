@@ -9,13 +9,13 @@ namespace PureActive.Logger.Provider.Serilog.Types
     {
         public LoggingLevelSwitch LoggingLevelSwitch { get; }
 
-        public LogEventLevel MinimumLevel
+        public LogEventLevel MinimumLogEventLevel
         {
             get => LoggingLevelSwitch.MinimumLevel;
             set => LoggingLevelSwitch.MinimumLevel = value;
         }
 
-        public LogEventLevel InitialLevel { get; set; }
+        public LogEventLevel InitialLogEventLevel { get; set; }
 
         public LogLevel MinimumLogLevel
         {
@@ -25,13 +25,13 @@ namespace PureActive.Logger.Provider.Serilog.Types
 
         public LogLevel InitialLogLevel
         {
-            get => SerilogToMsftLogLevel(InitialLevel);
-            set => InitialLevel = MsftToSerilogLogLevel(value);
+            get => SerilogToMsftLogLevel(InitialLogEventLevel);
+            set => InitialLogEventLevel = MsftToSerilogLogLevel(value);
         }
 
         public SerilogLogLevel(LogEventLevel minimumLevelSerilog)
         {
-            InitialLevel = minimumLevelSerilog;
+            InitialLogEventLevel = minimumLevelSerilog;
             LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevelSerilog);
         }
 

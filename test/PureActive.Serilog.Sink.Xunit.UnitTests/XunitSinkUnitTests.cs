@@ -2,9 +2,10 @@ using System;
 using System.Collections.Generic;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Settings;
-using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog.Events;
 using Serilog.Sinks.TestCorrelator;
@@ -25,32 +26,55 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         private IPureLogger CreateLogger(LogEventLevel logEventLevel,
             XUnitSerilogFormatter xUnitSerilogFormatter = XUnitSerilogFormatter.RenderedCompactJsonFormatter)
         {
-            var loggerSettings = new SerilogLoggerSettings(logEventLevel);
+            var fileSystem = new FileSystem(typeof(XunitSinkUnitTests));
+            var loggerSettings = new SerilogLoggerSettings(fileSystem, logEventLevel, LoggingOutputFlags.Testing);
             var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings, xUnitSerilogFormatter);
 
             var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
 
-            var logger = new PureSeriLogger(loggerFactory.CreateLogger<XunitSinkUnitTests>());
+            var logger = loggerFactory.CreatePureLogger<XunitSinkUnitTests>();
 
             logger.Should().NotBeNull("CreateLogger should always succeed");
 
             return logger;
         }
 
-
         [Fact]
         public void XunitSink_Create_TestCorrelator()
+        {
+            var fileSystem = new FileSystem(typeof(XunitSinkUnitTests));
+            var loggerSettings = new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.TestCorrelator);
+            var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+            var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
+            var logger = loggerFactory.CreatePureLogger<XunitSinkUnitTests>();
+
+            logger.Should().NotBeNull("CreateLogger should always succeed");
+
+            using (TestCorrelator.CreateContext())
+            {
+                logger.LogInformation("Test: XunitSink_Create_TestCorrelator");
+
+                TestCorrelator.GetLogEventsFromCurrentContext()
+                    .Should().ContainSingle()
+                    .Which.MessageTemplate.Text
+                    .Should().Be("Test: XunitSink_Create_TestCorrelator");
+            }
+        }
+
+
+        [Fact]
+        public void XunitSink_String_TestCorrelator()
         {
             var logger = CreateLogger(LogEventLevel.Debug);
 
             using (TestCorrelator.CreateContext())
             {
-                logger.LogInformation("Test: Create_XUnit_Sink_TestCorrelator");
+                logger.LogInformation("Test: XunitSink_String_TestCorrelator");
 
                 TestCorrelator.GetLogEventsFromCurrentContext()
                     .Should().ContainSingle()
                     .Which.MessageTemplate.Text
-                    .Should().Be("Test: Create_XUnit_Sink_TestCorrelator");
+                    .Should().Be("Test: XunitSink_String_TestCorrelator");
             }
         }
 

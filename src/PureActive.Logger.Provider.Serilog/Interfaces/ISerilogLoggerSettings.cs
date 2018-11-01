@@ -1,26 +1,27 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using Serilog.Events;
 
 namespace PureActive.Logger.Provider.Serilog.Interfaces
 {
     public interface ISerilogLoggerSettings : IPureLoggerSettings
     {
-        LogEventLevel DefaultLogEventLevel { get; set; }
+        IConfiguration Configuration { get; }
 
         IPureLogLevel RegisterLogLevel(string key, LogEventLevel logEventLevel);
 
-        ISerilogLogLevel GetSerilogLogLevel(string key);
+        IPureLogLevel RegisterLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel);
 
-        IConfiguration Configuration { get; }
+        ISerilogLogLevel GetSerilogLogLevel(LoggingOutputFlags loggingOutputFlag);
 
-        ISerilogLogLevel RegisterSerilogLogLevel(string key, LogEventLevel logEventLevel);
-        ISerilogLogLevel RegisterSerilogLogLevel(string key, LogLevel logLevel);
+        ISerilogLogLevel RegisterSerilogLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel);
+        ISerilogLogLevel RegisterSerilogLogLevel(LoggingOutputFlags loggingOutputFlag, LogLevel logLevel);
 
-        ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogLevel logLevel);
-        ISerilogLogLevel GetOrRegisterSerilogLogLevel(string key, LogEventLevel logEventLevel);
+        ISerilogLogLevel GetOrRegisterSerilogLogLevel(LoggingOutputFlags loggingOutputFlag, LogLevel logLevel);
+        ISerilogLogLevel GetOrRegisterSerilogLogLevel(LoggingOutputFlags loggingOutputFlag, LogEventLevel logEventLevel);
 
-        ISerilogLogLevel GetOrRegisterSerilogLogDefaultLevel(string key);
+        ISerilogLogLevel GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags loggingOutputFlag);
     }
 }

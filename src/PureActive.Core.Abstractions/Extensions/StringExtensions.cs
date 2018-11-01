@@ -77,51 +77,35 @@ namespace PureActive.Core.Abstractions.Extensions
             ).Trim();
         }
 
-        public static string[] SplitOnFirstDelim(this string str, char chDelim)
+        private static string[] ProcessSplits(string str, int indexDelim)
         {
             var strings = new string[2];
 
-            if (!string.IsNullOrEmpty(str))
-            {
-                var indexDelim = str.IndexOf(chDelim);
+            if (string.IsNullOrEmpty(str))
+                return strings;
 
-                if (indexDelim != -1 && indexDelim <= str.Length - 1)
-                {
-                    strings[0] = str.Substring(0, indexDelim).Trim();
-                    strings[1] = str.Substring(indexDelim + 1).Trim();
-                }
-                else
-                {
-                    strings[0] = str.Trim();
-                    strings[1] = string.Empty;
-                }
+            if (indexDelim != -1 && indexDelim <= str.Length - 1)
+            {
+                strings[0] = str.Substring(0, indexDelim).Trim();
+                strings[1] = str.Substring(indexDelim + 1).Trim();
+            }
+            else
+            {
+                strings[0] = str.Trim();
+                strings[1] = string.Empty;
             }
 
             return strings;
         }
 
+        public static string[] SplitOnFirstDelim(this string str, char chDelim)
+        {
+            return ProcessSplits(str, str.IndexOf(chDelim));
+        }
 
         public static string[] SplitOnLastDelim(this string str, char chDelim)
         {
-            var strings = new string[2];
-
-            if (!string.IsNullOrEmpty(str))
-            {
-                var indexDelim = str.LastIndexOf(chDelim);
-
-                if (indexDelim != -1 && indexDelim <= str.Length - 1)
-                {
-                    strings[0] = str.Substring(0, indexDelim).Trim();
-                    strings[1] = str.Substring(indexDelim + 1).Trim();
-                }
-                else
-                {
-                    strings[0] = str.Trim();
-                    strings[1] = string.Empty;
-                }
-            }
-
-            return strings;
+            return ProcessSplits(str, str.LastIndexOf(chDelim));
         }
 
         public static string StringAfterDelim(this string str, char chDelim)

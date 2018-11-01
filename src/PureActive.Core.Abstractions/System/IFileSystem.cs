@@ -78,10 +78,9 @@ namespace PureActive.Core.Abstractions.System
         /// <returns></returns>
         string GetLocalApplicationDataFolderPath(Environment.SpecialFolderOption option);
 
-        string GetAppFolderName();
-
         string LogFolderPath();
 
+        string TestLogFolderPath();
 
         string DataFolderPath();
 

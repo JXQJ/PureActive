@@ -36,8 +36,23 @@ namespace PureActive.Core.System
         {
             if (type == null) throw new ArgumentNullException(nameof(type));
 
-            AppFolderName = TypeNameHelper.GetTypeDisplayName(type);
+            AppFolderName = TypeNameHelper.GetTypeDisplayName(type).Replace(".", "/");
             OperatingSystem = operatingSystem ?? throw new ArgumentNullException(nameof(operatingSystem));
+        }
+
+        public FileSystem(Type type) : this(type, new OperatingSystem())
+        {
+
+        }
+
+        public FileSystem(string appFolderName) : this(appFolderName, new OperatingSystem())
+        {
+
+        }
+
+        public FileSystem(IConfigurationRoot configuration) : this(configuration, new OperatingSystem())
+        {
+
         }
 
         /// <summary>
@@ -207,20 +222,11 @@ namespace PureActive.Core.System
         public string GetCurrentApplicationDataFolderPath()
         {
             var commonApplicationFolder =
-                GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.Create) + $"/{GetAppFolderName()}/";
+                GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.Create) + $"/{AppFolderName}/";
 
             Directory.CreateDirectory(commonApplicationFolder);
 
             return commonApplicationFolder;
-        }
-
-        /// <summary>
-        /// Returns the folder name used by the Application
-        /// </summary>
-        /// <returns></returns>
-        public string GetAppFolderName()
-        {
-            return AppFolderName;
         }
 
 
@@ -231,6 +237,19 @@ namespace PureActive.Core.System
         public string LogFolderPath()
         {
             var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/";
+
+            Directory.CreateDirectory(logFolderPath);
+
+            return logFolderPath;
+        }
+
+        /// <summary>
+        ///     Returns folder path for test logs
+        /// </summary>
+        /// <returns></returns>
+        public string TestLogFolderPath()
+        {
+            var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/Test/";
 
             Directory.CreateDirectory(logFolderPath);
 

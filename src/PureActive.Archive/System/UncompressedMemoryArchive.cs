@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using PureActive.Archive.Abstractions.System;
-using PureActive.Core.Abstractions.System;
 
 namespace PureActive.Archive.System
 {

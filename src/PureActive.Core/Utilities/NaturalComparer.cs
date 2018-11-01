@@ -9,32 +9,32 @@ namespace PureActive.Core.Utilities
     /// </summary>
     public class NaturalComparer : Comparer<string>, IDisposable
     {
-        private Dictionary<string, string[]> table;
+        private Dictionary<string, string[]> _table;
 
         public NaturalComparer()
         {
-            table = new Dictionary<string, string[]>();
+            _table = new Dictionary<string, string[]>();
         }
 
         public void Dispose()
         {
-            table.Clear();
-            table = null;
+            _table.Clear();
+            _table = null;
         }
 
         public override int Compare(string x, string y)
         {
             if (x == y) return 0;
-            if (!table.TryGetValue(x, out var x1))
+            if (!_table.TryGetValue(x, out var x1))
             {
                 x1 = Regex.Split(x.Replace(" ", ""), "([0-9]+)");
-                table.Add(x, x1);
+                _table.Add(x, x1);
             }
 
-            if (!table.TryGetValue(y, out var y1))
+            if (!_table.TryGetValue(y, out var y1))
             {
                 y1 = Regex.Split(y.Replace(" ", ""), "([0-9]+)");
-                table.Add(y, y1);
+                _table.Add(y, y1);
             }
 
             for (var i = 0; i < x1.Length && i < y1.Length; i++)

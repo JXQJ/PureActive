@@ -148,7 +148,7 @@ namespace PureActive.Core.Utilities
             int highByte = (b & 0xF0) >> 4;
 
             return new string(
-                new char[] { HexChars[highByte], HexChars[lowByte] }
+                new[] { HexChars[highByte], HexChars[lowByte] }
             );
         }
 
@@ -353,7 +353,7 @@ namespace PureActive.Core.Utilities
             }
 
             // If they are the same object, done
-            if (object.ReferenceEquals(a1, b1))
+            if (ReferenceEquals(a1, b1))
             {
                 return true;
             }

@@ -181,7 +181,7 @@ namespace PureActive.Core.System
         public string GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption option)
         {
 
-            if (OperatingSystem.IsOSX())
+            if (OperatingSystem.IsOsx())
             {
                 return ProcessSpecialFolder(option, "/Users/Shared/");
             }

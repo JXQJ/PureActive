@@ -160,7 +160,7 @@ namespace PureActive.Core.Utilities
 
                     // Add value
                     if (ret == null)
-                        ret = new string[] { s };
+                        ret = new[] { s };
                     else
                     {
                         tmp = new string[ret.Length + 1];

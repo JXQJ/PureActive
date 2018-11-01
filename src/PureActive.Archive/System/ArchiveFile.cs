@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using PureActive.Archive.Abstractions.System;
-using PureActive.Core.Abstractions.System;
 
 namespace PureActive.Archive.System
 {

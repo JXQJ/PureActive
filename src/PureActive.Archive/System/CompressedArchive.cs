@@ -4,7 +4,6 @@ using System.IO.Compression;
 using System.Linq;
 using PureActive.Archive.Abstractions.System;
 using PureActive.Archive.Extensions;
-using PureActive.Core.Abstractions.System;
 
 namespace PureActive.Archive.System
 {

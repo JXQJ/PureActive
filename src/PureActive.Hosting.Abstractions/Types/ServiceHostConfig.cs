@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PureActive.Hosting.Abstractions.Types
+﻿namespace PureActive.Hosting.Abstractions.Types
 {
     public enum ServiceHostConfig
     {
         Docker,
         Kestrel,
+        // ReSharper disable once InconsistentNaming
         IISExpress
     }
 }

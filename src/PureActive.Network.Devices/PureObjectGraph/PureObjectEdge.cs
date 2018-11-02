@@ -3,7 +3,7 @@ using PureActive.Network.Abstractions.PureObject;
 
 namespace PureActive.Network.Devices.PureObjectGraph
 {
-    public class  PureObjectEdge<T>: IComparable<PureObjectEdge<T>> where T : IPureObject
+    public class  PureObjectEdge<T>: IComparable<PureObjectEdge<T>> where T : class, IPureObject
     {
         /// <summary>
         /// Gets the edge's ID.
@@ -53,7 +53,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
                 if (_directed != value)
                 {
                     _directed = value;
-                    SetID();
+                    SetId();
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
             EndPoints = new Tuple<PureObjectVertex<T>, PureObjectVertex<T>>(tail, head);
             _directed = directed;
             Weight = weight;
-            SetID();
+            SetId();
         }
 
         /// <summary>
@@ -80,7 +80,6 @@ namespace PureActive.Network.Devices.PureObjectGraph
         /// <param name="head">The head vertex.</param>
         /// <param name="directed">Indicates if the edge is directed or not.</param>
         /// <param name="weight">The weight of the edge. Default is 0 (unweighted).</param>
-        /// <param name="label">The label of the edge.</param>
         /// <returns>The edge created.</returns>
         internal static PureObjectEdge<T> Create(PureObjectVertex<T> tail, PureObjectVertex<T> head, bool directed = false, double weight = 0) => new PureObjectEdge<T>(tail, head, directed, weight);
 
@@ -100,7 +99,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         /// <summary>
         /// Sets the edge's ID.
         /// </summary>
-        private void SetID()
+        private void SetId()
         {
             (Guid tail, int directed, Guid head) = this;
             Id = (tail, directed, head);

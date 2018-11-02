@@ -1,7 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
-using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
@@ -24,7 +23,7 @@ namespace PureActive.Network.Devices.Network
         public NetworkInterfaceType NetworkInterfaceType => NetworkInterface.NetworkInterfaceType;
         public IPInterfaceProperties IPProperties => NetworkInterface.GetIPProperties();
 
-        public IPAddressSubnet NetworkAddressSubnet => PrimaryAddressSubnet?.NetworkAddressSubnet ?? null;
+        public IPAddressSubnet NetworkAddressSubnet => PrimaryAddressSubnet?.NetworkAddressSubnet;
 
         public IPAddressSubnet PrimaryAddressSubnet
         {

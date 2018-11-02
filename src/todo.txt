@@ -1,0 +1,18 @@
+Common.Infrastructure
+	Configuration
+	Hosting
+	Logging
+	Object
+	ObjectGraph
+	Queue
+	Settings
+	System: CommonServices, Hosting
+	
+Common.Interfaces
+	Logging
+	Queue
+	Settings
+	System: CommonServices, Hosting
+
+Common.Net
+	

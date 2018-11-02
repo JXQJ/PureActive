@@ -1,0 +1,121 @@
+Last login: Tue Sep 25 13:05:44 on ttys000
+BCMacDev:~ stevebu$ arp -n 10.1.10.241
+10.1.10.241 (10.1.10.241) -- no entry
+BCMacDev:~ stevebu$ arp -?
+arp: illegal option -- ?
+usage: arp [-n] [-i interface] hostname
+       arp [-n] [-i interface] [-l] -a
+       arp -d hostname [pub] [ifscope interface]
+       arp -d [-i interface] -a
+       arp -s hostname ether_addr [temp] [reject] [blackhole] [pub [only]] [ifscope interface]
+       arp -S hostname ether_addr [temp] [reject] [blackhole] [pub [only]] [ifscope interface]
+       arp -f filename
+BCMacDev:~ stevebu$ arp -i 10.1.10.241
+arp: interface 10.1.10.241 does not exist
+BCMacDev:~ stevebu$ arp
+usage: arp [-n] [-i interface] hostname
+       arp [-n] [-i interface] [-l] -a
+       arp -d hostname [pub] [ifscope interface]
+       arp -d [-i interface] -a
+       arp -s hostname ether_addr [temp] [reject] [blackhole] [pub [only]] [ifscope interface]
+       arp -S hostname ether_addr [temp] [reject] [blackhole] [pub [only]] [ifscope interface]
+       arp -f filename
+BCMacDev:~ stevebu$ arp -a
+utm.bushchang.com (10.1.10.1) at 0:1a:8c:46:27:d0 on en0 ifscope [ethernet]
+? (10.1.10.10) at e4:f4:c6:1:3d:d7 on en0 ifscope [ethernet]
+? (10.1.10.13) at e4:f4:c6:1:c7:44 on en0 ifscope [ethernet]
+? (10.1.10.17) at 0:15:5d:a:19:2 on en0 ifscope [ethernet]
+? (10.1.10.25) at 40:16:7e:29:8:30 on en0 ifscope [ethernet]
+? (10.1.10.26) at a0:36:9f:2b:37:3b on en0 ifscope [ethernet]
+? (10.1.10.30) at a0:36:9f:2b:37:3a on en0 ifscope [ethernet]
+bcactive.bushchang.local (10.1.10.33) at 0:15:5d:a:19:1 on en0 ifscope [ethernet]
+? (10.1.10.163) at 10:40:f3:ec:35:4e on en0 ifscope [ethernet]
+? (10.1.10.181) at 0:e:58:57:7a:52 on en0 ifscope [ethernet]
+? (10.1.10.198) at 40:98:ad:31:2f:8a on en0 ifscope [ethernet]
+? (10.1.10.200) at 0:5:cd:c1:33:9c on en0 ifscope [ethernet]
+? (10.1.10.246) at 0:5:cd:9a:5f:a4 on en0 ifscope [ethernet]
+? (10.1.10.255) at ff:ff:ff:ff:ff:ff on en0 ifscope [ethernet]
+? (169.254.77.178) at 0:15:5d:a:19:2 on en0 [ethernet]
+? (169.254.133.253) at d0:4f:7e:60:a4:21 on en0 [ethernet]
+? (169.254.169.254) at (incomplete) on en0 [ethernet]
+? (169.254.179.174) at f4:96:34:d2:6e:37 on en0 [ethernet]
+? (224.0.0.251) at 1:0:5e:0:0:fb on en0 ifscope permanent [ethernet]
+BCMacDev:~ stevebu$ arp -a -i en0
+utm.bushchang.com (10.1.10.1) at 0:1a:8c:46:27:d0 on en0 ifscope [ethernet]
+? (10.1.10.10) at e4:f4:c6:1:3d:d7 on en0 ifscope [ethernet]
+? (10.1.10.13) at e4:f4:c6:1:c7:44 on en0 ifscope [ethernet]
+? (10.1.10.17) at 0:15:5d:a:19:2 on en0 ifscope [ethernet]
+? (10.1.10.25) at 40:16:7e:29:8:30 on en0 ifscope [ethernet]
+? (10.1.10.26) at a0:36:9f:2b:37:3b on en0 ifscope [ethernet]
+? (10.1.10.30) at a0:36:9f:2b:37:3a on en0 ifscope [ethernet]
+bcactive.bushchang.local (10.1.10.33) at 0:15:5d:a:19:1 on en0 ifscope [ethernet]
+? (10.1.10.163) at 10:40:f3:ec:35:4e on en0 ifscope [ethernet]
+? (10.1.10.181) at 0:e:58:57:7a:52 on en0 ifscope [ethernet]
+? (10.1.10.198) at 40:98:ad:31:2f:8a on en0 ifscope [ethernet]
+? (10.1.10.200) at 0:5:cd:c1:33:9c on en0 ifscope [ethernet]
+? (10.1.10.246) at 0:5:cd:9a:5f:a4 on en0 ifscope [ethernet]
+? (10.1.10.255) at ff:ff:ff:ff:ff:ff on en0 ifscope [ethernet]
+? (169.254.77.178) at 0:15:5d:a:19:2 on en0 [ethernet]
+? (169.254.133.253) at d0:4f:7e:60:a4:21 on en0 [ethernet]
+? (169.254.169.254) at (incomplete) on en0 [ethernet]
+? (169.254.179.174) at f4:96:34:d2:6e:37 on en0 [ethernet]
+? (224.0.0.251) at 1:0:5e:0:0:fb on en0 ifscope permanent [ethernet]
+BCMacDev:~ stevebu$ ping bcden
+PING bcden.bushchang.local (10.1.10.30): 56 data bytes
+64 bytes from 10.1.10.30: icmp_seq=0 ttl=128 time=0.713 ms
+64 bytes from 10.1.10.30: icmp_seq=1 ttl=128 time=0.904 ms
+64 bytes from 10.1.10.30: icmp_seq=2 ttl=128 time=0.803 ms
+64 bytes from 10.1.10.30: icmp_seq=3 ttl=128 time=0.936 ms
+64 bytes from 10.1.10.30: icmp_seq=4 ttl=128 time=0.834 ms
+64 bytes from 10.1.10.30: icmp_seq=5 ttl=128 time=1.438 ms
+64 bytes from 10.1.10.30: icmp_seq=6 ttl=128 time=4.000 ms
+64 bytes from 10.1.10.30: icmp_seq=7 ttl=128 time=0.639 ms
+64 bytes from 10.1.10.30: icmp_seq=8 ttl=128 time=0.821 ms
+64 bytes from 10.1.10.30: icmp_seq=9 ttl=128 time=0.682 ms
+^C
+--- bcden.bushchang.local ping statistics ---
+10 packets transmitted, 10 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 0.639/1.177/4.000/0.965 ms
+BCMacDev:~ stevebu$ arp -a
+utm.bushchang.com (10.1.10.1) at 0:1a:8c:46:27:d0 on en0 ifscope [ethernet]
+? (10.1.10.10) at e4:f4:c6:1:3d:d7 on en0 ifscope [ethernet]
+? (10.1.10.13) at e4:f4:c6:1:c7:44 on en0 ifscope [ethernet]
+? (10.1.10.17) at 0:15:5d:a:19:2 on en0 ifscope [ethernet]
+? (10.1.10.25) at 40:16:7e:29:8:30 on en0 ifscope [ethernet]
+? (10.1.10.26) at a0:36:9f:2b:37:3b on en0 ifscope [ethernet]
+? (10.1.10.30) at a0:36:9f:2b:37:3a on en0 ifscope [ethernet]
+bcactive.bushchang.local (10.1.10.33) at 0:15:5d:a:19:1 on en0 ifscope [ethernet]
+? (10.1.10.163) at 10:40:f3:ec:35:4e on en0 ifscope [ethernet]
+? (10.1.10.181) at 0:e:58:57:7a:52 on en0 ifscope [ethernet]
+? (10.1.10.198) at 40:98:ad:31:2f:8a on en0 ifscope [ethernet]
+? (10.1.10.200) at 0:5:cd:c1:33:9c on en0 ifscope [ethernet]
+? (10.1.10.246) at 0:5:cd:9a:5f:a4 on en0 ifscope [ethernet]
+? (10.1.10.255) at ff:ff:ff:ff:ff:ff on en0 ifscope [ethernet]
+? (169.254.77.178) at 0:15:5d:a:19:2 on en0 [ethernet]
+? (169.254.133.253) at d0:4f:7e:60:a4:21 on en0 [ethernet]
+? (169.254.169.254) at (incomplete) on en0 [ethernet]
+? (169.254.179.174) at f4:96:34:d2:6e:37 on en0 [ethernet]
+? (224.0.0.251) at 1:0:5e:0:0:fb on en0 ifscope permanent [ethernet]
+BCMacDev:~ stevebu$ arp -a
+utm.bushchang.com (10.1.10.1) at 0:1a:8c:46:27:d0 on en0 ifscope [ethernet]
+? (10.1.10.10) at e4:f4:c6:1:3d:d7 on en0 ifscope [ethernet]
+? (10.1.10.13) at e4:f4:c6:1:c7:44 on en0 ifscope [ethernet]
+? (10.1.10.25) at 40:16:7e:29:8:30 on en0 ifscope [ethernet]
+bcactive.bushchang.local (10.1.10.33) at 0:15:5d:a:19:1 on en0 ifscope [ethernet]
+? (10.1.10.86) at a4:b8:5:c3:65:c2 on en0 ifscope [ethernet]
+? (10.1.10.163) at 10:40:f3:ec:35:4e on en0 ifscope [ethernet]
+? (10.1.10.180) at 0:e:58:57:7c:80 on en0 ifscope [ethernet]
+? (10.1.10.181) at 0:e:58:57:7a:52 on en0 ifscope [ethernet]
+? (10.1.10.182) at 0:e:58:57:7e:24 on en0 ifscope [ethernet]
+? (10.1.10.198) at 40:98:ad:31:2f:8a on en0 ifscope [ethernet]
+? (10.1.10.200) at 0:5:cd:c1:33:9c on en0 ifscope [ethernet]
+? (10.1.10.206) at ec:ad:b8:54:8e:16 on en0 ifscope [ethernet]
+? (10.1.10.243) at dc:a9:4:94:3b:31 on en0 ifscope [ethernet]
+? (10.1.10.246) at 0:5:cd:9a:5f:a4 on en0 ifscope [ethernet]
+? (10.1.10.255) at ff:ff:ff:ff:ff:ff on en0 ifscope [ethernet]
+? (169.254.77.178) at 0:15:5d:a:19:2 on en0 [ethernet]
+? (169.254.133.253) at d0:4f:7e:60:a4:21 on en0 [ethernet]
+? (169.254.169.254) at (incomplete) on en0 [ethernet]
+? (169.254.179.174) at f4:96:34:d2:6e:37 on en0 [ethernet]
+? (224.0.0.251) at 1:0:5e:0:0:fb on en0 ifscope permanent [ethernet]
+BCMacDev:~ stevebu$ 

@@ -2,9 +2,9 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using PureActive.Network.Extensions.Extensions;
+using PureActive.Network.Abstractions.Extensions;
 
-namespace PureActive.Network.Extensions.Types
+namespace PureActive.Network.Abstractions.Types
 {
     public class IPAddressSubnet : IComparable<IPAddressSubnet>, IComparable, IEquatable<IPAddressSubnet>
     {

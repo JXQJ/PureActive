@@ -1,7 +1,7 @@
 ﻿using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace PureActive.Network.Extensions.Extensions
+namespace PureActive.Network.Abstractions.Extensions
 {
     public static class GatewayIPAddressInformationCollectionExtensions
     {

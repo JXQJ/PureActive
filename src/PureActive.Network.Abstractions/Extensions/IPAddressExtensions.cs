@@ -3,9 +3,10 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
-using PureActive.Network.Extensions.Types;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Network.Abstractions.Types;
 
-namespace PureActive.Network.Extensions.Extensions
+namespace PureActive.Network.Abstractions.Extensions
 {
     public static class IPAddressExtensions
     {
@@ -16,7 +17,7 @@ namespace PureActive.Network.Extensions.Extensions
         public static readonly IPAddress SubnetClassB = IPAddress.Parse(StringSubnetClassB);
         public static readonly IPAddress SubnetClassC = IPAddress.Parse(StringSubnetClassC);
 
-        public static IPAddressSubnet GetDefaultLocalAddressSubnet(ILogger logger = null)
+        public static IPAddressSubnet GetDefaultLocalAddressSubnet(IPureLogger logger = null)
         {
             try
             {
@@ -47,21 +48,21 @@ namespace PureActive.Network.Extensions.Extensions
             return new IPAddressSubnet(IPAddress.None, IPAddress.None);
         }
 
-        public static IPAddress GetDefaultLocalAddress(ILogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.IPAddress;
-        public static IPAddress GetDefaultLocalSubnet(ILogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.SubnetMask;
+        public static IPAddress GetDefaultLocalAddress(IPureLogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.IPAddress;
+        public static IPAddress GetDefaultLocalSubnet(IPureLogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.SubnetMask;
 
 
-        public static IPAddressSubnet GetDefaultLocalNetworkAddressSubnet(ILogger logger = null)
+        public static IPAddressSubnet GetDefaultLocalNetworkAddressSubnet(IPureLogger logger = null)
         {
             var localIPAddressSubnet = GetDefaultLocalAddressSubnet(logger);
 
             return new IPAddressSubnet(localIPAddressSubnet.IPAddress.GetNetworkAddress(), localIPAddressSubnet.SubnetMask);
         }
 
-        public static IPAddress GetDefaultLocalNetworkAddress(ILogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.IPAddress;
-        public static IPAddress GetDefaultLocalNetworkSubnet(ILogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.SubnetMask;
+        public static IPAddress GetDefaultLocalNetworkAddress(IPureLogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.IPAddress;
+        public static IPAddress GetDefaultLocalNetworkSubnet(IPureLogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.SubnetMask;
 
-        public static IPAddressSubnet GetDefaultGatewayAddressSubnet(ILogger logger = null)
+        public static IPAddressSubnet GetDefaultGatewayAddressSubnet(IPureLogger logger = null)
         {
             try
             {
@@ -99,8 +100,8 @@ namespace PureActive.Network.Extensions.Extensions
             return IPAddressSubnet.None;
         }
 
-        public static IPAddress GetDefaultGatewayAddress(ILogger logger = null) => GetDefaultGatewayAddressSubnet(logger).IPAddress;
-        public static IPAddress GetDefaultGatewaySubnet(ILogger logger = null) => GetDefaultGatewayAddressSubnet(logger).SubnetMask;
+        public static IPAddress GetDefaultGatewayAddress(IPureLogger logger = null) => GetDefaultGatewayAddressSubnet(logger).IPAddress;
+        public static IPAddress GetDefaultGatewaySubnet(IPureLogger logger = null) => GetDefaultGatewayAddressSubnet(logger).SubnetMask;
 
 
         /// <summary>

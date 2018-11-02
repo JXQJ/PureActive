@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
+using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Core.System
 {
@@ -15,12 +16,12 @@ namespace PureActive.Core.System
         /// <summary>
         ///     The logger.
         /// </summary>
-        private readonly ILogger _logger;
+        private readonly IPureLogger _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public ProcessRunner(ILogger<ProcessRunner> logger)
+        public ProcessRunner(IPureLogger<ProcessRunner> logger)
         {
             _logger = logger;
         }

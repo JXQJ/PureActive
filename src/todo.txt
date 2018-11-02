@@ -11,6 +11,9 @@ Common.Reactive
 NetworkService.Dhcp
 NetworkService.Infrastructure
 NetworkService.Interfaces
+	DhcpService
+	NetworkMapService
+	Types
 NetworkService.NetworkMap
 NetworkService.WebApp
 	

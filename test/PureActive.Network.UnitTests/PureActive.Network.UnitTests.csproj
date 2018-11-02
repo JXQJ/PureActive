@@ -16,6 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Hosting\PureActive.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Network.Services\PureActive.Network.Services.csproj" />

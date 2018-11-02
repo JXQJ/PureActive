@@ -16,7 +16,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Services\PureActive.Network.Services.csproj" />
   </ItemGroup>
 
 </Project>

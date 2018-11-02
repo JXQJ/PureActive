@@ -1,17 +1,16 @@
 Common.Infrastructure
 	Configuration
 	Logging
-	Object
-	ObjectGraph
 	Queue
-	Settings
-	System: CommonServices, Hosting
 	
 Common.Interfaces
 	Logging
 	Queue
-	Settings
-	System: CommonServices, Hosting
 
-Common.Net
+Common.Reactive
+NetworkService.Dhcp
+NetworkService.Infrastructure
+NetworkService.Interfaces
+NetworkService.NetworkMap
+NetworkService.WebApp
 	

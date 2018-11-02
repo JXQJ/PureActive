@@ -12,12 +12,17 @@
     <Title>PureActive Hosting Abstractions</Title>  </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Settings\" />
   </ItemGroup>
 
 </Project>

@@ -23,11 +23,9 @@ namespace PureActive.Core.Serialization
         ///     Constructor.
         /// </summary>
         /// <param name="jsonSettingsProvider">The json settings provider.</param>
-        /// <param name="typeMaps">
         ///     A list of type maps, keyed by base type.
         ///     Each entry in a typemap consists of a string representation of
         ///     a sub type, along with the actual subclass type.
-        /// </param>
         public ModelSerializer(IJsonSettingsProvider jsonSettingsProvider)
         {
             _jsonSettingsProvider = jsonSettingsProvider;

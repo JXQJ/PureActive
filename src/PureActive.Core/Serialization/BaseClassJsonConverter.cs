@@ -15,7 +15,7 @@ namespace PureActive.Core.Serialization
         /// <summary>
         ///     The type property name.
         /// </summary>
-        private const string c_typePropertyName = "type";
+        private const string TypePropertyName = "type";
 
         /// <summary>
         ///     Whether or not to bypass this converter on the next read or write.
@@ -23,7 +23,7 @@ namespace PureActive.Core.Serialization
         ///     infinite recursion caused by JSON.NET when attempting to convert
         ///     to and from JObjects with the same converter.
         /// </summary>
-        [ThreadStatic] private static bool bypassOnNextOperation;
+        [ThreadStatic] private static bool _bypassOnNextOperation;
 
         /// <summary>
         ///     The base class type.
@@ -53,9 +53,9 @@ namespace PureActive.Core.Serialization
         {
             get
             {
-                if (bypassOnNextOperation)
+                if (_bypassOnNextOperation)
                 {
-                    bypassOnNextOperation = false;
+                    _bypassOnNextOperation = false;
                     return false;
                 }
 
@@ -70,9 +70,9 @@ namespace PureActive.Core.Serialization
         {
             get
             {
-                if (bypassOnNextOperation)
+                if (_bypassOnNextOperation)
                 {
-                    bypassOnNextOperation = false;
+                    _bypassOnNextOperation = false;
                     return false;
                 }
 
@@ -102,7 +102,7 @@ namespace PureActive.Core.Serialization
                 return null;
 
             var obj = JObject.Load(reader);
-            var type = (string) obj[c_typePropertyName];
+            var type = (string) obj[TypePropertyName];
 
             if (string.IsNullOrEmpty(type))
                 throw new InvalidOperationException("Object does not have required type property.");
@@ -112,12 +112,12 @@ namespace PureActive.Core.Serialization
 
             try
             {
-                bypassOnNextOperation = true;
+                _bypassOnNextOperation = true;
                 return obj.ToObject(_typeMap[type], serializer);
             }
             finally
             {
-                bypassOnNextOperation = false;
+                _bypassOnNextOperation = false;
             }
         }
 
@@ -130,12 +130,12 @@ namespace PureActive.Core.Serialization
 
             try
             {
-                bypassOnNextOperation = true;
+                _bypassOnNextOperation = true;
                 obj = JObject.FromObject(value, serializer);
             }
             finally
             {
-                bypassOnNextOperation = false;
+                _bypassOnNextOperation = false;
             }
 
             var type = _typeMap
@@ -146,7 +146,7 @@ namespace PureActive.Core.Serialization
             if (type == null)
                 throw new InvalidOperationException("The object type is not registered in the type map.");
 
-            obj.AddFirst(new JProperty(c_typePropertyName, type));
+            obj.AddFirst(new JProperty(TypePropertyName, type));
 
             obj.WriteTo(writer);
         }

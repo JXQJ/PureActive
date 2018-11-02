@@ -61,7 +61,7 @@ namespace PureActive.Archive.System
         /// </summary>
         public static string StripInitialFolders(string path, int numFoldersToStrip)
         {
-            for (var i = 0; i < numFoldersToStrip; i++) path = path.Substring(path.IndexOf("/") + 1);
+            for (var i = 0; i < numFoldersToStrip; i++) path = path.Substring(path.IndexOf("/", StringComparison.Ordinal) + 1);
 
             return path;
         }

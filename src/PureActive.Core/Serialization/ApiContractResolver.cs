@@ -61,8 +61,8 @@ namespace PureActive.Core.Serialization
         {
             return base.CreateProperties(type, memberSerialization)
                 ?.OrderBy(p => GetInheritanceHierarchy(p.DeclaringType).Count)
-                ?.Select(CamelCaseEnumValues)
-                ?.ToList();
+                .Select(CamelCaseEnumValues)
+                .ToList();
         }
 
         /// <summary>

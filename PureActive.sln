@@ -65,6 +65,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Email.Office365"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Email.UnitTests", "test\PureActive.Email.UnitTests\PureActive.Email.UnitTests.csproj", "{461798DC-236E-4301-924C-A7FB44C76814}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.UnitTests", "test\PureActive.Network.UnitTests\PureActive.Network.UnitTests.csproj", "{34124DEE-8FA1-48E5-98F6-EE8CB3328479}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Extensions", "src\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj", "{83B950B7-8D81-4B3C-B1A5-2187D2375B0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +159,14 @@ Global
 		{461798DC-236E-4301-924C-A7FB44C76814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{461798DC-236E-4301-924C-A7FB44C76814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{461798DC-236E-4301-924C-A7FB44C76814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34124DEE-8FA1-48E5-98F6-EE8CB3328479}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34124DEE-8FA1-48E5-98F6-EE8CB3328479}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34124DEE-8FA1-48E5-98F6-EE8CB3328479}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34124DEE-8FA1-48E5-98F6-EE8CB3328479}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B950B7-8D81-4B3C-B1A5-2187D2375B0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B950B7-8D81-4B3C-B1A5-2187D2375B0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B950B7-8D81-4B3C-B1A5-2187D2375B0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B950B7-8D81-4B3C-B1A5-2187D2375B0F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -181,6 +193,8 @@ Global
 		{83EC058F-8AB3-429A-8FE1-FF19DCC9FF8F} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{F8735EFD-A33D-4688-9FA1-05E0CB59567B} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{461798DC-236E-4301-924C-A7FB44C76814} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{34124DEE-8FA1-48E5-98F6-EE8CB3328479} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{83B950B7-8D81-4B3C-B1A5-2187D2375B0F} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

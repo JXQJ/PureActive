@@ -50,9 +50,9 @@ namespace PureActive.Core.Utilities
 
         private static int PartCompare(string left, string right)
         {
-            if (!int.TryParse(left, out var x)) return left.CompareTo(right);
+            if (!int.TryParse(left, out var x)) return string.Compare(left, right, StringComparison.Ordinal);
 
-            return !int.TryParse(right, out var y) ? left.CompareTo(right) : x.CompareTo(y);
+            return !int.TryParse(right, out var y) ? string.Compare(left, right, StringComparison.Ordinal) : x.CompareTo(y);
         }
     }
 }

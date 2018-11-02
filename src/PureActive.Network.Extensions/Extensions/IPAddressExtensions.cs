@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
-using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Extensions.Types;
 
 namespace PureActive.Network.Extensions.Extensions
@@ -178,7 +175,7 @@ namespace PureActive.Network.Extensions.Extensions
             uint ip = (uint)byteIP[0] << 24;
             ip += (uint)byteIP[1] << 16;
             ip += (uint)byteIP[2] << 8;
-            ip += (uint)byteIP[3];
+            ip += byteIP[3];
 
             return ip;
         }

@@ -63,7 +63,7 @@ namespace PureActive.Core.Utilities
 
                     // Add value
                     if (ret == null)
-                        ret = new string[] { s };
+                        ret = new[] { s };
                     else
                     {
                         tmp = new string[ret.Length + 1];
@@ -184,43 +184,43 @@ namespace PureActive.Core.Utilities
             // Pairs of 3 8-bit bytes will become pairs of 4 6-bit bytes
             // That's the whole trick of base64 encoding :-)
 
-            int Blocks = value.Length / 3;           // The amount of original pairs
-            if (Blocks * 3 < value.Length) ++Blocks; // Fixes rounding issues; always round up
-            int Bytes = Blocks * 4;                  // The length of the base64 output
+            int blocks = value.Length / 3;           // The amount of original pairs
+            if (blocks * 3 < value.Length) ++blocks; // Fixes rounding issues; always round up
+            int bytes = blocks * 4;                  // The length of the base64 output
 
             // These characters will be used to represent the 6-bit bytes in ASCII
-            char[] Base64_Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray();
+            char[] base64Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray();
 
             // Converts the input string to characters and creates the output array
-            char[] InputChars = value.ToCharArray();
-            char[] OutputChars = new char[Bytes];
+            char[] inputChars = value.ToCharArray();
+            char[] outputChars = new char[bytes];
 
             // Converts the blocks of bytes
-            for (int Block = 0; Block < Blocks; ++Block)
+            for (int block = 0; block < blocks; ++block)
             {
                 // Fetches the input pairs
-                byte Input0 = (byte)(InputChars.Length > Block * 3 ? InputChars[Block * 3] : 0);
-                byte Input1 = (byte)(InputChars.Length > Block * 3 + 1 ? InputChars[Block * 3 + 1] : 0);
-                byte Input2 = (byte)(InputChars.Length > Block * 3 + 2 ? InputChars[Block * 3 + 2] : 0);
+                byte input0 = (byte)(inputChars.Length > block * 3 ? inputChars[block * 3] : 0);
+                byte input1 = (byte)(inputChars.Length > block * 3 + 1 ? inputChars[block * 3 + 1] : 0);
+                byte input2 = (byte)(inputChars.Length > block * 3 + 2 ? inputChars[block * 3 + 2] : 0);
 
                 // Generates the output pairs
-                byte Output0 = (byte)(Input0 >> 2);                           // The first 6 bits of the 1st byte
-                byte Output1 = (byte)(((Input0 & 0x3) << 4) + (Input1 >> 4)); // The last 2 bits of the 1st byte followed by the first 4 bits of the 2nd byte
-                byte Output2 = (byte)(((Input1 & 0xf) << 2) + (Input2 >> 6)); // The last 4 bits of the 2nd byte followed by the first 2 bits of the 3rd byte
-                byte Output3 = (byte)(Input2 & 0x3f);                         // The last 6 bits of the 3rd byte
+                byte output0 = (byte)(input0 >> 2);                           // The first 6 bits of the 1st byte
+                byte output1 = (byte)(((input0 & 0x3) << 4) + (input1 >> 4)); // The last 2 bits of the 1st byte followed by the first 4 bits of the 2nd byte
+                byte output2 = (byte)(((input1 & 0xf) << 2) + (input2 >> 6)); // The last 4 bits of the 2nd byte followed by the first 2 bits of the 3rd byte
+                byte output3 = (byte)(input2 & 0x3f);                         // The last 6 bits of the 3rd byte
 
                 // This prevents 0-bytes at the end
-                if (InputChars.Length < Block * 3 + 2) Output2 = 64;
-                if (InputChars.Length < Block * 3 + 3) Output3 = 64;
+                if (inputChars.Length < block * 3 + 2) output2 = 64;
+                if (inputChars.Length < block * 3 + 3) output3 = 64;
 
                 // Converts the output pairs to base64 characters
-                OutputChars[Block * 4] = Base64_Characters[Output0];
-                OutputChars[Block * 4 + 1] = Base64_Characters[Output1];
-                OutputChars[Block * 4 + 2] = Base64_Characters[Output2];
-                OutputChars[Block * 4 + 3] = Base64_Characters[Output3];
+                outputChars[block * 4] = base64Characters[output0];
+                outputChars[block * 4 + 1] = base64Characters[output1];
+                outputChars[block * 4 + 2] = base64Characters[output2];
+                outputChars[block * 4 + 3] = base64Characters[output3];
             }
 
-            return new string(OutputChars);
+            return new string(outputChars);
         }
 
         /// <summary>
@@ -230,7 +230,7 @@ namespace PureActive.Core.Utilities
         /// <returns></returns>
         public static string FormatDiskSize(long value)
         {
-            double cur = (double)value;
+            double cur = value;
             string[] size = new string[] { "bytes", "kb", "mb", "gb", "tb" };
             int i = 0;
 
@@ -240,7 +240,7 @@ namespace PureActive.Core.Utilities
                 i++;
             }
 
-            return global::System.Math.Round(cur) + " " + size[i];
+            return Math.Round(cur) + " " + size[i];
         }
 
         #region ZeroFill Method
@@ -254,31 +254,33 @@ namespace PureActive.Core.Utilities
         /// <returns>A string with the right amount of digits</returns>
         public static string ZeroFill(string number, int digits, char character = '0')
         {
-            bool Negative = false;
+            var negative = false;
             if (number.Substring(0, 1) == "-")
             {
-                Negative = true;
+                negative = true;
                 number = number.Substring(1);
             }
 
-            for (int Counter = number.Length; Counter < digits; ++Counter)
+            for (var counter = number.Length; counter < digits; ++counter)
             {
                 number = character + number;
             }
-            if (Negative) number = "-" + number;
+
+            if (negative) number = "-" + number;
+
             return number;
         }
 
         /// <summary>
         /// Changes a number into a string and add zeros in front of it, if required
         /// </summary>
-        /// <param name="Number">The input number</param>
-        /// <param name="MinLength">The amount of digits it should be</param>
-        /// <param name="Character">The character to repeat in front (default: 0)</param>
+        /// <param name="number">The input number</param>
+        /// <param name="minLength">The amount of digits it should be</param>
+        /// <param name="character">The character to repeat in front (default: 0)</param>
         /// <returns>A string with the right amount of digits</returns>
-        public static string ZeroFill(int Number, int MinLength, char Character = '0')
+        public static string ZeroFill(int number, int minLength, char character = '0')
         {
-            return ZeroFill(Number.ToString(), MinLength, Character);
+            return ZeroFill(number.ToString(), minLength, character);
         }
 
         #endregion ZeroFill Method
@@ -286,7 +288,7 @@ namespace PureActive.Core.Utilities
         #region Replace Method
 
         /// <summary>
-        /// Replace all occurances of the 'find' string with the 'replace' string.
+        /// Replace all occurrences of the 'find' string with the 'replace' string.
         /// </summary>
         /// <param name="source">Original string</param>
         /// <param name="find">String to find within the original string</param>
@@ -294,15 +296,14 @@ namespace PureActive.Core.Utilities
         /// <returns>Final string after all instances have been replaced.</returns>
         public static string Replace(string source, string find, string replace)
         {
-            int i;
-            int iStart = 0;
+            var iStart = 0;
 
-            if (source == string.Empty || source == null || find == string.Empty || find == null)
+            if (string.IsNullOrEmpty(source) || find == string.Empty || find == null)
                 return source;
 
             while (true)
             {
-                i = source.IndexOf(find, iStart);
+                var i = source.IndexOf(find, iStart, StringComparison.Ordinal);
                 if (i < 0) break;
 
                 if (i > 0)
@@ -323,9 +324,7 @@ namespace PureActive.Core.Utilities
         /// <returns>source</returns>
         public static string ReplaceEmptyOrNull(string source, string replaceWith)
         {
-            if (source == string.Empty || source == null)
-                return replaceWith;
-            return source;
+            return string.IsNullOrEmpty(source) ? replaceWith : source;
         }
 
         /// <summary>
@@ -338,6 +337,7 @@ namespace PureActive.Core.Utilities
         {
             if (source == null || source.ToString() == string.Empty)
                 return replaceWith;
+
             return source.ToString();
         }
 
@@ -389,13 +389,13 @@ namespace PureActive.Core.Utilities
             {
                 i = (r + l) / 2;
 
-                if (string.Compare(array[l], array[i]) > 0)
+                if (string.CompareOrdinal(array[l], array[i]) > 0)
                     Swap(array, l, i);
 
-                if (string.Compare(array[l], array[r]) > 0)
+                if (string.CompareOrdinal(array[l], array[r]) > 0)
                     Swap(array, l, r);
 
-                if (string.Compare(array[i], array[r]) > 0)
+                if (string.CompareOrdinal(array[i], array[r]) > 0)
                     Swap(array, i, r);
 
                 j = r - 1;
@@ -405,10 +405,10 @@ namespace PureActive.Core.Utilities
                 v = array[j];
                 for (; ; )
                 {
-                    while (string.Compare(array[++i], v) < 0)
+                    while (string.CompareOrdinal(array[++i], v) < 0)
                     { }
 
-                    while (string.Compare(array[--j], v) > 0)
+                    while (string.CompareOrdinal(array[--j], v) > 0)
                     { }
 
                     if (j < i)
@@ -433,7 +433,7 @@ namespace PureActive.Core.Utilities
             {
                 v = array[i];
                 j = i;
-                while ((j > lo) && (string.Compare(array[j - 1], v) > 0))
+                while ((j > lo) && (string.CompareOrdinal(array[j - 1], v) > 0))
                 {
 
                     array[j] = array[j - 1];
@@ -464,7 +464,7 @@ namespace PureActive.Core.Utilities
         /// <exception cref="ArgumentNullException">format or args is null</exception>
         public static string Format(string format, object arg)
         {
-            return Format(format, new object[] { arg });
+            return Format(format, new[] { arg });
         }
 
         /// <summary>
@@ -506,7 +506,6 @@ namespace PureActive.Core.Utilities
                         {
                             // escaped starting bracket.
                             starting = starting + 2;
-                            continue;
                         }
                         else
                         {
@@ -553,7 +552,7 @@ namespace PureActive.Core.Utilities
                                         }
                                         else
                                         {
-                                            //throw new FormatException(FormatException.ERROR_MESSAGE);
+                                            //throw new FormatException(FormatException.StringFormatErrorMessage);
                                         }
                                     }
 
@@ -571,14 +570,14 @@ namespace PureActive.Core.Utilities
 
                             if (!found)
                             {
-                                throw new FormatException(FormatException.ERROR_MESSAGE);
+                                throw new FormatException(FormatException.StringFormatErrorMessage);
                             }
                         }
                     }
                     else
                     {
                         // invalid
-                        throw new FormatException(FormatException.ERROR_MESSAGE);
+                        throw new FormatException(FormatException.StringFormatErrorMessage);
                     }
 
                 }
@@ -600,18 +599,17 @@ namespace PureActive.Core.Utilities
 
             int i = 0;
 
-            while ((i = format.IndexOfAny(new char[] { '{', '}' }, i)) >= 0)
+            while ((i = format.IndexOfAny(new[] { '{', '}' }, i)) >= 0)
             {
                 if (i < (format.Length - 1) && format[i] == format[i + 1])
                 {
                     // escaped brace. continue looking.
                     i = i + 2;
-                    continue;
                 }
                 else if (format[i] != expected)
                 {
                     // badly formed string.
-                    //throw new FormatException(FormatException.ERROR_MESSAGE);
+                    //throw new FormatException(FormatException.StringFormatErrorMessage);
                 }
                 else
                 {
@@ -629,7 +627,7 @@ namespace PureActive.Core.Utilities
             if (expected == '}')
             {
                 // orpaned opening brace. Bad format.
-                //throw new FormatException(FormatException.ERROR_MESSAGE);
+                //throw new FormatException(FormatException.StringFormatErrorMessage);
             }
 
         }
@@ -698,13 +696,12 @@ namespace PureActive.Core.Utilities
     /// </summary>
     public class FormatException : Exception
     {
-        internal static string ERROR_MESSAGE = "String format is not valid";
+        internal const string StringFormatErrorMessage = "String format is not valid";
 
         /// <summary>
         /// Initializes a new instance of the FormatException class.
         /// </summary>
         public FormatException()
-            : base()
         {
         }
 

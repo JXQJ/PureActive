@@ -38,12 +38,15 @@ namespace PureActive.Core.Async
             int maxSimultaneous
             )
         {
-            var currentlyRunningTasks = sources
+            // Enumerate once to List and use twice below
+            var sourcesList = sources.ToList();
+
+            var currentlyRunningTasks = sourcesList
                 .Select(operation)
                 .Take(maxSimultaneous)
                 .ToList();
 
-            var sourcesWaitingToStart = sources
+            var sourcesWaitingToStart = sourcesList
                 .Skip(maxSimultaneous)
                 .ToList();
 

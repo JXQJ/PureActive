@@ -29,7 +29,6 @@ namespace PureActive.Core.Serialization
         ///     <see cref="IJsonSerializer" />
         /// </summary>
         /// <param name="settings">The settings object to populate.</param>
-        /// <param name="typeMaps">The type maps to use when serializing/deserializing abstract classes.</param>
         public void PopulateSettings(JsonSerializerSettings settings)
         {
             settings.ContractResolver = new ApiContractResolver(_typeMaps);

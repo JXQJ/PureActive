@@ -8,42 +8,25 @@ namespace PureActive.Network.Extensions.Types
 {
     public class IPAddressSubnet : IComparable<IPAddressSubnet>, IComparable, IEquatable<IPAddressSubnet>
     {
-        private IPAddress _iPAddress;
-        private IPAddress _subnetMask;
-        private IPAddress _networkAddress;
-        private IPAddress _broadcastAddress;
-
-        public IPAddress IPAddress => _iPAddress;
-
-        public IPAddress SubnetMask => _subnetMask;
-
-        public IPAddress NetworkAddress => _networkAddress;
-
-        public IPAddress BroadcastAddress => _broadcastAddress;
-
+        public IPAddress IPAddress { get; }
+        public IPAddress SubnetMask { get; }
+        public IPAddress NetworkAddress { get; }
+        public IPAddress BroadcastAddress { get; }
         public IPAddressSubnet NetworkAddressSubnet => new IPAddressSubnet(NetworkAddress, SubnetMask);
-
         public static readonly IPAddressSubnet None = new IPAddressSubnet(IPAddress.None, IPAddress.None);
 
         public bool IsAddressOnSameSubnet(IPAddress address) => IPAddress.IsAddressOnSameSubnet(address, SubnetMask);
 
-
-
-        public void UpdateAddress(IPAddress ipAddress, IPAddress subnetMask)
-        {
-            _iPAddress = ipAddress ?? throw new ArgumentNullException(nameof(ipAddress));
-            _subnetMask = subnetMask ?? throw new ArgumentNullException(nameof(subnetMask));
-
-            if (_iPAddress.AddressFamily != AddressFamily.InterNetwork)
-                throw new ArgumentException("Only IPv4 addresses are supported", nameof(ipAddress));
-
-            _networkAddress = ipAddress.GetNetworkAddress(subnetMask);
-            _broadcastAddress = ipAddress.GetBroadcastAddress(subnetMask);
-        }
-
         public IPAddressSubnet(IPAddress ipAddress, IPAddress subnetMask)
         {
-            UpdateAddress(ipAddress, subnetMask);
+            IPAddress = ipAddress ?? throw new ArgumentNullException(nameof(ipAddress));
+            SubnetMask = subnetMask ?? throw new ArgumentNullException(nameof(subnetMask));
+
+            if (IPAddress.AddressFamily != AddressFamily.InterNetwork)
+                throw new ArgumentException("Only IPv4 addresses are supported", nameof(ipAddress));
+
+            NetworkAddress = ipAddress.GetNetworkAddress(subnetMask);
+            BroadcastAddress = ipAddress.GetBroadcastAddress(subnetMask);
         }
 
         public IPAddressSubnet(IPAddress ipAddress) : this(ipAddress, IPAddressExtensions.SubnetClassC)
@@ -53,7 +36,7 @@ namespace PureActive.Network.Extensions.Types
 
         public int CompareTo(IPAddressSubnet other)
         {
-            return other == null ? 1 : _iPAddress.CompareTo(other._iPAddress);
+            return other == null ? 1 : IPAddress.CompareTo(other.IPAddress);
 
             // Ignore Subnet Masks, Just compare IPAddress
         }
@@ -80,8 +63,8 @@ namespace PureActive.Network.Extensions.Types
         {
             unchecked
             {
-                var hashCode = (_iPAddress != null ? _iPAddress.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (_subnetMask != null ? _subnetMask.GetHashCode() : 0);
+                var hashCode = (IPAddress != null ? IPAddress.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (SubnetMask != null ? SubnetMask.GetHashCode() : 0);
                 return hashCode;
             }
         }

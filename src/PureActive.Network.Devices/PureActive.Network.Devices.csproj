@@ -1,17 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PureActive.Network.Services.snk</AssemblyOriginatorKeyFile>
-    <Description>PureActive Network Services</Description>
+    <AssemblyOriginatorKeyFile>PureActive.Network.Devices.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Network Devices</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveNetwork256.png</PackageIconUrl>
-    <PackageId>PureActive.Network.Services</PackageId>
-    <PackageTags>PureActive network services</PackageTags>
+    <PackageId>PureActive.Network.Devices</PackageId>
+    <PackageTags>PureActive network devices</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Network Services</Title>
+    <Title>PureActive Network Devices</Title>
 
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

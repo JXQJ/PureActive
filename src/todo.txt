@@ -1,6 +1,5 @@
 Common.Infrastructure
 	Configuration
-	Hosting
 	Logging
 	Object
 	ObjectGraph

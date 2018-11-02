@@ -63,7 +63,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
             pureLogger.Should().NotBeNull();
 
-            var logger = loggerFactory.CreateLogger<SerilogProviderUnitTests>();
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
             logger.Should().NotBeNull();
         }
 

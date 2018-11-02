@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Network.Abstractions.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Network Abstractions</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveNetwork256.png</PackageIconUrl>
+    <PackageId>PureActive.Network.Abstractions</PackageId>
+    <PackageTags>PureActive network abstractions</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Network Abstractions</Title>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

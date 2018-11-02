@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.Async;
+using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Core.Async
 {
@@ -17,12 +18,12 @@ namespace PureActive.Core.Async
         /// <summary>
         ///     The logger.
         /// </summary>
-        private readonly ILogger<OperationRunner> _logger;
+        private readonly IPureLogger<OperationRunner> _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public OperationRunner(ILogger<OperationRunner> logger)
+        public OperationRunner(IPureLogger<OperationRunner> logger)
         {
             _logger = logger;
         }
@@ -38,12 +39,15 @@ namespace PureActive.Core.Async
             int maxSimultaneous
             )
         {
-            var currentlyRunningTasks = sources
+            // Enumerate once to List and use twice below
+            var sourcesList = sources.ToList();
+
+            var currentlyRunningTasks = sourcesList
                 .Select(operation)
                 .Take(maxSimultaneous)
                 .ToList();
 
-            var sourcesWaitingToStart = sources
+            var sourcesWaitingToStart = sourcesList
                 .Skip(maxSimultaneous)
                 .ToList();
 

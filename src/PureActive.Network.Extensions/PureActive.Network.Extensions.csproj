@@ -17,10 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Types\" />
+    <ProjectReference Include="..\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

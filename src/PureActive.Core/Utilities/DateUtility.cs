@@ -74,7 +74,7 @@ namespace PureActive.Core.Utilities
             }
 
             // Short
-            if (datetime.IndexOf("/") > 0)
+            if (datetime.IndexOf("/", StringComparison.Ordinal) > 0)
             {
                 vals = datetime.Split('/');
                 return new DateTime(int.Parse(vals[2]),

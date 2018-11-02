@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
@@ -280,5 +281,18 @@ namespace PureActive.Core.System
                 return "/usr/sbin/arp";
             }
         }
+
+        public string AssemblyFolder
+        {
+            get
+            {
+                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var uri = new UriBuilder(codeBase);
+                var path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
+
+        public string SettingsFolder => AssemblyFolder + "/Settings/";
     }
 }

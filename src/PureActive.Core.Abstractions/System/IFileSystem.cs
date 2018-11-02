@@ -88,6 +88,8 @@ namespace PureActive.Core.Abstractions.System
 
         string ArpCommandPath();
 
+        string AssemblyFolder { get; }
 
+        string SettingsFolder { get; }
     }
 }

@@ -18,6 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PureActive.Archive.Abstractions\PureActive.Archive.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Archive\PureActive.Archive.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Core\PureActive.Core.csproj" />
   </ItemGroup>
 
 </Project>

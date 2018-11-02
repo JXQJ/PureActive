@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
 using PureActive.Hosting.Abstractions.Settings;
 using PureActive.Hosting.Abstractions.Types;
@@ -34,7 +33,7 @@ namespace PureActive.Hosting.Settings
 
             ServiceHost = serviceHost;
             ServiceHostConfig = serviceHostConfig;
-            ServiceDatabaseConfig = ServiceDatabaseConfig;
+            ServiceDatabaseConfig = serviceDatabaseConfig;
         }
 
         // Public Interfaces

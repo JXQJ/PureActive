@@ -14,7 +14,7 @@ namespace PureActive.Network.Devices.Network
         private PureObjectGraph<IDevice> _deviceGraph;
         private INetworkGateway _networkGateway;
         private ILocalNetworkDevice _localNetworkDevice;
-        private readonly object deviceGraphLock = new object();
+        private readonly object _deviceGraphLock = new object();
 
         #endregion
 
@@ -70,7 +70,7 @@ namespace PureActive.Network.Devices.Network
 
         public bool AddDeviceToGateway(IDevice device)
         {
-            lock (deviceGraphLock)
+            lock (_deviceGraphLock)
             {
                 if (device.Equals(NetworkGateway))
                 {

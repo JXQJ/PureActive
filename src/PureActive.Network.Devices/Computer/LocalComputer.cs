@@ -10,7 +10,7 @@ namespace PureActive.Network.Devices.Computer
 {
     public class LocalComputer : ComputerBase, ILocalComputer
     {
-        private bool _isInitialized = false;
+        private bool _isInitialized;
         public bool IsMonitoring { get; internal set; }
 
         private readonly NetworkAdapterCollection _networkAdapterCollection;
@@ -31,8 +31,8 @@ namespace PureActive.Network.Devices.Computer
             if (!IsMonitoring)
             {
                 IsMonitoring = true;
-                NetworkChange.NetworkAvailabilityChanged += LocalComputer.NetworkAvailabilityChanged;
-                NetworkChange.NetworkAddressChanged += LocalComputer.NetworkAddressChanged;
+                NetworkChange.NetworkAvailabilityChanged += NetworkAvailabilityChanged;
+                NetworkChange.NetworkAddressChanged += NetworkAddressChanged;
             }
 
             return IsMonitoring;
@@ -43,8 +43,8 @@ namespace PureActive.Network.Devices.Computer
             if (IsMonitoring)
             {
                 IsMonitoring = false;
-                NetworkChange.NetworkAvailabilityChanged -= LocalComputer.NetworkAvailabilityChanged;
-                NetworkChange.NetworkAddressChanged -= LocalComputer.NetworkAddressChanged;
+                NetworkChange.NetworkAvailabilityChanged -= NetworkAvailabilityChanged;
+                NetworkChange.NetworkAddressChanged -= NetworkAddressChanged;
             }
 
             return IsMonitoring;

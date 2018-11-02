@@ -55,7 +55,7 @@ namespace PureActive.Network.Devices.Network
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

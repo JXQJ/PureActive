@@ -14,7 +14,7 @@ namespace PureActive.Network.Devices.Network
     public class LocalNetworkCollection : ILocalNetworkCollection
     {
         private readonly Dictionary<IPAddressSubnet, INetwork> _networks = new Dictionary<IPAddressSubnet, INetwork>();
-        private INetwork _primaryNetwork = null;
+        private INetwork _primaryNetwork;
         
         public INetwork PrimaryNetwork
         {
@@ -93,7 +93,7 @@ namespace PureActive.Network.Devices.Network
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
     }
 }

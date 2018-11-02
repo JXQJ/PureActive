@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Abstractions.Device;
 using PureActive.Network.Abstractions.PureObject;
 using PureActive.Network.Abstractions.Types;

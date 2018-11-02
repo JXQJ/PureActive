@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;

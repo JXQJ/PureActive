@@ -3,7 +3,7 @@ using PureActive.Network.Abstractions.PureObject;
 
 namespace PureActive.Network.Devices.PureObjectGraph
 {
-    public class PureObjectVertex<T> : IComparable<PureObjectVertex<T>> where T : IPureObject, IComparable<IPureObject>
+    public class PureObjectVertex<T> : IComparable<PureObjectVertex<T>> where T : class, IPureObject, IComparable<IPureObject>
     {
         public T Value { get; set; }
 
@@ -17,7 +17,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
 
         public PureObjectVertex(T value)
         {
-            this.Value = value;
+            Value = value;
         }
 
         #region Overrides
@@ -43,7 +43,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
 
         public int CompareTo(T other)
         {
-            return Value.CompareTo((IPureObject)other);
+            return Value.CompareTo(other);
         }
 
         public int CompareTo(PureObjectVertex<T> other)

@@ -35,24 +35,18 @@ namespace PureActive.Network.Devices.PureObject
             Logger = logger ?? LoggerFactory.CreatePureLogger<PureObjectBase>();
         }
 
-        public bool IsSameObjectId(IPureObject objectOther)
-        {
-            return objectOther != null && this.ObjectId.Equals(objectOther.ObjectId);
-        }
+        public bool IsSameObjectId(IPureObject objectOther) => objectOther != null && ObjectId.Equals(objectOther.ObjectId);
 
-        public bool IsSameObjectVersion(IPureObject objectOther)
-        {
-            return objectOther != null && this.ObjectVersion == objectOther.ObjectVersion;
-        }
+        public bool IsSameObjectVersion(IPureObject objectOther) => objectOther != null && ObjectVersion == objectOther.ObjectVersion;
 
         public virtual IPureObject CopyInstance()
         {
-            return this.MemberwiseClone() as IPureObject;
+            return MemberwiseClone() as IPureObject;
         }
 
         public virtual IPureObject CloneInstance()
         {
-            var objectClone = (PureObjectBase)this.MemberwiseClone();
+            var objectClone = (PureObjectBase)MemberwiseClone();
 
             // Establishes new ObjectId, CreatedTimestamp and ModifiedTimestamp
             objectClone.ObjectId = Guid.NewGuid();

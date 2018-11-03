@@ -19,6 +19,7 @@
     <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
     <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Hosting\PureActive.Hosting.csproj" />
+    <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
   </ItemGroup>

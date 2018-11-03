@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Hosting\PureActive.Hosting.csproj" />
   </ItemGroup>

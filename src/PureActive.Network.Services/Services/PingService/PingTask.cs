@@ -136,10 +136,9 @@ namespace PureActive.Network.Services.Services.PingService
                 }
             }
 
-            public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken,
-                int pingCallLimit, bool shuffle)
+            public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle)
             {
-                    return PingNetworkAsync(ipAddressSubnet, cancellationToken, DefaultTimeout, _pingOptions, pingCallLimit, shuffle);
+                    return PingNetworkAsync(ipAddressSubnet, cancellationToken, timeout, _pingOptions, pingCallLimit, shuffle);
             }
         }
     }

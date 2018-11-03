@@ -1,6 +1,9 @@
 Common.Infrastructure
 	Configuration
+		Fix RegisterServices
 	Logging
+		Fix Logging Extensions
+		Fix LogPropertyLevel
 	Queue
 	
 Common.Interfaces
@@ -16,7 +19,5 @@ NetworkService.Interfaces
 NetworkService.NetworkMap
 NetworkService.WebApp
 
-Fix LogPropertyLevel
-Fix RegisterServices
 Fix PingReply Logging
 	

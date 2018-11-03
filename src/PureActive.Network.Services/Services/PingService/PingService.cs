@@ -72,11 +72,11 @@ namespace PureActive.Network.Services.Services.PingService
         }
 
 
-        public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int pingCallLimit, bool shuffle)
+        public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle)
         {
             var iPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
 
-            return _pingTask.PingNetworkAsync(iPAddressSubnet, cancellationToken, pingCallLimit, shuffle);
+            return _pingTask.PingNetworkAsync(iPAddressSubnet, cancellationToken, timeout, pingCallLimit, shuffle);
         }
 
         public Task<PingReply> PingIpAddressAsync(IPAddress ipAddress, int timeout)

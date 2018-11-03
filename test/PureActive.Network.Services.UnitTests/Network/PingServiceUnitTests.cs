@@ -16,6 +16,8 @@ namespace PureActive.Network.Services.UnitTests.Network
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IPingService _pingService;
+        private const int DefaultNetworkTimeout = 250;
+        private const int DefaultPingCalls = 5;
 
         public PingServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
@@ -31,7 +33,7 @@ namespace PureActive.Network.Services.UnitTests.Network
             var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 
             _pingService.OnPingReply += PingReplyEventHandler;
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, 20, false);
+            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
         }
 
         private void PingReplyEventHandler(object sender, PingReplyEventArgs args)

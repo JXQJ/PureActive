@@ -32,7 +32,7 @@ namespace PureActive.Network.Services.UnitTests.Network
         }
 
 
-        [Fact(Timeout=1000)]
+        [Fact]
         public void TestDeviceLogging()
         {
             var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);

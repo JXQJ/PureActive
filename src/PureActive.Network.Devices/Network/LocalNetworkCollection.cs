@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.Extensions.Logging;
+using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Local;
 using PureActive.Network.Abstractions.Network;
@@ -25,13 +26,13 @@ namespace PureActive.Network.Devices.Network
         public int Count => _networks.Count;
 
         private readonly ICommonNetworkServices _commonNetworkServices;
-        private readonly ILogger _logger;
+        private readonly IPureLogger _logger;
         
         public LocalNetworkCollection(ICommonNetworkServices commonNetworkServices)
         {
             _commonNetworkServices = commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
 
-            _logger = commonNetworkServices.LoggerFactory?.CreateLogger<LocalNetworkCollection>();
+            _logger = commonNetworkServices.LoggerFactory?.CreatePureLogger<LocalNetworkCollection>();
         }
 
         private INetwork GetPrimaryNetworkInternal()

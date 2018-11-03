@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.Types;
+using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Local;
 using PureActive.Network.Abstractions.Network;
@@ -18,7 +19,7 @@ namespace PureActive.Network.Devices.Network
         public DateTimeOffset UpdatedTimestamp { get; private set; }
         public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
 
-        private readonly ILogger _logger;
+        private readonly IPureLogger _logger;
 
         public INetwork PrimaryNetwork => LocalNetworks?.PrimaryNetwork;
 
@@ -26,7 +27,7 @@ namespace PureActive.Network.Devices.Network
         {
             if (commonNetworkServices == null) throw new ArgumentNullException(nameof(commonNetworkServices));
 
-            _logger = commonNetworkServices.LoggerFactory?.CreateLogger<NetworkMap>();
+            _logger = commonNetworkServices.LoggerFactory?.CreatePureLogger<NetworkMap>();
 
             UpdateTimestamp();
         }

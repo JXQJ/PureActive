@@ -27,21 +27,21 @@ namespace PureActive.Network.Services.UnitTests.Network
         }
 
 
-        [Fact]
-        public async Task TestPingNetworkEventWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
+        //[Fact]
+        //public async Task TestPingNetworkEventWithLogging()
+        //{
+        //    var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 
-            _pingService.OnPingReply += PingReplyEventHandler;
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
+        //    _pingService.OnPingReply += PingReplyEventHandler;
+        //    await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
+        //}
 
-        private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
-        {
-            if (args != null)
-            {
-                TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
-            }
-        }
+        //private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
+        //{
+        //    if (args != null)
+        //    {
+        //        TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
+        //    }
+        //}
     }
 }

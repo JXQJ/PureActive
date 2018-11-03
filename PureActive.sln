@@ -77,12 +77,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Devices"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Devices.UnitTests", "test\PureActive.Network.Devices.UnitTests\PureActive.Network.Devices.UnitTests.csproj", "{6F4349D0-3FA0-4053-A326-630926CC02FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.UnitTests", "test\PureActive.Network.Services.UnitTests\PureActive.Network.Services.UnitTests.csproj", "{E7270101-53D0-4E1B-AF81-42D1DE800EFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.UnitTests", "test\PureActive.Network.Services.UnitTests\PureActive.Network.Services.UnitTests.csproj", "{E7270101-53D0-4E1B-AF81-42D1DE800EFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A1FFB685-D4FB-45F0-820A-293F1BC156BD}"
 	ProjectSection(SolutionItems) = preProject
 		docs\todo.txt = docs\todo.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Queue.Hangfire", "src\PureActive.Queue.Hangfire\PureActive.Queue.Hangfire.csproj", "{BD64B6B9-E34B-4F91-AFDB-EC217027C870}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Queue.Hangfire.UnitTests", "test\PureActive.Queue.Hangfire.UnitTests\PureActive.Queue.Hangfire.UnitTests.csproj", "{92C854C4-1BDB-4738-B699-9DC38A1B2943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -202,6 +206,14 @@ Global
 		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD64B6B9-E34B-4F91-AFDB-EC217027C870}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD64B6B9-E34B-4F91-AFDB-EC217027C870}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD64B6B9-E34B-4F91-AFDB-EC217027C870}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD64B6B9-E34B-4F91-AFDB-EC217027C870}.Release|Any CPU.Build.0 = Release|Any CPU
+		{92C854C4-1BDB-4738-B699-9DC38A1B2943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92C854C4-1BDB-4738-B699-9DC38A1B2943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92C854C4-1BDB-4738-B699-9DC38A1B2943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92C854C4-1BDB-4738-B699-9DC38A1B2943}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,6 +247,8 @@ Global
 		{0048054E-A435-4FEC-AB1F-CF6AA2AD7B0A} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{6F4349D0-3FA0-4053-A326-630926CC02FE} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{E7270101-53D0-4E1B-AF81-42D1DE800EFD} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{BD64B6B9-E34B-4F91-AFDB-EC217027C870} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{92C854C4-1BDB-4738-B699-9DC38A1B2943} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

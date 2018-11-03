@@ -17,10 +17,13 @@
   <ItemGroup>
     <PackageReference Include="AsyncFriendlyStackTrace" Version="1.6.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
+    <PackageReference Include="HtmlSanitizer" Version="4.0.187" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="2.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.1" />
@@ -28,11 +31,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PureActive.Archive.Abstractions\PureActive.Archive.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Archive\PureActive.Archive.csproj" />
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
+    <ProjectReference Include="..\PureActive.Email.Office365\PureActive.Email.Office365.csproj" />
     <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Logger.Provider.ApplicationInsights\PureActive.Logger.Provider.ApplicationInsights.csproj" />
+    <ProjectReference Include="..\PureActive.Logger.Provider.Serilog\PureActive.Logger.Provider.Serilog.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
+    <ProjectReference Include="..\PureActive.Queue.Hangfire\PureActive.Queue.Hangfire.csproj" />
   </ItemGroup>
 
 </Project>

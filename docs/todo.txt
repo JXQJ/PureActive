@@ -1,14 +1,10 @@
 Common.Infrastructure
-	Configuration
-		Fix RegisterServices
 	Logging
 		Fix Logging Extensions
 		Fix LogPropertyLevel
-	Queue
 	
 Common.Interfaces
 	Logging
-	Queue
 
 Common.Reactive
 NetworkService.Dhcp

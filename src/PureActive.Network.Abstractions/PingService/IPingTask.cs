@@ -20,10 +20,9 @@ namespace PureActive.Network.Abstractions.PingService
         Task<PingReply> PingIpAddressAsync(IPAddress ipAddress, int timeout);
         Task<PingReply> PingIpAddressAsync(IPAddress ipAddress);
 
-        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout,  
-            PingOptions pingOptions, int pingCallLimit, bool shuffle);
+        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, PingOptions pingOptions, int pingCallLimit, bool shuffle);
 
-        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int pingCallLimit, bool shuffle);
+        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle);
 
         event PingReplyEventHandler OnPingReply;
     }

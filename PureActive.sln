@@ -79,6 +79,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Devices.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.UnitTests", "test\PureActive.Network.Services.UnitTests\PureActive.Network.Services.UnitTests.csproj", "{E7270101-53D0-4E1B-AF81-42D1DE800EFD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{A1FFB685-D4FB-45F0-820A-293F1BC156BD}"
+	ProjectSection(SolutionItems) = preProject
+		docs\todo.txt = docs\todo.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

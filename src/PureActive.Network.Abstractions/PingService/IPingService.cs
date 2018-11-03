@@ -12,9 +12,11 @@ namespace PureActive.Network.Abstractions.PingService
     {
         event PingReplyEventHandler OnPingReply;
         bool EnableLogging { get; set; }
-        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int pingCallLimit, bool shuffle);
+        Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle);
 
         Task<PingReply> PingIpAddressAsync(IPAddress ipAddress, int timeout);
         Task<PingReply> PingIpAddressAsync(IPAddress ipAddress);
+
+
     }
 }

@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Core\PureActive.Core.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
   </ItemGroup>
 

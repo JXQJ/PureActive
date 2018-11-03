@@ -1,5 +1,6 @@
 using System.Net;
 using FluentAssertions;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Logging;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
@@ -31,7 +32,7 @@ namespace PureActive.Network.Services.UnitTests.Network
         }
 
 
-        [Fact]
+        [Fact(Timeout=1000)]
         public void TestDeviceLogging()
         {
             var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);

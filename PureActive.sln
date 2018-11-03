@@ -77,6 +77,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Devices"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Devices.UnitTests", "test\PureActive.Network.Devices.UnitTests\PureActive.Network.Devices.UnitTests.csproj", "{6F4349D0-3FA0-4053-A326-630926CC02FE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.UnitTests", "test\PureActive.Network.Services.UnitTests\PureActive.Network.Services.UnitTests.csproj", "{E7270101-53D0-4E1B-AF81-42D1DE800EFD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -191,6 +193,10 @@ Global
 		{6F4349D0-3FA0-4053-A326-630926CC02FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F4349D0-3FA0-4053-A326-630926CC02FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4349D0-3FA0-4053-A326-630926CC02FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E7270101-53D0-4E1B-AF81-42D1DE800EFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -223,6 +229,7 @@ Global
 		{B315442C-26CC-40BB-97CA-E89B15EDCD6E} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{0048054E-A435-4FEC-AB1F-CF6AA2AD7B0A} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{6F4349D0-3FA0-4053-A326-630926CC02FE} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{E7270101-53D0-4E1B-AF81-42D1DE800EFD} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

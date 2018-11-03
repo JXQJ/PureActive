@@ -9,11 +9,14 @@ Common.Interfaces
 
 Common.Reactive
 NetworkService.Dhcp
-NetworkService.Infrastructure
 NetworkService.Interfaces
 	DhcpService
 	NetworkMapService
 	Types
 NetworkService.NetworkMap
 NetworkService.WebApp
+
+Fix LogPropertyLevel
+Fix RegisterServices
+Fix PingReply Logging
 	

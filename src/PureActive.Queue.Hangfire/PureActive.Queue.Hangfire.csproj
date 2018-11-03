@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Queue.Hangfire.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Hangfire Queue</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveQueue256.png</PackageIconUrl>
+    <PackageId>PureActive.Queue.Hangfire</PackageId>
+    <PackageTags>PureActive Hangfire queue</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Hangfire Queue</Title>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.6.21" />
+    <PackageReference Include="Hangfire.AspNetCore" Version="1.6.21" />
+    <PackageReference Include="Hangfire.SQLite" Version="1.4.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
+  </ItemGroup>
+
+</Project>

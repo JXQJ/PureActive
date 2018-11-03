@@ -37,22 +37,22 @@ namespace PureActive.Network.Services.UnitTests.Network
             var pingReply = await _pingService.PingIpAddressAsync(ipAddress, timeout);
         }
 
-        [Fact]
-        public async Task TestPingNetworkWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
+        //[Fact]
+        //public async Task TestPingNetworkWithLogging()
+        //{
+        //    var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
+        //    await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
+        //}
 
-        [Fact]
-        public async Task TestPingNetworkEventWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
+        //[Fact]
+        //public async Task TestPingNetworkEventWithLogging()
+        //{
+        //    var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 
-            _pingService.OnPingReply += PingReplyEventHandler;
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
+        //    _pingService.OnPingReply += PingReplyEventHandler;
+        //    await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
+        //}
 
         private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
         {

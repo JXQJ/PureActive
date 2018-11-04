@@ -13,7 +13,7 @@ using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.PingService;
 
-namespace PureActive.Network.Services.Services
+namespace PureActive.Network.Services
 {
     public class CommonNetworkServices : LoggableBase<CommonNetworkServices>, ICommonNetworkServices
     {
@@ -44,7 +44,7 @@ namespace PureActive.Network.Services.Services
             if (commonServices == null) throw new ArgumentNullException(nameof(commonServices));
 
             // Common Network Services
-            var pingService = new PureActive.Network.Services.Services.PingService.PingService(commonServices);
+            var pingService = new PingService.PingService(commonServices);
             var arpService = new ArpService.ArpService(commonServices, pingService);
   
             return new CommonNetworkServices(commonServices, pingService, arpService);

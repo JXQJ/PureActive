@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// <see cref="SocketChannel"/> have sent or received a message.

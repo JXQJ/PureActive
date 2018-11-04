@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using PureActive.Logging.Abstractions.Interfaces;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     ///     Used by <see cref="SocketListener.ClientConnected"/>.
@@ -13,7 +13,7 @@ namespace PureActive.Network.Services.Sockets
         /// <summary>
         ///     Initializes a new instance of the <see cref="ClientConnectedEventArgs" /> class.
         /// </summary>
-        /// <param name="socket">The channel.</param>
+        /// <param name="logger">The channel.</param>
         /// <param name="logger">Logger</param>
         public SocketEventArgs(Socket socket, IPureLogger logger)
         {

@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
+
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PureActive.Network.Services.snk</AssemblyOriginatorKeyFile>
-    <Description>PureActive Network Services</Description>
+    <AssemblyOriginatorKeyFile>PureActive.Network.Services.ArpService.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Network Arp Service</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveNetwork256.png</PackageIconUrl>
-    <PackageId>PureActive.Network.Services</PackageId>
-    <PackageTags>PureActive network services</PackageTags>
+    <PackageId>PureActive.Network.Services.ArpService</PackageId>
+    <PackageTags>PureActive network arp service</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Network Services</Title>
+    <Title>PureActive Network Arp Service</Title>
 
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,8 +23,6 @@
     <ProjectReference Include="..\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Network.Core\PureActive.Network.Core.csproj" />
     <ProjectReference Include="..\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
-    <ProjectReference Include="..\PureActive.Network.Services.ArpService\PureActive.Network.Services.ArpService.csproj" />
-    <ProjectReference Include="..\PureActive.Network.Services.PingService\PureActive.Network.Services.PingService.csproj" />
   </ItemGroup>
 
 </Project>

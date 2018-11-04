@@ -7,13 +7,11 @@ using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
-using PureActive.Network.Services.Services.ArpService;
-using PureActive.Network.Services.Services.PingService;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.Services.UnitTests.Network
+namespace PureActive.Network.Services.ArpService.UnitTests
 {
     public class ArpServiceUnitTests : LoggingUnitTestBase<ArpServiceUnitTests>
     {
@@ -24,8 +22,8 @@ namespace PureActive.Network.Services.UnitTests.Network
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceUnitTests");
             _cancellationTokenSource = new CancellationTokenSource();
-            IPingService pingService = new PingService(commonServices);
-            _arpService = new ArpService(commonServices, pingService);
+            IPingService pingService = new PingService.PingService(commonServices);
+            _arpService = new Services.ArpService.ArpService(commonServices, pingService);
         }
     
         [Fact]

@@ -1,7 +1,7 @@
 ﻿using System;
 using PureActive.Logging.Abstractions.Interfaces;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     public class HostedSocketService : SocketService
     {

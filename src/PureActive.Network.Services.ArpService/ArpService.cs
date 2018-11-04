@@ -17,7 +17,7 @@ using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
 
-namespace PureActive.Network.Services.Services.ArpService
+namespace PureActive.Network.Services.ArpService
 {
     public class ArpService : BackgroundServiceInternal<ArpService>, IArpService
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     ///     Socket buffer used by the socket channel

@@ -7,12 +7,9 @@ using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
-using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
-using Serilog;
-using Serilog.Configuration;
 using Serilog.Events;
 using OperatingSystem = PureActive.Core.System.OperatingSystem;
 

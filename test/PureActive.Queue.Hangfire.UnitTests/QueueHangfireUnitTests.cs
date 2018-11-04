@@ -1,7 +1,5 @@
-using System;
 using FluentAssertions;
 using Hangfire.Logging;
-using Microsoft.EntityFrameworkCore.Metadata;
 using PureActive.Core.Extensions;
 using PureActive.Queue.Hangfire.Queue;
 using PureActive.Serilog.Sink.Xunit.TestBase;

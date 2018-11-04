@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using PureActive.Core.Abstractions.System;
 using PureActive.Hosting.Abstractions.Settings;
 using PureActive.Hosting.Abstractions.Types;
+using PureActive.Hosting.Configuration;
 using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Hosting.Settings
@@ -64,12 +65,11 @@ namespace PureActive.Hosting.Settings
         {
             var builder = new ContainerBuilder();
 
-            // TODO: Fix Registration of Builder Services
-            //builder.RegisterSecurity();
-            //builder.RegisterOffice365MailProvider(Configuration);
-            //builder.RegisterSystem();
-            //builder.RegisterOperationRunner();
-            //builder.RegisterCommonServices();
+            builder.RegisterSecurity();
+            builder.RegisterOffice365MailProvider(Configuration);
+            builder.RegisterSystem();
+            builder.RegisterOperationRunner();
+            builder.RegisterCommonServices();
 
             return builder;
         }

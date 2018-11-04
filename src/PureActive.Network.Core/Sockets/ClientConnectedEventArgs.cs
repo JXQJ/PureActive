@@ -3,7 +3,7 @@ using System.IO;
 using System.Net.Sockets;
 using PureActive.Logging.Abstractions.Interfaces;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     ///     Used by <see cref="SocketListener.OnClientConnected" />.
@@ -34,7 +34,7 @@ namespace PureActive.Network.Services.Sockets
         /// <param name="messageBuffer">The message buffer.</param>
         public ClientConnectedEventArgs(Socket socket, IPureLogger logger, int messageBuffer)
         {
-            if (socket == null) throw new ArgumentNullException("socket");
+            if (socket == null) throw new ArgumentNullException(nameof(socket));
 
             AllowConnect = true;
 

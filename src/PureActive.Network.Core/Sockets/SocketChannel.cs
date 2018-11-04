@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using PureActive.Logging.Abstractions.Interfaces;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Represents a socket connection between two end points.

@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// A class that listen for remote clients.

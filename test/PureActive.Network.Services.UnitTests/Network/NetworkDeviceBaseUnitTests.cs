@@ -2,7 +2,6 @@ using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Devices.Network;
-using PureActive.Network.Services.Services;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

@@ -13,7 +13,7 @@ using PureActive.Network.Abstractions.PingService.Events;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.Network;
 
-namespace PureActive.Network.Services.Services.PingService
+namespace PureActive.Network.Services.PingService
 {
     public partial class PingService
     {

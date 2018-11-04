@@ -5,12 +5,11 @@ using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
 using PureActive.Network.Abstractions.PingService.Events;
 using PureActive.Network.Abstractions.Types;
-using PureActive.Network.Services.Services.PingService;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.Services.UnitTests.Network
+namespace PureActive.Network.Services.PingService.UnitTests
 {
     public class PingTaskUnitTests : LoggingUnitTestBase<PingTaskUnitTests>
     {

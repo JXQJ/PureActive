@@ -3,7 +3,7 @@ using System.Net;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.Extensions;
 
-namespace PureActive.Network.Services.Sockets
+namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Implementation of <see cref="SocketService"/> that serves socket requests from remote clients.

@@ -13,7 +13,7 @@ using PureActive.Network.Abstractions.PingService;
 using PureActive.Network.Abstractions.PingService.Events;
 using PureActive.Network.Abstractions.Types;
 
-namespace PureActive.Network.Services.Services.PingService
+namespace PureActive.Network.Services.PingService
 {
     public partial class PingService : BackgroundServiceInternal<PingService>, IPingService
     {
@@ -32,7 +32,7 @@ namespace PureActive.Network.Services.Services.PingService
 
             OnPingReply += PingReplyLoggingEventHandler;
 
-            _pingTask = new PingTaskImpl(commonServices);
+            _pingTask = new Services.PingService.PingService.PingTaskImpl(commonServices);
             _pingTask.OnPingReply += OnPingReply;
         }
 

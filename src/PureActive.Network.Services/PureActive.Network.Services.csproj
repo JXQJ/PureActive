@@ -20,7 +20,6 @@
     <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Hosting\PureActive.Hosting.csproj" />
     <ProjectReference Include="..\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
-    <ProjectReference Include="..\PureActive.Network.Core\PureActive.Network.Core.csproj" />
     <ProjectReference Include="..\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
     <ProjectReference Include="..\PureActive.Network.Services.ArpService\PureActive.Network.Services.ArpService.csproj" />
     <ProjectReference Include="..\PureActive.Network.Services.PingService\PureActive.Network.Services.PingService.csproj" />

@@ -6,7 +6,6 @@ Common.Infrastructure
 Common.Interfaces
 	Logging
 
-Common.Reactive
 NetworkService.WebApp
 
 Fix PingReply Logging

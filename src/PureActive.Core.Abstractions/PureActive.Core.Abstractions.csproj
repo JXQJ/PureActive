@@ -11,7 +11,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Core Abstractions</Title>
 
-    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  </PropertyGroup>
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  
+  </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="Interfaces\**" />

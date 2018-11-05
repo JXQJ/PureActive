@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Network.Services.NetworkMap.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Network Map Service</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveNetwork256.png</PackageIconUrl>
+    <PackageId>PureActive.Network.Services.NetworkMap</PackageId>
+    <PackageTags>PureActive network Map service</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Network Map Service</Title>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
+    <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Hosting\PureActive.Hosting.csproj" />
+    <ProjectReference Include="..\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Network.Core\PureActive.Network.Core.csproj" />
+    <ProjectReference Include="..\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>

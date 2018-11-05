@@ -7,12 +7,6 @@ Common.Interfaces
 	Logging
 
 Common.Reactive
-NetworkService.Dhcp
-NetworkService.Interfaces
-	DhcpService
-	NetworkMapService
-	Types
-NetworkService.NetworkMap
 NetworkService.WebApp
 
 Fix PingReply Logging

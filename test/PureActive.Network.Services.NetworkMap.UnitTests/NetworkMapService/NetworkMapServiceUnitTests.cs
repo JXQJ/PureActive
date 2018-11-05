@@ -1,6 +1,5 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.NetworkMapService;
 using PureActive.Serilog.Sink.Xunit.TestBase;
@@ -25,7 +24,7 @@ namespace PureActive.Network.Services.NetworkMap.UnitTests.NetworkMapService
             var dhcpService = new DhcpService.DhcpService(_commonNetworkServices);
             var networkMap = new Devices.Network.NetworkMap(_commonNetworkServices);
 
-            return new NetworkMap.NetworkMapService(networkMap, dhcpService, null);
+            return new NetworkMap.NetworkMapService(networkMap, dhcpService);
         }
 
         [Fact]

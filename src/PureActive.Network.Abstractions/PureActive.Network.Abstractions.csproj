@@ -19,4 +19,8 @@
     <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PingService\Extensions\" />
+  </ItemGroup>
+
 </Project>

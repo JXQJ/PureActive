@@ -16,7 +16,6 @@ using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Core.Sockets;
 using PureActive.Network.Services.DhcpService.Events;
 using PureActive.Network.Services.DhcpService.Session;
-using Serilog.Core;
 
 namespace PureActive.Network.Services.DhcpService
 {
@@ -67,20 +66,20 @@ namespace PureActive.Network.Services.DhcpService
             _listenerDhcpServer = new UdpListener(CommonServices.LoggerFactory)
             {
                 InterfaceAddress = IPAddress.Any,
-                BufferSize = DhcpConstants.DHCP_MAX_MESSAGE_SIZE,
-                ReceiveTimeout = DhcpConstants.DHCP_RECEIVE_TIMEOUT,
-                SendTimeout = DhcpConstants.DHCP_SEND_TIMEOUT
+                BufferSize = DhcpConstants.DhcpMaxMessageSize,
+                ReceiveTimeout = DhcpConstants.DhcpReceiveTimeout,
+                SendTimeout = DhcpConstants.DhcpSendTimeout
             };
 
             _listenerDhcpServer.ClientConnected += OnDhcpServerClientConnect;
             _listenerDhcpServer.ClientDisconnected += OnDhcpServerClientDisconnect;
 
-            var retVal = _listenerDhcpServer.Start(DhcpConstants.DHCP_SERVICE_PORT, true);
+            var retVal = _listenerDhcpServer.Start(DhcpConstants.DhcpServicePort, true);
 
             if (retVal)
-                Logger?.LogInformation("DhcpService started listening on port {DhcpServicePort}", DhcpConstants.DHCP_SERVICE_PORT);
+                Logger?.LogInformation("DhcpService started listening on port {DhcpServicePort}", DhcpConstants.DhcpServicePort);
             else
-                Logger?.LogDebug("DhcpService failed to start listening on port {DhcpServicePort}", DhcpConstants.DHCP_SERVICE_PORT);
+                Logger?.LogDebug("DhcpService failed to start listening on port {DhcpServicePort}", DhcpConstants.DhcpServicePort);
 
             ServiceHostStatus = ServiceHostStatus.Running;
 
@@ -97,17 +96,17 @@ namespace PureActive.Network.Services.DhcpService
 
                 if (retVal)
                     Logger?.LogInformation("DhcpService stopped listening on port {DhcpServicePort}",
-                        DhcpConstants.DHCP_SERVICE_PORT);
+                        DhcpConstants.DhcpServicePort);
                 else
                     Logger?.LogDebug("DhcpService failed to stop listening on port {DhcpServicePort}",
-                        DhcpConstants.DHCP_SERVICE_PORT);
+                        DhcpConstants.DhcpServicePort);
 
                 return Task.CompletedTask;
             }
             catch (Exception ex)
             {
                 Logger?.LogError(ex, "DhcpService failed to stop listening on port {DhcpServicePort}",
-                    DhcpConstants.DHCP_SERVICE_PORT);
+                    DhcpConstants.DhcpServicePort);
 
                 return Task.FromException(ex);
             }
@@ -126,8 +125,8 @@ namespace PureActive.Network.Services.DhcpService
 
             if (channelBuffer != null
                 && args.Channel.IsConnected
-                && channelBuffer.BytesTransferred >= DhcpConstants.DHCP_MIN_MESSAGE_SIZE
-                && channelBuffer.BytesTransferred <= DhcpConstants.DHCP_MAX_MESSAGE_SIZE)
+                && channelBuffer.BytesTransferred >= DhcpConstants.DhcpMinMessageSize
+                && channelBuffer.BytesTransferred <= DhcpConstants.DhcpMaxMessageSize)
             {
                 Logger?.LogTrace("DHCP PACKET received on {LocalEndPoint} with channel id {ChannelId} was received from {RemoteEndPoint} and queued for processing...",
                     args.Channel.Socket.LocalEndPoint,
@@ -142,7 +141,16 @@ namespace PureActive.Network.Services.DhcpService
         }
 
 
-        public DhcpSession this[PhysicalAddress physicalAddress] => _dhcpSessions[physicalAddress];
+        public DhcpSession this[PhysicalAddress physicalAddress]
+        {
+            get
+            {
+                lock (_sessionsLock)
+                {
+                    return _dhcpSessions[physicalAddress];
+                }
+            }
+        }
 
         public IDhcpSession FindOrCreateDhcpSession(PhysicalAddress physicalAddress)
         {

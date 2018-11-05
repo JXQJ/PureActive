@@ -14,9 +14,9 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
     /// </summary>
     public static class HardwareString
     {
-        public static string GetName(HardwareType OperationEnum)
+        public static string GetName(HardwareType operationEnum)
         {
-            switch (OperationEnum)
+            switch (operationEnum)
             {
                 case HardwareType.Ethernet:
                     return "Ethernet";

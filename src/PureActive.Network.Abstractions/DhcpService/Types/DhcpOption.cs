@@ -1,4 +1,5 @@
 
+// ReSharper disable InconsistentNaming
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>

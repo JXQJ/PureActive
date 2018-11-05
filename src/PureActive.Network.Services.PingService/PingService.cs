@@ -32,7 +32,7 @@ namespace PureActive.Network.Services.PingService
 
             OnPingReply += PingReplyLoggingEventHandler;
 
-            _pingTask = new Services.PingService.PingService.PingTaskImpl(commonServices);
+            _pingTask = new PingTaskImpl(commonServices);
             _pingTask.OnPingReply += OnPingReply;
         }
 

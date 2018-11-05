@@ -32,7 +32,7 @@ namespace PureActive.Network.Services.DhcpService.Events
             get
             {
                 // get message type option
-                var messageTypeData = this.RequestMessage.GetOptionData(DhcpOption.MessageType);
+                var messageTypeData = RequestMessage.GetOptionData(DhcpOption.MessageType);
 
                 return (messageTypeData != null && messageTypeData.Length > 0) ? (MessageType)messageTypeData[0] : MessageType.Unknown;
             }
@@ -46,21 +46,21 @@ namespace PureActive.Network.Services.DhcpService.Events
         /// <param name="data">Raw data received from socket.</param>
         public DhcpMessageEventArgs(IDhcpService dhcpService, SocketChannel channel, SocketBuffer data)
         {
-            this.Channel = channel ?? throw new ArgumentNullException(nameof(channel));
-            this.ChannelBuffer = data ?? throw new ArgumentNullException(nameof(data));
-            this.DhcpService = dhcpService ?? throw new ArgumentNullException(nameof(DhcpService));
+            Channel = channel ?? throw new ArgumentNullException(nameof(channel));
+            ChannelBuffer = data ?? throw new ArgumentNullException(nameof(data));
+            DhcpService = dhcpService ?? throw new ArgumentNullException(nameof(DhcpService));
 
             var logger = dhcpService.Logger;
 
             try
             {
                 // Parse the dhcp message
-                this.RequestMessage = new DhcpMessage(data.Buffer, dhcpService.LoggerFactory, logger);
+                RequestMessage = new DhcpMessage(data.Buffer, dhcpService.LoggerFactory, logger);
 
      
              logger?.LogTrace(
                     "DHCP PACKET with message id {SessionId} successfully parsed from client endpoint {RemoteEndPoint}",
-                    this.RequestMessage.SessionId.ToHexString("0x"), this.Channel.RemoteEndpoint);
+                    RequestMessage.SessionId.ToHexString("0x"), Channel.RemoteEndpoint);
         }
             catch (Exception ex)
             {

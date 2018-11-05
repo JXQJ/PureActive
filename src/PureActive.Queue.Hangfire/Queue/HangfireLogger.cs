@@ -1,6 +1,5 @@
 ﻿using System;
 using Hangfire.Logging;
-using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 using LogLevel = Hangfire.Logging.LogLevel;
 

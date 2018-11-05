@@ -1,7 +1,7 @@
 
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
-    public enum DhcpSessionState : int
+    public enum DhcpSessionState
     {
         Init = 0,
         Discover,

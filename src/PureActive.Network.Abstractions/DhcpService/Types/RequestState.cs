@@ -1,7 +1,7 @@
 
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
-    public enum RequestState : int
+    public enum RequestState
     {
         Unknown = 0,
         Selecting,

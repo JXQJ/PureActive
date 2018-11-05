@@ -17,6 +17,8 @@
   <ItemGroup>
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
   </ItemGroup>
 
   <ItemGroup>

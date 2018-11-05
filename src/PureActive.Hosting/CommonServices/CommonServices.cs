@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
 using PureActive.Core.Abstractions.Async;
 using PureActive.Core.Abstractions.System;
@@ -9,11 +12,12 @@ using PureActive.Core.System;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Types;
 
 namespace PureActive.Hosting.CommonServices
 {
-    public class CommonServices : LoggableBase<CommonServices>, ICommonServices
+    public class CommonServices : PureLoggableBase<CommonServices>, ICommonServices
     {
         public IProcessRunner ProcessRunner { get; }
         public IFileSystem FileSystem { get; }
@@ -71,19 +75,18 @@ namespace PureActive.Hosting.CommonServices
             return Task.CompletedTask;
         }
 
-        // TODO: ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logPropertyLevels = loggableFormat.IsWithParents()
-        //        ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
-        //        : new List<ILogPropertyLevel>();
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logPropertyLevels = loggableFormat.IsWithParents()
+                ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
+                : new List<IPureLogPropertyLevel>();
 
-        //    if (logLevel <= LogLevel.Information)
-        //    {
-        //        logPropertyLevels?.Add(new LogPropertyLevel("CommonServicesHostStatus", ServiceHostStatus, LogLevel.Information));
-        //    }
+            if (logLevel <= LogLevel.Information)
+            {
+                logPropertyLevels?.Add(new PureLogPropertyLevel("CommonServicesHostStatus", ServiceHostStatus, LogLevel.Information));
+            }
 
-        //    return logPropertyLevels;
-        //}
+            return logPropertyLevels;
+        }
     }
 }

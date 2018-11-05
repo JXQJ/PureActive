@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.Device;
 using PureActive.Network.Abstractions.PureObject;
 using PureActive.Network.Abstractions.Types;
@@ -38,19 +43,18 @@ namespace PureActive.Network.Devices.Device
             return DeviceType.CompareTo(other.DeviceType);
         }
 
-        // TODO: ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logPropertyLevels = loggableFormat.IsWithParents()
-        //        ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
-        //        : new List<ILogPropertyLevel>();
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logPropertyLevels = loggableFormat.IsWithParents()
+                ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
+                : new List<IPureLogPropertyLevel>();
 
-        //    if (logLevel <= LogLevel.Information)
-        //    {
-        //        logPropertyLevels?.Add(new LogPropertyLevel(nameof(DeviceType), DeviceType, LogLevel.Information));
-        //    }
+            if (logLevel <= LogLevel.Information)
+            {
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(DeviceType), DeviceType, LogLevel.Information));
+            }
 
-        //    return logPropertyLevels;
-        //}
+            return logPropertyLevels;
+        }
     }
 }

@@ -1,6 +1,9 @@
 using System;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using PureActive.Logger.Provider.Serilog.Extensions;
+using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Services.DhcpService.Message;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
@@ -56,11 +59,10 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Information;
 
-            // TODO: Logger With
-            //using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents)))
-            //{
+            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents)))
+            {
                 Logger?.LogDebug("DhcpRequest_GetPropertyListLevel by {LogLevel}", logLevel);
-            //}
+            }
         }
 
         [Fact]
@@ -71,9 +73,8 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
             var logLevel = LogLevel.Trace;
             var sb = new StringBuilder();
 
-            // TODO: LogPropertyLevel
-            //LogPropertyLevel.FormatPropertyList(sb, LoggableFormat.ToLogWithParents, 
-            //    dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToStringWithParents), logLevel);
+            PureLogPropertyLevel.FormatPropertyList(sb, LoggableFormat.ToLogWithParents,
+                dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToStringWithParents), logLevel);
 
             TestOutputHelper.WriteLine(sb.ToString());
         }
@@ -93,11 +94,10 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Debug;
 
-            // TODO: LogPropertyLevel
-            //using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
-            //{
+            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
+            {
                 Logger?.LogDebug("DhcpRequest_With by {LogLevel}", logLevel);
-            //}
+            }
 
             TestOutputHelper.WriteLine(Environment.NewLine + dhcpRequestMessage.ToString());
         }
@@ -110,11 +110,10 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.None;
 
-            // TODO: Logger With
-            //using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
-            //{
+            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
+            {
                 Logger?.LogDebug("DhcpRequest_With_None by {LogLevel}", logLevel);
-            //}
+            }
         }
 
 
@@ -125,11 +124,10 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Debug;
 
-            // TODO: Logger With
-            //using (dhcpRequestMessage.With(logLevel))
-            //{
+            using (dhcpRequestMessage.With(logLevel))
+            {
                 Logger?.LogDebug("TestDhcpRequest_DhcpRequest_With_ILoggable by {LogLevel}", logLevel);
-            //}
+            }
         }
 
 

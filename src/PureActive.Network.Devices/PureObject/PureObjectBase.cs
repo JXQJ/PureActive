@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.PureObject;
 
 namespace PureActive.Network.Devices.PureObject
 {
-    public abstract class PureObjectBase : LoggableBase<PureObjectBase>, IPureObject, IEquatable<PureObjectBase>
+    public abstract class PureObjectBase : PureLoggableBase<PureObjectBase>, IPureObject, IEquatable<PureObjectBase>
     {
         public Guid ObjectId { get; set; }
 
@@ -80,24 +82,24 @@ namespace PureActive.Network.Devices.PureObject
         {
             return other == null ? 1 : ObjectId.CompareTo(other.ObjectId);
         }
-    
-        // TODO: ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logPropertyLevels = loggableFormat.IsWithParents()
-        //        ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
-        //        : new List<ILogPropertyLevel>();
 
-        //    if (logLevel <= LogLevel.Information)
-        //    {
-        //        logPropertyLevels?.Add(new LogPropertyLevel(nameof(ObjectId), ObjectId, LogLevel.Information));
-        //        logPropertyLevels?.Add(new LogPropertyLevel(nameof(ObjectVersion), ObjectVersion, LogLevel.Information));
-        //        logPropertyLevels?.Add(new LogPropertyLevel(nameof(CreatedTimestamp), CreatedTimestamp, LogLevel.Information));
-        //        logPropertyLevels?.Add(new LogPropertyLevel(nameof(ModifiedTimestamp), ModifiedTimestamp, LogLevel.Information));
-        //    }
 
-        //    return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
-        //}
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logPropertyLevels = loggableFormat.IsWithParents()
+                ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
+                : new List<IPureLogPropertyLevel>();
+
+            if (logLevel <= LogLevel.Information)
+            {
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ObjectId), ObjectId, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ObjectVersion), ObjectVersion, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(CreatedTimestamp), CreatedTimestamp, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ModifiedTimestamp), ModifiedTimestamp, LogLevel.Information));
+            }
+
+            return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
+        }
 
         public override bool Equals(object obj)
         {

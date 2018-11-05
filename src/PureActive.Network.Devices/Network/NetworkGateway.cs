@@ -1,7 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using Microsoft.Extensions.Logging;
 using System.Net.NetworkInformation;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.CommonNetworkServices;
+using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Network;
 using PureActive.Network.Abstractions.Types;
 
@@ -54,20 +61,19 @@ namespace PureActive.Network.Devices.Network
         {
 
         }
-    
-        // TODO: ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logPropertyLevels = loggableFormat.IsWithParents()
-        //        ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
-        //        : new List<ILogPropertyLevel>();
 
-        //    if (logLevel > LogLevel.Information) return logPropertyLevels;
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logPropertyLevels = loggableFormat.IsWithParents()
+                ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
+                : new List<IPureLogPropertyLevel>();
 
-        //    logPropertyLevels?.Add(new LogPropertyLevel("GatewayIPAddressSubnet", IPAddressSubnet, LogLevel.Information));
-        //    logPropertyLevels?.Add(new LogPropertyLevel("GatewayPhysicalAddress", PhysicalAddress.ToDashString(), LogLevel.Information));
+            if (logLevel > LogLevel.Information) return logPropertyLevels;
 
-        //    return logPropertyLevels;
-        //}
+            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayIPAddressSubnet", IPAddressSubnet, LogLevel.Information));
+            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayPhysicalAddress", PhysicalAddress.ToDashString(), LogLevel.Information));
+
+            return logPropertyLevels;
+        }
     }
 }

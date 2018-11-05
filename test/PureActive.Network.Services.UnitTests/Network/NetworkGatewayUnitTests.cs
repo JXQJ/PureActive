@@ -1,6 +1,7 @@
 using System.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using PureActive.Logger.Provider.Serilog.Extensions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;
@@ -37,11 +38,10 @@ namespace PureActive.Network.Services.UnitTests.Network
 
             var logLevel = LogLevel.Debug;
 
-            // TODO: Fix Logging With
-            //using (networkGateway.With(logLevel))
-            //{
+            using (networkGateway.With(logLevel))
+            {
                 Logger?.LogDebug("TestDeviceLogging {LogLevel}", logLevel);
-            //}
+            }
         }
 
         [Fact]
@@ -50,11 +50,10 @@ namespace PureActive.Network.Services.UnitTests.Network
             var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
             var logLevel = LogLevel.Debug;
 
-            // TODO: Fix Logging With Parents
-            //using (networkGateway.WithParents(logLevel))
-            //{
+            using (networkGateway.WithParents(logLevel))
+            {
                 Logger?.LogDebug("TestDeviceLoggingWithParents {LogLevel}", logLevel);
-            //}
+            }
         }
 
         [Fact]

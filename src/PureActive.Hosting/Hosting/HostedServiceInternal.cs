@@ -1,15 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Types;
 
 namespace PureActive.Hosting.Hosting
 {
-    public abstract class HostedServiceInternal<T> : LoggableBase<T>, IHostedServiceInternal
+    public abstract class HostedServiceInternal<T> : PureLoggableBase<T>, IHostedServiceInternal
     {
         private IApplicationLifetime ApplicationLifetime { get; }
         public ICommonServices CommonServices { get; }
@@ -39,20 +43,19 @@ namespace PureActive.Hosting.Hosting
             }
         }
 
-        // TODO: Fix ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logPropertyLevels = loggableFormat.IsWithParents()
-        //        ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
-        //        : new List<ILogPropertyLevel>();
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logPropertyLevels = loggableFormat.IsWithParents()
+                ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
+                : new List<IPureLogPropertyLevel>();
 
-        //    if (logLevel <= LogLevel.Information)
-        //    {
-        //        logPropertyLevels?.Add(new LogPropertyLevel( $"{ServiceHost}HostStatus", ServiceHostStatus, LogLevel.Information));
-        //    }
+            if (logLevel <= LogLevel.Information)
+            {
+                logPropertyLevels?.Add(new PureLogPropertyLevel($"{ServiceHost}HostStatus", ServiceHostStatus, LogLevel.Information));
+            }
 
-        //    return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
-        //}
+            return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
+        }
 
         public virtual void RequestStopService()
         {

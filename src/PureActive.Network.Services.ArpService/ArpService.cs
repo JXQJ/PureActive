@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
@@ -13,6 +14,10 @@ using PureActive.Core.Abstractions.System;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
+using PureActive.Logger.Provider.Serilog.Extensions;
+using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
@@ -197,12 +202,10 @@ namespace PureActive.Network.Services.ArpService
             if (ServiceHostStatus == ServiceHostStatus.StartPending)
                 ServiceHostStatus = ServiceHostStatus.Running;
 
-
-            // TODO: Fix Logging
-            //using (this.With(LogLevel.Debug))
-            //{
-            //    Logger?.LogDebug("{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}", ServiceHost, arpRefreshStatus, Count);
-            //};
+            using (this.With(LogLevel.Debug))
+            {
+                Logger?.LogDebug("{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}", ServiceHost, arpRefreshStatus, Count);
+            };
         }
 
         protected  override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -275,26 +278,25 @@ namespace PureActive.Network.Services.ArpService
 
             return IPAddress.None;
         }
-       
-        // TODO: Figure out ILogPropertyLevel
-        //public override IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        //{
-        //    var logProperties = new List<ILogPropertyLevel>
-        //    {
-        //        {new LogPropertyLevel("DiscoveredDevices", _physical2ArpItem.Count, LogLevel.Information)},
-        //        {new LogPropertyLevel("ArpLastRefreshStatus", LastArpRefreshStatus, LogLevel.Information)},
-        //        {new LogPropertyLevel("ArpLastUpdated", LastUpdated, LogLevel.Information)},
-        //    };
 
-        //    if (logLevel <= LogLevel.Debug)
-        //    {
-        //        foreach (var arpItem in this)
-        //        {
-        //            logProperties.Add(new LogPropertyLevel(arpItem.IPAddress.ToString(), arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
-        //        }
-        //    }
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        {
+            var logProperties = new List<IPureLogPropertyLevel>
+            {
+                {new PureLogPropertyLevel("DiscoveredDevices", _physical2ArpItem.Count, LogLevel.Information)},
+                {new PureLogPropertyLevel("ArpLastRefreshStatus", LastArpRefreshStatus, LogLevel.Information)},
+                {new PureLogPropertyLevel("ArpLastUpdated", LastUpdated, LogLevel.Information)},
+            };
 
-        //    return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
-        //}
-   }
+            if (logLevel <= LogLevel.Debug)
+            {
+                foreach (var arpItem in this)
+                {
+                    logProperties.Add(new PureLogPropertyLevel(arpItem.IPAddress.ToString(), arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
+                }
+            }
+
+            return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
+        }
+    }
 }

@@ -1,24 +1,2 @@
-Common.Infrastructure
-	Logging
-		Fix Logging Extensions
-		Fix LogPropertyLevel
-	
-Common.Interfaces
-	Logging
-
 NetworkService.WebApp
-
-Fix PingReply Logging
-
-Files:
-LoggerExtensions.cs
-LogContext.cs
-ILogContext.cs
-ILogProperty.cs
-ILogPropertyLevel.cs
-ILogPropertyLIst.cs
-LogProperty.cs
-LogPropertyLevel.cs
-
-
 	

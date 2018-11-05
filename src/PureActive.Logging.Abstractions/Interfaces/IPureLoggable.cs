@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Types;
 
@@ -12,8 +13,7 @@ namespace PureActive.Logging.Abstractions.Interfaces
 
         StringBuilder FormatLogString(StringBuilder sb, LogLevel logLevel, LoggableFormat loggableFormat);
 
-        // TODO: Fix ILogPropertyLevel
-        // IEnumerable<ILogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat);
+         IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat);
 
         IPureLoggerFactory LoggerFactory { get; }
 

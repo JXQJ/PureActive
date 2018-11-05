@@ -1,7 +1,6 @@
 using System;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Services.DhcpService.Message;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

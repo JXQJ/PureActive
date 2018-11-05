@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using PureActive.Archive.Abstractions.System;
 using PureActive.Archive.System;
 using PureActive.Core.Abstractions.Async;
+using PureActive.Core.Abstractions.Queue;
 using PureActive.Core.Abstractions.Serialization;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.Async;
@@ -13,6 +14,7 @@ using PureActive.Core.System;
 using PureActive.Email.Office365.Interfaces;
 using PureActive.Email.Office365.Providers;
 using PureActive.Hosting.Abstractions.System;
+using PureActive.Queue.Hangfire.Queue;
 
 namespace PureActive.Hosting.Configuration
 {
@@ -93,7 +95,7 @@ namespace PureActive.Hosting.Configuration
         /// </summary>
         public static void RegisterJobQueueClient(this ContainerBuilder builder)
         {
-            // builder.RegisterType<JobQueueClient>().As<IJobQueueClient>().InstancePerLifetimeScope();
+            builder.RegisterType<JobQueueClient>().As<IJobQueueClient>().InstancePerLifetimeScope();
         }
 
         public static void RegisterJsonSerialization(this ContainerBuilder builder, ITypeMapCollection typeMaps)

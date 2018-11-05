@@ -8,7 +8,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 {
     public class DhcpSessionResult : IDhcpSessionResult
     {
-        private DhcpDiscoveredDevice _dhcpDiscoveredDevice = null;
+        private DhcpDiscoveredDevice _dhcpDiscoveredDevice;
 
         public IDhcpDiscoveredDevice DhcpDiscoveredDevice
         {

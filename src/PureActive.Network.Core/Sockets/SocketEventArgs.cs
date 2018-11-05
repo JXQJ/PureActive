@@ -13,7 +13,7 @@ namespace PureActive.Network.Core.Sockets
         /// <summary>
         ///     Initializes a new instance of the <see cref="ClientConnectedEventArgs" /> class.
         /// </summary>
-        /// <param name="logger">The channel.</param>
+        /// <param name="socket">The channel.</param>
         /// <param name="logger">Logger</param>
         public SocketEventArgs(Socket socket, IPureLogger logger)
         {

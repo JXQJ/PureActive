@@ -1,5 +1,4 @@
 ﻿using Hangfire.Logging;
-using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Queue.Hangfire.Queue

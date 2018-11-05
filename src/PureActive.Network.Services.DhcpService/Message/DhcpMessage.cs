@@ -1,13 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
-using Microsoft.Extensions.Logging;
 using PureActive.Core.Extensions;
 using PureActive.Core.Utilities;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.DhcpService.Interfaces;
 using PureActive.Network.Abstractions.DhcpService.Types;
@@ -15,8 +12,6 @@ using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.IO;
 using PureActive.Network.Services.DhcpService.Types;
-using Serilog.Configuration;
-using Serilog.Core;
 
 namespace PureActive.Network.Services.DhcpService.Message
 {
@@ -71,7 +66,7 @@ namespace PureActive.Network.Services.DhcpService.Message
     {
         #region Private Properties
 
-        private static readonly Random RANDOM = new Random();
+        private static readonly Random Random = new Random();
 
         private byte _op;
         private byte _htype;
@@ -90,7 +85,7 @@ namespace PureActive.Network.Services.DhcpService.Message
 
         private Dictionary<DhcpOption, byte[]> _options = new Dictionary<DhcpOption, byte[]>();
         private byte[] _optionOrdering = new Byte[] { };
-        private int _optionDataSize = 0;
+        private int _optionDataSize;
 
         #endregion Private Properties
 
@@ -108,7 +103,7 @@ namespace PureActive.Network.Services.DhcpService.Message
             _htype = (byte)HardwareType.Ethernet;
             _hlen = 0;
             _hops = 0;
-            _xid = (ushort)RANDOM.Next(ushort.MaxValue);
+            _xid = (ushort)Random.Next(ushort.MaxValue);
             _secs = 0;
             Array.Clear(_flags, 0, _flags.Length);
             Array.Clear(_ciaddr, 0, _ciaddr.Length);
@@ -151,8 +146,8 @@ namespace PureActive.Network.Services.DhcpService.Message
 
             // if magic number is valid then process options
             if (offset + 4 < rawOptions.Length &&
-                (BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DHCP_OPTIONS_MAGIC_NUMBER
-                || BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DHCP_WIN_OPTIONS_MAGIC_NUMBER))
+                (BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DhcpOptionsMagicNumber
+                || BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DhcpWinOptionsMagicNumber))
             {
                 offset += 4;
                 Boolean end = false;
@@ -172,7 +167,7 @@ namespace PureActive.Network.Services.DhcpService.Message
                             end = true;
                             continue;
                         default:
-                            optionLen = (int)rawOptions[offset];
+                            optionLen = rawOptions[offset];
                             offset++;
                             break;
                     }
@@ -182,8 +177,8 @@ namespace PureActive.Network.Services.DhcpService.Message
                     Array.Copy(rawOptions, offset, optionData, 0, optionLen);
                     offset += optionLen;
 
-                    this._options.Add(option, optionData);
-                    this._optionDataSize += optionLen;
+                    _options.Add(option, optionData);
+                    _optionDataSize += optionLen;
                 }
             }
         }
@@ -256,8 +251,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         ///</summary>
         public byte[] Flags
         {
-            get { return this._flags; }
-            set { this._flags = value; }
+            get { return _flags; }
+            set { _flags = value; }
         }
 
         /// <summary>
@@ -265,10 +260,10 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>
         public bool IsBroadcast
         {
-            get { return ByteUtility.GetBits(_flags[0], 7, 1) == 1; }
+            get => ByteUtility.GetBits(_flags[0], 7, 1) == 1;
             set
             {
-                if (value == true)
+                if (value)
                 {
                     _flags[0] = ByteUtility.SetBits(ref _flags[0], 15, 1, 1);
                 }
@@ -334,7 +329,7 @@ namespace PureActive.Network.Services.DhcpService.Message
 
                 for (Int32 i = value.ToArray().Length; i < 16; i++)
                 {
-                    this._chaddr[i] = 0;
+                    _chaddr[i] = 0;
                 }
             }
         }
@@ -344,8 +339,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>
         public byte[] ServerName
         {
-            get { return this._sname; }
-            set { CopyData(value, this._sname); }
+            get { return _sname; }
+            set { CopyData(value, _sname); }
         }
 
         /// <summary>
@@ -353,8 +348,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>
         public byte[] BootFileName
         {
-            get { return this._file; }
-            set { CopyData(value, this.BootFileName); }
+            get { return _file; }
+            set { CopyData(value, BootFileName); }
         }
 
         /// <summary>
@@ -362,8 +357,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>
         public byte[] OptionOrdering
         {
-            get { return this._optionOrdering; }
-            set { this._optionOrdering = value; }
+            get { return _optionOrdering; }
+            set { _optionOrdering = value; }
         }
 
         #endregion Public Properties
@@ -375,9 +370,9 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary> 
         public byte[] GetOptionData(DhcpOption option)
         {
-            if (this._options.ContainsKey(option))
+            if (_options.ContainsKey(option))
             {
-                return (byte[])this._options[option];
+                return _options[option];
             }
             else
             {
@@ -390,8 +385,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary> 
         public void ClearOptions()
         {
-            this._optionDataSize = 0;
-            this._options.Clear();
+            _optionDataSize = 0;
+            _options.Clear();
         }
 
         /// <summary>
@@ -404,8 +399,8 @@ namespace PureActive.Network.Services.DhcpService.Message
                 throw new ArgumentException("The Pad and End DhcpOptions cannot be added explicitly", "option");
             }
 
-            this._options.Add(option, data);
-            this._optionDataSize += data.Length;
+            _options.Add(option, data);
+            _optionDataSize += data.Length;
         }
 
         public bool ParamOptionExists(DhcpOption paramOption)
@@ -428,11 +423,11 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>  
         public bool RemoveOption(DhcpOption option)
         {
-            if (this._options.ContainsKey(option))
+            if (_options.ContainsKey(option))
             {
-                byte[] optionValue = (byte[])this._options[option];
-                this._optionDataSize -= optionValue.Length;
-                this._options.Remove(option);
+                byte[] optionValue = _options[option];
+                _optionDataSize -= optionValue.Length;
+                _options.Remove(option);
                 return true;
             }
             return false;
@@ -446,7 +441,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         /// </summary>
         public byte[] ToArray()
         {
-            ByteWriter byteWriter = new ByteWriter(DhcpConstants.DHCP_MIN_MESSAGE_SIZE, ByteOrder.Network);
+            ByteWriter byteWriter = new ByteWriter(DhcpConstants.DhcpMinMessageSize, ByteOrder.Network);
 
             byteWriter.Write(_op);
             byteWriter.Write(_htype);
@@ -468,21 +463,21 @@ namespace PureActive.Network.Services.DhcpService.Message
             int offset = 0;
             if (_options.Count > 0)
             {
-                BitConverter.GetBytes(DhcpConstants.DHCP_WIN_OPTIONS_MAGIC_NUMBER).CopyTo(data, offset);
+                BitConverter.GetBytes(DhcpConstants.DhcpWinOptionsMagicNumber).CopyTo(data, offset);
                 offset += 4;
 
                 foreach (Byte optionId in _optionOrdering)
                 {
                     DhcpOption option = (DhcpOption)optionId;
-                    if (this._options.ContainsKey(option))
+                    if (_options.ContainsKey(option))
                     {
                         data[offset++] = optionId;
-                        byte[] optionValue = (byte[])_options[option];
+                        byte[] optionValue = _options[option];
 
-                        if (this._options[option] != null && optionValue.Length > 0)
+                        if (_options[option] != null && optionValue.Length > 0)
                         {
                             data[offset++] = (Byte)optionValue.Length;
-                            Array.Copy((byte[])_options[option], 0, data, offset, optionValue.Length);
+                            Array.Copy(_options[option], 0, data, offset, optionValue.Length);
                             offset += optionValue.Length;
                         }
                     }
@@ -493,12 +488,12 @@ namespace PureActive.Network.Services.DhcpService.Message
                     if (Array.IndexOf(_optionOrdering, (Byte)option) == -1)
                     {
                         data[offset++] = (Byte)option;
-                        byte[] optionValue = (byte[])_options[option];
+                        byte[] optionValue = _options[option];
 
-                        if (this._options[option] != null && optionValue.Length > 0)
+                        if (_options[option] != null && optionValue.Length > 0)
                         {
                             data[offset++] = (Byte)optionValue.Length;
-                            Array.Copy((byte[])_options[option], 0, data, offset, optionValue.Length);
+                            Array.Copy(_options[option], 0, data, offset, optionValue.Length);
                             offset += optionValue.Length;
                         }
                     }

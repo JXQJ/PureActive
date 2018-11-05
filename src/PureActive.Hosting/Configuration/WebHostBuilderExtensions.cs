@@ -8,7 +8,6 @@ using PureActive.Core.Abstractions.System;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Settings;
-using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using Serilog.Events;
 using OperatingSystem = PureActive.Core.System.OperatingSystem;
@@ -41,7 +40,7 @@ namespace PureActive.Hosting.Configuration
             var loggerFactory = LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
 
             webHostBuilder.ConfigureServices(services =>
-                services.AddSingleton<IPureLoggerFactory>(loggerFactory));
+                services.AddSingleton(loggerFactory));
 
             webHostBuilder.ConfigureServices(services =>
                 services.AddSingleton<ILoggerFactory>(loggerFactory));

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Microsoft.Extensions.Logging;
 using PureActive.Core.Extensions;
 using PureActive.Network.Services.DhcpService.Message;
 using PureActive.Network.Services.DhcpService.Types;
@@ -12,7 +11,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 {
     public class DhcpOptionUnitTests : LoggingUnitTestBase<DhcpOptionUnitTests>
     {
-        private static readonly byte[] IPhoneRequestDhcpMsgBytes = new byte[]
+        private static readonly byte[] PhoneRequestDhcpMsgBytes = new byte[]
         {
             1, 1, 6, 0, 122, 6, 156, 94, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 64, 152, 173, 49,
             47, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -65,7 +64,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
             private readonly List<object[]> _data = new List<object[]>
 
             {
-                new object[] {IPhoneRequestDhcpMsgBytes},
+                new object[] {PhoneRequestDhcpMsgBytes},
                 new object[] {BcDenDiscoverDhcpMsgBytes},
                 new object[] { CcDenRequestDhcpMsgBytes },
             };

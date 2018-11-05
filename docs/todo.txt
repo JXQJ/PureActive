@@ -9,4 +9,16 @@ Common.Interfaces
 NetworkService.WebApp
 
 Fix PingReply Logging
+
+Files:
+LoggerExtensions.cs
+LogContext.cs
+ILogContext.cs
+ILogProperty.cs
+ILogPropertyLevel.cs
+ILogPropertyLIst.cs
+LogProperty.cs
+LogPropertyLevel.cs
+
+
 	

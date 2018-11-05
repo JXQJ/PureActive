@@ -23,7 +23,7 @@ namespace PureActive.Network.Services.ArpService.UnitTests
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceUnitTests");
             _cancellationTokenSource = new CancellationTokenSource();
             IPingService pingService = new PingService.PingService(commonServices);
-            _arpService = new Services.ArpService.ArpService(commonServices, pingService);
+            _arpService = new ArpService(commonServices, pingService);
         }
     
         [Fact]

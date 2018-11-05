@@ -20,7 +20,7 @@ namespace PureActive.Network.Services.NetworkMap
         private static INetworkMapService Instance
         {
             get => _networkMapService;
-            set => NetworkMapService._networkMapService = value ?? throw new ArgumentNullException(nameof(value));
+            set => _networkMapService = value ?? throw new ArgumentNullException(nameof(value));
         }
 
         // Common Services

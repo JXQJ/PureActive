@@ -14,9 +14,9 @@ namespace PureActive.Network.Services.DhcpService.Types
 {
     public static class DhcpOptionTypeMap
     {
-        public static Dictionary<DhcpOption, DhcpOptionType> DhcpOptionTypes => _dhcpOptionTypes.Value;
+        public static Dictionary<DhcpOption, DhcpOptionType> DhcpOptionTypes => DhcpOptionTypesReadOnly.Value;
 
-        private static readonly Lazy<Dictionary<DhcpOption, DhcpOptionType>> _dhcpOptionTypes =
+        private static readonly Lazy<Dictionary<DhcpOption, DhcpOptionType>> DhcpOptionTypesReadOnly =
             new Lazy<Dictionary<DhcpOption, DhcpOptionType>>(
                 () => new Dictionary<DhcpOption, DhcpOptionType>()
                 {
@@ -226,7 +226,7 @@ namespace PureActive.Network.Services.DhcpService.Types
                     return GetDhcpRequestListString(dhcpOptionValue, dhcpRequestListFormat, logger);
                 }
 
-                switch (DhcpOptionTypeMap.DhcpOptionTypes[dhcpOption])
+                switch (DhcpOptionTypes[dhcpOption])
                 {
                     case DhcpOptionType.IPAddress:
                         return new IPAddress(dhcpOptionValue).ToString();

@@ -5,7 +5,6 @@ using Hangfire.SQLite;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Logging;
 using PureActive.Logger.Provider.ApplicationInsights.Telemetry;
 using PureActive.Logging.Abstractions.Interfaces;
@@ -22,7 +21,7 @@ namespace PureActive.Hosting.Configuration
         /// <summary>
         ///     How long to wait before retrying if the database does not exist.
         /// </summary>
-        private static readonly TimeSpan c_storageRetryDelay = TimeSpan.FromMinutes(1);
+        private static readonly TimeSpan CStorageRetryDelay = TimeSpan.FromMinutes(1);
 
 
         /// <summary>
@@ -92,7 +91,7 @@ namespace PureActive.Hosting.Configuration
             catch
             {
                 // TODO: Fix logic for SQLite
-                Thread.Sleep(c_storageRetryDelay);
+                Thread.Sleep(CStorageRetryDelay);
 
                 return GetHangfireStorage(connectionString);
             }

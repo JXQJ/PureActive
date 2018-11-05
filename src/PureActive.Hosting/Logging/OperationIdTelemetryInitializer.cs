@@ -3,7 +3,6 @@ using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Primitives;
 
 namespace PureActive.Hosting.Logging
 {
@@ -32,21 +31,18 @@ namespace PureActive.Hosting.Logging
         {
             var httpContext = _httpContextAccessor.HttpContext;
             var requestTelemetry = httpContext?.Features.Get<RequestTelemetry>();
-            if (requestTelemetry != null)
-            {
-                StringValues value;
 
-                httpContext
-                    ?.Request
-                    ?.Headers
-                    ?.TryGetValue("X-Operation-Id", out value);
+            if (requestTelemetry == null) return;
 
-                if (value.Count == 1)
-                {
-                    requestTelemetry.Id = value.First();
-                    telemetry.Context.Operation.Id = value.First();
-                }
-            }
+            httpContext
+                .Request
+                ?.Headers
+                ?.TryGetValue("X-Operation-Id", out var value);
+
+            if (value.Count != 1) return;
+
+            requestTelemetry.Id = value.First();
+            telemetry.Context.Operation.Id = value.First();
         }
     }
 }

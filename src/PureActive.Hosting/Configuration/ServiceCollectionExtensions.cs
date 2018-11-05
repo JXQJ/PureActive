@@ -62,7 +62,7 @@ namespace PureActive.Hosting.Configuration
         public static void AddHangfireQueue(
             this IServiceCollection services,
             string connectionString,
-            ILoggerFactory loggerFactory)
+            IPureLoggerFactory loggerFactory)
         {
             services.AddHangfire
             (

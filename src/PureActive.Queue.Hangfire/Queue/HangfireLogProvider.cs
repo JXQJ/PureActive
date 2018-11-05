@@ -1,5 +1,6 @@
 ﻿using Hangfire.Logging;
 using Microsoft.Extensions.Logging;
+using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Queue.Hangfire.Queue
 {
@@ -11,12 +12,12 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <summary>
         ///     The logger factory.
         /// </summary>
-        private readonly ILoggerFactory _loggerFactory;
+        private readonly IPureLoggerFactory _loggerFactory;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public HangfireLogProvider(ILoggerFactory loggerFactory)
+        public HangfireLogProvider(IPureLoggerFactory loggerFactory)
         {
             _loggerFactory = loggerFactory;
         }
@@ -26,7 +27,7 @@ namespace PureActive.Queue.Hangfire.Queue
         /// </summary>
         public ILog GetLogger(string name)
         {
-            return new HangfireLogger(_loggerFactory?.CreateLogger(name));
+            return new HangfireLogger(_loggerFactory?.CreatePureLogger(name));
         }
     }
 }

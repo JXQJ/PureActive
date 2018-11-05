@@ -88,15 +88,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Queue.Hangfire",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Queue.Hangfire.UnitTests", "test\PureActive.Queue.Hangfire.UnitTests\PureActive.Queue.Hangfire.UnitTests.csproj", "{92C854C4-1BDB-4738-B699-9DC38A1B2943}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Core", "src\PureActive.Network.Core\PureActive.Network.Core.csproj", "{E300DCD2-8E41-4C9F-9ACC-53EBE8CC6573}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Core", "src\PureActive.Network.Core\PureActive.Network.Core.csproj", "{E300DCD2-8E41-4C9F-9ACC-53EBE8CC6573}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.PingService", "src\PureActive.Network.Services.PingService\PureActive.Network.Services.PingService.csproj", "{9D080735-7BD6-43CD-8D17-71E9818B4C17}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.PingService", "src\PureActive.Network.Services.PingService\PureActive.Network.Services.PingService.csproj", "{9D080735-7BD6-43CD-8D17-71E9818B4C17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.ArpService", "src\PureActive.Network.Services.ArpService\PureActive.Network.Services.ArpService.csproj", "{A965A909-E454-4D19-9E29-C72808C2457B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.ArpService", "src\PureActive.Network.Services.ArpService\PureActive.Network.Services.ArpService.csproj", "{A965A909-E454-4D19-9E29-C72808C2457B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.ArpService.UnitTests", "test\PureActive.Network.Services.ArpService.UnitTests\PureActive.Network.Services.ArpService.UnitTests.csproj", "{9EFB1155-31D9-4597-BEAB-75700BA6FC56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.ArpService.UnitTests", "test\PureActive.Network.Services.ArpService.UnitTests\PureActive.Network.Services.ArpService.UnitTests.csproj", "{9EFB1155-31D9-4597-BEAB-75700BA6FC56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.PingService.UnitTests", "test\PureActive.Network.Services.PingService.UnitTests\PureActive.Network.Services.PingService.UnitTests.csproj", "{CF9486DB-4BFC-446E-B799-28BC613AD81A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.PingService.UnitTests", "test\PureActive.Network.Services.PingService.UnitTests\PureActive.Network.Services.PingService.UnitTests.csproj", "{CF9486DB-4BFC-446E-B799-28BC613AD81A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.DhcpService", "src\PureActive.Network.Services.DhcpService\PureActive.Network.Services.DhcpService.csproj", "{37485DD1-177F-4F77-891D-D5E2DDEF1CDE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.DhcpService.UnitTests", "test\PureActive.Network.Services.DhcpService.UnitTests\PureActive.Network.Services.DhcpService.UnitTests.csproj", "{CA170051-EDD8-45D4-9E05-DF87CEF71EFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +248,14 @@ Global
 		{CF9486DB-4BFC-446E-B799-28BC613AD81A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF9486DB-4BFC-446E-B799-28BC613AD81A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF9486DB-4BFC-446E-B799-28BC613AD81A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37485DD1-177F-4F77-891D-D5E2DDEF1CDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37485DD1-177F-4F77-891D-D5E2DDEF1CDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37485DD1-177F-4F77-891D-D5E2DDEF1CDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37485DD1-177F-4F77-891D-D5E2DDEF1CDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA170051-EDD8-45D4-9E05-DF87CEF71EFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA170051-EDD8-45D4-9E05-DF87CEF71EFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA170051-EDD8-45D4-9E05-DF87CEF71EFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA170051-EDD8-45D4-9E05-DF87CEF71EFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -284,6 +296,8 @@ Global
 		{A965A909-E454-4D19-9E29-C72808C2457B} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{9EFB1155-31D9-4597-BEAB-75700BA6FC56} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{CF9486DB-4BFC-446E-B799-28BC613AD81A} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{37485DD1-177F-4F77-891D-D5E2DDEF1CDE} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{CA170051-EDD8-45D4-9E05-DF87CEF71EFF} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

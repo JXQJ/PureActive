@@ -1,6 +1,7 @@
 ﻿using System;
 using Hangfire.Logging;
 using Microsoft.Extensions.Logging;
+using PureActive.Logging.Abstractions.Interfaces;
 using LogLevel = Hangfire.Logging.LogLevel;
 
 namespace PureActive.Queue.Hangfire.Queue
@@ -16,12 +17,12 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <summary>
         ///     The system logger.
         /// </summary>
-        private readonly ILogger _logger;
+        private readonly IPureLogger _logger;
 
         /// <summary>
         ///     Constructor.
         /// </summary>
-        public HangfireLogger(ILogger logger)
+        public HangfireLogger(IPureLogger logger)
         {
             _logger = logger;
         }

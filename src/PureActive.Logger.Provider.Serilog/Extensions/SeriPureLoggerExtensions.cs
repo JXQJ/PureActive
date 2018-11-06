@@ -33,7 +33,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
-            return global::Serilog.Context.LogContext.Push
+            return LogContext.Push
             (
                 properties.Select
                     (
@@ -55,7 +55,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
         {
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
 
-            return global::Serilog.Context.LogContext.Push
+            return LogContext.Push
             (
                 logPropertyList.Select
                     (
@@ -79,7 +79,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
                 .Cast<ILogEventEnricher>()
                 .ToArray();
 
-            return global::Serilog.Context.LogContext.Push
+            return LogContext.Push
             (
                 logPropertyListFiltered
             );
@@ -130,7 +130,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
         public static IDisposable With(this ILogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList,
             Func<IPureLogPropertyLevel, bool> includeLogProperty)
         {
-            return global::Serilog.Context.LogContext.Push
+            return LogContext.Push
             (
                 logPropertyList
                     .Where(includeLogProperty)

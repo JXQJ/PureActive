@@ -99,7 +99,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
                 Logger?.LogDebug("DhcpRequest_With by {LogLevel}", logLevel);
             }
 
-            TestOutputHelper.WriteLine(Environment.NewLine + dhcpRequestMessage.ToString());
+            TestOutputHelper.WriteLine(Environment.NewLine + dhcpRequestMessage);
         }
 
 

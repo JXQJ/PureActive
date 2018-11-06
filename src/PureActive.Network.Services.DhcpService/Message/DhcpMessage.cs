@@ -523,28 +523,28 @@ namespace PureActive.Network.Services.DhcpService.Message
             if (logLevel <= LogLevel.Information)
             {
                 logPropertyLevels?.Add(new PureLogPropertyLevel("MessageTimeStamp", CreatedTimestamp.ToLocalTime(), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageOp", OperationString.GetName(this.Operation), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareType)", HardwareString.GetName(this.Hardware), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("Hops", ByteUtility.PrintByte(this.Hops), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("TrxId", this.SessionId.ToHexString("0x"), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("SecondsElapsed", this.SecondsElapsed.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("Flags", ByteUtility.PrintBytes(this._flags), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("IsBroadcast", this.IsBroadcast.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("ClientAddress", this.ClientAddress.ToString(), LogLevel.Debug));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("AssignedAddress", this.AssignedAddress.ToString(), LogLevel.Debug));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("NextServerAddress", this.NextServerAddress.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("RelayAgentAddress", this.RelayAgentAddress.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareAddress", this.ClientHardwareAddress.ToString(), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("ServerName", ByteUtility.GetSafeString(this.ServerName), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("BootFileName", ByteUtility.GetSafeString(this.BootFileName), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageOp", OperationString.GetName(Operation), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareType)", HardwareString.GetName(Hardware), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("Hops", ByteUtility.PrintByte(Hops), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("TrxId", SessionId.ToHexString("0x"), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("SecondsElapsed", SecondsElapsed.ToString(), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("Flags", ByteUtility.PrintBytes(_flags), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("IsBroadcast", IsBroadcast.ToString(), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("ClientAddress", ClientAddress.ToString(), LogLevel.Debug));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("AssignedAddress", AssignedAddress.ToString(), LogLevel.Debug));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("NextServerAddress", NextServerAddress.ToString(), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("RelayAgentAddress", RelayAgentAddress.ToString(), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareAddress", ClientHardwareAddress.ToString(), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("ServerName", ByteUtility.GetSafeString(ServerName), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("BootFileName", ByteUtility.GetSafeString(BootFileName), LogLevel.Trace));
                                            
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptMessageType", GetDhcpOptionString(DhcpOption.MessageType, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptClientId", GetDhcpOptionString(DhcpOption.ClientId, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptVendorClassId", GetDhcpOptionString(DhcpOption.VendorClassId, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptHostName", GetDhcpOptionString(DhcpOption.Hostname, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptAddressRequest", GetDhcpOptionString(DhcpOption.RequestedIpAddr, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptServerIdentifier", GetDhcpOptionString(DhcpOption.ServerId, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptParamReqList", GetDhcpOptionString(DhcpOption.ParamReqList, DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptMessageType", GetDhcpOptionString(DhcpOption.MessageType), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptClientId", GetDhcpOptionString(DhcpOption.ClientId), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptVendorClassId", GetDhcpOptionString(DhcpOption.VendorClassId), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptHostName", GetDhcpOptionString(DhcpOption.Hostname), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptAddressRequest", GetDhcpOptionString(DhcpOption.RequestedIpAddr), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptServerIdentifier", GetDhcpOptionString(DhcpOption.ServerId), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptParamReqList", GetDhcpOptionString(DhcpOption.ParamReqList), LogLevel.Trace));
             }
 
             return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);

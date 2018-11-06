@@ -26,12 +26,13 @@ namespace PureActive.Logging.Extensions.Types
         }
 
         public static void FormatPropertyList(StringBuilder sb, LoggableFormat loggableFormat, 
-            IEnumerable<IPureLogPropertyLevel> logPropertyList, LogLevel minimumLogLevel = LogLevel.Debug)
+            IEnumerable<IPureLogPropertyLevel> logPropertyEnumerable, LogLevel minimumLogLevel = LogLevel.Debug)
         {
             if (sb == null) throw new ArgumentNullException(nameof(sb));
-            if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
+            if (logPropertyEnumerable == null) throw new ArgumentNullException(nameof(logPropertyEnumerable));
 
-            int maxLength = logPropertyList.Select(p => p.Key).MaxStringLength() + 2;
+            var logPropertyList = logPropertyEnumerable.ToList();
+            var maxLength = logPropertyList.Select(p => p.Key).MaxStringLength() + 2;
 
             foreach (var logPropertyListItem in logPropertyList)
             {

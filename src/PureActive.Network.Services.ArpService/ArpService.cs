@@ -205,7 +205,7 @@ namespace PureActive.Network.Services.ArpService
             using (this.With(LogLevel.Debug))
             {
                 Logger?.LogDebug("{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}", ServiceHost, arpRefreshStatus, Count);
-            };
+            }
         }
 
         protected  override async Task ExecuteAsync(CancellationToken stoppingToken)

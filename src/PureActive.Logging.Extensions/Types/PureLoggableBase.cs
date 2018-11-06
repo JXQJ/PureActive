@@ -56,7 +56,7 @@ namespace PureActive.Logging.Extensions.Types
         {
             var logProperties = new List<IPureLogPropertyLevel>
             {
-                {new PureLogPropertyLevel("ObjectType", TypeNameHelper.GetTypeDisplayName(this.GetType()), LogLevel.Information)}
+                {new PureLogPropertyLevel("ObjectType", TypeNameHelper.GetTypeDisplayName(GetType()), LogLevel.Information)}
             };
 
             return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);

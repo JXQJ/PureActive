@@ -14,8 +14,8 @@ namespace PureActive.Logging.Extensions.Types
 
         public PureLogProperty(KeyValuePair<string, object> keyValuePair, bool destructureObjects = false)
         {
-            this.KeyValuePair = keyValuePair;
-            this.DestructureObject = destructureObjects;
+            KeyValuePair = keyValuePair;
+            DestructureObject = destructureObjects;
         }
 
         public PureLogProperty(string key, object value, bool destructureObjects = false) : this(new KeyValuePair<string, object>(key, value), destructureObjects)

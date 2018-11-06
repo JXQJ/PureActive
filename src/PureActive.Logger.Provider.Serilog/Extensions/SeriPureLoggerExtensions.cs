@@ -12,24 +12,17 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
 {
     public static class SeriPureLoggerExtensions
     {
-        public static IDisposable BeginPropertyScope<T>(this ILogger logger, string propertyName, T value)
-        {
-            return logger?.BeginScope(new Dictionary<string, T> {{propertyName, value}});
-        }
-
-        public static IDisposable With(this ILogger logger, string propertyName, object value,
-            bool destructureObjects = false)
+        public static IDisposable With(this IPureLogger logger, string propertyName, object value, bool destructureObjects = false)
         {
             return LogContext.PushProperty(propertyName, value, destructureObjects);
         }
 
-        public static IDisposable WithDeconstruct(this ILogger logger, string propertyName, object value)
+        public static IDisposable WithDeconstruct(this IPureLogger logger, string propertyName, object value)
         {
             return LogContext.PushProperty(propertyName, value, true);
         }
 
-        public static IDisposable With(this ILogger logger, IEnumerable<KeyValuePair<string, object>> properties,
-            bool destructureObjects = false)
+        public static IDisposable With(this IPureLogger logger, IEnumerable<KeyValuePair<string, object>> properties, bool destructureObjects = false)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
@@ -43,15 +36,14 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
             );
         }
 
-        public static IDisposable WithDeconstruct(this ILogger logger,
-            IEnumerable<KeyValuePair<string, object>> properties)
+        public static IDisposable WithDeconstruct(this IPureLogger logger, IEnumerable<KeyValuePair<string, object>> properties)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
             return With(logger, properties, true);
         }
 
-        public static IDisposable With(this ILogger logger, IEnumerable<IPureLogProperty> logPropertyList)
+        public static IDisposable With(this IPureLogger logger, IEnumerable<IPureLogProperty> logPropertyList)
         {
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
 
@@ -65,8 +57,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
             );
         }
 
-        public static IDisposable With(this ILogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList,
-            LogLevel minimumLogLevel)
+        public static IDisposable With(this IPureLogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList, LogLevel minimumLogLevel)
         {
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
 
@@ -86,8 +77,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
         }
 
 
-        public static IDisposable With(this IPureLoggable loggable, LogLevel minimumLogLevel,
-            LoggableFormat loggableFormat = LoggableFormat.ToLog)
+        public static IDisposable With(this IPureLoggable loggable, LogLevel minimumLogLevel, LoggableFormat loggableFormat = LoggableFormat.ToLog)
         {
             if (loggable == null) throw new ArgumentNullException(nameof(loggable));
             if (loggable.Logger == null) throw new ArgumentNullException(nameof(loggable.Logger));
@@ -101,8 +91,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
 
 
 
-        public static IDisposable With(this IPureLoggable loggable, IPureLogLevel pureLogLevel,
-            LoggableFormat loggableFormat = LoggableFormat.ToLog)
+        public static IDisposable With(this IPureLoggable loggable, IPureLogLevel pureLogLevel, LoggableFormat loggableFormat = LoggableFormat.ToLog)
         {
             if (loggable == null) throw new ArgumentNullException(nameof(loggable));
 
@@ -113,8 +102,7 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
             With(loggable, pureLogLevel, LoggableFormat.ToLogWithParents);
 
 
-        public static IDisposable With(this ILogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList,
-            IPureLogLevel pureLogLevel)
+        public static IDisposable With(this IPureLogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList, IPureLogLevel pureLogLevel)
         {
             if (logger == null) throw new ArgumentNullException(nameof(logger));
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
@@ -123,12 +111,10 @@ namespace PureActive.Logger.Provider.Serilog.Extensions
             return With(logger, logPropertyList, pureLogLevel.MinimumLogLevel);
         }
 
-        public static IDisposable With(this ILogger logger, IPureLogPropertyLevelList logPropertyLevelList,
-            LogLevel minimumLogLevel) =>
+        public static IDisposable With(this IPureLogger logger, IPureLogPropertyLevelList logPropertyLevelList, LogLevel minimumLogLevel) =>
             With(logger, logPropertyLevelList.GetLogPropertyLevelList(minimumLogLevel));
 
-        public static IDisposable With(this ILogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList,
-            Func<IPureLogPropertyLevel, bool> includeLogProperty)
+        public static IDisposable With(this IPureLogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList, Func<IPureLogPropertyLevel, bool> includeLogProperty)
         {
             return LogContext.Push
             (

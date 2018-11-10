@@ -1,31 +1,13 @@
 using System;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Extensions.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
 namespace PureActive.Logging.UnitTests.Extensions
 {
-    public static class LoggerExtensionsTest
-    {
-        private static readonly Action<ILogger, string, Exception> _quoteAdded;
-
-        static LoggerExtensionsTest()
-        {
-            _quoteAdded = LoggerMessage.Define<string>(
-                LogLevel.Information,
-                new EventId(2, nameof(QuoteAdded)),
-                "Quote added (Quote = '{Quote}')");
-        }
-
-        public static void QuoteAdded(this IPureLogger logger, string quote)
-        {
-            _quoteAdded(logger, quote, null);
-
-        }
-    }
-
 
     public class LoggerExtensionsUnitTests : LoggingUnitTestBase<LoggerExtensionsUnitTests>
     {
@@ -34,11 +16,13 @@ namespace PureActive.Logging.UnitTests.Extensions
 
         }
 
-
         [Fact]
-        public void LoggerExtensions_TestQuoteAdded()
+        public void LoggerExtensions_BeginPropertyScope()
         {
-            Logger.QuoteAdded("Test Quote Add");
+            using (Logger.BeginPropertyScope("PropertyInt", 14))
+            {
+                Logger.LogDebug("Log Int Property Scope");
+            }
         }
     }
 }

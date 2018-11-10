@@ -1,6 +1,4 @@
-using System;
 using Microsoft.Extensions.Logging;
-using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Extensions.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

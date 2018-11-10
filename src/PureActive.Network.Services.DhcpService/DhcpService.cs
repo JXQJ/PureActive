@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
-using PureActive.Logger.Provider.Serilog.Extensions;
+using PureActive.Logging.Extensions.Extensions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.DhcpService.Events;
 using PureActive.Network.Abstractions.DhcpService.Interfaces;
@@ -269,7 +269,7 @@ namespace PureActive.Network.Services.DhcpService
                 var msgLogLevel = LogLevelFromDhcpMessageProcessed(dhcpMessageProcessed);
 
                 // log that the packet was successfully parsed
-                using (args.RequestMessage.With(msgLogLevel))
+                using (args.RequestMessage.PushLogProperties(msgLogLevel))
                 {
                     Logger?.Log(msgLogLevel,
                         "DHCP {DhcpMessageType} message with session id {DhcpSessionId} from client {ClientHardwareAddress} with status {DhcpMessageProcessed} on thread #{ThreadId}",
@@ -281,7 +281,7 @@ namespace PureActive.Network.Services.DhcpService
             }
             else
             {
-                using (args.RequestMessage.With(LogLevel.Debug))
+                using (args.RequestMessage.PushLogProperties(LogLevel.Debug))
                 {
                     Logger?.LogDebug("UNKNOWN operation code {OperationCode} received and ignored",
                         args.RequestMessage.Operation);

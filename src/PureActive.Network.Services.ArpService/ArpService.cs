@@ -14,9 +14,9 @@ using PureActive.Core.Abstractions.System;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
-using PureActive.Logger.Provider.Serilog.Extensions;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Extensions;
 using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.Extensions;
@@ -202,7 +202,7 @@ namespace PureActive.Network.Services.ArpService
             if (ServiceHostStatus == ServiceHostStatus.StartPending)
                 ServiceHostStatus = ServiceHostStatus.Running;
 
-            using (this.With(LogLevel.Debug))
+            using (this.PushLogProperties(LogLevel.Debug))
             {
                 Logger?.LogDebug("{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}", ServiceHost, arpRefreshStatus, Count);
             }

@@ -1,10 +1,23 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using System;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 
 namespace PureActive.Logging.Abstractions.Interfaces
 {
     public interface IPureLogger : ILogger
     {
+        IDisposable PushProperty(string propertyName, object value, bool destructureObjects = false);
+        IDisposable PushProperty<T>(string propertyName, T value, bool destructureObjects = false);
 
+        IDisposable PushLogProperties(IEnumerable<IPureLogProperty> logPropertyList);
+
+        IDisposable PushLogProperties(IEnumerable<KeyValuePair<string, object>> properties,
+            bool destructureObjects = false);
+
+        IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList, LogLevel minimumLogLevel);
+
+
+        IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList, Func<IPureLogPropertyLevel, bool> includeLogProperty);
     }
 
     /// <summary>

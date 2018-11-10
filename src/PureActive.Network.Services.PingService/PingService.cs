@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
-using PureActive.Logger.Provider.Serilog.Extensions;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
@@ -49,21 +48,21 @@ namespace PureActive.Network.Services.PingService
 
                     if (pingReply.Status == IPStatus.Success)
                     {
-                        using (Logger?.With(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
+                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
                         {
                             Logger?.LogDebug("Ping {Status} to {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
                         }
                     }
                     else if (pingReply.Status == IPStatus.TimedOut)
                     {
-                        using (Logger?.With(pingReply.GetLogPropertyListLevel(LogLevel.Trace, LoggableFormat.ToLog)))
+                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Trace, LoggableFormat.ToLog)))
                         {
                             Logger?.LogTrace("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
                         }
                     }
                     else
                     {
-                        using (Logger?.With(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
+                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
                         {
                             Logger?.LogDebug("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
                         }

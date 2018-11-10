@@ -1,8 +1,8 @@
 using System;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using PureActive.Logger.Provider.Serilog.Extensions;
 using PureActive.Logging.Abstractions.Types;
+using PureActive.Logging.Extensions.Extensions;
 using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Services.DhcpService.Message;
 using PureActive.Serilog.Sink.Xunit.TestBase;
@@ -59,7 +59,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Information;
 
-            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents)))
+            using (Logger?.PushLogProperties(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents)))
             {
                 Logger?.LogDebug("DhcpRequest_GetPropertyListLevel by {LogLevel}", logLevel);
             }
@@ -94,7 +94,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Debug;
 
-            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
+            using (Logger?.PushLogProperties(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
             {
                 Logger?.LogDebug("DhcpRequest_With by {LogLevel}", logLevel);
             }
@@ -110,7 +110,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.None;
 
-            using (Logger?.With(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
+            using (Logger?.PushLogProperties(dhcpRequestMessage.GetLogPropertyListLevel(logLevel, LoggableFormat.ToLogWithParents), logLevel))
             {
                 Logger?.LogDebug("DhcpRequest_With_None by {LogLevel}", logLevel);
             }
@@ -124,7 +124,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
             var logLevel = LogLevel.Debug;
 
-            using (dhcpRequestMessage.With(logLevel))
+            using (dhcpRequestMessage.PushLogProperties(logLevel))
             {
                 Logger?.LogDebug("TestDhcpRequest_DhcpRequest_With_ILoggable by {LogLevel}", logLevel);
             }

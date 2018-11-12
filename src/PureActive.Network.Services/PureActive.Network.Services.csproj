@@ -10,6 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Network Services</Title>
+	<AssemblyTitle>PureActive Network Services</AssemblyTitle>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>  
   </PropertyGroup>

@@ -9,7 +9,11 @@
     <PackageTags>PureActive hosting abstractions</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Hosting Abstractions</Title>  </PropertyGroup>
+    <Title>PureActive Hosting Abstractions</Title>  
+	  <AssemblyTitle>PureActive Hosting Abstractions</AssemblyTitle>  
+	
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+	</PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.1" />

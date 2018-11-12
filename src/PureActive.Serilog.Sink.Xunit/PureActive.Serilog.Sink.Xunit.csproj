@@ -10,6 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Serilog Sink for xUnit</Title>
+    <AssemblyTitle>PureActive Serilog Sink for xUnit</AssemblyTitle>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>

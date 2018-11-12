@@ -10,6 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Serilog Logger Provider</Title>
+	<AssemblyTitle>PureActive Serilog Logger Provider</AssemblyTitle>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>

@@ -10,6 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Email Provider for Office365</Title>
+    <AssemblyTitle>PureActive Email Provider for Office365</AssemblyTitle>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>

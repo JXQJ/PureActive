@@ -11,7 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Network Dhcp Service</Title>
-
+    <AssemblyTitle>PureActive Network Dhcp Service</AssemblyTitle>
+	
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
 

@@ -36,7 +36,7 @@ namespace PureActive.Logging.Abstractions.Types
             return BeginScope(new Dictionary<string, T> { { propertyName, value } });
         }
 
-        private IDisposable PushEmptyLogProperty() => (IDisposable) NullScope.Instance;
+        private IDisposable PushEmptyLogProperty() => NullScope.Instance;
 
         public IDisposable PushLogProperties(IEnumerable<IPureLogProperty> logPropertyList) => PushEmptyLogProperty();
 

@@ -9,6 +9,7 @@
     <PackageTags>PureActive samples console</PackageTags>
     <SignAssembly>true</SignAssembly>
     <Title>PureActive Sample Console Application</Title>
+	<AssemblyTitle>PureActive Sample Console Application</AssemblyTitle>
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
 
     <OutputType>Exe</OutputType>

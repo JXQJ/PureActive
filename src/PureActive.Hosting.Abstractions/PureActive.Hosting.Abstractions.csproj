@@ -10,7 +10,7 @@
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
     <Title>PureActive Hosting Abstractions</Title>  
-	  <AssemblyTitle>PureActive Hosting Abstractions</AssemblyTitle>  
+	<AssemblyTitle>PureActive Hosting Abstractions</AssemblyTitle>  
 	
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
 	</PropertyGroup>

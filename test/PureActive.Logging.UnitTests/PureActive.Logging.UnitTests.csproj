@@ -10,7 +10,7 @@
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="5.5.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="Nerdbank.GitVersioning" Version="2.2.13">
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.2.33">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PureActive.Core.Extensions
 {
@@ -27,7 +28,7 @@ namespace PureActive.Core.Extensions
             }
        }
 
-        public static List<T> AddItem<T>(this List<T> list, T item)
+        public static IList<T> AddItem<T>(this IList<T> list, T item)
         {
             list.Add(item);
             return list;
@@ -37,6 +38,11 @@ namespace PureActive.Core.Extensions
         {
             list.Add(item);
             return list;
+        }
+
+        public static IList<T> CloneList<T>(this IEnumerable<T> list) where T : ICloneable
+        {
+            return list.Select(item => (T)item.Clone()).ToList();
         }
     }
 }

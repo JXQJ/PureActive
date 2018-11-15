@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
 using FluentAssertions;
-using PureActive.Core.Abstractions.Async;
-using PureActive.Core.Async;
 using PureActive.Core.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

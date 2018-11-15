@@ -1,5 +1,4 @@
 ﻿using System;
-using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Network.Abstractions.PureObject
 {

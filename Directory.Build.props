@@ -16,7 +16,7 @@
     <Copyright>© 2018 BushChang Corporation. All rights reserved.</Copyright>
     <NuspecProperties>$(NuspecProperties);owners=PureActive</NuspecProperties>
     <Owners>PureActive</Owners>
-    <PackageLicenseUrl>https://github.com/PureActive/PureActive/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/PureActive/PureActive</PackageProjectUrl>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>

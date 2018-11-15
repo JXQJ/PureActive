@@ -7,7 +7,7 @@ namespace PureActive.Core.Extensions
     {
         public static int MaxStringLength<T>(this IEnumerable<T> enumerable)
         {
-            return enumerable.Select(item => item.ToString().Length).Concat(new[] {0}).Max();
+            return enumerable?.Select(item => item.ToString().Length).Concat(new[] {0}).Max() ?? 0;
         }
     }
 }

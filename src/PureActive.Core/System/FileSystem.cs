@@ -64,7 +64,7 @@ namespace PureActive.Core.System
         {
             return new FileStream
             (
-                Path.GetTempFileName(),
+                GetTempFileName(),
                 FileMode.OpenOrCreate,
                 FileAccess.ReadWrite,
                 FileShare.ReadWrite,
@@ -74,6 +74,8 @@ namespace PureActive.Core.System
         }
 
         public string GetTempFolderPath() => Path.GetTempPath();
+
+        public string GetTempFileName() => Path.GetTempFileName();
 
         /// <summary>
         ///     Reads the contents of a file.

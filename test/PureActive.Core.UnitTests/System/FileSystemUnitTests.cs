@@ -4,6 +4,7 @@ using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
+using Moq;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
 using PureActive.Core.System;
@@ -152,6 +153,52 @@ namespace PureActive.Core.UnitTests.System
 
             tempFile.CanWrite.Should().BeFalse();
             tempFile.CanRead.Should().BeFalse();
+        }
+
+        [Fact]
+        public void FileSystem_GetTempFileName_Writable()
+        {
+            var tempFolderPath = _fileSystem.GetTempFolderPath();
+
+            Stream tempFile;
+
+            using (tempFile = new FileStream
+            (
+                _fileSystem.GetTempFileName(),
+                FileMode.OpenOrCreate,
+                FileAccess.ReadWrite,
+                FileShare.ReadWrite,
+                CBufferSize,
+                FileOptions.DeleteOnClose
+            ))
+            {
+                tempFile.CanWrite.Should().BeTrue();
+                tempFile.WriteByte(10);
+                tempFile.Length.Should().Be(1);
+            }
+
+            tempFile.CanWrite.Should().BeFalse();
+            tempFile.CanRead.Should().BeFalse();
+        }
+
+        [Fact]
+        public void FileSystem_ArpCommandPath_FileExists()
+        {
+            var arpCommandPath = _fileSystem.ArpCommandPath();
+            File.Exists(arpCommandPath).Should().BeTrue();
+        }
+
+        [Fact]
+        public void FileSystem_ArpCommandPath_FileExists_OSX()
+        {
+            Mock<IOperatingSystem> operatingSystemMock = new Mock<IOperatingSystem>();
+
+            operatingSystemMock.Setup(osm => osm.IsWindows()).Returns(false);
+            operatingSystemMock.Setup(osm => osm.IsOsx()).Returns(true);
+
+            var fileSystem = new FileSystem(typeof(FileSystemUnitTests), operatingSystemMock.Object);
+
+            fileSystem.ArpCommandPath().Should().Be("/usr/sbin/arp");
         }
     }
 }

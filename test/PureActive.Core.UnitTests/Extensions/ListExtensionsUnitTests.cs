@@ -32,6 +32,12 @@ namespace PureActive.Core.UnitTests.Extensions
         }
 
         [Fact]
+        public void ListExtensions_ShuffleList_Null()
+        {
+            ((List<int>) null).Shuffle();
+        }
+
+        [Fact]
         public void ListExtensions_AddItemList()
         {
             var listOfIntegers = new List<int>

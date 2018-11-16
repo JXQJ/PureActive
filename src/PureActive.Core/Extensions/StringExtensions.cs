@@ -79,12 +79,12 @@ namespace PureActive.Core.Extensions
 
         public static string[] SplitOnFirstDelim(this string str, char chDelim)
         {
-            return ProcessSplits(str, str.IndexOf(chDelim));
+            return string.IsNullOrEmpty(str) ? new string[2]: ProcessSplits(str, str.IndexOf(chDelim));
         }
 
         public static string[] SplitOnLastDelim(this string str, char chDelim)
         {
-            return ProcessSplits(str, str.LastIndexOf(chDelim));
+            return string.IsNullOrEmpty(str) ? new string[2] : ProcessSplits(str, str.LastIndexOf(chDelim));
         }
 
         public static string StringAfterDelim(this string str, char chDelim)
@@ -113,16 +113,15 @@ namespace PureActive.Core.Extensions
 
         public static bool? ParseYesNoStrict(this string str)
         {
-            if (!string.IsNullOrWhiteSpace(str) && str.Length > 0)
-            {
-                string strNormalized = str.Trim().ToUpper();
+            if (string.IsNullOrWhiteSpace(str) || str.Length <= 0) return null;
 
-                if (strNormalized.StartsWith("YES"))
-                    return true;
+            var strNormalized = str.Trim().ToUpper();
 
-                if (strNormalized.StartsWith("NO"))
-                    return false;
-            }
+            if (strNormalized.Equals("YES"))
+                return true;
+
+            if (strNormalized.Equals("NO"))
+                return false;
 
             return null;
         }
@@ -166,26 +165,6 @@ namespace PureActive.Core.Extensions
                 sb.Append(' ', paddingLen);
 
             return sb.ToString();
-        }
-
-        public static string GetDescription(this Enum value)
-        {
-            var field = value.GetType().GetField(value.ToString());
-
-            return !(Attribute.GetCustomAttribute(field, typeof(DescriptionAttribute)) is DescriptionAttribute attribute
-                )
-                ? value.ToString()
-                : attribute.Description;
-        }
-
-        public static string ToEnumString(this string enumStr)
-        {
-            return (string.IsNullOrWhiteSpace(enumStr) ? null : enumStr.Trim().Replace(" ", "_"));
-        }
-
-        public static string FromEnumValue(this Enum value)
-        {
-            return (value.ToString().Replace("_", " "));
         }
 
         public static string ToDoubleQuoted(this string input)

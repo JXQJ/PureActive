@@ -17,6 +17,9 @@ namespace PureActive.Core.Abstractions.System
         /// </summary>
         Stream CreateNewTempFile();
 
+        string GetTempFolderPath();
+
+
         /// <summary>
         ///     Reads the contents of a file.
         /// </summary>

@@ -73,6 +73,8 @@ namespace PureActive.Core.System
             );
         }
 
+        public string GetTempFolderPath() => Path.GetTempPath();
+
         /// <summary>
         ///     Reads the contents of a file.
         /// </summary>

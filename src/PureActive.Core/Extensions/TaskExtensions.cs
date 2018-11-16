@@ -19,14 +19,20 @@ namespace PureActive.Core.Extensions
             {
                 t.Wait(cancellationToken);
             }
+            catch (OperationCanceledException ex)
+            {
+                logger?.LogError("Task {Method} timed out", memberName);
+
+                t =  Task.FromException(ex);
+            }
             catch (Exception ex)
             {
-                logger?.LogError(ex, "{Method} Failed to Shutdown", memberName);
+                logger?.LogError(ex, "Task {Method} threw an exception", memberName);
 
-                return Task.FromException(ex);
+                t = Task.FromException(ex);
             }
 
-            return Task.CompletedTask;
+            return t;
         }
     }
 }

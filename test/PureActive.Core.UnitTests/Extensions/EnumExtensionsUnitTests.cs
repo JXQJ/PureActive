@@ -1,7 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Linq;
-using System.Reflection;
 using FluentAssertions;
 using PureActive.Core.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;

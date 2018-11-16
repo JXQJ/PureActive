@@ -1,7 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
 
 namespace PureActive.Core.Extensions
 {
@@ -157,14 +155,7 @@ namespace PureActive.Core.Extensions
 
         public static string PadWithDelim(this string input, string delim, int length)
         {
-            var sb = new StringBuilder(input).Append(delim);
-
-            var paddingLen = length - sb.Length;
-
-            if (paddingLen > 0)
-                sb.Append(' ', paddingLen);
-
-            return sb.ToString();
+            return $"{input}{delim}".PadRight(length, ' ');
         }
 
         public static string ToDoubleQuoted(this string input)

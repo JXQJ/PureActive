@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using System.Reflection;
 using FluentAssertions;
@@ -426,6 +425,26 @@ namespace PureActive.Core.UnitTests.Extensions
         public void StringExtensions_ParseLongOrNull(string testString, long? expectedLong)
         {
             testString.ParseLongOrNull().Should().Be(expectedLong);
+        }
+
+        [Theory]
+        [InlineData(null, "\"\"")]
+        [InlineData("", "\"\"")]
+        [InlineData(" ", "\" \"")]
+        [InlineData("Test", "\"Test\"")]
+        public void StringExtensions_ToDoubleQuote(string testString, string expectedString)
+        {
+            testString.ToDoubleQuoted().Should().Be(expectedString);
+        }
+
+        [Theory]
+        [InlineData("Property", ":", 20, "Property:           ")]
+        [InlineData("Property", ":", 5, "Property:")]
+        [InlineData(null, ":", 5, ":    ")]
+        [InlineData(null, null, 5, "     ")]
+        public void StringExtensions_PadWithDelim(string testString, string delimString, int length, string expectedString)
+        {
+            testString.PadWithDelim(delimString, length).Should().Be(expectedString);
         }
 
     }

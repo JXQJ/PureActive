@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security.Cryptography.X509Certificates;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
@@ -9,7 +8,6 @@ using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
 using PureActive.Core.System;
 using PureActive.Serilog.Sink.Xunit.TestBase;
-using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
 

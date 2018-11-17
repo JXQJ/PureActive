@@ -45,13 +45,16 @@ namespace PureActive.Network.UnitTests.Network
                 new object[] {TestAddressClass1A, IPAddressExtensions.SubnetClassC, NetworkAddressClass1C},
             };
 
+            [Trait("Category", "Unit")]
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
 
+            [Trait("Category", "Unit")]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
         [Trait("Category", "Unit")]
         [Theory]
+        [Trait("Category", "Unit")]
         [ClassData(typeof(NetworkAddressTestGenerator))]
         public void NetworkAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
         {
@@ -84,13 +87,16 @@ namespace PureActive.Network.UnitTests.Network
                 new object[] {NetworkAddressTestGenerator.TestAddressClass1A, IPAddressExtensions.SubnetClassC, BroadcastAddressClass1C},
             };
 
+            [Trait("Category", "Unit")]
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
 
+            [Trait("Category", "Unit")]
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
         [Trait("Category", "Unit")]
         [Theory]
+        [Trait("Category", "Unit")]
         [ClassData(typeof(BroadcastAddressTestGenerator))]
         public void BroadcastAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
         {

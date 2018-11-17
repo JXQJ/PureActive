@@ -11,6 +11,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.PingService.UnitTests
 {
+    [Trait("Category", "Unit")]
     public class PingTaskUnitTests : TestBaseLoggable<PingTaskUnitTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
@@ -26,7 +27,6 @@ namespace PureActive.Network.Services.PingService.UnitTests
             _pingService = new PingService(commonServices);
         }
 
-        [Trait("Category", "Unit")]
         [Fact]
         public async Task TestPingTask()
         {
@@ -35,41 +35,6 @@ namespace PureActive.Network.Services.PingService.UnitTests
             // Wait 5 seconds for a reply.
             int timeout = 500;
             var pingReply = await _pingService.PingIpAddressAsync(ipAddress, timeout);
-        }
-
-        [Trait("Category", "Integration")]
-        [Fact]
-        public async Task TestPingNetworkWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
-
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
-
-        [Trait("Category", "Integration")]
-        [Fact]
-        public async Task TestPingNetworkEventWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
-
-            _pingService.OnPingReply += PingReplyEventHandler;
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
-
-        private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
-        {
-            if (args != null)
-            {
-                TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
-            }
-        }
-
-        private void PingReplyCancelEventHandler(object sender, PingReplyEventArgs args)
-        {
-            if (args != null && args.PingJob.TaskId >= 5)
-            {
-                _cancellationTokenSource?.Cancel();
-            }
         }
     }
 }

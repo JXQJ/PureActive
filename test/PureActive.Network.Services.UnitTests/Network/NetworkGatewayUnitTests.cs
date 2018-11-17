@@ -16,57 +16,27 @@ namespace PureActive.Network.Services.UnitTests.Network
     public class NetworkGatewayUnitTests : TestBaseLoggable<NetworkGatewayUnitTests>
     {
         private readonly ICommonNetworkServices _commonNetworkServices;
-        private readonly IPAddressSubnet _gatewayIPAddressSubnet;
+
+        private static readonly IPAddressSubnet TestIPAddressSubnet =
+            new IPAddressSubnet(IPAddress.Parse("10.1.10.1"), IPAddressExtensions.SubnetClassC);
 
         public NetworkGatewayUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayUnitTests");
-            _gatewayIPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
         }
 
         [Fact]
-        public void TestDeviceToString()
+        public void NetworkGateway_Constructor()
         {
-            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
+            var networkGateway = new NetworkGateway(_commonNetworkServices, TestIPAddressSubnet);
+            networkGateway.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void NetworkGateway_ToString()
+        {
+            var networkGateway = new NetworkGateway(_commonNetworkServices, TestIPAddressSubnet);
             TestOutputHelper.WriteLine(networkGateway.ToString());
-        }
-
-
-        [Fact]
-        public void TestDeviceLogging()
-        {
-            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
-
-            var logLevel = LogLevel.Debug;
-
-            using (networkGateway.PushLogProperties(logLevel))
-            {
-                Logger?.LogDebug("TestDeviceLogging {LogLevel}", logLevel);
-            }
-        }
-
-        [Fact]
-        public void TestDeviceLoggingWithParents()
-        {
-            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
-            var logLevel = LogLevel.Debug;
-
-            using (networkGateway.PushLogPropertiesParents(logLevel))
-            {
-                Logger?.LogDebug("TestDeviceLoggingWithParents {LogLevel}", logLevel);
-            }
-        }
-
-        [Fact]
-        public void TestSwitchNetworkGateway()
-        {
-            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
-            var physicalAddress = networkGateway.PhysicalAddress;
-            
-            networkGateway.IPAddressSubnet = new IPAddressSubnet(IPAddress.Parse("10.1.10.33"), IPAddressExtensions.SubnetClassC);
-
-            var newPhysicalAddress = networkGateway.PhysicalAddress;
-            networkGateway.PhysicalAddress.Should().Be(newPhysicalAddress);
         }
     }
 }

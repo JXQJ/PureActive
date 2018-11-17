@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 namespace PureActive.Archive.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class ArchiveUnitTests : LoggingUnitTestBase<ArchiveUnitTests>
+    public class ArchiveTests : TestLoggerBase<ArchiveTests>
     {
-        public ArchiveUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public ArchiveTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

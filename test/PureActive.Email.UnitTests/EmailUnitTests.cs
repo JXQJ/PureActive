@@ -9,9 +9,9 @@ using Xunit.Abstractions;
 namespace PureActive.Email.UnitTests
 {
     [Trait("Category", "Integration")]
-    public class EmailUnitTests : LoggingUnitTestBase<EmailUnitTests>
+    public class EmailTests : TestLoggerBase<EmailTests>
     {
-        public EmailUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public EmailTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

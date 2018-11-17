@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.System
 {
     [Trait("Category", "Unit")]
-    public class OperatingSystemUnitTests : LoggingUnitTestBase<OperatingSystemUnitTests>
+    public class OperatingSystemTests : TestLoggerBase<OperatingSystemTests>
     {
-        public OperatingSystemUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public OperatingSystemTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

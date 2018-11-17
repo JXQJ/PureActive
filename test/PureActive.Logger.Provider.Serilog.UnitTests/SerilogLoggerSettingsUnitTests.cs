@@ -13,13 +13,13 @@ using Xunit.Abstractions;
 namespace PureActive.Logger.Provider.Serilog.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class SerilogLoggerSettingsUnitTests : LoggingUnitTestBase<SerilogLoggerSettingsUnitTests>
+    public class SerilogLoggerSettingsTests : TestLoggerBase<SerilogLoggerSettingsTests>
     {
         private readonly IFileSystem _fileSystem;
 
-        public SerilogLoggerSettingsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public SerilogLoggerSettingsTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _fileSystem = new FileSystem(typeof(SerilogLoggerSettingsUnitTests));
+            _fileSystem = new FileSystem(typeof(SerilogLoggerSettingsTests));
         }
 
         [Theory]

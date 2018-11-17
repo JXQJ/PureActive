@@ -12,16 +12,16 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.PingService.UnitTests
 {
     [Trait("Category", "Integration")]
-    public class PingServiceUnitTests : LoggingUnitTestBase<PingServiceUnitTests>
+    public class PingServiceTests : TestLoggerBase<PingServiceTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IPingService _pingService;
         private const int DefaultNetworkTimeout = 250;
         private const int DefaultPingCalls = 5;
 
-        public PingServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public PingServiceTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceUnitTests");
+            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceTests");
             _cancellationTokenSource = new CancellationTokenSource();
             _pingService = new PingService(commonServices);
         }

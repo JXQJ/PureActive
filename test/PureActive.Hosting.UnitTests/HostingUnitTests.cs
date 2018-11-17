@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 namespace PureActive.Hosting.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class HostingUnitTests : LoggingUnitTestBase<HostingUnitTests>
+    public class HostingTests : TestLoggerBase<HostingTests>
     {
-        public HostingUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public HostingTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

@@ -27,9 +27,9 @@ namespace PureActive.Logging.UnitTests.Extensions
     }
 
     [Trait("Category", "Unit")]
-    public class LoggerMessageUnitTests : LoggingUnitTestBase<LoggerExtensionsUnitTests>
+    public class LoggerMessageTests : TestLoggerBase<LoggerExtensionsTests>
     {
-        public LoggerMessageUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public LoggerMessageTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

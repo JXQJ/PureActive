@@ -13,14 +13,14 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.UnitTests.Network
 {
     [Trait("Category", "Unit")]
-    public class NetworkGatewayUnitTests : LoggingUnitTestBase<NetworkGatewayUnitTests>
+    public class NetworkGatewayTests : TestLoggerBase<NetworkGatewayTests>
     {
         private readonly ICommonNetworkServices _commonNetworkServices;
         private readonly IPAddressSubnet _gatewayIPAddressSubnet;
 
-        public NetworkGatewayUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public NetworkGatewayTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayUnitTests");
+            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayTests");
             _gatewayIPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
         }
 

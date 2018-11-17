@@ -13,7 +13,7 @@ using Xunit.Abstractions;
 namespace PureActive.Logger.Provider.Serilog.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class SerilogLoggerSettingsUnitTests : LoggingUnitTestBase<SerilogLoggerSettingsUnitTests>
+    public class SerilogLoggerSettingsUnitTests : TestBaseLoggable<SerilogLoggerSettingsUnitTests>
     {
         private readonly IFileSystem _fileSystem;
 

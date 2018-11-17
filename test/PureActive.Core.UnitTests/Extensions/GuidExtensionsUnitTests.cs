@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.Extensions
 {
     [Trait("Category", "Unit")]
-    public class GuidExtensionsUnitTests : LoggingUnitTestBase<GuidExtensionsUnitTests>
+    public class GuidExtensionsUnitTests : TestBaseLoggable<GuidExtensionsUnitTests>
     {
         public GuidExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {

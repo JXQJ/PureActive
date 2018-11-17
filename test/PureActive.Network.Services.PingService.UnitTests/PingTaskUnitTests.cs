@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.PingService.UnitTests
 {
-    public class PingTaskUnitTests : LoggingUnitTestBase<PingTaskUnitTests>
+    public class PingTaskUnitTests : TestBaseLoggable<PingTaskUnitTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IPingService _pingService;

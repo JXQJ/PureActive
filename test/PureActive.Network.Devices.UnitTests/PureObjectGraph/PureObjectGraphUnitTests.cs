@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
 {
     [Trait("Category", "Unit")]
-    public class PureObjectGraphUnitTests : LoggingUnitTestBase<PureObjectGraphUnitTests>
+    public class PureObjectGraphUnitTests : TestBaseLoggable<PureObjectGraphUnitTests>
     {
         public PureObjectGraphUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {

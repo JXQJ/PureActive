@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.NetworkMap.UnitTests.NetworkMapService
 {
     [Trait("Category", "Unit")]
-    public class NetworkMapServiceUnitTests : LoggingUnitTestBase<NetworkMapServiceUnitTests>
+    public class NetworkMapServiceUnitTests : TestBaseLoggable<NetworkMapServiceUnitTests>
     {
         private readonly ICommonNetworkServices _commonNetworkServices;
 

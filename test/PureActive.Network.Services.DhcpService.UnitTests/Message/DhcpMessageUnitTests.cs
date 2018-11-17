@@ -12,7 +12,7 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 {
     [Trait("Category", "Unit")]
-    public class DhcpMessageUnitTests : LoggingUnitTestBase<DhcpMessageUnitTests>
+    public class DhcpMessageUnitTests : TestBaseLoggable<DhcpMessageUnitTests>
     {
         private readonly byte[] _iPhoneRequestDhcpMsgBytes = new byte[]
         {

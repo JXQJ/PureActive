@@ -15,7 +15,7 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.System
 {
     [Trait("Category", "Unit")]
-    public class FileSystemUnitTests : LoggingUnitTestBase<FileSystemUnitTests>
+    public class FileSystemUnitTests : TestBaseLoggable<FileSystemUnitTests>
     {
         private static readonly string AppFolderName = "FileSystemUnitTests";
         private readonly IFileSystem _fileSystem;

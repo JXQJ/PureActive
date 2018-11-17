@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.Async
 {
     [Trait("Category", "Unit")]
-    public class OperationRunnerUnitTests : LoggingUnitTestBase<OperationRunnerUnitTests>
+    public class OperationRunnerUnitTests : TestBaseLoggable<OperationRunnerUnitTests>
     {
         private readonly IOperationRunner _operationRunner;
 

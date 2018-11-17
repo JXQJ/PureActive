@@ -10,7 +10,7 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 {
     [Trait("Category", "Unit")]
-    public class DhcpOptionUnitTests : LoggingUnitTestBase<DhcpOptionUnitTests>
+    public class DhcpOptionUnitTests : TestBaseLoggable<DhcpOptionUnitTests>
     {
         private static readonly byte[] PhoneRequestDhcpMsgBytes = new byte[]
         {

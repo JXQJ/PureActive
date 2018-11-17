@@ -10,9 +10,9 @@ using Xunit.Abstractions;
 namespace PureActive.Network.UnitTests.Network
 {
     [Trait("Category", "Unit")]
-    public class IPAddressRangeUnitTests : LoggingUnitTestBase<IPAddressRangeUnitTests>
+    public class IPAddressRangeTests : TestLoggerBase<IPAddressRangeTests>
     {
-        public IPAddressRangeUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public IPAddressRangeTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

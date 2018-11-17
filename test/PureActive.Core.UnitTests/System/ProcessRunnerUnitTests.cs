@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.System
 {
     [Trait("Category", "Unit")]
-    public class ProcessRunnerUnitTests : LoggingUnitTestBase<ProcessRunnerUnitTests>
+    public class ProcessRunnerTests : TestLoggerBase<ProcessRunnerTests>
     {
-        public ProcessRunnerUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public ProcessRunnerTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

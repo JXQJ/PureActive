@@ -11,11 +11,11 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.Async
 {
     [Trait("Category", "Unit")]
-    public class OperationRunnerUnitTests : LoggingUnitTestBase<OperationRunnerUnitTests>
+    public class OperationRunnerTests : TestLoggerBase<OperationRunnerTests>
     {
         private readonly IOperationRunner _operationRunner;
 
-        public OperationRunnerUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public OperationRunnerTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _operationRunner = new OperationRunner(TestLoggerFactory.CreatePureLogger<OperationRunner>());
         }

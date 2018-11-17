@@ -10,9 +10,9 @@ using Xunit.Abstractions;
 namespace PureActive.Queue.Hangfire.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class QueueHangfireUnitTests : LoggingUnitTestBase<QueueHangfireUnitTests>
+    public class QueueHangfireTests : TestLoggerBase<QueueHangfireTests>
     {
-        public QueueHangfireUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public QueueHangfireTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }
@@ -21,7 +21,7 @@ namespace PureActive.Queue.Hangfire.UnitTests
         public void QueueHangfire_Logging()
         {
             var hangFireLogger = new HangfireLogProvider(TestLoggerFactory);
-            var sourceContext = "QueueHangfireUnitTests";
+            var sourceContext = "QueueHangfireTests";
             var logger = hangFireLogger.GetLogger(sourceContext);
             var testString = "Test: QueueHangfire_Logging";
 

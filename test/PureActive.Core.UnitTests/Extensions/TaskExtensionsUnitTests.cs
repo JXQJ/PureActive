@@ -12,10 +12,10 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.Extensions
 {
     [Trait("Category", "Unit")]
-    public class TaskExtensionsUnitTests : LoggingUnitTestBase<TaskExtensionsUnitTests>
+    public class TaskExtensionsTests : TestLoggerBase<TaskExtensionsTests>
     {
 
-        public TaskExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public TaskExtensionsTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

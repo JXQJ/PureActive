@@ -5,10 +5,10 @@ using Xunit.Abstractions;
 namespace PureActive.Core.Reactive.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class ReactiveUnitTests : LoggingUnitTestBase<ReactiveUnitTests>
+    public class ReactiveTests : TestLoggerBase<ReactiveTests>
     {
 
-        public ReactiveUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public ReactiveTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

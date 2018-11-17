@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.Extensions
 {
     [Trait("Category", "Unit")]
-    public class EnumerationExtensionsUnitTests : LoggingUnitTestBase<EnumerationExtensionsUnitTests>
+    public class EnumerationExtensionsTests : TestLoggerBase<EnumerationExtensionsTests>
     {
-        public EnumerationExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public EnumerationExtensionsTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

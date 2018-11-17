@@ -9,13 +9,13 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.NetworkMap.UnitTests.NetworkMapService
 {
     [Trait("Category", "Unit")]
-    public class NetworkMapServiceUnitTests : LoggingUnitTestBase<NetworkMapServiceUnitTests>
+    public class NetworkMapServiceTests : TestLoggerBase<NetworkMapServiceTests>
     {
         private readonly ICommonNetworkServices _commonNetworkServices;
 
-        public NetworkMapServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public NetworkMapServiceTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkMapServiceUnitTests");
+            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkMapServiceTests");
         }
 
 

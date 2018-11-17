@@ -11,7 +11,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.PingService.UnitTests
 {
-    public class PingTaskUnitTests : LoggingUnitTestBase<PingTaskUnitTests>
+    public class PingTaskTests : TestLoggerBase<PingTaskTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IPingService _pingService;
@@ -19,9 +19,9 @@ namespace PureActive.Network.Services.PingService.UnitTests
         private const int DefaultPingCalls = 5;
 
 
-        public PingTaskUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public PingTaskTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskUnitTests");
+            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskTests");
             _cancellationTokenSource = new CancellationTokenSource();
             _pingService = new PingService(commonServices);
         }

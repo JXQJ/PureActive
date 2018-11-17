@@ -1,6 +1,4 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -46,20 +44,6 @@ namespace PureActive.Hosting.Settings
         public IPureLoggerFactory LoggerFactory { get; internal set; }
         public IFileSystem FileSystem { get; internal set; }
         public IOperatingSystem OperatingSystem { get; internal set; }
-
-        public static string AssemblyFolder
-        {
-            get
-            {
-                var codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                var uri = new UriBuilder(codeBase);
-                var path = Uri.UnescapeDataString(uri.Path);
-                return Path.GetDirectoryName(path);
-            }
-        }
-
-        public static string SettingsFolder => AssemblyFolder + "/Settings/";
-
 
         public ContainerBuilder RegisterSharedServices(IServiceCollection services)
         {

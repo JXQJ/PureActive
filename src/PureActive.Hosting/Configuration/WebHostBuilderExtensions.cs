@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,8 +20,9 @@ namespace PureActive.Hosting.Configuration
         /// </summary>
         private static IConfigurationRoot GetAppConfiguration()
         {
+            var fileSystem = new FileSystem();
             return new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(fileSystem.GetCurrentDirectory())
                 .AddAppSettings()
                 .AddEnvironmentVariables()
                 .Build();

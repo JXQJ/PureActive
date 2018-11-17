@@ -9,11 +9,11 @@ namespace PureActive.Logging.UnitTests.Extensions
 {
     public static class LoggerExtensionsTest
     {
-        private static readonly Action<ILogger, string, Exception> _quoteAdded;
+        private static readonly Action<ILogger, string, Exception> QuoteAddedMessage;
 
         static LoggerExtensionsTest()
         {
-            _quoteAdded = LoggerMessage.Define<string>(
+            QuoteAddedMessage = LoggerMessage.Define<string>(
                 LogLevel.Information,
                 new EventId(2, nameof(QuoteAdded)),
                 "Quote added (Quote = '{Quote}')");
@@ -21,7 +21,7 @@ namespace PureActive.Logging.UnitTests.Extensions
 
         public static void QuoteAdded(this IPureLogger logger, string quote)
         {
-            _quoteAdded(logger, quote, null);
+            QuoteAddedMessage(logger, quote, null);
 
         }
     }

@@ -61,7 +61,7 @@ namespace PureActive.Core.UnitTests.Extensions
                 1, 2, 4, 5, 6, 8, 9, 10
             };
 
-            var oldCount = ((ICollection<int>) listOfIntegers).Count();
+            var oldCount = listOfIntegers.Count();
             var listOfIntegersReturned = ((ICollection<int>) listOfIntegers).AddItem(11);
 
             listOfIntegersReturned.Should().BeSameAs(listOfIntegers);

@@ -21,6 +21,16 @@ namespace PureActive.Core.System
 
         public string AppFolderName { get; set; }
 
+        public FileSystem() : this(new OperatingSystem())
+        {
+
+        }
+
+        public FileSystem(IOperatingSystem operatingSystem) : this(Assembly.GetExecutingAssembly().GetName().Name.Replace(".", "/"), operatingSystem)
+        {
+
+        }
+
         public FileSystem(IConfigurationRoot configuration, IOperatingSystem operatingSystem) : this(
             configuration?.GetSection("AppSettings")?["AppFolderName"], operatingSystem)
         {
@@ -55,6 +65,8 @@ namespace PureActive.Core.System
         {
 
         }
+
+        public string GetCurrentDirectory() => Directory.GetCurrentDirectory();
 
         /// <summary>
         ///     Creates a new temporary file, and returns the corresponding

@@ -21,6 +21,7 @@ namespace PureActive.Core.Abstractions.System
 
         string GetTempFileName();
 
+        string GetCurrentDirectory();
 
         /// <summary>
         ///     Reads the contents of a file.

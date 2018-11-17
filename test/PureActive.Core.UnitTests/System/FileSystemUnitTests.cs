@@ -40,6 +40,14 @@ namespace PureActive.Core.UnitTests.System
 
 
         [Fact]
+        public void FileSystem_Constructor_Default()
+        {
+            var fileSystem = new FileSystem();
+            fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should().Be("PureActive/Core");
+        }
+
+
+        [Fact]
         public void FileSystem_Constructor_Configuration()
         {
             var fileSystem = new FileSystem(FileSystemConfigurationRoot(AppFolderName));
@@ -52,6 +60,7 @@ namespace PureActive.Core.UnitTests.System
         {
             var fileSystemConfigurationRoot = FileSystemConfigurationRoot(null);
 
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new FileSystem(fileSystemConfigurationRoot);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("appFolderName");
@@ -62,6 +71,7 @@ namespace PureActive.Core.UnitTests.System
         {
             var fileSystemConfigurationRoot = FileSystemConfigurationRoot(AppFolderName);
 
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new FileSystem(fileSystemConfigurationRoot, null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
@@ -89,6 +99,7 @@ namespace PureActive.Core.UnitTests.System
         [Fact]
         public void FileSystem_Constructor_Type_Null()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new FileSystem((Type) null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("type");
@@ -97,6 +108,7 @@ namespace PureActive.Core.UnitTests.System
         [Fact]
         public void FileSystem_Constructor_Type_OperatingSystem_Null()
         {
+            // ReSharper disable once ObjectCreationAsStatement
             Action act = () => new FileSystem(typeof(FileSystemUnitTests), null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
@@ -158,8 +170,6 @@ namespace PureActive.Core.UnitTests.System
         [Fact]
         public void FileSystem_GetTempFileName_Writable()
         {
-            var tempFolderPath = _fileSystem.GetTempFolderPath();
-
             Stream tempFile;
 
             using (tempFile = new FileStream
@@ -282,6 +292,52 @@ namespace PureActive.Core.UnitTests.System
         public void FileSystem_SpecialFolder(Environment.SpecialFolder specialFolder)
         {
             var specialFolderPath = _fileSystem.GetSpecialFolderPath(specialFolder);
+            specialFolderPath.Should().NotBeNull();
+
+            if (!string.IsNullOrEmpty(specialFolderPath))
+            {
+                Directory.Exists(specialFolderPath).Should().BeTrue();
+            }
+        }
+
+        [Theory]
+        [InlineData(Environment.SpecialFolder.MyDocuments, Environment.SpecialFolderOption.None)]
+        public void FileSystem_SpecialFolder_Option(Environment.SpecialFolder specialFolder, Environment.SpecialFolderOption specialFolderOption)
+        {
+            var specialFolderPath = _fileSystem.GetSpecialFolderPath(specialFolder, specialFolderOption);
+            specialFolderPath.Should().NotBeNull();
+
+            if (!string.IsNullOrEmpty(specialFolderPath))
+            {
+                Directory.Exists(specialFolderPath).Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void FileSystem_GetCommonApplicationDataFolderPath()
+        {
+            var specialFolderPath = _fileSystem.GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.None);
+
+            specialFolderPath.Should().NotBeNull();
+
+            if (!string.IsNullOrEmpty(specialFolderPath))
+            {
+                Directory.Exists(specialFolderPath).Should().BeTrue();
+            }
+        }
+
+        [Fact]
+        public void FileSystem_GetCommonApplicationDataFolderPath_Osx()
+        {
+            Mock<IOperatingSystem> operatingSystemMock = new Mock<IOperatingSystem>();
+
+            operatingSystemMock.Setup(osm => osm.IsWindows()).Returns(false);
+            operatingSystemMock.Setup(osm => osm.IsOsx()).Returns(true);
+
+            var fileSystem = new FileSystem(typeof(FileSystemUnitTests), operatingSystemMock.Object);
+
+            var specialFolderPath = fileSystem.GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.None);
+
             specialFolderPath.Should().NotBeNull();
 
             if (!string.IsNullOrEmpty(specialFolderPath))

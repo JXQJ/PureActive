@@ -9,6 +9,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Queue.Hangfire.UnitTests
 {
+    [Trait("Category", "Unit")]
     public class QueueHangfireUnitTests : LoggingUnitTestBase<QueueHangfireUnitTests>
     {
         public QueueHangfireUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)

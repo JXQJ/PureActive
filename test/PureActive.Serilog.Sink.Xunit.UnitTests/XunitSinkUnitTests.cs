@@ -14,6 +14,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Serilog.Sink.Xunit.UnitTests
 {
+    [Trait("Category", "Unit")]
     public class XunitSinkUnitTests
     {
         private readonly ITestOutputHelper _testOutputHelper;

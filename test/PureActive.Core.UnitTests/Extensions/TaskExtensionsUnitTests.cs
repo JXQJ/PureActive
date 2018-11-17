@@ -11,6 +11,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Core.UnitTests.Extensions
 {
+    [Trait("Category", "Unit")]
     public class TaskExtensionsUnitTests : LoggingUnitTestBase<TaskExtensionsUnitTests>
     {
 
@@ -43,7 +44,7 @@ namespace PureActive.Core.UnitTests.Extensions
 
             stopWatch.Stop();
 
-            stopWatch.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(300);
+            stopWatch.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(299);
             TestOutputHelper.WriteLine(stopWatch.ElapsedMilliseconds.ToString());
         }
 

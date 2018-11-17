@@ -13,6 +13,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.ArpService.UnitTests
 {
+    [Trait("Category", "Unit")]
     public class ArpServiceUnitTests : LoggingUnitTestBase<ArpServiceUnitTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;

@@ -5,16 +5,19 @@ using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Types;
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Serilog.Events;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Logger.Provider.Serilog.UnitTests
 {
-    public class SerilogLoggerSettingsUnitTests
+    [Trait("Category", "Unit")]
+    public class SerilogLoggerSettingsUnitTests : LoggingUnitTestBase<SerilogLoggerSettingsUnitTests>
     {
         private readonly IFileSystem _fileSystem;
 
-        public SerilogLoggerSettingsUnitTests()
+        public SerilogLoggerSettingsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _fileSystem = new FileSystem(typeof(SerilogLoggerSettingsUnitTests));
         }

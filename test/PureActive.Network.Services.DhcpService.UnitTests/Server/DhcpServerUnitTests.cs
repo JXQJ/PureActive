@@ -4,6 +4,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.DhcpService.UnitTests.Server
 {
+    [Trait("Category", "Unit")]
     public class DhcpServerUnitTests : LoggingUnitTestBase<DhcpServerUnitTests>
     {
         public DhcpServerUnitTests(ITestOutputHelper output) : base(output)

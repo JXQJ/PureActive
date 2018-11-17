@@ -2,14 +2,22 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Email.Office365.Providers;
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Email.UnitTests
 {
-    public class EmailUnitTests
+    [Trait("Category", "Integration")]
+    public class EmailUnitTests : LoggingUnitTestBase<EmailUnitTests>
     {
+        public EmailUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+
+        }
+
         [Fact]
-        public async Task Email_Create_Provider()
+        public async Task EmailUnitTests_Create_Provider()
         {
             try
             {

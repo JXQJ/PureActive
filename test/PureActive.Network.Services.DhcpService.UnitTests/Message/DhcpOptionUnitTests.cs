@@ -9,6 +9,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 {
+    [Trait("Category", "Unit")]
     public class DhcpOptionUnitTests : LoggingUnitTestBase<DhcpOptionUnitTests>
     {
         private static readonly byte[] PhoneRequestDhcpMsgBytes = new byte[]
@@ -59,6 +60,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
         }
 
+        [Trait("Category", "Unit")]
         private class DhcpMessageGenerator : IEnumerable<object[]>
         {
             private readonly List<object[]> _data = new List<object[]>
@@ -74,8 +76,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-
-
+        [Trait("Category", "Unit")]
         [Theory]
         [ClassData(typeof(DhcpMessageGenerator))]
         public void TestDhcpOptionTypeMap(byte[] dhcpMessageBytes)

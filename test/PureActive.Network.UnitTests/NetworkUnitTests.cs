@@ -1,11 +1,19 @@
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Network.UnitTests
 {
-    public class NetworkUnitTests
+    [Trait("Category", "Unit")]
+    public class NetworkUnitTests : LoggingUnitTestBase<NetworkUnitTests>
     {
+        public NetworkUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+
+        }
+
         [Fact]
-        public void Network_Create()
+        public void Network_Constructor()
         {
 
         }

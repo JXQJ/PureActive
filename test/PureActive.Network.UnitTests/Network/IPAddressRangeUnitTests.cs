@@ -2,12 +2,21 @@
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.Network;
+using PureActive.Network.UnitTests.Extensions;
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Network.UnitTests.Network
 {
-    public class IPAddressRangeUnitTests
+    [Trait("Category", "Unit")]
+    public class IPAddressRangeUnitTests : LoggingUnitTestBase<IPAddressRangeUnitTests>
     {
+        public IPAddressRangeUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+
+        }
+    
         [Theory]
         [InlineData("10.1.10.255", "10.1.11.2", 4)]
         [InlineData("10.1.10.0", "10.1.11.255", 512)]

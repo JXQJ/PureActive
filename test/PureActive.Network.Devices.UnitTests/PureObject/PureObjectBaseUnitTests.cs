@@ -8,6 +8,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Devices.UnitTests.PureObject
 {
+    [Trait("Category", "Unit")]
     public class PureObjectBaseUnitTests : LoggingUnitTestBase<PureObjectBaseUnitTests>
     {
         public PureObjectBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)

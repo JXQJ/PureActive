@@ -7,6 +7,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Core.UnitTests.Extensions
 {
+    [Trait("Category", "Unit")]
     public class EnumerationExtensionsUnitTests : LoggingUnitTestBase<EnumerationExtensionsUnitTests>
     {
         public EnumerationExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)

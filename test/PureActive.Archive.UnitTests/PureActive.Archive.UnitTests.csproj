@@ -22,6 +22,7 @@
     <ProjectReference Include="..\..\src\PureActive.Archive\PureActive.Archive.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Core\PureActive.Core.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -11,6 +11,7 @@ using Serilog.Sinks.TestCorrelator;
 
 namespace PureActive.Serilog.Sink.Xunit.UnitTests
 {
+    [Trait("Category", "Unit")]
     public class LoggingUnitTestBaseUnitTests : LoggingUnitTestBase<LoggingUnitTestBaseUnitTests>
     {
         public LoggingUnitTestBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)

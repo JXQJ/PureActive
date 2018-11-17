@@ -1,11 +1,19 @@
 using System.Net.NetworkInformation;
 using PureActive.Network.Abstractions.Extensions;
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Network.UnitTests.Extensions
 {
-    public class ExtensionsUnitTests
+    [Trait("Category", "Unit")]
+    public class ExtensionsUnitTests : LoggingUnitTestBase<ExtensionsUnitTests>
     {
+        public ExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+
+        }
+    
         private const string PhysicalAddressZeros = "00-00-00-00-00-00";
 
         [Fact]

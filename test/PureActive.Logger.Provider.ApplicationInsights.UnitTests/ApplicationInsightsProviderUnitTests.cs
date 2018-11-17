@@ -1,11 +1,19 @@
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Logger.Provider.ApplicationInsights.UnitTests
 {
-    public class ApplicationInsightsProviderUnitTests
+    [Trait("Category", "Unit")]
+    public class ApplicationInsightsProviderUnitTests : LoggingUnitTestBase<ApplicationInsightsProviderUnitTests>
     {
+        public ApplicationInsightsProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+
+        }
+
         [Fact]
-        public void Test1()
+        public void ApplicationInsightsProvider_Constructor()
         {
 
         }

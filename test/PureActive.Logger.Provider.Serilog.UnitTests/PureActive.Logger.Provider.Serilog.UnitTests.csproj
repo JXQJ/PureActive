@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PureActive.Logger.Provider.Serilog\PureActive.Logger.Provider.Serilog.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj" />
   </ItemGroup>
 
   <ItemGroup>

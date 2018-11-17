@@ -10,6 +10,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Network.Services.UnitTests.Device
 {
+    [Trait("Category", "Unit")]
     public class DeviceUnitTests : LoggingUnitTestBase<DeviceUnitTests>
     {
         private readonly ICommonServices _commonServices;

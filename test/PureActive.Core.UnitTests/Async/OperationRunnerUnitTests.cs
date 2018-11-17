@@ -10,6 +10,7 @@ using Xunit.Abstractions;
 
 namespace PureActive.Core.UnitTests.Async
 {
+    [Trait("Category", "Unit")]
     public class OperationRunnerUnitTests : LoggingUnitTestBase<OperationRunnerUnitTests>
     {
         private readonly IOperationRunner _operationRunner;

@@ -26,6 +26,7 @@ namespace PureActive.Network.Services.PingService.UnitTests
             _pingService = new PingService(commonServices);
         }
 
+        [Trait("Category", "Unit")]
         [Fact]
         public async Task TestPingTask()
         {
@@ -36,6 +37,7 @@ namespace PureActive.Network.Services.PingService.UnitTests
             var pingReply = await _pingService.PingIpAddressAsync(ipAddress, timeout);
         }
 
+        [Trait("Category", "Integration")]
         [Fact]
         public async Task TestPingNetworkWithLogging()
         {
@@ -44,6 +46,7 @@ namespace PureActive.Network.Services.PingService.UnitTests
             await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
         }
 
+        [Trait("Category", "Integration")]
         [Fact]
         public async Task TestPingNetworkEventWithLogging()
         {

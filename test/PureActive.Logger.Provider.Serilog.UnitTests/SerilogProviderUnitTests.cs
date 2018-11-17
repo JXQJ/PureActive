@@ -2,19 +2,30 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
+using PureActive.Serilog.Sink.Xunit.TestBase;
 using Serilog.Events;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace PureActive.Logger.Provider.Serilog.UnitTests
 {
-    public class SerilogProviderUnitTests
+    [Trait("Category", "Unit")]
+    public class SerilogProviderUnitTests : LoggingUnitTestBase<SerilogProviderUnitTests>
     {
+        private readonly IFileSystem _fileSystem;
+
+        public SerilogProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        {
+            _fileSystem = new FileSystem(typeof(SerilogLoggerSettingsUnitTests));
+        }
+
         private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)
         {
             var fileSystem = new FileSystem(typeof(SerilogProviderUnitTests));

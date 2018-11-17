@@ -5,9 +5,9 @@ using Xunit.Abstractions;
 namespace PureActive.Logger.Provider.ApplicationInsights.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class ApplicationInsightsProviderTests : TestLoggerBase<ApplicationInsightsProviderTests>
+    public class ApplicationInsightsProviderUnitTests : LoggingUnitTestBase<ApplicationInsightsProviderUnitTests>
     {
-        public ApplicationInsightsProviderTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public ApplicationInsightsProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

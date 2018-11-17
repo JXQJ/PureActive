@@ -11,13 +11,13 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.UnitTests.Device
 {
     [Trait("Category", "Unit")]
-    public class DeviceTests : TestLoggerBase<DeviceTests>
+    public class DeviceUnitTests : LoggingUnitTestBase<DeviceUnitTests>
     {
         private readonly ICommonServices _commonServices;
 
-        public DeviceTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public DeviceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonServices = CommonServices.CreateInstance(TestLoggerFactory, "DeviceTests");
+            _commonServices = CommonServices.CreateInstance(TestLoggerFactory, "DeviceUnitTests");
         }
 
         public class DeviceTest : DeviceBase

@@ -12,9 +12,9 @@ using Serilog.Sinks.TestCorrelator;
 namespace PureActive.Serilog.Sink.Xunit.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class LoggingTestBaseTests : TestLoggerBase<LoggingTestBaseTests>
+    public class LoggingUnitTestBaseUnitTests : LoggingUnitTestBase<LoggingUnitTestBaseUnitTests>
     {
-        public LoggingTestBaseTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public LoggingUnitTestBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }
@@ -80,7 +80,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
                 TestCorrelator.GetLogEventsFromCurrentContext()
                     .Should().ContainSingle()
                     .Which.Properties["SourceContext"].ToString().Should()
-                    .Be(TypeNameHelper.GetTypeDisplayName(typeof(LoggingTestBaseTests)).AddDoubleQuote());
+                    .Be(TypeNameHelper.GetTypeDisplayName(typeof(LoggingUnitTestBaseUnitTests)).AddDoubleQuote());
             }
         }
     }

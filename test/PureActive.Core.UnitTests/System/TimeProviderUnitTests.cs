@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.System
 {
     [Trait("Category", "Unit")]
-    public class TimeProviderTests : TestLoggerBase<TimeProviderTests>
+    public class TimeProviderUnitTests : LoggingUnitTestBase<TimeProviderUnitTests>
     {
-        public TimeProviderTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public TimeProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

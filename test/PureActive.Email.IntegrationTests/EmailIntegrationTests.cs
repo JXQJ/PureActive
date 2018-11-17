@@ -6,12 +6,12 @@ using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Email.UnitTests
+namespace PureActive.Email.IntegrationTests
 {
     [Trait("Category", "Integration")]
-    public class EmailUnitTests : TestBaseLoggable<EmailUnitTests>
+    public class EmailIntegrationTests : TestBaseLoggable<EmailIntegrationTests>
     {
-        public EmailUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public EmailIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

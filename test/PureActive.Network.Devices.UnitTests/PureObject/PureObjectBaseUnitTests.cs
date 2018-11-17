@@ -16,7 +16,7 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
 
         }
 
-        public class PureObjectTest : PureObjectBase
+        private class PureObjectTest : PureObjectBase
         {
             public PureObjectTest(IPureLoggerFactory loggerFactory): base(loggerFactory)
             {

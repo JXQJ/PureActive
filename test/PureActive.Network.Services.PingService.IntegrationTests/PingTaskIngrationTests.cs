@@ -9,23 +9,31 @@ using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.Services.PingService.UnitTests
+namespace PureActive.Network.Services.PingService.IntegrationTests
 {
     [Trait("Category", "Integration")]
-    public class PingServiceUnitTests : TestBaseLoggable<PingServiceUnitTests>
+    public class PingTaskIntegrationTests : TestBaseLoggable<PingTaskIntegrationTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IPingService _pingService;
         private const int DefaultNetworkTimeout = 250;
         private const int DefaultPingCalls = 5;
 
-        public PingServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+
+        public PingTaskIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceUnitTests");
+            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskIntegrationTests");
             _cancellationTokenSource = new CancellationTokenSource();
             _pingService = new PingService(commonServices);
         }
 
+        [Fact]
+        public async Task TestPingNetworkWithLogging()
+        {
+            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
+
+            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
+        }
 
         [Fact]
         public async Task TestPingNetworkEventWithLogging()
@@ -41,6 +49,14 @@ namespace PureActive.Network.Services.PingService.UnitTests
             if (args != null)
             {
                 TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
+            }
+        }
+
+        private void PingReplyCancelEventHandler(object sender, PingReplyEventArgs args)
+        {
+            if (args != null && args.PingJob.TaskId >= 5)
+            {
+                _cancellationTokenSource?.Cancel();
             }
         }
     }

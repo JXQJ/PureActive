@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.5.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="Moq" Version="4.10.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Hosting\PureActive.Hosting.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Abstractions\PureActive.Network.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Devices\PureActive.Network.Devices.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Extensions\PureActive.Network.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Services.PingService\PureActive.Network.Services.PingService.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Network.Services\PureActive.Network.Services.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Nerdbank.GitVersioning" Version="2.2.33">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

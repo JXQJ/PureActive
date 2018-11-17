@@ -1,5 +1,7 @@
+using FluentAssertions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
+using PureActive.Network.Abstractions.NetworkDevice;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Devices.Network;
 using PureActive.Serilog.Sink.Xunit.TestBase;
@@ -12,18 +14,17 @@ namespace PureActive.Network.Services.UnitTests.Network
     public class NetworkDeviceBaseUnitTests : TestBaseLoggable<NetworkDeviceBaseUnitTests>
     {
         private readonly ICommonNetworkServices _commonNetworkServices;
-        private readonly IPAddressSubnet _gatewayIPAddressSubnet;
 
         public NetworkDeviceBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkDeviceBaseUnitTests");
-            _gatewayIPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
         }
 
         [Fact]
-        public void TestGetNetworkAdapters()
+        public void NetworkDeviceBase_Constructor()
         {
             NetworkDeviceBase networkDeviceBase = new NetworkDeviceBase(_commonNetworkServices, DeviceType.LocalComputer);
+            networkDeviceBase.Should().NotBeNull().And.Subject.Should().BeAssignableTo<INetworkDevice>();
         }
     }
 }

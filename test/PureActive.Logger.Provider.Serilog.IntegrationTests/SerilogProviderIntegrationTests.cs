@@ -14,21 +14,21 @@ using Serilog.Events;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Logger.Provider.Serilog.UnitTests
+namespace PureActive.Logger.Provider.Serilog.IntegrationTests
 {
-    [Trait("Category", "Unit")]
-    public class SerilogProviderUnitTests : TestBaseLoggable<SerilogProviderUnitTests>
+    [Trait("Category", "Integration")]
+    public class SerilogProviderIntegrationTests : TestBaseLoggable<SerilogProviderIntegrationTests>
     {
         private readonly IFileSystem _fileSystem;
 
-        public SerilogProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public SerilogProviderIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _fileSystem = new FileSystem(typeof(SerilogLoggerSettingsUnitTests));
+            _fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
         }
 
         private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)
         {
-            var fileSystem = new FileSystem(typeof(SerilogProviderUnitTests));
+            var fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
 
             var loggerSettings = new SerilogLoggerSettings(fileSystem, logEventLevel, loggingOutputFlags);
             var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
@@ -71,10 +71,10 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             loggerFactory.WrappedLoggerFactory.Should().NotBeNull();
 
             // Validate creation of loggers
-            var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
+            var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
             pureLogger.Should().NotBeNull();
 
-            var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
             logger.Should().NotBeNull();
         }
 
@@ -83,7 +83,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
             var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
-            var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
 
             const string msg = "Test";
             logger.LogDebug(msg);
@@ -106,7 +106,7 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
             var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
-            var logger = loggerFactory.CreatePureLogger<SerilogProviderUnitTests>();
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
 
             const string msg = "Test";
             logger.LogDebug(msg);

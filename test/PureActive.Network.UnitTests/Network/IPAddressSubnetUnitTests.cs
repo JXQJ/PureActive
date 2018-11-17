@@ -10,9 +10,9 @@ using Xunit.Abstractions;
 namespace PureActive.Network.UnitTests.Network
 {
     [Trait("Category", "Unit")]
-    public class IPAddressSubnetTests : TestLoggerBase<IPAddressSubnetTests>
+    public class IPAddressSubnetUnitTests : TestBaseLoggable<IPAddressSubnetUnitTests>
     {
-        public IPAddressSubnetTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public IPAddressSubnetUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }
@@ -50,9 +50,9 @@ namespace PureActive.Network.UnitTests.Network
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        [Trait("Category", "Unit")]
         [Theory]
         [ClassData(typeof(NetworkAddressTestGenerator))]
-        [Trait("Category", "Unit")]
         public void NetworkAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
         {
             IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);
@@ -89,9 +89,9 @@ namespace PureActive.Network.UnitTests.Network
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
+        [Trait("Category", "Unit")]
         [Theory]
         [ClassData(typeof(BroadcastAddressTestGenerator))]
-        [Trait("Category", "Unit")]
         public void BroadcastAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
         {
             IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);

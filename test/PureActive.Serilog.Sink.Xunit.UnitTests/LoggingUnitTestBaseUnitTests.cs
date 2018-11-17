@@ -12,15 +12,15 @@ using Serilog.Sinks.TestCorrelator;
 namespace PureActive.Serilog.Sink.Xunit.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class LoggingTestBaseTests : TestLoggerBase<LoggingTestBaseTests>
+    public class TestBaseLoggableUnitTests : TestBaseLoggable<TestBaseLoggableUnitTests>
     {
-        public LoggingTestBaseTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public TestBaseLoggableUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }
 
         [Fact]
-        public void LoggingUnitTestBase_Constructor()
+        public void TestBaseLoggable_Constructor()
         {
             TestLoggerFactory.Should().NotBeNull("initialized in constructor");
             LoggerSettings.Should().NotBeNull("initialized in constructor");
@@ -30,23 +30,23 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
 
 
         [Fact]
-        public void LoggingUnitTestBase_Logger_TestCorrelator_String()
+        public void TestBaseLoggable_Logger_TestCorrelator_String()
         {
             Logger.Should().NotBeNull("initialized in constructor");
 
             using (TestCorrelator.CreateContext())
             {
-                Logger.LogInformation("Test: LoggingUnitTestBase_Logger");
+                Logger.LogInformation("Test: TestBaseLoggable_Logger");
 
                 TestCorrelator.GetLogEventsFromCurrentContext()
                     .Should().ContainSingle()
                     .Which.MessageTemplate.Text
-                    .Should().Be("Test: LoggingUnitTestBase_Logger");
+                    .Should().Be("Test: TestBaseLoggable_Logger");
             }
         }
 
         [Fact]
-        public void LoggingUnitTestBase_Logger_TestCorrelator_Param_Int()
+        public void TestBaseLoggable_Logger_TestCorrelator_Param_Int()
         {
             Logger.Should().NotBeNull("initialized in constructor");
 
@@ -69,7 +69,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
         }
 
         [Fact]
-        public void LoggingUnitTestBase_Logger_SourceContext()
+        public void TestBaseLoggable_Logger_SourceContext()
         {
             Logger.Should().NotBeNull("initialized in constructor");
 
@@ -80,7 +80,7 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
                 TestCorrelator.GetLogEventsFromCurrentContext()
                     .Should().ContainSingle()
                     .Which.Properties["SourceContext"].ToString().Should()
-                    .Be(TypeNameHelper.GetTypeDisplayName(typeof(LoggingTestBaseTests)).AddDoubleQuote());
+                    .Be(TypeNameHelper.GetTypeDisplayName(typeof(TestBaseLoggableUnitTests)).AddDoubleQuote());
             }
         }
     }

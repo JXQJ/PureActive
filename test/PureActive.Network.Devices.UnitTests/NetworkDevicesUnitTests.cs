@@ -6,9 +6,9 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Devices.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class NetworkDevicesTests : TestLoggerBase<NetworkDevicesTests>
+    public class NetworkDevicesUnitTests : TestBaseLoggable<NetworkDevicesUnitTests>
     {
-        public NetworkDevicesTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public NetworkDevicesUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
 
         }

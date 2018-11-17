@@ -14,14 +14,14 @@ using Xunit.Abstractions;
 namespace PureActive.Network.Services.ArpService.UnitTests
 {
     [Trait("Category", "Unit")]
-    public class ArpServiceTests : TestLoggerBase<ArpServiceTests>
+    public class ArpServiceUnitTests : TestBaseLoggable<ArpServiceUnitTests>
     {
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly IArpService _arpService;
 
-        public ArpServiceTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public ArpServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceTests");
+            var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceUnitTests");
             _cancellationTokenSource = new CancellationTokenSource();
             IPingService pingService = new PingService.PingService(commonServices);
             _arpService = new ArpService(commonServices, pingService);

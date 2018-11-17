@@ -15,14 +15,14 @@ using Xunit.Abstractions;
 namespace PureActive.Core.UnitTests.System
 {
     [Trait("Category", "Unit")]
-    public class FileSystemTests : TestLoggerBase<FileSystemTests>
+    public class FileSystemUnitTests : TestBaseLoggable<FileSystemUnitTests>
     {
-        private static readonly string AppFolderName = "FileSystemTests";
+        private static readonly string AppFolderName = "FileSystemUnitTests";
         private readonly IFileSystem _fileSystem;
 
-        public FileSystemTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
+        public FileSystemUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _fileSystem = new FileSystem(typeof(FileSystemTests));
+            _fileSystem = new FileSystem(typeof(FileSystemUnitTests));
         }
 
         private static IConfigurationRoot FileSystemConfigurationRoot(string appFolderName)
@@ -90,10 +90,10 @@ namespace PureActive.Core.UnitTests.System
         [Fact]
         public void FileSystem_Constructor_Type()
         {
-            var fileSystem = new FileSystem(typeof(FileSystemTests));
+            var fileSystem = new FileSystem(typeof(FileSystemUnitTests));
 
             fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should()
-                .Be(TypeNameHelper.GetTypeDisplayName(typeof(FileSystemTests)).Replace(".", "/"));
+                .Be(TypeNameHelper.GetTypeDisplayName(typeof(FileSystemUnitTests)).Replace(".", "/"));
         }
 
 
@@ -110,7 +110,7 @@ namespace PureActive.Core.UnitTests.System
         public void FileSystem_Constructor_Type_OperatingSystem_Null()
         {
             // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new FileSystem(typeof(FileSystemTests), null);
+            Action act = () => new FileSystem(typeof(FileSystemUnitTests), null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
         }
@@ -207,7 +207,7 @@ namespace PureActive.Core.UnitTests.System
             operatingSystemMock.Setup(osm => osm.IsWindows()).Returns(false);
             operatingSystemMock.Setup(osm => osm.IsOsx()).Returns(true);
 
-            var fileSystem = new FileSystem(typeof(FileSystemTests), operatingSystemMock.Object);
+            var fileSystem = new FileSystem(typeof(FileSystemUnitTests), operatingSystemMock.Object);
 
             fileSystem.ArpCommandPath().Should().Be("/usr/sbin/arp");
         }
@@ -335,7 +335,7 @@ namespace PureActive.Core.UnitTests.System
             operatingSystemMock.Setup(osm => osm.IsWindows()).Returns(false);
             operatingSystemMock.Setup(osm => osm.IsOsx()).Returns(true);
 
-            var fileSystem = new FileSystem(typeof(FileSystemTests), operatingSystemMock.Object);
+            var fileSystem = new FileSystem(typeof(FileSystemUnitTests), operatingSystemMock.Object);
 
             var specialFolderPath = fileSystem.GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.None);
 

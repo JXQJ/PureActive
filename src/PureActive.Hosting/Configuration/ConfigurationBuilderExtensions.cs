@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using PureActive.Hosting.Settings;
+using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Types;
 using Serilog.Events;
 
@@ -13,7 +13,8 @@ namespace PureActive.Hosting.Configuration
     {
         public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config, string environmentName)
         {
-            var settingsDirectory = StartupSettings.SettingsFolder;
+            var fileSystem = new FileSystem();
+            var settingsDirectory = fileSystem.SettingsFolder;
 
             config
                 .AddJsonFile(settingsDirectory + "sharedsettings.json", false, true)

@@ -156,12 +156,12 @@ namespace PureActive.Core.UnitTests.Extensions
 
 
         [Theory]
-        [InlineData("First|Last", '|', new string[] {"First", "Last"})]
-        [InlineData("First|Middle|Last", '|', new string[] {"First", "Middle|Last"})]
-        [InlineData("First", '|', new string[] {"First", ""})]
-        [InlineData(" First | Last ", '|', new string[] {"First", "Last"})]
-        [InlineData(" First |  ", '|', new string[] {"First", ""})]
-        [InlineData("| Last ", '|', new string[] {"", "Last"})]
+        [InlineData("First|Last", '|', new[] {"First", "Last"})]
+        [InlineData("First|Middle|Last", '|', new[] {"First", "Middle|Last"})]
+        [InlineData("First", '|', new[] {"First", ""})]
+        [InlineData(" First | Last ", '|', new[] {"First", "Last"})]
+        [InlineData(" First |  ", '|', new[] {"First", ""})]
+        [InlineData("| Last ", '|', new[] {"", "Last"})]
         public void StringExtensions_SplitOnFirstDelim(string testString, char chDelim, string[] expectStrings)
         {
             var result = testString.SplitOnFirstDelim(chDelim);
@@ -195,12 +195,12 @@ namespace PureActive.Core.UnitTests.Extensions
 
 
         [Theory]
-        [InlineData("First|Last", '|', new string[] {"First", "Last"})]
-        [InlineData("First|Middle|Last", '|', new string[] {"First|Middle", "Last"})]
-        [InlineData("First", '|', new string[] {"First", ""})]
-        [InlineData(" First | Last ", '|', new string[] {"First", "Last"})]
-        [InlineData(" First |  ", '|', new string[] {"First", ""})]
-        [InlineData("| Last ", '|', new string[] {"", "Last"})]
+        [InlineData("First|Last", '|', new[] {"First", "Last"})]
+        [InlineData("First|Middle|Last", '|', new[] {"First|Middle", "Last"})]
+        [InlineData("First", '|', new[] {"First", ""})]
+        [InlineData(" First | Last ", '|', new[] {"First", "Last"})]
+        [InlineData(" First |  ", '|', new[] {"First", ""})]
+        [InlineData("| Last ", '|', new[] {"", "Last"})]
         public void StringExtensions_SplitOnLastDelim(string testString, char chDelim, string[] expectStrings)
         {
             var result = testString.SplitOnLastDelim(chDelim);

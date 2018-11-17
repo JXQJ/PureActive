@@ -8,8 +8,8 @@ namespace PureActive.Network.Extensions.IO
     {
         protected Stream _stream;
         protected Encoding _encoding = Encoding.UTF8;
-        protected ByteOrder _byteOrder = ByteOrder.Default;
-        private static ByteOrder _defaultByteOrder;
+        protected readonly ByteOrder _byteOrder;
+        private static readonly ByteOrder _defaultByteOrder;
 
         #region Constructor
 
@@ -31,14 +31,14 @@ namespace PureActive.Network.Extensions.IO
         public ByteWriter(int capacity)
         {
             _byteOrder = ByteOrder.Default;
-			_stream = new MemoryStream();
+			_stream = new MemoryStream(capacity);
 
         }
 
         public ByteWriter(int capacity, ByteOrder byteOrder)
         {
             _byteOrder = byteOrder;
-			_stream = new MemoryStream();
+			_stream = new MemoryStream(capacity);
 
         }
 
@@ -170,7 +170,7 @@ namespace PureActive.Network.Extensions.IO
         /// <summary>
         /// Writes a 8-byte signed integer to the stream.
         /// </summary>
-        /// <param name="i">The 8-byte signed integer to write</param>
+        /// <param name="l">The 64-byte signed long to write</param>
         public virtual void Write(long l)
         {
             switch(_byteOrder)
@@ -191,7 +191,7 @@ namespace PureActive.Network.Extensions.IO
         /// <summary>
         /// Writes a 2-byte unsigned integer to the stream.
         /// </summary>
-        /// <param name="i">The 2-byte unsigned integer to write</param>
+        /// <param name="s">The 2-byte unsigned short to write</param>
         public virtual void Write(ushort s)
         {
             switch (_byteOrder)
@@ -235,7 +235,7 @@ namespace PureActive.Network.Extensions.IO
         /// <summary>
         /// Writes a 8-byte unsigned integer to the stream.
         /// </summary>
-        /// <param name="i">The 8-byte unsigned integer to write</param>
+        /// <param name="l">The 64-byte unsigned integer to write</param>
         public virtual void Write(ulong l)
         {
             switch (_byteOrder)
@@ -280,7 +280,7 @@ namespace PureActive.Network.Extensions.IO
         public virtual void WriteString(string s)
         {
             byte[] bytes = _encoding.GetBytes(s);
-            Write((int)bytes.Length);
+            Write(bytes.Length);
             Write(bytes);
         }
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
+using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logger.Provider.Serilog.Types;
@@ -88,8 +88,10 @@ namespace PureActive.Logger.Provider.Serilog.Settings
 
         public static IConfiguration DefaultLoggerSettingsConfiguration(LogEventLevel initialMinimumLevel)
         {
+            var fileSystem = new FileSystem();
+
             return new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
+                .SetBasePath(fileSystem.GetCurrentDirectory())
                 .AddLoggerSettings(initialMinimumLevel)
                 .AddEnvironmentVariables()
                 .Build();

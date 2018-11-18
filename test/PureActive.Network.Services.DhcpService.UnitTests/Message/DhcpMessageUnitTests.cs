@@ -69,7 +69,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
         [Fact]
         public void TestDhcpRequest_FormatPropertyList()
         {
-            DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
+            DhcpMessage dhcpRequestMessage = new DhcpMessage(_bcDenDiscoverDhcpMsgBytes, TestLoggerFactory);
 
             var logLevel = LogLevel.Trace;
             var sb = new StringBuilder();

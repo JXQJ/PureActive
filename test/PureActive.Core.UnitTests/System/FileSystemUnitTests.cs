@@ -4,9 +4,7 @@ using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions.Internal;
-using Moq;
 using PureActive.Core.Abstractions.System;
-using PureActive.Core.Extensions;
 using PureActive.Core.System;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
@@ -18,11 +16,10 @@ namespace PureActive.Core.UnitTests.System
     public class FileSystemUnitTests : TestBaseLoggable<FileSystemUnitTests>
     {
         private static readonly string AppFolderName = "FileSystemUnitTests";
-        private readonly IFileSystem _fileSystem;
 
         public FileSystemUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _fileSystem = new FileSystem(typeof(FileSystemUnitTests));
+
         }
 
         private static IConfigurationRoot FileSystemConfigurationRoot(string appFolderName)

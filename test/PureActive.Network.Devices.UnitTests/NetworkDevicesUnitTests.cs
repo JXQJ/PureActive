@@ -1,4 +1,3 @@
-using PureActive.Network.Devices.UnitTests.PureObjectGraph;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

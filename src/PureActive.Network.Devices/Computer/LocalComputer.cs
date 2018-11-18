@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.NetworkInformation;
+using Microsoft.Extensions.Logging;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Local;
 using PureActive.Network.Abstractions.Network;
@@ -89,6 +90,11 @@ namespace PureActive.Network.Devices.Computer
                 {
                     // Initialize NetworkAdapters which will populate Local Networks
                     var networkAdapter = NetworkAdapters;
+
+                    if (networkAdapter != null)
+                    {
+                        Logger.LogInformation("NetworkAdapters Initialized");
+                    }
                 }
 
                 return _localNetworkCollection.PrimaryNetwork;

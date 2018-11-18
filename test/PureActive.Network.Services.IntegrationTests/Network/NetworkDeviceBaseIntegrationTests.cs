@@ -1,8 +1,5 @@
 using FluentAssertions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
-using PureActive.Network.Abstractions.NetworkDevice;
-using PureActive.Network.Abstractions.Types;
-using PureActive.Network.Devices.Network;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -17,6 +14,12 @@ namespace PureActive.Network.Services.IntegrationTests.Network
         public NetworkDeviceBaseIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkDeviceBaseIntegrationTests");
+        }
+
+        [Fact]
+        public void NetworkDeviceBase_Constructor()
+        {
+            _commonNetworkServices.Should().NotBeNull();
         }
     }
 }

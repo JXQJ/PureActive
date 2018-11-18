@@ -1,7 +1,5 @@
 using System.Net;
 using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using PureActive.Logging.Extensions.Extensions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;

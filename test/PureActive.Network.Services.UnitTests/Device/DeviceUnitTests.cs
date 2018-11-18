@@ -20,7 +20,7 @@ namespace PureActive.Network.Services.UnitTests.Device
             _commonServices = CommonServices.CreateInstance(TestLoggerFactory, "DeviceUnitTests");
         }
 
-        public class DeviceTest : DeviceBase
+        private class DeviceTest : DeviceBase
         {
             public DeviceTest(ICommonServices commonServices, DeviceType deviceType) : 
                 base(commonServices, deviceType)

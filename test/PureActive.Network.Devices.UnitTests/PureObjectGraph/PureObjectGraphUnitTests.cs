@@ -19,7 +19,7 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
 
         private class PureObjectBaseTest : PureObjectBase, IComparable<PureObjectBaseTest>
         {
-            public string TestValue { get; set; }
+            private string TestValue { get;}
 
             public PureObjectBaseTest(string testValue, IPureLoggerFactory loggerFactory) :base (loggerFactory)
             {

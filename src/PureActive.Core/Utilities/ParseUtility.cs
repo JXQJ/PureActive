@@ -199,22 +199,22 @@ namespace PureActive.Core.Utilities
             // We now have the time string to parse, and we'll adjust
             // to UTC or timezone after parsing
             string year = parts[0];
-            string month = (parts.Length > 1) ? parts[1] : "1";
-            string day = (parts.Length > 2) ? parts[2] : "1";
-            string hour = (parts.Length > 3) ? parts[3] : "0";
-            string minute = (parts.Length > 4) ? parts[4] : "0";
-            string second = (parts.Length > 5) ? parts[5] : "0";
-            string ms = (parts.Length > 6) ? parts[6] : "0";
+            string month = parts.Length > 1 ? parts[1] : "1";
+            string day = parts.Length > 2 ? parts[2] : "1";
+            string hour = parts.Length > 3 ? parts[3] : "0";
+            string minute = parts.Length > 4 ? parts[4] : "0";
+            string second = parts.Length > 5 ? parts[5] : "0";
+            string ms = parts.Length > 6 ? parts[6] : "0";
 
             DateTime dt = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day), Convert.ToInt32(hour), Convert.ToInt32(minute), Convert.ToInt32(second), Convert.ToInt32(ms));
 
             // If a time offset was specified instead of the UTC marker,
             // add/subtract in the hours/minutes
-            if ((utc == false) && (parts.Length >= 9))
+            if (utc == false && parts.Length >= 9)
             {
                 // There better be a timezone offset
-                string hourOffset = (parts.Length > 7) ? parts[7] : "";
-                string minuteOffset = (parts.Length > 8) ? parts[8] : "";
+                string hourOffset = parts.Length > 7 ? parts[7] : "";
+                string minuteOffset = parts.Length > 8 ? parts[8] : "";
                 if (datetime.Contains("+"))
                 {
                     dt = dt.AddHours(Convert.ToDouble(hourOffset));
@@ -222,8 +222,8 @@ namespace PureActive.Core.Utilities
                 }
                 else
                 {
-                    dt = dt.AddHours(-(Convert.ToDouble(hourOffset)));
-                    dt = dt.AddMinutes(-(Convert.ToDouble(minuteOffset)));
+                    dt = dt.AddHours(-Convert.ToDouble(hourOffset));
+                    dt = dt.AddMinutes(-Convert.ToDouble(minuteOffset));
                 }
             }
 
@@ -332,7 +332,7 @@ namespace PureActive.Core.Utilities
             if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 || value7 < 0)
                 return false;
 
-            value = ((value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7);
+            value = (value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7;
 
             return true;
         }

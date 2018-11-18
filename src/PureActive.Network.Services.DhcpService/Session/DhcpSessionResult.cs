@@ -88,8 +88,8 @@ namespace PureActive.Network.Services.DhcpService.Session
 
         private bool IsSamePhysicalAddress(PhysicalAddress physicalAddress)
         {
-            return (DhcpDiscoveredDevice?.PhysicalAddress != null &&
-                    DhcpDiscoveredDevice.PhysicalAddress.Equals(physicalAddress));
+            return DhcpDiscoveredDevice?.PhysicalAddress != null &&
+                   DhcpDiscoveredDevice.PhysicalAddress.Equals(physicalAddress);
         }
 
         private void Init(uint sessionId, DhcpSessionState dhcpSessionState, PhysicalAddress physicalAddress)

@@ -2,10 +2,10 @@
 
 namespace PureActive.Samples.ConsoleApp
 {
-    class Program
+    public class Program
     {
         // ReSharper disable once UnusedParameter.Local
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
         }

@@ -63,7 +63,7 @@ namespace PureActive.Network.Abstractions.Types
         {
             unchecked
             {
-                var hashCode = (IPAddress != null ? IPAddress.GetHashCode() : 0);
+                var hashCode = IPAddress != null ? IPAddress.GetHashCode() : 0;
                 hashCode = (hashCode * 397) ^ (SubnetMask != null ? SubnetMask.GetHashCode() : 0);
                 return hashCode;
             }

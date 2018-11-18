@@ -61,7 +61,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 
         public bool HasSessionExpired(DateTimeOffset timeStamp, TimeSpan timeSpan)
         {
-            return (timeStamp - UpdatedTimestamp) > timeSpan;
+            return timeStamp - UpdatedTimestamp > timeSpan;
         }
 
         public bool HasSessionExpired() => HasSessionExpired(DateTimeOffset.Now, DefaultSessionTimeOut);
@@ -123,7 +123,7 @@ namespace PureActive.Network.Services.DhcpService.Session
                 }
             }
 
-            if ((requestState == RequestState.InitReboot) || (requestState == RequestState.Selecting))
+            if (requestState == RequestState.InitReboot || requestState == RequestState.Selecting)
             {
                 if (addressRequest == null)
                 {

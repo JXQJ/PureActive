@@ -173,7 +173,7 @@ namespace PureActive.Network.Extensions.IO
         /// <returns>True if byte is non-zero; otherwise false.</returns>
         public bool ReadBoolean()
         {
-            return (Read() != 0);
+            return Read() != 0;
         }
 
         /// <summary>
@@ -282,10 +282,10 @@ namespace PureActive.Network.Extensions.IO
             switch (_byteOrder)
             {
                 case ByteOrder.BigEndian:
-                    return ((ulong)(_buffer[3] | _buffer[2] << 8 | _buffer[1] << 16 | _buffer[0] << 24)) << 32 |
+                    return (ulong)(_buffer[3] | _buffer[2] << 8 | _buffer[1] << 16 | _buffer[0] << 24) << 32 |
                            (uint)(_buffer[7] | _buffer[6] << 8 | _buffer[5] << 16 | _buffer[4] << 24);
                 case ByteOrder.LittleEndian:
-                    return ((ulong)(_buffer[4] | _buffer[5] << 8 | _buffer[6] << 16 | _buffer[7] << 24)) << 32 |
+                    return (ulong)(_buffer[4] | _buffer[5] << 8 | _buffer[6] << 16 | _buffer[7] << 24) << 32 |
                            (uint)(_buffer[0] | _buffer[1] << 8 | _buffer[2] << 16 | _buffer[3] << 24);
                 default:
                     throw new Exception("Could not handle bytes.");

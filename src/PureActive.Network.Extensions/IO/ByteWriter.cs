@@ -221,7 +221,7 @@ namespace PureActive.Network.Extensions.IO
                     Write((byte)(i >> 24));
                     Write((byte)(i >> 16));
                     Write((byte)(i >> 8));
-                    Write((byte)(i));
+                    Write((byte)i);
                     break;
                 case ByteOrder.LittleEndian:
                     Write((ushort)i);

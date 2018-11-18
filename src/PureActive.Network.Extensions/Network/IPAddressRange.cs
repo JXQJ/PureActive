@@ -37,14 +37,14 @@ namespace PureActive.Network.Extensions.Network
 
             for (var i = 0; i < lowerBytes.Length && (lowerBoundary || upperBoundary); i++)
             {
-                if ((lowerBoundary && addressBytes[i] < lowerBytes[i]) ||
-                    (upperBoundary && addressBytes[i] > upperBytes[i]))
+                if (lowerBoundary && addressBytes[i] < lowerBytes[i] ||
+                    upperBoundary && addressBytes[i] > upperBytes[i])
                 {
                     return false;
                 }
 
-                lowerBoundary &= (addressBytes[i] == lowerBytes[i]);
-                upperBoundary &= (addressBytes[i] == upperBytes[i]);
+                lowerBoundary &= addressBytes[i] == lowerBytes[i];
+                upperBoundary &= addressBytes[i] == upperBytes[i];
             }
 
             return true;

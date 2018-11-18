@@ -151,7 +151,7 @@ namespace PureActive.Network.Abstractions.Extensions
 
             for (var i = 0; i < networkAddress.Length; i++)
             {
-                networkAddress[i] = (byte)(ipAddressBytes[i] & (subnetMaskBytes[i]));
+                networkAddress[i] = (byte)(ipAddressBytes[i] & subnetMaskBytes[i]);
             }
 
             return new IPAddress(networkAddress);

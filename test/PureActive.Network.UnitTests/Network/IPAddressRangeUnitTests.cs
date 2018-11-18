@@ -2,7 +2,6 @@
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.Network;
-using PureActive.Network.UnitTests.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

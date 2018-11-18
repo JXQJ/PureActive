@@ -1,5 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
@@ -46,17 +47,11 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
 
         private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
         {
+            sender.Should().BeAssignableTo<IPingService>();
+
             if (args != null)
             {
                 TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
-            }
-        }
-
-        private void PingReplyCancelEventHandler(object sender, PingReplyEventArgs args)
-        {
-            if (args != null && args.PingJob.TaskId >= 5)
-            {
-                _cancellationTokenSource?.Cancel();
             }
         }
     }

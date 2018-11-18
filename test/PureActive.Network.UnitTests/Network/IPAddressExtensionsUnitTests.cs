@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using FluentAssertions;
 using PureActive.Network.Abstractions.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
@@ -56,6 +57,7 @@ namespace PureActive.Network.UnitTests.Network
         public void GetDefaultGatewayAddressSubnetTest()
         {
             var addressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
+            addressSubnet.Should().NotBeNull();
         }
     }
 }

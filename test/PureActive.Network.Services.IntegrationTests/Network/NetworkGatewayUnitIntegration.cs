@@ -62,6 +62,7 @@ namespace PureActive.Network.Services.IntegrationTests.Network
         {
             var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
             var physicalAddress = networkGateway.PhysicalAddress;
+            physicalAddress.Should().NotBeNull();
             
             networkGateway.IPAddressSubnet = new IPAddressSubnet(IPAddress.Parse("10.1.10.33"), IPAddressExtensions.SubnetClassC);
 

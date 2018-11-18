@@ -23,9 +23,11 @@ namespace PureActive.Hosting.Hosting
         public ServiceHost ServiceHost { get; protected set; }
 
         // IApplicationLifetime support
+        // ReSharper disable NotAccessedField.Local
         private readonly CancellationTokenRegistration _cancellationTokenOnStarted;
         private readonly CancellationTokenRegistration _cancellationTokenOnStopping;
         private readonly CancellationTokenRegistration _cancellationTokenOnStopped;
+        // ReSharper restore NotAccessedField.Local
 
         protected HostedServiceInternal(ICommonServices commonServices, IApplicationLifetime applicationLifetime, ServiceHost serviceHost):
             base(commonServices?.LoggerFactory)

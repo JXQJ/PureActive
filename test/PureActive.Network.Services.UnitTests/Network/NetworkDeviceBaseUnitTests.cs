@@ -1,6 +1,5 @@
 using FluentAssertions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
-using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.NetworkDevice;
 using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Devices.Network;

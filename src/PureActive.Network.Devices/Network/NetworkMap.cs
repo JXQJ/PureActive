@@ -43,6 +43,9 @@ namespace PureActive.Network.Devices.Network
 
             var networkAdapters = localComputer.NetworkAdapters;
 
+            if (networkAdapters.Count == 0)
+                _logger.LogInformation("LocalComputer: No Network Adapters Found");
+
             return localComputer;
         }
 

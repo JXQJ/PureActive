@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
@@ -19,11 +18,9 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
     [Trait("Category", "Integration")]
     public class SerilogProviderIntegrationTests : TestBaseLoggable<SerilogProviderIntegrationTests>
     {
-        private readonly IFileSystem _fileSystem;
-
         public SerilogProviderIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
+
         }
 
         private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)

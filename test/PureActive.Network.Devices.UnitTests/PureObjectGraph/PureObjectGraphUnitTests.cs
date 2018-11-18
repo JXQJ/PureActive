@@ -64,8 +64,7 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
 
             var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
             var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
-            var vertex1Ref = vertex1;
-
+  
             // ObjectIds are different
             Assert.True(vertex1.CompareTo(vertex2.Value) == 0, "vertex1.CompareTo(vertex2.Value) == 0");
             Assert.True(vertex1.CompareTo(vertex2) == 0, "vertex1.CompareTo(vertex2) == 0");

@@ -2,6 +2,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentAssertions;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.ArpService;
@@ -48,6 +49,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
             var gatewayIPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
 
             var physicalAddress = _arpService.GetPhysicalAddress(gatewayIPAddressSubnet.IPAddress);
+            physicalAddress.Should().NotBeNull();
 
             await _arpService.StopAsync(_cancellationTokenSource.Token);
         }

@@ -1,6 +1,3 @@
-using FluentAssertions;
-using PureActive.Core.Abstractions.System;
-using PureActive.Core.System;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

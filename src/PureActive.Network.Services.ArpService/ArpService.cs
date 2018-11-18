@@ -163,7 +163,7 @@ namespace PureActive.Network.Services.ArpService
                             var physicalAddress = PhysicalAddressExtensions.NormalizedParse(physicalAddressString);
                             var ipAddress = IPAddress.Parse(ipAddressString);
 
-                            var arpItem = _UpdateArpItem(physicalAddress, ipAddress, timestamp);
+                            _UpdateArpItem(physicalAddress, ipAddress, timestamp);
                         }
                     }
                     catch (Exception ex)
@@ -233,7 +233,7 @@ namespace PureActive.Network.Services.ArpService
                     return arpItem;
             }
 
-            var pingReply = await _pingService.PingIpAddressAsync(ipAddress);
+            await _pingService.PingIpAddressAsync(ipAddress);
 
             await RefreshInternalAsync(Timeout, cancellationToken);
 

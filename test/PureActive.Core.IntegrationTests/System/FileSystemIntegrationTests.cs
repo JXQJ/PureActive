@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using FluentAssertions;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging.Abstractions.Internal;
 using Moq;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
@@ -17,28 +14,12 @@ namespace PureActive.Core.IntegrationTests.System
     [Trait("Category", "Integration")]
     public class FileSystemIntegrationTests : TestBaseLoggable<FileSystemIntegrationTests>
     {
-        private static readonly string AppFolderName = "FileSystemIntegrationTests";
         private readonly IFileSystem _fileSystem;
 
         public FileSystemIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _fileSystem = new FileSystem(typeof(FileSystemIntegrationTests));
         }
-
-        private static IConfigurationRoot FileSystemConfigurationRoot(string appFolderName)
-        {
-            return new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddEnvironmentVariables()
-                .AddInMemoryCollection(
-                    new Dictionary<string, string>()
-                    {
-                        ["AppSettings:AppFolderName"] = appFolderName,
-                    }
-                )
-                .Build();
-        }
-
 
         [Fact]
         public void FileSystem_CreateNewTempFile()

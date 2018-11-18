@@ -65,35 +65,35 @@ namespace PureActive.Core.Utilities
                     // If the Name.StartsWith "get_" and/or "set_",
                     // and it's not Abstract && not Virtual
                     // then it's a Property to save
-                    if ((method.Name.StartsWith("get_")) &&
-                        (method.IsAbstract == false) &&
-                        (method.IsVirtual == false))
+                    if (method.Name.StartsWith("get_") &&
+                        method.IsAbstract == false &&
+                        method.IsVirtual == false)
                     {
                         // Ignore abstract and virtual objects
-                        if ((method.IsAbstract ||
-                            (method.IsVirtual) ||
-                            (method.ReturnType.IsAbstract)))
+                        if (method.IsAbstract ||
+                            method.IsVirtual ||
+                            method.ReturnType.IsAbstract)
                         {
                             continue;
                         }
 
                         // Ignore delegates and MethodInfos
-                        if ((method.ReturnType == typeof(Delegate)) ||
-                            (method.ReturnType == typeof(MulticastDelegate)) ||
-                            (method.ReturnType == typeof(MethodInfo)))
+                        if (method.ReturnType == typeof(Delegate) ||
+                            method.ReturnType == typeof(MulticastDelegate) ||
+                            method.ReturnType == typeof(MethodInfo))
                         {
                             continue;
                         }
 
                         // Same for DeclaringType
-                        if ((method.DeclaringType == typeof(Delegate)) ||
-                            (method.DeclaringType == typeof(MulticastDelegate)))
+                        if (method.DeclaringType == typeof(Delegate) ||
+                            method.DeclaringType == typeof(MulticastDelegate))
                         {
                             continue;
                         }
 
                         // Don't need these types either
-                        if ((method.Name.StartsWith("System.Globalization")))
+                        if (method.Name.StartsWith("System.Globalization"))
                         {
                             continue;
                         }

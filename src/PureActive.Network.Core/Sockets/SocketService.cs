@@ -90,12 +90,12 @@ namespace PureActive.Network.Core.Sockets
         /// <summary>
         ///  Starts the service listener if it is in a stopped state.
         /// </summary>
-        abstract public bool Start();
+        public abstract bool Start();
 
         /// <summary>
         ///  Stops the service listener if in started state.
         /// </summary>
-        abstract public bool Stop();
+        public abstract bool Stop();
 
         /// <summary>
         ///  Restarts the service listener if in a started state.

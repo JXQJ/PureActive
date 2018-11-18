@@ -78,7 +78,7 @@ namespace PureActive.Network.Devices.Network
             {
                 if (localNetwork.RemoveAdapterFromNetwork(networkAdapter))
                 {
-                    return (localNetwork.AdapterCount != 0) || RemoveNetwork(localNetwork);
+                    return localNetwork.AdapterCount != 0 || RemoveNetwork(localNetwork);
                 }
             }
             

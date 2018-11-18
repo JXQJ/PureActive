@@ -110,7 +110,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         /// </summary>
         /// <param name="directed">The directed flag.</param>
         /// <returns>The directed flag's indicator equivalent.</returns>
-        public static int ToDirectedIndicator(bool directed) => (directed ? 1 : 0);
+        public static int ToDirectedIndicator(bool directed) => directed ? 1 : 0;
 
         public int CompareTo(PureObjectEdge<T> other)
         {

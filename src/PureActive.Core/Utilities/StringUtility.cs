@@ -133,9 +133,9 @@ namespace PureActive.Core.Utilities
             int mp = 0;
             int cp = 0;
 
-            while (nText < source.Length && nPattern < pattern.Length && (pattern[nPattern] != '*'))
+            while (nText < source.Length && nPattern < pattern.Length && pattern[nPattern] != '*')
             {
-                if ((pattern[nPattern] != source[nText]) && (pattern[nPattern] != '?'))
+                if (pattern[nPattern] != source[nText] && pattern[nPattern] != '?')
                 {
                     return false;
                 }
@@ -155,7 +155,7 @@ namespace PureActive.Core.Utilities
                     mp = nPattern;
                     cp = nText + 1;
                 }
-                else if ((pattern[nPattern] == source[nText]) || (pattern[nPattern] == '?'))
+                else if (pattern[nPattern] == source[nText] || pattern[nPattern] == '?')
                 {
                     nPattern++;
                     nText++;
@@ -381,7 +381,7 @@ namespace PureActive.Core.Utilities
             int j;
             string v;
 
-            if ((r - l) <= M)
+            if (r - l <= M)
             {
                 InsertionSort(array, l, r);
             }
@@ -433,7 +433,7 @@ namespace PureActive.Core.Utilities
             {
                 v = array[i];
                 j = i;
-                while ((j > lo) && (string.CompareOrdinal(array[j - 1], v) > 0))
+                while (j > lo && string.CompareOrdinal(array[j - 1], v) > 0)
                 {
 
                     array[j] = array[j - 1];
@@ -514,7 +514,7 @@ namespace PureActive.Core.Utilities
 
                             while (endsearch > starting)
                             {
-                                if (endsearch != (format.Length - 1) && format[endsearch + 1] == '}')
+                                if (endsearch != format.Length - 1 && format[endsearch + 1] == '}')
                                 {
                                     // escaped ending bracket
                                     endsearch = endsearch + 2;
@@ -601,7 +601,7 @@ namespace PureActive.Core.Utilities
 
             while ((i = format.IndexOfAny(new[] { '{', '}' }, i)) >= 0)
             {
-                if (i < (format.Length - 1) && format[i] == format[i + 1])
+                if (i < format.Length - 1 && format[i] == format[i + 1])
                 {
                     // escaped brace. continue looking.
                     i = i + 2;

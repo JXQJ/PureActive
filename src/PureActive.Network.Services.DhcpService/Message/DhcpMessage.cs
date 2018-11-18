@@ -461,7 +461,7 @@ namespace PureActive.Network.Services.DhcpService.Message
             byteWriter.Write(_sname);
             byteWriter.Write(_file);
 
-            byte[] data = new byte[(_options.Count > 0 ? 4 + _options.Count * 2 + _optionDataSize + 1 : 0)];
+            byte[] data = new byte[_options.Count > 0 ? 4 + _options.Count * 2 + _optionDataSize + 1 : 0];
 
             int offset = 0;
             if (_options.Count > 0)

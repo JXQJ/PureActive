@@ -34,7 +34,7 @@ namespace PureActive.Network.Services.DhcpService.Events
                 // get message type option
                 var messageTypeData = RequestMessage.GetOptionData(DhcpOption.MessageType);
 
-                return (messageTypeData != null && messageTypeData.Length > 0) ? (MessageType)messageTypeData[0] : MessageType.Unknown;
+                return messageTypeData != null && messageTypeData.Length > 0 ? (MessageType)messageTypeData[0] : MessageType.Unknown;
             }
         }
 

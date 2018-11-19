@@ -65,7 +65,6 @@ namespace PureActive.Network.Services.DhcpService.Events
             catch (Exception ex)
             {
                 logger?.LogError(ex, "Error parsing DHCP message");
-                return;
             }
         }
     }

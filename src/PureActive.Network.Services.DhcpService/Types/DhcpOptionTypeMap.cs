@@ -252,8 +252,6 @@ namespace PureActive.Network.Services.DhcpService.Types
                         return IPAddress.NetworkToHostOrder(BitConverter.ToUInt16(dhcpOptionValue, 0)).ToString();
                     case DhcpOptionType.UInt32Network:
                         return IPAddress.NetworkToHostOrder(BitConverter.ToUInt32(dhcpOptionValue, 0)).ToString();
-                    default:
-                        break;
                 }
             }
             catch (Exception ex)

@@ -19,7 +19,7 @@ namespace PureActive.Network.Devices.Network
         public LocalNetwork(ICommonNetworkServices commonNetworkServices, INetworkAdapter networkAdapter, IPureLogger logger = null) : 
             base(commonNetworkServices, DeviceType.LocalNetwork, logger)
         {
-            NetworkAdapterCollection = new NetworkAdapterCollection(commonNetworkServices);
+            NetworkAdapterCollection = new NetworkAdapterCollection();
             NetworkGateway = _DiscoverNetworkGateway();
 
             NetworkIPAddressSubnet = networkAdapter.NetworkAddressSubnet;

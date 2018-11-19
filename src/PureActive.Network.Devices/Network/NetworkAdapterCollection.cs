@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Network;
 
 namespace PureActive.Network.Devices.Network
@@ -8,14 +7,8 @@ namespace PureActive.Network.Devices.Network
     public class NetworkAdapterCollection : INetworkAdapterCollection
     {
         private readonly List<INetworkAdapter> _networkAdapters = new List<INetworkAdapter>();
-        private readonly ICommonNetworkServices _commonNetworkServices;
-
+  
         public int Count => _networkAdapters?.Count ?? 0;
-
-        public NetworkAdapterCollection(ICommonNetworkServices commonNetworkServices)
-        {
-            _commonNetworkServices = commonNetworkServices;
-        }
 
         public INetworkAdapter this[int index]
         {

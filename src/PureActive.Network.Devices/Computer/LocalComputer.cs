@@ -23,7 +23,7 @@ namespace PureActive.Network.Devices.Computer
         public LocalComputer(ICommonNetworkServices commonNetworkServices, DeviceType deviceType)
             :base(commonNetworkServices, deviceType)
         {
-            _networkAdapterCollection = new NetworkAdapterCollection(commonNetworkServices);
+            _networkAdapterCollection = new NetworkAdapterCollection();
             _localNetworkCollection = new LocalNetworkCollection(commonNetworkServices);
         }
      

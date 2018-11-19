@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Extensions;
 using PureActive.Core.Utilities;
@@ -548,13 +547,6 @@ namespace PureActive.Network.Services.DhcpService.Message
             }
 
             return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
-        }
-
-        private void FormatDhcpOptionColon(StringBuilder sb, DhcpOption dhcpOption, string dhcpOptionString, int maxLength = 0)
-        {
-            sb.Append(maxLength > 0
-                ? $"{dhcpOption.ToString().PadWithDelim(": ", maxLength)}{dhcpOptionString}"
-                : $"{dhcpOption.ToString()}: {dhcpOptionString}");
         }
 
         /// <summary>

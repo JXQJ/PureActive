@@ -2,6 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Network.Core.Sockets
@@ -410,19 +411,8 @@ namespace PureActive.Network.Core.Sockets
         /// Detected a disconnect
         /// </summary>
         /// <param name="socketError">Socket failure reason.</param>
-        protected void HandleDisconnect(SocketError socketError)
-        {
-            try
-            {
-                _socket.Close();
-                _connected = false;
-                _clientDisconnected(this, new SocketException((int)socketError));
-            }
-            catch (Exception ex)
-            {
-                ChannelError(this, ex);
-            }
-        }
+        protected void HandleDisconnect(SocketError socketError) =>
+            HandleDisconnect(socketError, new SocketException((int) socketError));
 
         /// <summary>
         /// Detected a disconnect
@@ -433,6 +423,7 @@ namespace PureActive.Network.Core.Sockets
         {
             try
             {
+                Logger.LogError(exception, "SocketChannel: HandleDisconnect with error: {SocketError}", socketError);
                 _socket.Close();
                 _connected = false;
                 _clientDisconnected(this, exception);

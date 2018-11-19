@@ -260,9 +260,6 @@ namespace PureActive.Network.Services.DhcpService
                         case MessageType.Nak:
                         case MessageType.Offer:
                             break;
-
-                        default:
-                            break;
                     }
                 }
 

@@ -163,7 +163,10 @@ namespace PureActive.Network.Services.ArpService
                             var physicalAddress = PhysicalAddressExtensions.NormalizedParse(physicalAddressString);
                             var ipAddress = IPAddress.Parse(ipAddressString);
 
-                            _UpdateArpItem(physicalAddress, ipAddress, timestamp);
+                            if (_UpdateArpItem(physicalAddress, ipAddress, timestamp) == null)
+                            {
+                                Logger.LogDebug("_UpdateArpItem returned null item");
+                            }
                         }
                     }
                     catch (Exception ex)

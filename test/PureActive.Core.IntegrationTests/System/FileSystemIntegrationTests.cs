@@ -42,7 +42,7 @@ namespace PureActive.Core.IntegrationTests.System
         {
             var tempFolderPath = _fileSystem.GetTempFolderPath();
             tempFolderPath.Should().NotBeNullOrEmpty();
-            Directory.Exists(tempFolderPath).Should().BeTrue();
+            _fileSystem.FolderExists(tempFolderPath).Should().BeTrue();
 
         }
 
@@ -102,7 +102,7 @@ namespace PureActive.Core.IntegrationTests.System
         public void FileSystem_ArpCommandPath_FileExists()
         {
             var arpCommandPath = _fileSystem.ArpCommandPath();
-            File.Exists(arpCommandPath).Should().BeTrue();
+            _fileSystem.FileExists(arpCommandPath).Should().BeTrue();
         }
 
         [Fact]
@@ -130,8 +130,8 @@ namespace PureActive.Core.IntegrationTests.System
 
             fileContentsRead.Should().Be(fileContents);
 
-            if (File.Exists(tempFileName))
-                File.Delete(tempFileName);
+            if (_fileSystem.FileExists(tempFileName))
+                _fileSystem.DeleteFile(tempFileName);
         }
 
         [Fact]
@@ -139,11 +139,11 @@ namespace PureActive.Core.IntegrationTests.System
         {
             var tempFolderPath = _fileSystem.GetTempFolderPath() + "FileSystemIntegrationTests";
             
-            if (Directory.Exists(tempFolderPath))
+            if (_fileSystem.FolderExists(tempFolderPath))
                 _fileSystem.DeleteFolder(tempFolderPath);
 
             _fileSystem.CreateFolder(tempFolderPath);
-            Directory.Exists(tempFolderPath).Should().BeTrue();
+            _fileSystem.FolderExists(tempFolderPath).Should().BeTrue();
 
             _fileSystem.DeleteFolder(tempFolderPath);
         }
@@ -203,7 +203,7 @@ namespace PureActive.Core.IntegrationTests.System
 
             if (!string.IsNullOrEmpty(specialFolderPath))
             {
-                Directory.Exists(specialFolderPath).Should().BeTrue();
+                _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
             }
         }
 
@@ -216,7 +216,7 @@ namespace PureActive.Core.IntegrationTests.System
 
             if (!string.IsNullOrEmpty(specialFolderPath))
             {
-                Directory.Exists(specialFolderPath).Should().BeTrue();
+                _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
             }
         }
 
@@ -229,7 +229,7 @@ namespace PureActive.Core.IntegrationTests.System
 
             if (!string.IsNullOrEmpty(specialFolderPath))
             {
-                Directory.Exists(specialFolderPath).Should().BeTrue();
+                _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
             }
         }
 
@@ -249,7 +249,7 @@ namespace PureActive.Core.IntegrationTests.System
 
             if (!string.IsNullOrEmpty(specialFolderPath))
             {
-                Directory.Exists(specialFolderPath).Should().BeTrue();
+                _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
             }
         }
     }

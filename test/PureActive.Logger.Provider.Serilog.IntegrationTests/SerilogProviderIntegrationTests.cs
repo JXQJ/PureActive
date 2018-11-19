@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using PureActive.Core.Abstractions.System;
 using PureActive.Core.Extensions;
 using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Configuration;
@@ -18,16 +19,16 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
     [Trait("Category", "Integration")]
     public class SerilogProviderIntegrationTests : TestBaseLoggable<SerilogProviderIntegrationTests>
     {
+        private readonly IFileSystem _fileSystem;
+
         public SerilogProviderIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
+            _fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
         }
 
         private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)
         {
-            var fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
-
-            var loggerSettings = new SerilogLoggerSettings(fileSystem, logEventLevel, loggingOutputFlags);
+            var loggerSettings = new SerilogLoggerSettings(_fileSystem, logEventLevel, loggingOutputFlags);
             var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
 
             return LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
@@ -35,7 +36,7 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
 
         private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string logFileName, Action<string, LogLevel> testAction)
         {
-            string partialName = Path.GetFileNameWithoutExtension(logFileName);
+            string partialName = _fileSystem.GetFileNameWithoutExtension(logFileName);
             DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo(loggerSettings.TestLogFolderPath);
             FileInfo[] filesInDir = hdDirectoryInWhichToSearch.GetFiles("*" + partialName + "*.*");
 
@@ -43,7 +44,7 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
             {
                 if (foundFile.Name.StartsWith(partialName))
                 {
-                    if (!File.Exists(foundFile.FullName)) continue;
+                    if (!_fileSystem.FileExists(foundFile.FullName)) continue;
 
                     using (var sr = new StreamReader(foundFile.FullName))
                     {

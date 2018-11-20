@@ -23,6 +23,7 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/PureActive/PureActive</RepositoryUrl>
     <NoWarn>$(NoWarn);NU5125</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <Target Name="FreshClean" BeforeTargets="Clean">

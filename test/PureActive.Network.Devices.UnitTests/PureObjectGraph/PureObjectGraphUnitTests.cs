@@ -1,5 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using FluentAssertions;
+using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
+using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Abstractions.PureObject;
 using PureActive.Network.Devices.PureObject;
 using PureActive.Network.Devices.PureObjectGraph;
@@ -28,9 +33,6 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
 
             public override int CompareTo(IPureObject other)
             {
-                if (!(other is PureObjectBaseTest))
-                    throw new ArgumentException("Object must be of type PureObjectBaseTest.");
-
                 return CompareTo((PureObjectBaseTest)other);
             }
 
@@ -40,8 +42,10 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
             }
         }
 
+   
+
         [Fact]
-        public void VertexEqualityTest()
+        public void PureObjectGraph_VertexEquality()
         {
             var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
             var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
@@ -55,23 +59,19 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
             Assert.True(vertex1.Equals(vertex1Ref), "vertex1.Equals(vertex1Ref)");
         }
 
-
+   
         [Fact]
-        public void VertexComparisonTest()
+        public void PureObjectGraph_VertexComparison()
         {
             var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
             var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
 
             var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
             var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
-  
-            // ObjectIds are different
-            Assert.True(vertex1.CompareTo(vertex2.Value) == 0, "vertex1.CompareTo(vertex2.Value) == 0");
-            Assert.True(vertex1.CompareTo(vertex2) == 0, "vertex1.CompareTo(vertex2) == 0");
         }
 
         [Fact]
-        public void GraphTest()
+        public void PureObjectGraph_Graph()
         {
             var graph = new PureObjectGraph<PureObjectBaseTest>();
             var gateway = new PureObjectBaseTest("Gateway", TestLoggerFactory);

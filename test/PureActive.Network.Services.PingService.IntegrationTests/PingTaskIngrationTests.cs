@@ -29,7 +29,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         }
 
         [Fact]
-        public async Task TestPingNetworkWithLogging()
+        public async Task PingService_PingNetworkWithLogging()
         {
             var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 
@@ -37,7 +37,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         }
 
         [Fact]
-        public async Task TestPingNetworkEventWithLogging()
+        public async Task PingService_PingNetworkEventWithLogging()
         {
             var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
 

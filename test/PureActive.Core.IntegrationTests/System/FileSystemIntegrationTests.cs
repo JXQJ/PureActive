@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
@@ -10,6 +11,7 @@ using PureActive.Core.System;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
+using OperatingSystem = PureActive.Core.System.OperatingSystem;
 
 namespace PureActive.Core.IntegrationTests.System
 {
@@ -139,10 +141,7 @@ namespace PureActive.Core.IntegrationTests.System
         [Fact]
         public void FileSystem_CreateDeleteFolder()
         {
-            var tempFolderPath = _fileSystem.GetTempFolderPath() + "FileSystemIntegrationTests";
-            
-            if (_fileSystem.FolderExists(tempFolderPath))
-                _fileSystem.DeleteFolder(tempFolderPath);
+            var tempFolderPath = _fileSystem.GetTempFolderPath() + Guid.NewGuid().ToStringNoDashes();
 
             _fileSystem.CreateFolder(tempFolderPath);
             _fileSystem.FolderExists(tempFolderPath).Should().BeTrue();
@@ -223,8 +222,10 @@ namespace PureActive.Core.IntegrationTests.System
         }
 
         [Fact]
+        [ExcludeFromCodeCoverage]
         public void FileSystem_GetCommonApplicationDataFolderPath_Osx()
         {
+            var operatingSystem = new OperatingSystem();
             Mock<IOperatingSystem> operatingSystemMock = new Mock<IOperatingSystem>();
 
             operatingSystemMock.Setup(osm => osm.IsWindows()).Returns(false);
@@ -236,10 +237,8 @@ namespace PureActive.Core.IntegrationTests.System
 
             specialFolderPath.Should().NotBeNull();
 
-            if (!string.IsNullOrEmpty(specialFolderPath))
-            {
+            if (operatingSystem.IsOsx())
                 _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
-            }
         }
 
         [Fact]

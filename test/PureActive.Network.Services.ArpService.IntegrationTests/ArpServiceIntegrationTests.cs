@@ -29,7 +29,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
         }
     
         [Fact]
-        public async Task TestArpServiceStartStopAsync()
+        public async Task ArpService_StartStopAsync()
         {
             Assert.Equal(ServiceHostStatus.Stopped ,_arpService.ServiceHostStatus);
             await _arpService.StartAsync(_cancellationTokenSource.Token);
@@ -39,7 +39,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
         }
 
         [Fact]
-        public async Task TestArpServiceGatewayPhysicalAddress()
+        public async Task ArpService_GatewayPhysicalAddress()
         {
             // Start ArpService
             Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
@@ -55,7 +55,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
         }
 
         [Fact]
-        public async Task TestArpServiceBogusPhysicalAddress()
+        public async Task ArpService_BogusPhysicalAddress()
         {
             // Start ArpService
             Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);

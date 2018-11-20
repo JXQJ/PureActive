@@ -54,7 +54,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
         }
 
         [Fact]
-        public void TestDhcpRequest_GetPropertyListLevel()
+        public void DhcpMessage_GetPropertyListLevel()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 
@@ -67,7 +67,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
         }
 
         [Fact]
-        public void TestDhcpRequest_FormatPropertyList()
+        public void DhcpMessage_FormatPropertyList()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_bcDenDiscoverDhcpMsgBytes, TestLoggerFactory);
 
@@ -81,7 +81,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
         }
 
         [Fact]
-        public void TestDhcpRequest_ToString()
+        public void DhcpMessage_ToString()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 
@@ -89,7 +89,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
         }
 
         [Fact]
-        public void TestDhcpRequest_DhcpRequest_With()
+        public void DhcpMessage_With()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 
@@ -105,7 +105,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
 
         [Fact]
-        public void TestDhcpRequest_DhcpRequest_With_None()
+        public void DhcpMessage_With_None()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 
@@ -119,7 +119,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
 
         [Fact]
-        public void TestDhcpRequest_DhcpRequest_With_ILoggable()
+        public void DhcpMessage_With_ILoggable()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 
@@ -133,7 +133,7 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Message
 
 
         [Fact]
-        public void TestDhcpRequest_DhcpRequest_Deconstruct()
+        public void DhcpMessage_Deconstruct()
         {
             DhcpMessage dhcpRequestMessage = new DhcpMessage(_iPhoneRequestDhcpMsgBytes, TestLoggerFactory);
 

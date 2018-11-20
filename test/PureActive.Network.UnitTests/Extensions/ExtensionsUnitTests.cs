@@ -17,7 +17,7 @@ namespace PureActive.Network.UnitTests.Extensions
         private const string PhysicalAddressZeros = "00-00-00-00-00-00";
 
         [Fact]
-        public void ToDashStringTest()
+        public void PhysicalAddress_ToDashString()
         {
             PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
             var physicalAddressDash = physicalAddress.ToDashString();
@@ -25,7 +25,7 @@ namespace PureActive.Network.UnitTests.Extensions
         }
 
         [Fact]
-        public void ToColonStringTest()
+        public void PhysicalAddress_ToColonString()
         {
             PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
             var physicalAddressColon = physicalAddress.ToColonString();
@@ -40,7 +40,7 @@ namespace PureActive.Network.UnitTests.Extensions
         [InlineData("", null)]
         [InlineData(null, null)]
         [InlineData("3:4:5", "03-04-05")]
-        public void NormalizedParseTest(string physicalAddressString, string physicalAddressStringExpectedValue)
+        public void PhysicalAddress_NormalizedParse(string physicalAddressString, string physicalAddressStringExpectedValue)
         { 
             var physicalAddressExpectedValue = string.IsNullOrEmpty(physicalAddressStringExpectedValue) ? PhysicalAddress.None : PhysicalAddress.Parse(physicalAddressStringExpectedValue);
             var physicalAddressNormalized = PhysicalAddressExtensions.NormalizedParse(physicalAddressString);

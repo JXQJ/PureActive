@@ -19,7 +19,7 @@ namespace PureActive.Network.UnitTests.Network
         [Theory]
         [InlineData("10.1.10.255", "10.1.11.2", 4)]
         [InlineData("10.1.10.0", "10.1.11.255", 512)]
-        public void IPAddressRangeTest(string ipAddressLowerInclusiveString, string ipAddressUpperInclusiveString, int total)
+        public void IPAddressRange_IPAddress_Count(string ipAddressLowerInclusiveString, string ipAddressUpperInclusiveString, int total)
         {
             var ipAddressLowerInclusive = IPAddress.Parse(ipAddressLowerInclusiveString);
             var ipAddressUpperInclusive = IPAddress.Parse(ipAddressUpperInclusiveString);
@@ -47,7 +47,7 @@ namespace PureActive.Network.UnitTests.Network
         [InlineData("10.1.10.5", IPAddressExtensions.StringSubnetClassC, 256)]
         [InlineData("10.1.10.5", IPAddressExtensions.StringSubnetClassB, 65_536)]
  //       [InlineData("10.1.10.5", StringSubnetClassA, 16_777_216)]
-        public void IPAddressRangeSubnetTest(string ipAddressLowerInclusiveString, string ipAddressSubnetString, int total)
+        public void IPAddressRange_IPAddressSubnet_Count(string ipAddressLowerInclusiveString, string ipAddressSubnetString, int total)
         {
             var ipAddressLowerInclusive = IPAddress.Parse(ipAddressLowerInclusiveString);
             var ipAddressSubnetInclusive = IPAddress.Parse(ipAddressSubnetString);

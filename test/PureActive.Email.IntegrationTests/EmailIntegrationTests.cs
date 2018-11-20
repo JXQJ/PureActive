@@ -17,7 +17,7 @@ namespace PureActive.Email.IntegrationTests
         }
 
         [Fact]
-        public async Task EmailUnitTests_Create_Provider()
+        public async Task EmailIntegration_Create_Provider()
         {
             try
             {

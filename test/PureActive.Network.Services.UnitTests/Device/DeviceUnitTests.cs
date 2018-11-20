@@ -30,7 +30,7 @@ namespace PureActive.Network.Services.UnitTests.Device
         }
 
         [Fact]
-        public void TestDeviceToLog()
+        public void Device_ToLog()
         {
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 
@@ -39,7 +39,7 @@ namespace PureActive.Network.Services.UnitTests.Device
 
 
         [Fact]
-        public void TestDeviceToString()
+        public void Device_ToString()
         {
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 
@@ -47,7 +47,7 @@ namespace PureActive.Network.Services.UnitTests.Device
         }
 
         [Fact]
-        public void TestDeviceToLogParents()
+        public void Device_ToLogParents()
         {
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 
@@ -55,7 +55,7 @@ namespace PureActive.Network.Services.UnitTests.Device
         }
 
         [Fact]
-        public void TestDeviceToStringParents()
+        public void Device_ToStringParents()
         {
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 

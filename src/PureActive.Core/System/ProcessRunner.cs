@@ -36,6 +36,9 @@ namespace PureActive.Core.System
             string[] args,
             TimeSpan? timeout)
         {
+            if (path == null) throw new ArgumentNullException(nameof(path));
+            if (args == null) throw new ArgumentNullException(nameof(args));
+
             var output = new ConcurrentQueue<string>();
             var processTcs = new TaskCompletionSource<bool>();
 

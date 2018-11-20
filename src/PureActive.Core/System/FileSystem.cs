@@ -89,6 +89,7 @@ namespace PureActive.Core.System
 
         public string GetTempFileName() => Path.GetTempFileName();
 
+
         /// <summary>
         ///     Reads the contents of a file.
         /// </summary>
@@ -143,6 +144,17 @@ namespace PureActive.Core.System
             Directory.Delete(path, true);
         }
 
+        public void DeleteFile(string path) => File.Delete(path);
+
+        public bool FolderExists(string path) => Directory.Exists(path);
+
+        public bool FileExists(string path) => File.Exists(path);
+
+        public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
+
+
+        public string GetFolderName(string path) => Path.GetDirectoryName(path);
+
         /// <summary>
         ///     Returns a Special folder path given a special folder type
         /// </summary>
@@ -173,15 +185,15 @@ namespace PureActive.Core.System
 
                 case Environment.SpecialFolderOption.None:
                     {
-                        if (!Directory.Exists(folderPath))
-                            return "";
+                        if (!FolderExists(folderPath))
+                            return string.Empty;
 
                         break;
                     }
 
                 case Environment.SpecialFolderOption.Create:
                     {
-                        Directory.CreateDirectory(folderPath);
+                        CreateFolder(folderPath);
 
                         break;
                     }
@@ -241,7 +253,7 @@ namespace PureActive.Core.System
             var commonApplicationFolder =
                 GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.Create) + $"/{AppFolderName}/";
 
-            Directory.CreateDirectory(commonApplicationFolder);
+            CreateFolder(commonApplicationFolder);
 
             return commonApplicationFolder;
         }
@@ -253,9 +265,9 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string LogFolderPath()
         {
-            var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/";
+            var logFolderPath = GetCurrentApplicationDataFolderPath() + "Logs/";
 
-            Directory.CreateDirectory(logFolderPath);
+            CreateFolder(logFolderPath);
 
             return logFolderPath;
         }
@@ -266,9 +278,9 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string TestLogFolderPath()
         {
-            var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/Test/";
+            var logFolderPath = GetCurrentApplicationDataFolderPath() + "Logs/Test/";
 
-            Directory.CreateDirectory(logFolderPath);
+            CreateFolder(logFolderPath);
 
             return logFolderPath;
         }
@@ -279,9 +291,9 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string DataFolderPath()
         {
-            var databaseFolderPath = GetCurrentApplicationDataFolderPath() + "/Data/";
+            var databaseFolderPath = GetCurrentApplicationDataFolderPath() + "Data/";
 
-            Directory.CreateDirectory(databaseFolderPath);
+            CreateFolder(databaseFolderPath);
 
             return databaseFolderPath;
         }

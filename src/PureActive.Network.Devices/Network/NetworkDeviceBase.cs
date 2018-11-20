@@ -2,6 +2,7 @@
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.NetworkDevice;
 using PureActive.Network.Abstractions.Types;
+using PureActive.Network.Devices.Computer;
 using PureActive.Network.Devices.Device;
 
 namespace PureActive.Network.Devices.Network
@@ -16,16 +17,17 @@ namespace PureActive.Network.Devices.Network
             CommonNetworkServices = commonNetworkServices;
         }
 
-        public static INetworkDevice NetworkDeviceFromType(ICommonNetworkServices commonNetworkServices,
-            DeviceType deviceType)
+        public static INetworkDevice NetworkDeviceFromType(ICommonNetworkServices commonNetworkServices, DeviceType deviceType)
         {
             switch (deviceType)
             {
-                default:
-                    break;
+                case DeviceType.LocalComputer:
+                {
+                    return new LocalComputer(commonNetworkServices, DeviceType.LocalComputer);
+                }
             }
 
-            return new NetworkDeviceBase(commonNetworkServices, DeviceType.UnknownDevice, commonNetworkServices.LoggerFactory.CreatePureLogger<NetworkDeviceBase>());
+            return new NetworkDeviceBase(commonNetworkServices, deviceType, commonNetworkServices.LoggerFactory.CreatePureLogger<NetworkDeviceBase>());
         }
     }
 }

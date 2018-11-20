@@ -1,5 +1,3 @@
-using System;
-
 namespace PureActive.Core.Extensions
 {
     /// <summary>

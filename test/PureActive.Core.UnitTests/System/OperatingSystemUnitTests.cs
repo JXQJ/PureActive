@@ -21,5 +21,7 @@ namespace PureActive.Core.UnitTests.System
             var operatingSystem = new OperatingSystem();
             operatingSystem.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IOperatingSystem>();
         }
+
+
     }
 }

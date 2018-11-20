@@ -43,6 +43,16 @@ namespace PureActive.Core.Abstractions.System
         /// </summary>
         void DeleteFolder(string path);
 
+        void DeleteFile(string path);
+
+        bool FolderExists(string path);
+
+        bool FileExists(string path);
+
+        string GetFileNameWithoutExtension(string path);
+
+        string GetFolderName(string path);
+
         /// <summary>
         ///     Returns a Special folder path given a special folder type
         /// </summary>

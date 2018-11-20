@@ -226,8 +226,10 @@ namespace PureActive.Network.Core.Sockets
             }
             catch (SocketException ex)
             {
-                if (ex.ErrorCode == (int)SocketError.ConnectionReset)
-                    return;
+                if (ex.ErrorCode == (int) SocketError.ConnectionReset)
+                {
+                    Logger.LogError(ex, "SocketListener: socket connection reset");
+                }
             }
             catch (Exception ex)
             {
@@ -297,11 +299,6 @@ namespace PureActive.Network.Core.Sockets
         ///     A client has disconnected
         /// </summary>
         public delegate void ClientDisconnectedEventHandler(object sender, ClientDisconnectedEventArgs args);
-
-        /// <summary>
-        ///     An internal error occured
-        /// </summary>
-        public event ErrorHandler ListenerError = delegate { };
 
         #endregion Events
 

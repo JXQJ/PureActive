@@ -11,7 +11,6 @@ namespace PureActive.Logging.UnitTests.Extensions
     {
         public LoggerExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]

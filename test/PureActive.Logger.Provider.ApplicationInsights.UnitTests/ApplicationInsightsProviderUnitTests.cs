@@ -9,13 +9,11 @@ namespace PureActive.Logger.Provider.ApplicationInsights.UnitTests
     {
         public ApplicationInsightsProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void ApplicationInsightsProvider_Constructor()
         {
-
         }
     }
 }

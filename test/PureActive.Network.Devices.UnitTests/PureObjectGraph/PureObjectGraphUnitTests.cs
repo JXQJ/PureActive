@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Abstractions.Types;
 using PureActive.Network.Abstractions.PureObject;
 using PureActive.Network.Devices.PureObject;
 using PureActive.Network.Devices.PureObjectGraph;
@@ -19,55 +14,26 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
     {
         public PureObjectGraphUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         private class PureObjectBaseTest : PureObjectBase, IComparable<PureObjectBaseTest>
         {
-            private string TestValue { get;}
-
-            public PureObjectBaseTest(string testValue, IPureLoggerFactory loggerFactory) :base (loggerFactory)
+            public PureObjectBaseTest(string testValue, IPureLoggerFactory loggerFactory) : base(loggerFactory)
             {
                 TestValue = testValue ?? throw new ArgumentNullException(nameof(testValue));
             }
 
-            public override int CompareTo(IPureObject other)
-            {
-                return CompareTo((PureObjectBaseTest)other);
-            }
+            private string TestValue { get; }
 
             public int CompareTo(PureObjectBaseTest other)
             {
                 return other == null ? 1 : string.Compare(TestValue, other.TestValue, StringComparison.Ordinal);
             }
-        }
 
-   
-
-        [Fact]
-        public void PureObjectGraph_VertexEquality()
-        {
-            var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
-            var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
-            
-            var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
-            var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
-            var vertex1Ref = vertex1;
-
-            // ObjectIds are different
-            Assert.False(vertex1.Equals(vertex2), "vertex1.Equals(vertex2)");
-            Assert.True(vertex1.Equals(vertex1Ref), "vertex1.Equals(vertex1Ref)");
-        }
-
-   
-        [Fact]
-        public void PureObjectGraph_VertexComparison()
-        {
-            var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
-            var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
-
-            var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
-            var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
+            public override int CompareTo(IPureObject other)
+            {
+                return CompareTo((PureObjectBaseTest) other);
+            }
         }
 
         [Fact]
@@ -87,6 +53,33 @@ namespace PureActive.Network.Devices.UnitTests.PureObjectGraph
 
             graph.IndexEdges();
             graph.IndexVertices();
+        }
+
+
+        [Fact]
+        public void PureObjectGraph_VertexComparison()
+        {
+            var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
+            var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
+
+            var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
+            var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
+        }
+
+
+        [Fact]
+        public void PureObjectGraph_VertexEquality()
+        {
+            var objectBaseTest1 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
+            var objectBaseTest2 = new PureObjectBaseTest("VertexCreationTest", TestLoggerFactory);
+
+            var vertex1 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest1);
+            var vertex2 = new PureObjectVertex<PureObjectBaseTest>(objectBaseTest2);
+            var vertex1Ref = vertex1;
+
+            // ObjectIds are different
+            Assert.False(vertex1.Equals(vertex2), "vertex1.Equals(vertex2)");
+            Assert.True(vertex1.Equals(vertex1Ref), "vertex1.Equals(vertex1Ref)");
         }
     }
 }

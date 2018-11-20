@@ -10,7 +10,6 @@ using PureActive.Logger.Provider.ApplicationInsights.Telemetry;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Queue.Hangfire.Queue;
 
-
 namespace PureActive.Hosting.Configuration
 {
     /// <summary>

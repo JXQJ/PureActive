@@ -7,6 +7,17 @@ namespace PureActive.Logger.Provider.Serilog.Types
 {
     public class SerilogLogLevel : ISerilogLogLevel
     {
+        public SerilogLogLevel(LogEventLevel minimumLevelSerilog)
+        {
+            InitialLogEventLevel = minimumLevelSerilog;
+            LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevelSerilog);
+        }
+
+        public SerilogLogLevel(LogLevel minimumLevelMsft) :
+            this(MsftToSerilogLogLevel(minimumLevelMsft))
+        {
+        }
+
         public LoggingLevelSwitch LoggingLevelSwitch { get; }
 
         public LogEventLevel MinimumLogEventLevel
@@ -27,18 +38,6 @@ namespace PureActive.Logger.Provider.Serilog.Types
         {
             get => SerilogToMsftLogLevel(InitialLogEventLevel);
             set => InitialLogEventLevel = MsftToSerilogLogLevel(value);
-        }
-
-        public SerilogLogLevel(LogEventLevel minimumLevelSerilog)
-        {
-            InitialLogEventLevel = minimumLevelSerilog;
-            LoggingLevelSwitch = new LoggingLevelSwitch(minimumLevelSerilog);
-        }
-
-        public SerilogLogLevel(LogLevel minimumLevelMsft) :
-            this(MsftToSerilogLogLevel(minimumLevelMsft))
-        {
-
         }
 
         public static LogEventLevel MsftToSerilogLogLevel(LogLevel logLevelMsft)

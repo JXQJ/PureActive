@@ -11,21 +11,22 @@ namespace PureActive.Logging.Extensions.Types
 {
     public class PureLogPropertyLevel : PureLogProperty, IPureLogPropertyLevel
     {
-        public LogLevel MinimumLogLevel { get; }
-
-        public PureLogPropertyLevel(KeyValuePair<string, object> keyValuePair, LogLevel minimumLogLevel, bool destructureObjects = false):
+        public PureLogPropertyLevel(KeyValuePair<string, object> keyValuePair, LogLevel minimumLogLevel,
+            bool destructureObjects = false) :
             base(keyValuePair, destructureObjects)
         {
             MinimumLogLevel = minimumLogLevel;
         }
 
-        public PureLogPropertyLevel(string key, object value, LogLevel minimumLogLevel, bool destructureObjects = false) : 
+        public PureLogPropertyLevel(string key, object value, LogLevel minimumLogLevel,
+            bool destructureObjects = false) :
             this(new KeyValuePair<string, object>(key, value), minimumLogLevel, destructureObjects)
         {
-
         }
 
-        public static void FormatPropertyList(StringBuilder sb, LoggableFormat loggableFormat, 
+        public LogLevel MinimumLogLevel { get; }
+
+        public static void FormatPropertyList(StringBuilder sb, LoggableFormat loggableFormat,
             IEnumerable<IPureLogPropertyLevel> logPropertyEnumerable, LogLevel minimumLogLevel = LogLevel.Debug)
         {
             if (sb == null) throw new ArgumentNullException(nameof(sb));
@@ -38,7 +39,8 @@ namespace PureActive.Logging.Extensions.Types
             {
                 if (logPropertyListItem.MinimumLogLevel.CompareTo(minimumLogLevel) >= 0)
                 {
-                    sb.AppendLine($"{logPropertyListItem.Key.PadWithDelim(": ", maxLength)}{logPropertyListItem.Value}");
+                    sb.AppendLine(
+                        $"{logPropertyListItem.Key.PadWithDelim(": ", maxLength)}{logPropertyListItem.Value}");
                 }
             }
         }

@@ -78,7 +78,8 @@ namespace PureActive.Network.Core.Sockets
         public void SetBuffer(byte[] buffer)
         {
             if (buffer.Length > Capacity)
-                throw new ArgumentOutOfRangeException("buffer", "buffer length must be less then or equal to the socket buffer capacity");
+                throw new ArgumentOutOfRangeException("buffer",
+                    "buffer length must be less then or equal to the socket buffer capacity");
 
             Buffer = buffer;
             Length = buffer.Length;
@@ -125,10 +126,10 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Clears the data buffer.
+        ///     Clears the data buffer.
         /// </summary>
         public void Clear()
-        { 
+        {
             Buffer = new byte[Capacity];
             BytesTransferred = 0;
             Length = 0;

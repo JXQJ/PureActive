@@ -11,26 +11,9 @@ namespace PureActive.Network.UnitTests.Extensions
     {
         public ExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
-    
+
         private const string PhysicalAddressZeros = "00-00-00-00-00-00";
-
-        [Fact]
-        public void PhysicalAddress_ToDashString()
-        {
-            PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
-            var physicalAddressDash = physicalAddress.ToDashString();
-            Assert.Equal(physicalAddressDash, $"00-1A-8C-46-27-D0");
-        }
-
-        [Fact]
-        public void PhysicalAddress_ToColonString()
-        {
-            PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
-            var physicalAddressColon = physicalAddress.ToColonString();
-            Assert.Equal(physicalAddressColon, $"00:1A:8C:46:27:D0");
-        }
 
 
         [Theory]
@@ -40,12 +23,31 @@ namespace PureActive.Network.UnitTests.Extensions
         [InlineData("", null)]
         [InlineData(null, null)]
         [InlineData("3:4:5", "03-04-05")]
-        public void PhysicalAddress_NormalizedParse(string physicalAddressString, string physicalAddressStringExpectedValue)
-        { 
-            var physicalAddressExpectedValue = string.IsNullOrEmpty(physicalAddressStringExpectedValue) ? PhysicalAddress.None : PhysicalAddress.Parse(physicalAddressStringExpectedValue);
+        public void PhysicalAddress_NormalizedParse(string physicalAddressString,
+            string physicalAddressStringExpectedValue)
+        {
+            var physicalAddressExpectedValue = string.IsNullOrEmpty(physicalAddressStringExpectedValue)
+                ? PhysicalAddress.None
+                : PhysicalAddress.Parse(physicalAddressStringExpectedValue);
             var physicalAddressNormalized = PhysicalAddressExtensions.NormalizedParse(physicalAddressString);
 
             Assert.Equal(physicalAddressExpectedValue, physicalAddressNormalized);
+        }
+
+        [Fact]
+        public void PhysicalAddress_ToColonString()
+        {
+            PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
+            var physicalAddressColon = physicalAddress.ToColonString();
+            Assert.Equal(physicalAddressColon, "00:1A:8C:46:27:D0");
+        }
+
+        [Fact]
+        public void PhysicalAddress_ToDashString()
+        {
+            PhysicalAddress physicalAddress = PhysicalAddress.Parse("00-1A-8C-46-27-D0");
+            var physicalAddressDash = physicalAddress.ToDashString();
+            Assert.Equal(physicalAddressDash, "00-1A-8C-46-27-D0");
         }
     }
 }

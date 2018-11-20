@@ -8,7 +8,7 @@ using PureActive.Logging.Abstractions.Interfaces;
 namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
-    /// A class that listen for remote clients.
+    ///     A class that listen for remote clients.
     /// </summary>
     public abstract class SocketListener : IDisposable
     {
@@ -18,7 +18,7 @@ namespace PureActive.Network.Core.Sockets
         internal Thread Thread;
 
         private IPAddress _interfaceAddress = IPAddress.Any;
-        private byte[] sendBuffer = new byte[1460];
+        private readonly byte[] sendBuffer = new byte[1460];
         private int _receiveTimeout = -1;
         private int _sendTimeout = -1;
         private int _listenBacklog = 10;
@@ -48,12 +48,12 @@ namespace PureActive.Network.Core.Sockets
                 if (Socket == null)
                     return -1;
 
-                return ((IPEndPoint)Socket.LocalEndPoint).Port;
+                return ((IPEndPoint) Socket.LocalEndPoint).Port;
             }
         }
 
         /// <summary>
-        ///   Gets or sets the ip address for receiving data
+        ///     Gets or sets the ip address for receiving data
         /// </summary>
         public IPAddress InterfaceAddress
         {
@@ -62,7 +62,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        ///   Gets or sets the timeout for receiving data.
+        ///     Gets or sets the timeout for receiving data.
         /// </summary>
         public int ReceiveTimeout
         {
@@ -71,7 +71,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        ///   Gets or sets the timeout for sending data.
+        ///     Gets or sets the timeout for sending data.
         /// </summary>
         public int SendTimeout
         {
@@ -80,7 +80,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        ///   Gets or sets the socket listener backlog.
+        ///     Gets or sets the socket listener backlog.
         /// </summary>
         public int ListenBacklog
         {
@@ -89,7 +89,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        ///   Gets or sets the socket listener buffer size.
+        ///     Gets or sets the socket listener buffer size.
         /// </summary>
         public int BufferSize
         {
@@ -98,7 +98,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        ///   Gets or sets the socket listener active status.
+        ///     Gets or sets the socket listener active status.
         /// </summary>
         public bool IsActive
         {
@@ -111,7 +111,7 @@ namespace PureActive.Network.Core.Sockets
         #region Constructors / Deconstructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SocketListener"/> class.
+        ///     Initializes a new instance of the <see cref="SocketListener" /> class.
         /// </summary>
         public SocketListener(IPureLogger<SocketListener> logger)
         {
@@ -119,7 +119,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Handles object cleanup for GC finalization.
+        ///     Handles object cleanup for GC finalization.
         /// </summary>
         ~SocketListener()
         {
@@ -127,7 +127,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Handles object cleanup.
+        ///     Handles object cleanup.
         /// </summary>
         public void Dispose()
         {
@@ -136,7 +136,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Handles object cleanup
+        ///     Handles object cleanup
         /// </summary>
         /// <param name="disposing">True if called from Dispose(); false if called from GC finalization.</param>
         protected virtual void Dispose(bool disposing)
@@ -155,30 +155,33 @@ namespace PureActive.Network.Core.Sockets
         #region Methods
 
         /// <summary>
-        ///  Stops the service listener if in started state.
+        ///     Stops the service listener if in started state.
         /// </summary>
         public bool Stop()
         {
             try
             {
                 if (!IsActive)
-                    throw new InvalidOperationException("SocketListener is not active and must be started before stopping");
-                
+                    throw new InvalidOperationException(
+                        "SocketListener is not active and must be started before stopping");
+
                 IsActive = false;
-                
-                Logger?.LogInformation("SocketListener stopped listening for requests on {LocalEndPoint}", Socket.LocalEndPoint);
-                
+
+                Logger?.LogInformation("SocketListener stopped listening for requests on {LocalEndPoint}",
+                    Socket.LocalEndPoint);
+
                 return true;
             }
             catch (Exception ex)
             {
                 Logger?.LogError(ex, "SocketLister stop failed");
-            }        
+            }
+
             return false;
         }
 
         /// <summary>
-        /// Reads socket and processes packet
+        ///     Reads socket and processes packet
         /// </summary>
         /// <param name="socket">The active socket.</param>
         protected virtual void OnSocket(Socket socket)
@@ -189,12 +192,13 @@ namespace PureActive.Network.Core.Sockets
                 {
                     var args = new ClientConnectedEventArgs(socket, Logger, _bufferSize);
 
-                    EndPoint remoteEndPoint = new  IPEndPoint(0, 0);
+                    EndPoint remoteEndPoint = new IPEndPoint(0, 0);
 
                     if (socket.Available == 0)
                         return;
 
-                    args.ChannelBuffer.BytesTransferred = socket.ReceiveFrom(args.ChannelBuffer.Buffer, SocketFlags.None, ref remoteEndPoint);
+                    args.ChannelBuffer.BytesTransferred = socket.ReceiveFrom(args.ChannelBuffer.Buffer,
+                        SocketFlags.None, ref remoteEndPoint);
                     args.Channel.RemoteEndpoint = remoteEndPoint;
 
                     if (args.ChannelBuffer.BytesTransferred > 0)
@@ -212,10 +216,11 @@ namespace PureActive.Network.Core.Sockets
                                 }
                             }
 
-                           Logger?.LogDebug("PACKET request on {LocalEndPoint} from {RemoteEndPoint} with channel id {ChannelId} was denied access to connect.", 
-                               socket.LocalEndPoint,
-                               args.Channel.RemoteEndpoint,
-                               args.Channel.ChannelId);
+                            Logger?.LogDebug(
+                                "PACKET request on {LocalEndPoint} from {RemoteEndPoint} with channel id {ChannelId} was denied access to connect.",
+                                socket.LocalEndPoint,
+                                args.Channel.RemoteEndpoint,
+                                args.Channel.ChannelId);
                         }
                     }
                 }
@@ -260,7 +265,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Detected a disconnect
+        ///     Detected a disconnect
         /// </summary>
         /// <param name="socketError">ProtocolNotSupported = decoder failure.</param>
         /// <param name="exception">Why socket got disconnected</param>
@@ -301,6 +306,5 @@ namespace PureActive.Network.Core.Sockets
         public delegate void ClientDisconnectedEventHandler(object sender, ClientDisconnectedEventArgs args);
 
         #endregion Events
-
     }
 }

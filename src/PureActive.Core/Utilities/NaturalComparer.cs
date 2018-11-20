@@ -52,7 +52,9 @@ namespace PureActive.Core.Utilities
         {
             if (!int.TryParse(left, out var x)) return string.Compare(left, right, StringComparison.Ordinal);
 
-            return !int.TryParse(right, out var y) ? string.Compare(left, right, StringComparison.Ordinal) : x.CompareTo(y);
+            return !int.TryParse(right, out var y)
+                ? string.Compare(left, right, StringComparison.Ordinal)
+                : x.CompareTo(y);
         }
     }
 }

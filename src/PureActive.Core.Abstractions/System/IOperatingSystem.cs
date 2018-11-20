@@ -5,6 +5,5 @@
         bool IsWindows();
         bool IsOsx();
         bool IsLinux();
-
     }
 }

@@ -12,19 +12,6 @@ namespace PureActive.Network.UnitTests.Network
     {
         public IPAddressExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
-        }
-
-        [Fact]
-        public void IPAddressExtensions_ToLong()
-        {
-            IPAddress ipAddress = IPAddress.Parse("1.2.3.4");
-
-            var longTest = ipAddress.ToLong();
-
-            var ipAddressTest = new IPAddress(longTest);
-
-            Assert.Equal(ipAddressTest, ipAddress);
         }
 
         [Theory]
@@ -36,7 +23,7 @@ namespace PureActive.Network.UnitTests.Network
             IPAddress ipAddressExpected = IPAddress.Parse(ipAddressStringExpected);
 
             var ipAddressIncrement = ipAddressTest.Increment();
-            
+
             Assert.Equal(ipAddressExpected, ipAddressIncrement);
         }
 
@@ -58,6 +45,18 @@ namespace PureActive.Network.UnitTests.Network
         {
             var addressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
             addressSubnet.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void IPAddressExtensions_ToLong()
+        {
+            IPAddress ipAddress = IPAddress.Parse("1.2.3.4");
+
+            var longTest = ipAddress.ToLong();
+
+            var ipAddressTest = new IPAddress(longTest);
+
+            Assert.Equal(ipAddressTest, ipAddress);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace PureActive.Core.Utilities
     {
         private const string HexIndex = "0123456789abcdef          ABCDEF";
         private const string HexChars = "0123456789ABCDEF";
-        
+
         #region Public Members
 
         // byte
@@ -18,7 +18,7 @@ namespace PureActive.Core.Utilities
 
         public static byte SetBit(ref byte value, int position, bool flag)
         {
-            return SetBits(ref value, position, 1, flag ? (byte)1 : (byte)0);
+            return SetBits(ref value, position, 1, flag ? (byte) 1 : (byte) 0);
         }
 
         public static byte GetBits(byte value, int position, int length)
@@ -28,9 +28,9 @@ namespace PureActive.Core.Utilities
 
             int mask = (2 << (length - 1)) - 1;
 
-            return (byte)((value >> position) & mask);
+            return (byte) ((value >> position) & mask);
         }
-        
+
         public static byte SetBits(ref byte value, int position, int length, byte bits)
         {
             if (length <= 0 || position >= 8)
@@ -38,8 +38,8 @@ namespace PureActive.Core.Utilities
 
             int mask = (2 << (length - 1)) - 1;
 
-            value &= (byte)~(mask << position);
-            value |= (byte)((bits & mask) << position);
+            value &= (byte) ~(mask << position);
+            value |= (byte) ((bits & mask) << position);
 
             return value;
         }
@@ -52,7 +52,7 @@ namespace PureActive.Core.Utilities
 
         public static ushort SetBit(ref ushort value, int position, bool flag)
         {
-            return SetBits(ref value, position, 1, flag ? (ushort)1 : (ushort)0);
+            return SetBits(ref value, position, 1, flag ? (ushort) 1 : (ushort) 0);
         }
 
         public static ushort GetBits(ushort value, int position, int length)
@@ -62,7 +62,7 @@ namespace PureActive.Core.Utilities
 
             int mask = (2 << (length - 1)) - 1;
 
-            return (ushort)((value >> position) & mask);
+            return (ushort) ((value >> position) & mask);
         }
 
         public static ushort SetBits(ref ushort value, int position, int length, ushort bits)
@@ -72,8 +72,8 @@ namespace PureActive.Core.Utilities
 
             int mask = (2 << (length - 1)) - 1;
 
-            value &= (ushort)~(mask << position);
-            value |= (ushort)((bits & mask) << position);
+            value &= (ushort) ~(mask << position);
+            value |= (ushort) ((bits & mask) << position);
 
             return value;
         }
@@ -89,12 +89,12 @@ namespace PureActive.Core.Utilities
             if (bytes == null) return null;
             var s = GetStringSkipNull(bytes, 0, bytes.Length);
 
-            return string.IsNullOrEmpty(s) ?  null : s;
-    }
+            return string.IsNullOrEmpty(s) ? null : s;
+        }
 
         public static string GetString(byte[] bytes)
         {
-            return bytes != null ? GetString(bytes, 0, bytes.Length) : String.Empty;
+            return bytes != null ? GetString(bytes, 0, bytes.Length) : string.Empty;
         }
 
         public static string GetString(byte[] bytes, int offset, int length)
@@ -104,7 +104,7 @@ namespace PureActive.Core.Utilities
             if (bytes != null)
             {
                 for (int i = offset; i < length && i < bytes.Length; i++)
-                    sb.Append((char)bytes[i]);
+                    sb.Append((char) bytes[i]);
             }
 
             return sb.ToString();
@@ -120,7 +120,7 @@ namespace PureActive.Core.Utilities
                 for (int i = offset; i < length && i < bytes.Length; i++)
                 {
                     if (bytes[i] != 0)
-                        sb.Append((char)bytes[i]);
+                        sb.Append((char) bytes[i]);
                 }
             }
 
@@ -137,7 +137,7 @@ namespace PureActive.Core.Utilities
             StringBuilder sb = new StringBuilder();
 
             foreach (var ch in b)
-                sb.Append( ByteToHex(ch));
+                sb.Append(ByteToHex(ch));
 
             return sb.ToString();
         }
@@ -148,7 +148,7 @@ namespace PureActive.Core.Utilities
             int highByte = (b & 0xF0) >> 4;
 
             return new string(
-                new[] { HexChars[highByte], HexChars[lowByte] }
+                new[] {HexChars[highByte], HexChars[lowByte]}
             );
         }
 
@@ -167,7 +167,7 @@ namespace PureActive.Core.Utilities
                 c = s[j++];
                 n = HexIndex.IndexOf(c);
                 b += n & 0xf;
-                data[i] = (byte)b;
+                data[i] = (byte) b;
             }
 
             return data;
@@ -184,10 +184,8 @@ namespace PureActive.Core.Utilities
             {
                 return PrintBytes(bytes, bytes.Length);
             }
-            else
-            {
-                return "Null";
-            }
+
+            return "Null";
         }
 
         public static string PrintBytes(byte[] bytes, bool wrapLines)
@@ -277,7 +275,7 @@ namespace PureActive.Core.Utilities
 
         public static ushort NetworkToSystemByteOrder(ushort value) =>
             BitConverter.IsLittleEndian ? ReverseByteOrder(value) : value;
-        
+
         public static uint NetworkToSystemByteOrder(uint value) =>
             BitConverter.IsLittleEndian ? ReverseByteOrder(value) : value;
 
@@ -302,7 +300,8 @@ namespace PureActive.Core.Utilities
             int found = -1;
 
             //only look at this if we have a populated search array and search bytes with a sensible start
-            if (searchIn.Length > 0 && searchBytes.Length > 0 && start <= searchIn.Length - searchBytes.Length && searchIn.Length >= searchBytes.Length)
+            if (searchIn.Length > 0 && searchBytes.Length > 0 && start <= searchIn.Length - searchBytes.Length &&
+                searchIn.Length >= searchBytes.Length)
             {
                 //iterate through the array to be searched
                 for (var i = start; i <= searchIn.Length - searchBytes.Length; i++)
@@ -322,6 +321,7 @@ namespace PureActive.Core.Utilities
                                     break;
                                 }
                             }
+
                             //everything matched up
                             if (matched)
                             {
@@ -335,7 +335,6 @@ namespace PureActive.Core.Utilities
                             found = i;
                             break; //stop the loop
                         }
-
                     }
                 }
             }

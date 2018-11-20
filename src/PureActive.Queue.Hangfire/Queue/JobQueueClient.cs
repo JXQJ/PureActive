@@ -81,9 +81,8 @@ namespace PureActive.Queue.Hangfire.Queue
 
             if (stateName == EnqueuedState.StateName)
                 return JobState.NotStarted;
-            if (stateName == ProcessingState.StateName)
-                return JobState.InProgress;
-            return JobState.Unknown;
+
+            return stateName == ProcessingState.StateName ? JobState.InProgress : JobState.Unknown;
         }
     }
 }

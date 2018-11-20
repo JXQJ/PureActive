@@ -5,10 +5,10 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
 {
     public interface IDhcpDiscoveredDevice : INetworkDeviceInfo
     {
-        PhysicalAddress PhysicalAddress { get;}
+        PhysicalAddress PhysicalAddress { get; }
 
-        string HostName { get;}
-        string VendorClassId { get;}
+        string HostName { get; }
+        string VendorClassId { get; }
         uint DhcpSessionId { get; set; }
     }
 }

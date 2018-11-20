@@ -48,19 +48,26 @@ namespace PureActive.Network.Abstractions.Extensions
             return new IPAddressSubnet(IPAddress.None, IPAddress.None);
         }
 
-        public static IPAddress GetDefaultLocalAddress(IPureLogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.IPAddress;
-        public static IPAddress GetDefaultLocalSubnet(IPureLogger logger = null) => GetDefaultLocalAddressSubnet(logger)?.SubnetMask;
+        public static IPAddress GetDefaultLocalAddress(IPureLogger logger = null) =>
+            GetDefaultLocalAddressSubnet(logger)?.IPAddress;
+
+        public static IPAddress GetDefaultLocalSubnet(IPureLogger logger = null) =>
+            GetDefaultLocalAddressSubnet(logger)?.SubnetMask;
 
 
         public static IPAddressSubnet GetDefaultLocalNetworkAddressSubnet(IPureLogger logger = null)
         {
             var localIPAddressSubnet = GetDefaultLocalAddressSubnet(logger);
 
-            return new IPAddressSubnet(localIPAddressSubnet.IPAddress.GetNetworkAddress(), localIPAddressSubnet.SubnetMask);
+            return new IPAddressSubnet(localIPAddressSubnet.IPAddress.GetNetworkAddress(),
+                localIPAddressSubnet.SubnetMask);
         }
 
-        public static IPAddress GetDefaultLocalNetworkAddress(IPureLogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.IPAddress;
-        public static IPAddress GetDefaultLocalNetworkSubnet(IPureLogger logger = null) => GetDefaultLocalNetworkAddressSubnet(logger)?.SubnetMask;
+        public static IPAddress GetDefaultLocalNetworkAddress(IPureLogger logger = null) =>
+            GetDefaultLocalNetworkAddressSubnet(logger)?.IPAddress;
+
+        public static IPAddress GetDefaultLocalNetworkSubnet(IPureLogger logger = null) =>
+            GetDefaultLocalNetworkAddressSubnet(logger)?.SubnetMask;
 
         public static IPAddressSubnet GetDefaultGatewayAddressSubnet(IPureLogger logger = null)
         {
@@ -100,12 +107,15 @@ namespace PureActive.Network.Abstractions.Extensions
             return IPAddressSubnet.None;
         }
 
-        public static IPAddress GetDefaultGatewayAddress(IPureLogger logger = null) => GetDefaultGatewayAddressSubnet(logger).IPAddress;
-        public static IPAddress GetDefaultGatewaySubnet(IPureLogger logger = null) => GetDefaultGatewayAddressSubnet(logger).SubnetMask;
+        public static IPAddress GetDefaultGatewayAddress(IPureLogger logger = null) =>
+            GetDefaultGatewayAddressSubnet(logger).IPAddress;
+
+        public static IPAddress GetDefaultGatewaySubnet(IPureLogger logger = null) =>
+            GetDefaultGatewayAddressSubnet(logger).SubnetMask;
 
 
         /// <summary>
-        /// Returns broadcast address given an IPAddress and subnet Mask
+        ///     Returns broadcast address given an IPAddress and subnet Mask
         /// </summary>
         /// <param name="address"></param>
         /// <param name="subnetMask"></param>
@@ -122,7 +132,7 @@ namespace PureActive.Network.Abstractions.Extensions
 
             for (var i = 0; i < broadcastAddress.Length; i++)
             {
-                broadcastAddress[i] = (byte)(ipAddressBytes[i] | (subnetMaskBytes[i] ^ 255));
+                broadcastAddress[i] = (byte) (ipAddressBytes[i] | (subnetMaskBytes[i] ^ 255));
             }
 
             return new IPAddress(broadcastAddress);
@@ -133,8 +143,8 @@ namespace PureActive.Network.Abstractions.Extensions
 
 
         /// <summary>
-        /// Returns Network Address given and IPAddress and subnetMask. Used to compare
-        /// two IPAddresses to see if they are on the same subnet
+        ///     Returns Network Address given and IPAddress and subnetMask. Used to compare
+        ///     two IPAddresses to see if they are on the same subnet
         /// </summary>
         /// <param name="address"></param>
         /// <param name="subnetMask"></param>
@@ -151,7 +161,7 @@ namespace PureActive.Network.Abstractions.Extensions
 
             for (var i = 0; i < networkAddress.Length; i++)
             {
-                networkAddress[i] = (byte)(ipAddressBytes[i] & subnetMaskBytes[i]);
+                networkAddress[i] = (byte) (ipAddressBytes[i] & subnetMaskBytes[i]);
             }
 
             return new IPAddress(networkAddress);
@@ -173,9 +183,9 @@ namespace PureActive.Network.Abstractions.Extensions
         {
             byte[] byteIP = address.GetAddressBytes();
 
-            uint ip = (uint)byteIP[0] << 24;
-            ip += (uint)byteIP[1] << 16;
-            ip += (uint)byteIP[2] << 8;
+            uint ip = (uint) byteIP[0] << 24;
+            ip += (uint) byteIP[1] << 16;
+            ip += (uint) byteIP[2] << 8;
             ip += byteIP[3];
 
             return ip;
@@ -209,9 +219,9 @@ namespace PureActive.Network.Abstractions.Extensions
 
             for (int k = bytes.Length - 1; k >= 0; k--)
             {
-                if (bytes[k] == Byte.MinValue)
+                if (bytes[k] == byte.MinValue)
                 {
-                    bytes[k] = Byte.MaxValue;
+                    bytes[k] = byte.MaxValue;
                     continue;
                 }
 
@@ -242,6 +252,7 @@ namespace PureActive.Network.Abstractions.Extensions
                 if (octetResult != 0)
                     return octetResult;
             }
+
             return 0;
         }
     }

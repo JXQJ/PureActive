@@ -9,14 +9,11 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
     {
         public QueueHangfireIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void QueueHangfire_Integration()
         {
-
         }
-        
     }
 }

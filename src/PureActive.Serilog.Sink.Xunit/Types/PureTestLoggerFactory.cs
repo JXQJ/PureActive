@@ -7,10 +7,9 @@ namespace PureActive.Serilog.Sink.Xunit.Types
 {
     public class PureTestLoggerFactory : PureSeriLoggerFactory, IPureTestLoggerFactory
     {
-        public PureTestLoggerFactory(ILoggerFactory loggerFactory, ISerilogLoggerSettings loggerSettings) : 
+        public PureTestLoggerFactory(ILoggerFactory loggerFactory, ISerilogLoggerSettings loggerSettings) :
             base(loggerFactory, loggerSettings)
         {
-
         }
     }
 }

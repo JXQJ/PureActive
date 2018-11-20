@@ -8,7 +8,7 @@ namespace PureActive.Network.Abstractions.Types
         public static readonly InternetAddress Any = new InternetAddress(0, 0, 0, 0);
         public static readonly InternetAddress Broadcast = new InternetAddress(255, 255, 255, 255);
 
-        private readonly byte[] _address = new byte[] { 0, 0, 0, 0 };
+        private readonly byte[] _address = {0, 0, 0, 0};
 
         public InternetAddress(params byte[] address)
         {
@@ -47,6 +47,29 @@ namespace PureActive.Network.Abstractions.Types
 
         public bool IsBroadcast => Equals(Broadcast);
 
+        public int CompareTo(object obj)
+        {
+            if (!(obj is InternetAddress other))
+            {
+                return 1;
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (_address[i] > other._address[i])
+                {
+                    return 1;
+                }
+
+                if (_address[i] < other._address[i])
+                {
+                    return -1;
+                }
+            }
+
+            return 0;
+        }
+
         internal InternetAddress NextAddress()
         {
             InternetAddress next = Copy();
@@ -67,52 +90,28 @@ namespace PureActive.Network.Abstractions.Types
                         {
                             throw new InvalidOperationException();
                         }
-                        else
-                        {
-                            next._address[0] = (Byte)(_address[0] + 1);
-                        }
+
+                        next._address[0] = (byte) (_address[0] + 1);
                     }
                     else
                     {
-                        next._address[1] = (Byte)(_address[1] + 1);
+                        next._address[1] = (byte) (_address[1] + 1);
                     }
                 }
                 else
                 {
-                    next._address[2] = (Byte)(_address[2] + 1);
+                    next._address[2] = (byte) (_address[2] + 1);
                 }
             }
             else
             {
-                next._address[3] = (Byte)(_address[3] + 1);
+                next._address[3] = (byte) (_address[3] + 1);
             }
 
             return next;
         }
 
-        public int CompareTo(Object obj)
-        {
-            if (!(obj is InternetAddress other))
-            {
-                return 1;
-            }
-
-            for (int i = 0; i < 4; i++)
-            {
-                if (_address[i] > other._address[i])
-                {
-                    return 1;
-                }
-                else if (_address[i] < other._address[i])
-                {
-                    return -1;
-                }
-            }
-
-            return 0;
-        }
-
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             return Equals(obj as InternetAddress);
         }
@@ -120,13 +119,13 @@ namespace PureActive.Network.Abstractions.Types
         public bool Equals(InternetAddress other)
         {
             return _address == null ||
-                _address[0] == other._address[0] &&
-                _address[1] == other._address[1] &&
-                _address[2] == other._address[2] &&
-                _address[3] == other._address[3];
+                   _address[0] == other._address[0] &&
+                   _address[1] == other._address[1] &&
+                   _address[2] == other._address[2] &&
+                   _address[3] == other._address[3];
         }
 
-        public override Int32 GetHashCode()
+        public override int GetHashCode()
         {
             return BitConverter.ToInt32(_address, 0);
         }
@@ -135,8 +134,7 @@ namespace PureActive.Network.Abstractions.Types
         {
             if (_address != null)
                 return this[0] + "." + this[1] + "." + this[2] + "." + this[3];
-            else
-                return "Null";
+            return "Null";
         }
 
         public InternetAddress Copy()
@@ -146,7 +144,7 @@ namespace PureActive.Network.Abstractions.Types
 
         public byte[] ToArray()
         {
-            Byte[] array = new Byte[4];
+            byte[] array = new byte[4];
             _address.CopyTo(array, 0);
             return array;
         }
@@ -156,7 +154,7 @@ namespace PureActive.Network.Abstractions.Types
             return new IPAddress(ToArray());
         }
 
-        public static InternetAddress Parse(String address)
+        public static InternetAddress Parse(string address)
         {
             return new InternetAddress(IPAddress.Parse(address).GetAddressBytes());
         }

@@ -14,14 +14,7 @@ namespace PureActive.Network.Devices.Network
 {
     public class NetworkMap : NetworkDeviceBase, INetworkMap
     {
-        public ILocalNetworkDevice LocalNetworkDevice { get; private set; }
-        public ILocalNetworkCollection LocalNetworks => LocalNetworkDevice?.LocalNetworks;
-        public DateTimeOffset UpdatedTimestamp { get; private set; }
-        public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
-
         private readonly IPureLogger _logger;
-
-        public INetwork PrimaryNetwork => LocalNetworks?.PrimaryNetwork;
 
         public NetworkMap(ICommonNetworkServices commonNetworkServices) : base(commonNetworkServices)
         {
@@ -32,9 +25,34 @@ namespace PureActive.Network.Devices.Network
             UpdateTimestamp();
         }
 
+        public ILocalNetworkDevice LocalNetworkDevice { get; private set; }
+        public ILocalNetworkCollection LocalNetworks => LocalNetworkDevice?.LocalNetworks;
+        public DateTimeOffset UpdatedTimestamp { get; private set; }
+        public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
+
+        public INetwork PrimaryNetwork => LocalNetworks?.PrimaryNetwork;
+
         public DateTimeOffset UpdateTimestamp()
         {
             return UpdatedTimestamp = DateTimeOffset.Now;
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            ServiceHostStatus = ServiceHostStatus.StartPending;
+            LocalNetworkDevice = DiscoverLocalNetworkDevice();
+
+            _logger?.LogInformation("NetworkMap Service Started on Primary Network: {PrimaryIPAddressSubnet}",
+                LocalNetworkDevice?.LocalNetworks?.PrimaryNetwork?.NetworkIPAddressSubnet);
+
+            ServiceHostStatus = ServiceHostStatus.Running;
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            ServiceHostStatus = ServiceHostStatus.Stopped;
+            return Task.CompletedTask;
         }
 
         private ILocalNetworkDevice DiscoverLocalNetworkDevice()
@@ -47,23 +65,6 @@ namespace PureActive.Network.Devices.Network
                 _logger.LogInformation("LocalComputer: No Network Adapters Found");
 
             return localComputer;
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            ServiceHostStatus = ServiceHostStatus.StartPending;
-            LocalNetworkDevice = DiscoverLocalNetworkDevice();
-
-            _logger?.LogInformation("NetworkMap Service Started on Primary Network: {PrimaryIPAddressSubnet}", LocalNetworkDevice?.LocalNetworks?.PrimaryNetwork?.NetworkIPAddressSubnet);
-
-            ServiceHostStatus = ServiceHostStatus.Running;
-            return Task.CompletedTask;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            ServiceHostStatus = ServiceHostStatus.Stopped;
-            return Task.CompletedTask;
         }
     }
 }

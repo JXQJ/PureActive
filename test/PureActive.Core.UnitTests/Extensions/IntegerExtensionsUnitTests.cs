@@ -11,7 +11,6 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public IntegerExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
@@ -22,6 +21,18 @@ namespace PureActive.Core.UnitTests.Extensions
             var hexString = int16.ToHexString(prefix);
 
             hexString.Should().Be($"{prefix}{int16:X4}");
+        }
+
+        [Fact]
+        public void IntegerExtensions_ToInt16HexStringNullPrefix()
+        {
+            // ReSharper disable ExpressionIsAlwaysNull
+            const short int16 = 256;
+            string prefix = null;
+            var hexString = int16.ToHexString(prefix);
+
+            hexString.Should().Be($"{prefix}{int16:X4}");
+            // ReSharper restore ExpressionIsAlwaysNull
         }
 
         [Fact]
@@ -52,18 +63,6 @@ namespace PureActive.Core.UnitTests.Extensions
             var hexString = uint32.ToHexString(prefix);
 
             hexString.Should().Be($"{prefix}{uint32:X8}");
-        }
-
-        [Fact]
-        public void IntegerExtensions_ToInt16HexStringNullPrefix()
-        {
-            // ReSharper disable ExpressionIsAlwaysNull
-            const short int16 = 256;
-            string prefix = null;
-            var hexString = int16.ToHexString(prefix);
-
-            hexString.Should().Be($"{prefix}{int16:X4}");
-            // ReSharper restore ExpressionIsAlwaysNull
         }
     }
 }

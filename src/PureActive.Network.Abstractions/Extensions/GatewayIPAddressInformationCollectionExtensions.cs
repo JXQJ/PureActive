@@ -6,7 +6,8 @@ namespace PureActive.Network.Abstractions.Extensions
     public static class GatewayIPAddressInformationCollectionExtensions
     {
         // ReSharper disable once InconsistentNaming
-        public static GatewayIPAddressInformation IPv4OrDefault(this GatewayIPAddressInformationCollection gatewayIPAddressInformationCollection)
+        public static GatewayIPAddressInformation IPv4OrDefault(
+            this GatewayIPAddressInformationCollection gatewayIPAddressInformationCollection)
         {
             GatewayIPAddressInformation gatewayIPAddressInformationReturn = null;
 

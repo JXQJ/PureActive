@@ -11,12 +11,13 @@ namespace PureActive.Network.Services.NetworkMap.IntegrationTests.NetworkMapServ
     [Trait("Category", "Integration")]
     public class NetworkMapServiceIntegrationTests : TestBaseLoggable<NetworkMapServiceIntegrationTests>
     {
-        private readonly ICommonNetworkServices _commonNetworkServices;
-
         public NetworkMapServiceIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkMapServiceUnitTests");
+            _commonNetworkServices =
+                CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkMapServiceUnitTests");
         }
+
+        private readonly ICommonNetworkServices _commonNetworkServices;
 
         private INetworkMapService CreateNetworkMapService()
         {

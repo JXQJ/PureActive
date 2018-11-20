@@ -9,17 +9,18 @@ namespace PureActive.Network.Extensions.Network
 {
     public class NetworkEnumerator : INetworkEnumerable
     {
-        public IPAddressRange IPAddressRange { get; internal set; }
-
         public NetworkEnumerator(INetworkGateway networkGateway)
         {
-            IPAddressRange = new IPAddressRange(new IPAddressSubnet(networkGateway.IPAddress, networkGateway.SubnetMask));
+            IPAddressRange =
+                new IPAddressRange(new IPAddressSubnet(networkGateway.IPAddress, networkGateway.SubnetMask));
         }
 
         public NetworkEnumerator(IPAddressSubnet ipAddressSubnet)
         {
             IPAddressRange = new IPAddressRange(ipAddressSubnet);
         }
+
+        public IPAddressRange IPAddressRange { get; internal set; }
 
         public IEnumerator<IPAddress> GetEnumerator()
         {

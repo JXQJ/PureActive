@@ -13,7 +13,6 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public StringExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Theory]
@@ -25,18 +24,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.ToCamelCase().Should().Be(expectedString);
         }
 
-        [Fact]
-        public void StringExtensions_ToCamelCase_Empty()
-        {
-            "".ToCamelCase().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_ToCamelCase_Null()
-        {
-            ((string) null).ToCamelCase().Should().BeNull();
-        }
-
         [Theory]
         [InlineData("value", "Value")]
         [InlineData("v", "V")]
@@ -44,18 +31,6 @@ namespace PureActive.Core.UnitTests.Extensions
         public void StringExtensions_ToPascalCase(string testString, string expectedString)
         {
             testString.ToPascalCase().Should().Be(expectedString);
-        }
-
-        [Fact]
-        public void StringExtensions_ToPascalCase_Empty()
-        {
-            "".ToPascalCase().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_ToPascalCase_Null()
-        {
-            ((string) null).ToPascalCase().Should().BeNull();
         }
 
 
@@ -67,18 +42,6 @@ namespace PureActive.Core.UnitTests.Extensions
         public void StringExtensions_ToAlphaNumeric(string testString, string expectedString)
         {
             testString.ToAlphaNumeric().Should().Be(expectedString);
-        }
-
-        [Fact]
-        public void StringExtensions_ToAlphaNumeric_Empty()
-        {
-            "".ToAlphaNumeric().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_ToAlphaNumeric_Null()
-        {
-            ((string) null).ToAlphaNumeric().Should().BeNull();
         }
 
 
@@ -94,18 +57,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.RemoveWhitespace().Should().Be(expectedString);
         }
 
-        [Fact]
-        public void StringExtensions_RemoveWhitespace_Empty()
-        {
-            "".RemoveWhitespace().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_RemoveWhitespace_Null()
-        {
-            ((string) null).RemoveWhitespace().Should().BeNull();
-        }
-
 
         [Theory]
         [InlineData("123 1 ABC", "1231")]
@@ -119,18 +70,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.ToNumeric().Should().Be(expectedString);
         }
 
-        [Fact]
-        public void StringExtensions_ToNumeric_Empty()
-        {
-            "".ToNumeric().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_ToNumeric_Null()
-        {
-            ((string) null).ToNumeric().Should().BeNull();
-        }
-
 
         [Theory]
         [InlineData("1231 \n", "1231")]
@@ -141,18 +80,6 @@ namespace PureActive.Core.UnitTests.Extensions
         public void StringExtensions_TrimEveryLine(string testString, string expectedString)
         {
             testString.TrimEveryLine().Should().Be(expectedString);
-        }
-
-        [Fact]
-        public void StringExtensions_TrimEveryLine_Empty()
-        {
-            "".TrimEveryLine().Should().Be("");
-        }
-
-        [Fact]
-        public void StringExtensions_TrimEveryLine_Null()
-        {
-            ((string) null).ToNumeric().Should().BeNull();
         }
 
 
@@ -173,28 +100,6 @@ namespace PureActive.Core.UnitTests.Extensions
         }
 
 
-        [Fact]
-        public void StringExtensions_SplitOnFirstDelim_Empty()
-        {
-            var result = "".SplitOnFirstDelim('|');
-            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
-                .Be(2);
-            result[0].Should().BeNull();
-            result[1].Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_SplitOnFirstDelim_Null()
-        {
-            var result = ((string) null).SplitOnFirstDelim('|');
-
-            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
-                .Be(2);
-            result[0].Should().BeNull();
-            result[1].Should().BeNull();
-        }
-
-
         [Theory]
         [InlineData("First|Last", '|', new[] {"First", "Last"})]
         [InlineData("First|Middle|Last", '|', new[] {"First|Middle", "Last"})]
@@ -209,63 +114,6 @@ namespace PureActive.Core.UnitTests.Extensions
             result.Should().NotBeNull().And.Subject.Should().AllBeOfType(typeof(string)).And.Subject.Count().Should()
                 .Be(2);
             result.Should().ContainInOrder(expectStrings);
-        }
-
-
-        [Fact]
-        public void StringExtensions_SplitOnLastDelim_Empty()
-        {
-            var result = "".SplitOnLastDelim('|');
-            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
-                .Be(2);
-            result[0].Should().BeNull();
-            result[1].Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_SplitOnLastDelim_Null()
-        {
-            var result = ((string) null).SplitOnLastDelim('|');
-
-            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
-                .Be(2);
-            result[0].Should().BeNull();
-            result[1].Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_ProcessSplits_Null()
-        {
-            var methodInfo =
-                typeof(StringExtensions).GetMethod("ProcessSplits", BindingFlags.NonPublic | BindingFlags.Static);
-
-            object[] parameters = {null, 1};
-
-            var result = (string[]) methodInfo.Invoke(null, parameters);
-
-            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
-                .Be(2);
-            result[0].Should().BeNull();
-            result[1].Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_NullIfWhitespace_Space()
-        {
-            " ".NullIfWhitespace().Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_NullIfWhitespace_Empty()
-        {
-            "".NullIfWhitespace().Should().BeNull();
-        }
-
-
-        [Fact]
-        public void StringExtensions_NullIfWhitespace_Null()
-        {
-            ((string) null).NullIfWhitespace().Should().BeNull();
         }
 
         [Theory]
@@ -289,18 +137,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.StringBeforeDelim(chDelim).Should().Be(expectedString);
         }
 
-        [Fact]
-        public void StringExtensions_StringBeforeDelim_Empty()
-        {
-            "".StringBeforeDelim('|').Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_StringBeforeDelim_Null()
-        {
-            ((string) null).StringBeforeDelim('|').Should().BeNull();
-        }
-
 
         [Theory]
         [InlineData("First|Last", '|', "Last")]
@@ -310,18 +146,6 @@ namespace PureActive.Core.UnitTests.Extensions
         public void StringExtensions_StringAfterDelim(string testString, char chDelim, string expectedString)
         {
             testString.StringAfterDelim(chDelim).Should().Be(expectedString);
-        }
-
-        [Fact]
-        public void StringExtensions_StringAfterDelim_Empty()
-        {
-            "".StringAfterDelim('|').Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_StringAfterDelim_Null()
-        {
-            ((string)null).StringAfterDelim('|').Should().BeNull();
         }
 
 
@@ -337,18 +161,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.ParseYesNo().Should().Be(expectedBool);
         }
 
-        [Fact]
-        public void StringExtensions_ParseYesNo_Empty()
-        {
-            "".ParseYesNo().Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_ParseYesNo_Null()
-        {
-            ((string)null).ParseYesNo().Should().BeNull();
-        }
-
 
         [Theory]
         [InlineData("Yes", true)]
@@ -362,20 +174,6 @@ namespace PureActive.Core.UnitTests.Extensions
             testString.ParseYesNoStrict().Should().Be(expectedBool);
         }
 
-        [Fact]
-        public void StringExtensions_ParseYesNoStrict_Empty()
-        {
-            "".ParseYesNoStrict().Should().BeNull();
-        }
-
-        [Fact]
-        public void StringExtensions_ParseYesNoStrict_Null()
-        {
-            ((string)null).ParseYesNoStrict().Should().BeNull();
-        }
-
-
-        
 
         [Theory]
         [InlineData("1.0", 1.0)]
@@ -443,11 +241,209 @@ namespace PureActive.Core.UnitTests.Extensions
         [InlineData("Property", ":", 5, "Property:")]
         [InlineData(null, ":", 5, ":    ")]
         [InlineData(null, null, 5, "     ")]
-        public void StringExtensions_PadWithDelim(string testString, string delimString, int length, string expectedString)
+        public void StringExtensions_PadWithDelim(string testString, string delimString, int length,
+            string expectedString)
         {
             testString.PadWithDelim(delimString, length).Should().Be(expectedString);
         }
 
+        [Fact]
+        public void StringExtensions_NullIfWhitespace_Empty()
+        {
+            "".NullIfWhitespace().Should().BeNull();
+        }
+
+
+        [Fact]
+        public void StringExtensions_NullIfWhitespace_Null()
+        {
+            ((string) null).NullIfWhitespace().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_NullIfWhitespace_Space()
+        {
+            " ".NullIfWhitespace().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ParseYesNo_Empty()
+        {
+            "".ParseYesNo().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ParseYesNo_Null()
+        {
+            ((string) null).ParseYesNo().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ParseYesNoStrict_Empty()
+        {
+            "".ParseYesNoStrict().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ParseYesNoStrict_Null()
+        {
+            ((string) null).ParseYesNoStrict().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ProcessSplits_Null()
+        {
+            var methodInfo =
+                typeof(StringExtensions).GetMethod("ProcessSplits", BindingFlags.NonPublic | BindingFlags.Static);
+
+            object[] parameters = {null, 1};
+
+            var result = (string[]) methodInfo.Invoke(null, parameters);
+
+            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
+                .Be(2);
+            result[0].Should().BeNull();
+            result[1].Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_RemoveWhitespace_Empty()
+        {
+            "".RemoveWhitespace().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_RemoveWhitespace_Null()
+        {
+            ((string) null).RemoveWhitespace().Should().BeNull();
+        }
+
+
+        [Fact]
+        public void StringExtensions_SplitOnFirstDelim_Empty()
+        {
+            var result = "".SplitOnFirstDelim('|');
+            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
+                .Be(2);
+            result[0].Should().BeNull();
+            result[1].Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_SplitOnFirstDelim_Null()
+        {
+            var result = ((string) null).SplitOnFirstDelim('|');
+
+            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
+                .Be(2);
+            result[0].Should().BeNull();
+            result[1].Should().BeNull();
+        }
+
+
+        [Fact]
+        public void StringExtensions_SplitOnLastDelim_Empty()
+        {
+            var result = "".SplitOnLastDelim('|');
+            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
+                .Be(2);
+            result[0].Should().BeNull();
+            result[1].Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_SplitOnLastDelim_Null()
+        {
+            var result = ((string) null).SplitOnLastDelim('|');
+
+            result.Should().NotBeNull().And.Subject.Should().BeOfType(typeof(string[])).And.Subject.Count().Should()
+                .Be(2);
+            result[0].Should().BeNull();
+            result[1].Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_StringAfterDelim_Empty()
+        {
+            "".StringAfterDelim('|').Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_StringAfterDelim_Null()
+        {
+            ((string) null).StringAfterDelim('|').Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_StringBeforeDelim_Empty()
+        {
+            "".StringBeforeDelim('|').Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_StringBeforeDelim_Null()
+        {
+            ((string) null).StringBeforeDelim('|').Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ToAlphaNumeric_Empty()
+        {
+            "".ToAlphaNumeric().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_ToAlphaNumeric_Null()
+        {
+            ((string) null).ToAlphaNumeric().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ToCamelCase_Empty()
+        {
+            "".ToCamelCase().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_ToCamelCase_Null()
+        {
+            ((string) null).ToCamelCase().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ToNumeric_Empty()
+        {
+            "".ToNumeric().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_ToNumeric_Null()
+        {
+            ((string) null).ToNumeric().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_ToPascalCase_Empty()
+        {
+            "".ToPascalCase().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_ToPascalCase_Null()
+        {
+            ((string) null).ToPascalCase().Should().BeNull();
+        }
+
+        [Fact]
+        public void StringExtensions_TrimEveryLine_Empty()
+        {
+            "".TrimEveryLine().Should().Be("");
+        }
+
+        [Fact]
+        public void StringExtensions_TrimEveryLine_Null()
+        {
+            ((string) null).ToNumeric().Should().BeNull();
+        }
     }
 }
- 

@@ -15,35 +15,27 @@ namespace PureActive.Network.Devices.Device
 {
     public abstract class DeviceBase : PureObjectBase, IDevice
     {
-        public ICommonServices CommonServices { get; }
-        public DeviceType DeviceType { get; set; }
-        
-        protected DeviceBase(ICommonServices commonServices, DeviceType deviceType = DeviceType.UnknownDevice, IPureLogger logger = null) : 
+        protected DeviceBase(ICommonServices commonServices, DeviceType deviceType = DeviceType.UnknownDevice,
+            IPureLogger logger = null) :
             base(commonServices?.LoggerFactory, logger)
         {
             DeviceType = deviceType;
             CommonServices = commonServices;
         }
 
+        public ICommonServices CommonServices { get; }
+        public DeviceType DeviceType { get; set; }
+
         public override int CompareTo(IPureObject other)
         {
             if (!(other is DeviceBase))
                 throw new ArgumentException("Object must be of type DeviceBase.");
 
-            return CompareTo((DeviceBase)other);
+            return CompareTo((DeviceBase) other);
         }
 
-        public int CompareTo(DeviceBase other)
-        {
-            if (other == null) return 1;
-
-            if (ObjectId.Equals(other.ObjectId))
-                return 0;
-
-            return DeviceType.CompareTo(other.DeviceType);
-        }
-
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -55,6 +47,16 @@ namespace PureActive.Network.Devices.Device
             }
 
             return logPropertyLevels;
+        }
+
+        public int CompareTo(DeviceBase other)
+        {
+            if (other == null) return 1;
+
+            if (ObjectId.Equals(other.ObjectId))
+                return 0;
+
+            return DeviceType.CompareTo(other.DeviceType);
         }
     }
 }

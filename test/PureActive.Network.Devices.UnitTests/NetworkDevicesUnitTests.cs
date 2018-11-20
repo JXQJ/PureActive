@@ -9,13 +9,11 @@ namespace PureActive.Network.Devices.UnitTests
     {
         public NetworkDevicesUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void NetworkDevices_Create()
         {
-
         }
     }
 }

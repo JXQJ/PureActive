@@ -20,7 +20,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
         JsonFormatter,
         CompactJsonFormatter,
         RenderedJsonFormatter,
-        RenderedCompactJsonFormatter,
+        RenderedCompactJsonFormatter
     }
 
     public static class XunitLoggingSink
@@ -41,8 +41,9 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
                     return null;
             }
         }
-        
-        public static LoggerConfiguration CreateXUnitLoggerConfiguration(ITestOutputHelper testOutputHelper, ISerilogLoggerSettings loggerSettings, XUnitSerilogFormatter xUnitSerilogFormatter)
+
+        public static LoggerConfiguration CreateXUnitLoggerConfiguration(ITestOutputHelper testOutputHelper,
+            ISerilogLoggerSettings loggerSettings, XUnitSerilogFormatter xUnitSerilogFormatter)
         {
             if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
@@ -75,13 +76,15 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
                     loggerSettings.GetOrRegisterSerilogLogDefaultLevel(LoggingOutputFlags.TestCorrelator);
 
                 // Configuration switch to TestCorrelator
-                loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLogEventLevel, testCorrelatorLoggerSetting.LoggingLevelSwitch);
+                loggerConfiguration.WriteTo.TestCorrelator(testCorrelatorLoggerSetting.MinimumLogEventLevel,
+                    testCorrelatorLoggerSetting.LoggingLevelSwitch);
             }
 
             return loggerConfiguration;
         }
 
-        public static IPureTestLoggerFactory CreateXUnitSerilogFactory(ISerilogLoggerSettings loggerSettings, LoggerConfiguration loggerConfiguration)
+        public static IPureTestLoggerFactory CreateXUnitSerilogFactory(ISerilogLoggerSettings loggerSettings,
+            LoggerConfiguration loggerConfiguration)
         {
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
             if (loggerConfiguration == null) throw new ArgumentNullException(nameof(loggerConfiguration));
@@ -100,7 +103,8 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
             if (testOutputHelper == null) throw new ArgumentNullException(nameof(testOutputHelper));
             if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
 
-            var loggerConfiguration = CreateXUnitLoggerConfiguration(testOutputHelper, loggerSettings, xUnitSerilogFormatter);
+            var loggerConfiguration =
+                CreateXUnitLoggerConfiguration(testOutputHelper, loggerSettings, xUnitSerilogFormatter);
 
             return CreateXUnitSerilogFactory(loggerSettings, loggerConfiguration);
         }

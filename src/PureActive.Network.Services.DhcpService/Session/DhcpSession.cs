@@ -11,36 +11,19 @@ namespace PureActive.Network.Services.DhcpService.Session
 {
     public class DhcpSession : IDhcpSession
     {
+        private static readonly TimeSpan DefaultSessionTimeOut = new TimeSpan(0, 30, 0); // 30 minutes
         private readonly IDhcpService _dhcpService;
-        public IPureLogger Logger { get; private set; }
-
-        public RequestState RequestState { get; set; } = RequestState.Unknown;
-
-        public DhcpSessionState DhcpSessionState { get; set; } = DhcpSessionState.Init;
-
-        public PhysicalAddress PhysicalAddress { get; }
 
         private readonly DhcpSessionResult _dhcpSessionResult;
 
-        public IDhcpSessionResult DhcpSessionResult => _dhcpSessionResult;
 
-        public IDhcpDiscoveredDevice DhcpDiscoveredDevice => DhcpSessionResult?.DhcpDiscoveredDevice;
-
-
-        public DateTimeOffset CreatedTimestamp { get; private set; }
-        public DateTimeOffset UpdatedTimestamp { get; set; }
-
-        public TimeSpan SessionTimeOut { get; set; }
-
-        private static readonly TimeSpan DefaultSessionTimeOut = new TimeSpan(0, 30, 0); // 30 minutes
-
-
-        public DhcpSession(IDhcpService dhcpService, IPureLogger<DhcpSession> logger, PhysicalAddress physicalAddress, TimeSpan sessionTimeOut)
+        public DhcpSession(IDhcpService dhcpService, IPureLogger<DhcpSession> logger, PhysicalAddress physicalAddress,
+            TimeSpan sessionTimeOut)
         {
             _dhcpService = dhcpService ?? throw new ArgumentNullException(nameof(dhcpService));
             PhysicalAddress = physicalAddress;
             _dhcpSessionResult = new DhcpSessionResult(physicalAddress);
-           
+
             Logger = logger;
 
             CreatedTimestamp = UpdatedTimestamp = DateTimeOffset.Now;
@@ -50,8 +33,25 @@ namespace PureActive.Network.Services.DhcpService.Session
         public DhcpSession(IDhcpService dhcpService, IPureLogger<DhcpSession> logger, PhysicalAddress physicalAddress) :
             this(dhcpService, logger, physicalAddress, DefaultSessionTimeOut)
         {
-
         }
+
+        public IPureLogger Logger { get; private set; }
+
+        public PhysicalAddress PhysicalAddress { get; }
+
+        public IDhcpSessionResult DhcpSessionResult => _dhcpSessionResult;
+
+        public RequestState RequestState { get; set; } = RequestState.Unknown;
+
+        public DhcpSessionState DhcpSessionState { get; set; } = DhcpSessionState.Init;
+
+        public IDhcpDiscoveredDevice DhcpDiscoveredDevice => DhcpSessionResult?.DhcpDiscoveredDevice;
+
+
+        public DateTimeOffset CreatedTimestamp { get; private set; }
+        public DateTimeOffset UpdatedTimestamp { get; set; }
+
+        public TimeSpan SessionTimeOut { get; set; }
 
         public DateTimeOffset UpdateTimestamp()
         {
@@ -65,10 +65,11 @@ namespace PureActive.Network.Services.DhcpService.Session
         }
 
         public bool HasSessionExpired() => HasSessionExpired(DateTimeOffset.Now, DefaultSessionTimeOut);
-        
+
         public DhcpMessageProcessed ProcessDiscover(IDhcpMessage dhcpMessage)
         {
-            _dhcpSessionResult.UpdateSessionState(dhcpMessage.SessionId, DhcpSessionState.Discover, dhcpMessage.ClientHardwareAddress);
+            _dhcpSessionResult.UpdateSessionState(dhcpMessage.SessionId, DhcpSessionState.Discover,
+                dhcpMessage.ClientHardwareAddress);
             UpdateTimestamp();
 
             return DhcpMessageProcessed.Success;
@@ -83,13 +84,15 @@ namespace PureActive.Network.Services.DhcpService.Session
 
 
             // Update Session State
-            _dhcpSessionResult.UpdateSessionState(dhcpMessage.SessionId, DhcpSessionState.Request, dhcpMessage.ClientHardwareAddress);
+            _dhcpSessionResult.UpdateSessionState(dhcpMessage.SessionId, DhcpSessionState.Request,
+                dhcpMessage.ClientHardwareAddress);
 
             var addressRequest = dhcpMessage.GetOptionData(DhcpOption.RequestedIpAddr);
 
             var requestState = RequestState.Unknown;
 
             #region Pre-Processing
+
             //  Start pre-process validation
             //---------------------------------------------------------------------
             //|              |INIT-REBOOT  |SELECTING    |RENEWING     |REBINDING |
@@ -103,8 +106,7 @@ namespace PureActive.Network.Services.DhcpService.Session
             if (dhcpMessage.ClientAddress.Equals(InternetAddress.Any))
             {
                 // the ciAddr MUST be 0.0.0.0 for Init-Reboot and Selecting
-                requestState = addressRequest == null ?
-                    RequestState.InitReboot : RequestState.Selecting;
+                requestState = addressRequest == null ? RequestState.InitReboot : RequestState.Selecting;
             }
             else
             {
@@ -127,35 +129,46 @@ namespace PureActive.Network.Services.DhcpService.Session
             {
                 if (addressRequest == null)
                 {
-                    Logger?.LogDebug("Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is null", MessageType.Request, RequestStateString.GetName(requestState));
+                    Logger?.LogDebug(
+                        "Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is null",
+                        MessageType.Request, RequestStateString.GetName(requestState));
                     //return; // if processing should not continue
                 }
             }
             else
-            {	// type == Renewing or Rebinding
+            {
+                // type == Renewing or Rebinding
                 if (addressRequest != null)
                 {
-                    Logger?.LogDebug("Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is not null", MessageType.Request, RequestStateString.GetName(requestState));
+                    Logger?.LogDebug(
+                        "Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is not null",
+                        MessageType.Request, RequestStateString.GetName(requestState));
                     //return; // if processing should not continue
                 }
             }
 
             //  End pre-process validation
+
             #endregion Pre-Processing
 
-            Logger?.LogTrace("Processing {DhcpMessageType} {DhcpRequestState} message", MessageType.Request, RequestStateString.GetName(requestState));
+            Logger?.LogTrace("Processing {DhcpMessageType} {DhcpRequestState} message", MessageType.Request,
+                RequestStateString.GetName(requestState));
 
             DhcpSessionState = DhcpSessionState.Request;
             RequestState = requestState;
 
             if (!dhcpMessage.ClientHardwareAddress.Equals(PhysicalAddress))
             {
-                Logger?.LogError("ClientHardwareAddress {ClientHardwareAddress} does not equal PhysicalAddress {PhysicalAddress}", dhcpMessage.ClientHardwareAddress, PhysicalAddress);
+                Logger?.LogError(
+                    "ClientHardwareAddress {ClientHardwareAddress} does not equal PhysicalAddress {PhysicalAddress}",
+                    dhcpMessage.ClientHardwareAddress, PhysicalAddress);
             }
 
             // Update Hostname
-            _dhcpSessionResult.HostName = ByteUtility.GetStringNullIfEmpty(dhcpMessage.GetOptionData(DhcpOption.Hostname));
-            _dhcpSessionResult.VendorClassId = ByteUtility.GetStringNullIfEmpty(dhcpMessage.GetOptionData(DhcpOption.VendorClassId));
+            _dhcpSessionResult.HostName =
+                ByteUtility.GetStringNullIfEmpty(dhcpMessage.GetOptionData(DhcpOption.Hostname));
+            _dhcpSessionResult.VendorClassId =
+                ByteUtility.GetStringNullIfEmpty(dhcpMessage.GetOptionData(DhcpOption.VendorClassId));
 
             bool routerDiscoveryParamExists = dhcpMessage.ParamOptionExists(DhcpOption.RouterDiscovery);
 

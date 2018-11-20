@@ -1,4 +1,3 @@
-
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     public enum RequestState

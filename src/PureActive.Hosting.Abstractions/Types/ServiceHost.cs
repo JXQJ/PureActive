@@ -7,6 +7,6 @@
         DhcpService,
         PingService,
         ArpService,
-        NetworkMap,
+        NetworkMap
     }
 }

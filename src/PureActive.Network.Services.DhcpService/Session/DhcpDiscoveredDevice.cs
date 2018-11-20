@@ -16,11 +16,10 @@ namespace PureActive.Network.Services.DhcpService.Session
         }
 
         public DhcpDiscoveredDevice(uint dhcpSessionId, PhysicalAddress physicalAddress)
-            :this (dhcpSessionId, physicalAddress, IPAddress.None)
+            : this(dhcpSessionId, physicalAddress, IPAddress.None)
         {
-
         }
-  
+
         // IDeviceInfo
         public string Id { get; set; }
         public string Model { get; set; }
@@ -36,7 +35,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 
         // INetworkDeviceInfo
         public IPAddress IpAddress { get; set; }
-   
+
 
         // IDhcpDiscoveredDevice
         public PhysicalAddress PhysicalAddress { get; set; }

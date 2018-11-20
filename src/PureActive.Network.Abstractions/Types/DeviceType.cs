@@ -9,7 +9,7 @@ namespace PureActive.Network.Abstractions.Types
         LocalDevice = 1 << 1,
         NetworkDevice = 1 << 2,
         Computer = 1 << 3,
-        Phone  = 1 << 4,
+        Phone = 1 << 4,
         Tablet = 1 << 4,
         MediaDevice = 1 << 5,
         SmartTv = 1 << 6,
@@ -36,8 +36,6 @@ namespace PureActive.Network.Abstractions.Types
         LocalNetwork = LocalDevice | Network,
         Internet = Network + 1,
 
-        NetworkAdapter = LocalNetworkDevice + 1,
-
-
+        NetworkAdapter = LocalNetworkDevice + 1
     }
 }

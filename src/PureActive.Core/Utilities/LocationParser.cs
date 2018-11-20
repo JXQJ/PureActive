@@ -1,5 +1,4 @@
-﻿
-using PureActive.Core.Extensions;
+﻿using PureActive.Core.Extensions;
 
 namespace PureActive.Core.Utilities
 {

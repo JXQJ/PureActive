@@ -10,10 +10,11 @@ namespace PureActive.Logging.Extensions.Extensions
     {
         public static IDisposable BeginPropertyScope<T>(this IPureLogger logger, string propertyName, T value)
         {
-            return logger?.BeginScope(new Dictionary<string, T> { { propertyName, value } });
+            return logger?.BeginScope(new Dictionary<string, T> {{propertyName, value}});
         }
 
-        public static IDisposable PushLogProperty(this IPureLogger logger, string propertyName, object value, bool destructureObjects = false)
+        public static IDisposable PushLogProperty(this IPureLogger logger, string propertyName, object value,
+            bool destructureObjects = false)
         {
             return logger.PushProperty(propertyName, value, destructureObjects);
         }
@@ -24,7 +25,8 @@ namespace PureActive.Logging.Extensions.Extensions
         }
 
 
-        public static IDisposable PushLogPropertyDeconstruct(this IPureLogger logger, IEnumerable<KeyValuePair<string, object>> properties)
+        public static IDisposable PushLogPropertyDeconstruct(this IPureLogger logger,
+            IEnumerable<KeyValuePair<string, object>> properties)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
@@ -32,20 +34,22 @@ namespace PureActive.Logging.Extensions.Extensions
         }
 
 
-        public static IDisposable PushLogProperties(this IPureLoggable loggable, LogLevel minimumLogLevel, LoggableFormat loggableFormat = LoggableFormat.ToLog)
+        public static IDisposable PushLogProperties(this IPureLoggable loggable, LogLevel minimumLogLevel,
+            LoggableFormat loggableFormat = LoggableFormat.ToLog)
         {
             if (loggable == null) throw new ArgumentNullException(nameof(loggable));
             if (loggable.Logger == null) throw new ArgumentNullException(nameof(loggable.Logger));
 
-            return loggable.Logger.PushLogProperties(loggable.GetLogPropertyListLevel(minimumLogLevel, loggableFormat), minimumLogLevel);
+            return loggable.Logger.PushLogProperties(loggable.GetLogPropertyListLevel(minimumLogLevel, loggableFormat),
+                minimumLogLevel);
         }
 
         public static IDisposable PushLogPropertiesParents(this IPureLoggable loggable, LogLevel minimumLogLevel) =>
             PushLogProperties(loggable, minimumLogLevel, LoggableFormat.ToLogWithParents);
 
 
-
-        public static IDisposable PushLogProperties(this IPureLoggable loggable, IPureLogLevel pureLogLevel, LoggableFormat loggableFormat = LoggableFormat.ToLog)
+        public static IDisposable PushLogProperties(this IPureLoggable loggable, IPureLogLevel pureLogLevel,
+            LoggableFormat loggableFormat = LoggableFormat.ToLog)
         {
             if (loggable == null) throw new ArgumentNullException(nameof(loggable));
 
@@ -56,7 +60,8 @@ namespace PureActive.Logging.Extensions.Extensions
             PushLogProperties(loggable, pureLogLevel, LoggableFormat.ToLogWithParents);
 
 
-        public static IDisposable PushLogProperties(this IPureLogger logger, IEnumerable<IPureLogPropertyLevel> logPropertyList, IPureLogLevel pureLogLevel)
+        public static IDisposable PushLogProperties(this IPureLogger logger,
+            IEnumerable<IPureLogPropertyLevel> logPropertyList, IPureLogLevel pureLogLevel)
         {
             if (logger == null) throw new ArgumentNullException(nameof(logger));
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
@@ -65,7 +70,8 @@ namespace PureActive.Logging.Extensions.Extensions
             return logger.PushLogProperties(logPropertyList, pureLogLevel.MinimumLogLevel);
         }
 
-        public static IDisposable PushLogProperties(this IPureLogger logger, IPureLogPropertyLevelList logPropertyLevelList, LogLevel minimumLogLevel) =>
+        public static IDisposable PushLogProperties(this IPureLogger logger,
+            IPureLogPropertyLevelList logPropertyLevelList, LogLevel minimumLogLevel) =>
             logger.PushLogProperties(logPropertyLevelList.GetLogPropertyLevelList(minimumLogLevel));
     }
 }

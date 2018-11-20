@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
-using ILoggerMsft = Microsoft.Extensions.Logging.ILogger;
 using Serilog.Context;
 using Serilog.Core;
 using Serilog.Core.Enrichers;
+using ILoggerMsft = Microsoft.Extensions.Logging.ILogger;
 
 namespace PureActive.Logger.Provider.Serilog.Types
 {
     public class PureSeriLogger : IPureLogger
     {
-        public ILoggerMsft WrappedLogger { get; }
-
         public PureSeriLogger(ILoggerMsft logger)
         {
             WrappedLogger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
+
+        public ILoggerMsft WrappedLogger { get; }
 
         // Wrap ILogger interface methods
         public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception,
@@ -38,7 +38,8 @@ namespace PureActive.Logger.Provider.Serilog.Types
             return LogContext.PushProperty(propertyName, value, destructureObjects);
         }
 
-        public IDisposable PushLogProperties(IEnumerable<KeyValuePair<string, object>> properties, bool destructureObjects = false)
+        public IDisposable PushLogProperties(IEnumerable<KeyValuePair<string, object>> properties,
+            bool destructureObjects = false)
         {
             if (properties == null) throw new ArgumentNullException(nameof(properties));
 
@@ -52,7 +53,8 @@ namespace PureActive.Logger.Provider.Serilog.Types
             );
         }
 
-        public IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList, LogLevel minimumLogLevel)
+        public IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList,
+            LogLevel minimumLogLevel)
         {
             if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
 
@@ -71,7 +73,8 @@ namespace PureActive.Logger.Provider.Serilog.Types
             );
         }
 
-        public IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList, Func<IPureLogPropertyLevel, bool> includeLogProperty)
+        public IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList,
+            Func<IPureLogPropertyLevel, bool> includeLogProperty)
         {
             return LogContext.Push
             (
@@ -103,11 +106,8 @@ namespace PureActive.Logger.Provider.Serilog.Types
 
     public class PureSeriLogger<T> : PureSeriLogger, IPureLogger<T>
     {
-        public PureSeriLogger(ILoggerMsft logger) :base (logger)
+        public PureSeriLogger(ILoggerMsft logger) : base(logger)
         {
-
         }
     }
-
-
 }

@@ -12,13 +12,48 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public EnumerationExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+        }
 
+        private class TestObject
+        {
+        }
+
+        [Fact]
+        public void EnumerationExtensions_Empty()
+        {
+            var maxLength = new List<string>().MaxStringLength();
+
+            maxLength.Should().Be(0);
+        }
+
+        [Fact]
+        public void EnumerationExtensions_IntList()
+        {
+            var intList = new List<int>
+            {
+                12345,
+                123456,
+                123,
+                15
+            };
+
+            var maxLength = intList.MaxStringLength();
+
+            maxLength.Should().Be("123456".Length);
+        }
+
+        [Fact]
+        public void EnumerationExtensions_Null()
+        {
+            var maxLength = ((List<string>) null).MaxStringLength();
+
+            maxLength.Should().Be(0);
         }
 
         [Fact]
         public void EnumerationExtensions_StringList()
         {
-            var stringList = new List<string>()
+            var stringList = new List<string>
             {
                 "12345",
                 "123456",
@@ -32,46 +67,9 @@ namespace PureActive.Core.UnitTests.Extensions
         }
 
         [Fact]
-        public void EnumerationExtensions_Empty()
-        {
-            var maxLength = new List<string>().MaxStringLength();
-
-            maxLength.Should().Be(0);
-        }
-
-        [Fact]
-        public void EnumerationExtensions_Null()
-        {
-            var maxLength = ((List<string>) null).MaxStringLength();
-
-            maxLength.Should().Be(0);
-        }
-
-        [Fact]
-        public void EnumerationExtensions_IntList()
-        {
-            var intList = new List<int>()
-            {
-                12345,
-                123456,
-                123,
-                15
-            };
-
-            var maxLength = intList.MaxStringLength();
-
-            maxLength.Should().Be("123456".Length);
-        }
-
-        private class TestObject
-        {
-            
-        }
-
-        [Fact]
         public void EnumerationExtensions_TestObject()
         {
-            var testObjectList = new List<TestObject>()
+            var testObjectList = new List<TestObject>
             {
                 new TestObject()
             };

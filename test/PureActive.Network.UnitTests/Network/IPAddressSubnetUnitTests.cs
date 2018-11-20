@@ -14,7 +14,24 @@ namespace PureActive.Network.UnitTests.Network
     {
         public IPAddressSubnetUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+        }
 
+        [Theory]
+        [ClassData(typeof(NetworkAddressTestGenerator))]
+        public void NetworkAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
+        {
+            IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);
+
+            Assert.Equal(ipAddressExpected, ipAddressSubnet.NetworkAddress);
+        }
+
+        [Theory]
+        [ClassData(typeof(BroadcastAddressTestGenerator))]
+        public void BroadcastAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
+        {
+            IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);
+
+            Assert.Equal(ipAddressExpected, ipAddressSubnet.BroadcastAddress);
         }
 
         private class NetworkAddressTestGenerator : IEnumerable<object[]>
@@ -41,7 +58,7 @@ namespace PureActive.Network.UnitTests.Network
                 new object[] {TestAddressClass1A, IPAddressExtensions.SubnetClassA, NetworkAddressClassA},
                 new object[] {TestAddressClass1B, IPAddressExtensions.SubnetClassB, NetworkAddressClassB},
 
-                new object[] {TestAddressClass1A, IPAddressExtensions.SubnetClassC, NetworkAddressClass1C},
+                new object[] {TestAddressClass1A, IPAddressExtensions.SubnetClassC, NetworkAddressClass1C}
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
@@ -49,18 +66,8 @@ namespace PureActive.Network.UnitTests.Network
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         }
 
-        [Theory]
-        [ClassData(typeof(NetworkAddressTestGenerator))]
-        public void NetworkAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
-        {
-            IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);
-
-            Assert.Equal(ipAddressExpected, ipAddressSubnet.NetworkAddress);
-        }
-
         private class BroadcastAddressTestGenerator : IEnumerable<object[]>
         {
-
             private static readonly IPAddress BroadcastAddressClassA = IPAddress.Parse("10.255.255.255");
             private static readonly IPAddress BroadcastAddressClassB = IPAddress.Parse("172.16.255.255");
             private static readonly IPAddress BroadcastAddressClassC = IPAddress.Parse("192.168.1.255");
@@ -70,28 +77,43 @@ namespace PureActive.Network.UnitTests.Network
             private readonly List<object[]> _data = new List<object[]>
 
             {
-                new object[] {NetworkAddressTestGenerator.TestAddressClassA, IPAddressExtensions.SubnetClassA, BroadcastAddressClassA},
-                new object[] {NetworkAddressTestGenerator.TestAddressClassB, IPAddressExtensions.SubnetClassB, BroadcastAddressClassB},
-                new object[] {NetworkAddressTestGenerator.TestAddressClassC, IPAddressExtensions.SubnetClassC, BroadcastAddressClassC},
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClassA, IPAddressExtensions.SubnetClassA,
+                    BroadcastAddressClassA
+                },
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClassB, IPAddressExtensions.SubnetClassB,
+                    BroadcastAddressClassB
+                },
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClassC, IPAddressExtensions.SubnetClassC,
+                    BroadcastAddressClassC
+                },
 
-                new object[] {NetworkAddressTestGenerator.TestAddressClass1A, IPAddressExtensions.SubnetClassA, BroadcastAddressClassA},
-                new object[] {NetworkAddressTestGenerator.TestAddressClass1B, IPAddressExtensions.SubnetClassB, BroadcastAddressClassB},
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClass1A, IPAddressExtensions.SubnetClassA,
+                    BroadcastAddressClassA
+                },
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClass1B, IPAddressExtensions.SubnetClassB,
+                    BroadcastAddressClassB
+                },
 
-                new object[] {NetworkAddressTestGenerator.TestAddressClass1A, IPAddressExtensions.SubnetClassC, BroadcastAddressClass1C},
+                new object[]
+                {
+                    NetworkAddressTestGenerator.TestAddressClass1A, IPAddressExtensions.SubnetClassC,
+                    BroadcastAddressClass1C
+                }
             };
 
             public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
 
             IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        }
-
-        [Theory]
-        [ClassData(typeof(BroadcastAddressTestGenerator))]
-        public void BroadcastAddressTest(IPAddress ipAddress, IPAddress subnetAddress, IPAddress ipAddressExpected)
-        {
-            IPAddressSubnet ipAddressSubnet = new IPAddressSubnet(ipAddress, subnetAddress);
-
-            Assert.Equal(ipAddressExpected, ipAddressSubnet.BroadcastAddress);
         }
     }
 }

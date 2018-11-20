@@ -8,14 +8,7 @@ namespace PureActive.Network.Abstractions.Types
 {
     public class IPAddressSubnet : IComparable<IPAddressSubnet>, IComparable, IEquatable<IPAddressSubnet>
     {
-        public IPAddress IPAddress { get; }
-        public IPAddress SubnetMask { get; }
-        public IPAddress NetworkAddress { get; }
-        public IPAddress BroadcastAddress { get; }
-        public IPAddressSubnet NetworkAddressSubnet => new IPAddressSubnet(NetworkAddress, SubnetMask);
         public static readonly IPAddressSubnet None = new IPAddressSubnet(IPAddress.None, IPAddress.None);
-
-        public bool IsAddressOnSameSubnet(IPAddress address) => IPAddress.IsAddressOnSameSubnet(address, SubnetMask);
 
         public IPAddressSubnet(IPAddress ipAddress, IPAddress subnetMask)
         {
@@ -31,15 +24,13 @@ namespace PureActive.Network.Abstractions.Types
 
         public IPAddressSubnet(IPAddress ipAddress) : this(ipAddress, IPAddressExtensions.SubnetClassC)
         {
-
         }
 
-        public int CompareTo(IPAddressSubnet other)
-        {
-            return other == null ? 1 : IPAddress.CompareTo(other.IPAddress);
-
-            // Ignore Subnet Masks, Just compare IPAddress
-        }
+        public IPAddress IPAddress { get; }
+        public IPAddress SubnetMask { get; }
+        public IPAddress NetworkAddress { get; }
+        public IPAddress BroadcastAddress { get; }
+        public IPAddressSubnet NetworkAddressSubnet => new IPAddressSubnet(NetworkAddress, SubnetMask);
 
         public int CompareTo(object obj)
         {
@@ -49,10 +40,19 @@ namespace PureActive.Network.Abstractions.Types
             return CompareTo((IPAddressSubnet) obj);
         }
 
+        public int CompareTo(IPAddressSubnet other)
+        {
+            return other == null ? 1 : IPAddress.CompareTo(other.IPAddress);
+
+            // Ignore Subnet Masks, Just compare IPAddress
+        }
+
         public bool Equals(IPAddressSubnet other)
         {
             return CompareTo(other) == 0;
         }
+
+        public bool IsAddressOnSameSubnet(IPAddress address) => IPAddress.IsAddressOnSameSubnet(address, SubnetMask);
 
         public override bool Equals(object obj)
         {

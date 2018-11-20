@@ -3,12 +3,12 @@ using System;
 namespace PureActive.Core.Utilities
 {
     /// <summary>
-    /// Provides additional parsing operations
+    ///     Provides additional parsing operations
     /// </summary>
     public abstract class ParseUtility
     {
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -21,14 +21,14 @@ namespace PureActive.Core.Utilities
                 i = int.Parse(value);
                 return true;
             }
-            catch 
+            catch
             {
                 return false;
-            }    
+            }
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -48,7 +48,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -68,7 +68,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -88,7 +88,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="val">Variable to set successfully parsed value to</param>
@@ -104,7 +104,8 @@ namespace PureActive.Core.Utilities
 
                     return true;
                 }
-                else if (value == "0" || value.ToUpper() == bool.FalseString.ToUpper())
+
+                if (value == "0" || value.ToUpper() == bool.FalseString.ToUpper())
                 {
                     val = false;
 
@@ -112,7 +113,6 @@ namespace PureActive.Core.Utilities
                 }
 
                 return false;
-
             }
             catch
             {
@@ -121,7 +121,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -141,7 +141,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -161,7 +161,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided string value.
+        ///     Attempt to parse the provided string value.
         /// </summary>
         /// <param name="value">String value to be parsed</param>
         /// <param name="i">Variable to set successfully parsed value to</param>
@@ -181,7 +181,7 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Attempt to parse the provided datetime value.
+        ///     Attempt to parse the provided datetime value.
         /// </summary>
         /// <param name="datetime">Datetime value to be parsed</param>
         /// <returns>Datetime if parsing was successful</returns>
@@ -189,12 +189,12 @@ namespace PureActive.Core.Utilities
         {
             // Converts an ISO 8601 time/date format string, which is used by JSON and others,
             // into a DateTime object. 
-            
+
             //Check to see if format contains the timezone ID, or contains UTC reference
             // Neither means it's localtime
             bool utc = datetime.EndsWith("Z");
 
-            string[] parts = datetime.Split(new char[] { 'T', 'Z', ':', '-', '.', '+', });
+            string[] parts = datetime.Split('T', 'Z', ':', '-', '.', '+');
 
             // We now have the time string to parse, and we'll adjust
             // to UTC or timezone after parsing
@@ -206,7 +206,8 @@ namespace PureActive.Core.Utilities
             string second = parts.Length > 5 ? parts[5] : "0";
             string ms = parts.Length > 6 ? parts[6] : "0";
 
-            DateTime dt = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day), Convert.ToInt32(hour), Convert.ToInt32(minute), Convert.ToInt32(second), Convert.ToInt32(ms));
+            DateTime dt = new DateTime(Convert.ToInt32(year), Convert.ToInt32(month), Convert.ToInt32(day),
+                Convert.ToInt32(hour), Convert.ToInt32(minute), Convert.ToInt32(second), Convert.ToInt32(ms));
 
             // If a time offset was specified instead of the UTC marker,
             // add/subtract in the hours/minutes
@@ -243,10 +244,10 @@ namespace PureActive.Core.Utilities
 
         #region TryParseHex Method
 
-        private static string hexValues = "0123456789ABCDEF";
+        private static readonly string hexValues = "0123456789ABCDEF";
 
         /// <summary>
-        /// Converts a hex string to a byte value
+        ///     Converts a hex string to a byte value
         /// </summary>
         /// <param name="source">source hex string to convert</param>
         /// <param name="value">Byte value as output parameter</param>
@@ -268,18 +269,18 @@ namespace PureActive.Core.Utilities
             if (value0 < 0 || value1 < 0)
                 return false;
 
-            value = (byte)((value0 << 4) + value1);
+            value = (byte) ((value0 << 4) + value1);
 
             return true;
         }
 
         /// <summary>
-        /// Converts a hex string to an Int16 value
+        ///     Converts a hex string to an Int16 value
         /// </summary>
         /// <param name="source">source hex string to convert</param>
         /// <param name="value">Int16 value as output parameter</param>
         /// <returns>True if successful</returns>
-        public static bool TryParseHex(string source, out Int16 value)
+        public static bool TryParseHex(string source, out short value)
         {
             value = 0;
 
@@ -298,18 +299,18 @@ namespace PureActive.Core.Utilities
             if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0)
                 return false;
 
-            value = (Int16)((value0 << 12) + (value1 << 8) + (value2 << 4) + value3);
+            value = (short) ((value0 << 12) + (value1 << 8) + (value2 << 4) + value3);
 
             return true;
         }
 
         /// <summary>
-        /// Converts a hex string to an Int32 value
+        ///     Converts a hex string to an Int32 value
         /// </summary>
         /// <param name="source">source hex string to convert</param>
         /// <param name="value">Int32 value as output parameter</param>
         /// <returns>True if successful</returns>
-        public static bool TryParseHex(string source, out Int32 value)
+        public static bool TryParseHex(string source, out int value)
         {
             value = 0;
 
@@ -329,21 +330,23 @@ namespace PureActive.Core.Utilities
             int value5 = hexValues.IndexOf(source[5]);
             int value6 = hexValues.IndexOf(source[6]);
             int value7 = hexValues.IndexOf(source[7]);
-            if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 || value7 < 0)
+            if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 ||
+                value7 < 0)
                 return false;
 
-            value = (value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7;
+            value = (value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) +
+                    (value6 << 4) + value7;
 
             return true;
         }
 
         /// <summary>
-        /// Converts a hex string to an UInt16 value
+        ///     Converts a hex string to an UInt16 value
         /// </summary>
         /// <param name="source">source hex string to convert</param>
         /// <param name="value">UInt16 value as output parameter</param>
         /// <returns>True if successful</returns>
-        public static bool TryParseHex(string source, out UInt16 value)
+        public static bool TryParseHex(string source, out ushort value)
         {
             value = 0;
 
@@ -362,18 +365,18 @@ namespace PureActive.Core.Utilities
             if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0)
                 return false;
 
-            value = (UInt16)((value0 << 12) + (value1 << 8) + (value2 << 4) + value3);
+            value = (ushort) ((value0 << 12) + (value1 << 8) + (value2 << 4) + value3);
 
             return true;
         }
 
         /// <summary>
-        /// Converts a hex string to an UInt32 value
+        ///     Converts a hex string to an UInt32 value
         /// </summary>
         /// <param name="source">source hex string to convert</param>
         /// <param name="value">UInt32 value as output parameter</param>
         /// <returns>True if successful</returns>
-        public static bool TryParseHex(string source, out UInt32 value)
+        public static bool TryParseHex(string source, out uint value)
         {
             value = 0;
 
@@ -393,10 +396,12 @@ namespace PureActive.Core.Utilities
             int value5 = hexValues.IndexOf(source[5]);
             int value6 = hexValues.IndexOf(source[6]);
             int value7 = hexValues.IndexOf(source[7]);
-            if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 || value7 < 0)
+            if (value0 < 0 || value1 < 0 || value2 < 0 || value3 < 0 || value4 < 0 || value5 < 0 || value6 < 0 ||
+                value7 < 0)
                 return false;
 
-            value = (UInt32)((value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) + (value5 << 8) + (value6 << 4) + value7);
+            value = (uint) ((value0 << 28) + (value1 << 24) + (value2 << 20) + (value3 << 16) + (value4 << 12) +
+                            (value5 << 8) + (value6 << 4) + value7);
 
             return true;
         }

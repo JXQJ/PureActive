@@ -8,7 +8,7 @@ using PureActive.Logging.Abstractions.Interfaces;
 namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
-    /// A class that listen for TCP packets from remote clients.
+    ///     A class that listen for TCP packets from remote clients.
     /// </summary>
     public class TcpListener : SocketListener
     {
@@ -20,16 +20,18 @@ namespace PureActive.Network.Core.Sockets
         #region Methods
 
         /// <summary>
-        ///  Starts the service listener if it is in a stopped state.
+        ///     Starts the service listener if it is in a stopped state.
         /// </summary>
         /// <param name="servicePort">The port used to listen on.</param>
         public bool Start(int servicePort)
         {
             if (servicePort > IPEndPoint.MaxPort || servicePort < IPEndPoint.MinPort)
-                throw new ArgumentOutOfRangeException(nameof(servicePort), "Port must be less then " + IPEndPoint.MaxPort + " and more then " + IPEndPoint.MinPort);
+                throw new ArgumentOutOfRangeException(nameof(servicePort),
+                    "Port must be less then " + IPEndPoint.MaxPort + " and more then " + IPEndPoint.MinPort);
 
             if (IsActive)
-                throw new InvalidOperationException("Tcp listener is already active and must be stopped before starting");
+                throw new InvalidOperationException(
+                    "Tcp listener is already active and must be stopped before starting");
 
             if (InterfaceAddress == null)
             {
@@ -51,18 +53,19 @@ namespace PureActive.Network.Core.Sockets
                 Thread = new Thread(StartTcpListening);
                 Thread.Start();
 
-                Logger?.LogInformation("Listener started for TCP requests on {LocalEndPoint}" , Socket.LocalEndPoint);
+                Logger?.LogInformation("Listener started for TCP requests on {LocalEndPoint}", Socket.LocalEndPoint);
             }
             catch (Exception ex)
             {
                 Logger?.LogError(ex, "Listener failed to to start on TCP {ServicePort}", servicePort);
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        ///  Listener thread
+        ///     Listener thread
         /// </summary>
         private void StartTcpListening()
         {
@@ -80,6 +83,7 @@ namespace PureActive.Network.Core.Sockets
                     }
                 }
             }
+
             Socket.Close();
         }
 

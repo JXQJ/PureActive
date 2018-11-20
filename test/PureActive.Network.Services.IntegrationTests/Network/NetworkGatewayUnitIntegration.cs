@@ -15,21 +15,15 @@ namespace PureActive.Network.Services.IntegrationTests.Network
     [Trait("Category", "Integration")]
     public class NetworkGatewayIntegrationTests : TestBaseLoggable<NetworkGatewayIntegrationTests>
     {
-        private readonly ICommonNetworkServices _commonNetworkServices;
-        private readonly IPAddressSubnet _gatewayIPAddressSubnet;
-
         public NetworkGatewayIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayIntegrationTests");
+            _commonNetworkServices =
+                CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayIntegrationTests");
             _gatewayIPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
         }
 
-        [Fact]
-        public void NetworkGateway_ToString()
-        {
-            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
-            TestOutputHelper.WriteLine(networkGateway.ToString());
-        }
+        private readonly ICommonNetworkServices _commonNetworkServices;
+        private readonly IPAddressSubnet _gatewayIPAddressSubnet;
 
 
         [Fact]
@@ -63,11 +57,19 @@ namespace PureActive.Network.Services.IntegrationTests.Network
             var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
             var physicalAddress = networkGateway.PhysicalAddress;
             physicalAddress.Should().NotBeNull();
-            
-            networkGateway.IPAddressSubnet = new IPAddressSubnet(IPAddress.Parse("10.1.10.33"), IPAddressExtensions.SubnetClassC);
+
+            networkGateway.IPAddressSubnet =
+                new IPAddressSubnet(IPAddress.Parse("10.1.10.33"), IPAddressExtensions.SubnetClassC);
 
             var newPhysicalAddress = networkGateway.PhysicalAddress;
             networkGateway.PhysicalAddress.Should().Be(newPhysicalAddress);
+        }
+
+        [Fact]
+        public void NetworkGateway_ToString()
+        {
+            var networkGateway = new NetworkGateway(_commonNetworkServices, _gatewayIPAddressSubnet);
+            TestOutputHelper.WriteLine(networkGateway.ToString());
         }
     }
 }

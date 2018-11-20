@@ -14,11 +14,21 @@ namespace PureActive.Network.Services.DhcpService.Types
 {
     public static class DhcpOptionTypeMap
     {
-        public static Dictionary<DhcpOption, DhcpOptionType> DhcpOptionTypes => DhcpOptionTypesReadOnly.Value;
+        public enum DhcpRequestListFormat
+        {
+            StringCommaSeparated,
+            StringNewlineSeparated,
+            StringNewlineIndentedSeparated,
+            HexValueCommaSeparated,
+            HexValueSpaceSeparated,
+            HexValueDashSeparated,
+            DecimalValueCommaSeparated,
+            DecimalValueSpaceSeparated
+        }
 
         private static readonly Lazy<Dictionary<DhcpOption, DhcpOptionType>> DhcpOptionTypesReadOnly =
             new Lazy<Dictionary<DhcpOption, DhcpOptionType>>(
-                () => new Dictionary<DhcpOption, DhcpOptionType>()
+                () => new Dictionary<DhcpOption, DhcpOptionType>
                 {
                     {DhcpOption.Pad, DhcpOptionType.SafeBytes},
                     {DhcpOption.NetMask, DhcpOptionType.SafeBytes},
@@ -140,29 +150,20 @@ namespace PureActive.Network.Services.DhcpService.Types
                     {DhcpOption.Serial, DhcpOptionType.SafeBytes},
                     {DhcpOption.BpFile, DhcpOptionType.SafeBytes},
                     {DhcpOption.NextServer, DhcpOptionType.SafeBytes},
-                    {DhcpOption.End, DhcpOptionType.SafeBytes},
+                    {DhcpOption.End, DhcpOptionType.SafeBytes}
                 }
             );
 
-        public enum DhcpRequestListFormat
-        {
-            StringCommaSeparated,
-            StringNewlineSeparated,
-            StringNewlineIndentedSeparated,
-            HexValueCommaSeparated,
-            HexValueSpaceSeparated,
-            HexValueDashSeparated,
-            DecimalValueCommaSeparated,
-            DecimalValueSpaceSeparated
-        }
+        public static Dictionary<DhcpOption, DhcpOptionType> DhcpOptionTypes => DhcpOptionTypesReadOnly.Value;
 
-        public static string GetDhcpRequestListString(byte[] dhcpOptionValue, DhcpRequestListFormat dhcpRequestListFormat, IPureLogger logger = null)
+        public static string GetDhcpRequestListString(byte[] dhcpOptionValue,
+            DhcpRequestListFormat dhcpRequestListFormat, IPureLogger logger = null)
         {
             StringBuilder sb = new StringBuilder();
 
             foreach (var requestOption in dhcpOptionValue)
             {
-                DhcpOption dhcpRequestOption = (DhcpOption)requestOption;
+                DhcpOption dhcpRequestOption = (DhcpOption) requestOption;
 
                 switch (dhcpRequestListFormat)
                 {
@@ -176,23 +177,23 @@ namespace PureActive.Network.Services.DhcpService.Types
                         sb.Append($"{Environment.NewLine}    {dhcpRequestOption.ToString()}");
                         break;
                     case DhcpRequestListFormat.HexValueCommaSeparated:
-                        sb.Append($"{ByteUtility.ByteToHex((Byte)dhcpRequestOption)}, ");
+                        sb.Append($"{ByteUtility.ByteToHex((byte) dhcpRequestOption)}, ");
                         break;
                     case DhcpRequestListFormat.HexValueSpaceSeparated:
-                        sb.Append($"{ByteUtility.ByteToHex((Byte)dhcpRequestOption)} ");
+                        sb.Append($"{ByteUtility.ByteToHex((byte) dhcpRequestOption)} ");
                         break;
                     case DhcpRequestListFormat.HexValueDashSeparated:
-                        sb.Append($"{ByteUtility.ByteToHex((Byte)dhcpRequestOption)}-");
+                        sb.Append($"{ByteUtility.ByteToHex((byte) dhcpRequestOption)}-");
                         break;
                     case DhcpRequestListFormat.DecimalValueCommaSeparated:
-                        sb.Append($"{(Byte)dhcpRequestOption}, ");
+                        sb.Append($"{(byte) dhcpRequestOption}, ");
                         break;
                     case DhcpRequestListFormat.DecimalValueSpaceSeparated:
-                        sb.Append($"{(Byte)dhcpRequestOption} ");
+                        sb.Append($"{(byte) dhcpRequestOption} ");
                         break;
                 }
             }
-            
+
             // Remove trailing space
             if (sb.Length > 1)
             {
@@ -206,15 +207,15 @@ namespace PureActive.Network.Services.DhcpService.Types
                 if (sb[sb.Length - 1] == ',')
                     sb.Length--;
             }
-        
+
             return sb.ToString();
         }
 
         public static string GetDhcpOptionString(
-            DhcpOption dhcpOption, byte[] dhcpOptionValue, 
+            DhcpOption dhcpOption, byte[] dhcpOptionValue,
             DhcpRequestListFormat dhcpRequestListFormat = DhcpRequestListFormat.StringNewlineIndentedSeparated,
             IPureLogger logger = null
-            )
+        )
         {
             try
             {

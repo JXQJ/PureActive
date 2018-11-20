@@ -16,7 +16,7 @@
         tvOS,
         watchOS,
         macOS,
-        Tizen,
+        Tizen
     }
 
     // ReSharper restore InconsistentNaming

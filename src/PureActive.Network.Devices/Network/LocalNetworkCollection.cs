@@ -14,9 +14,19 @@ namespace PureActive.Network.Devices.Network
 {
     public class LocalNetworkCollection : ILocalNetworkCollection
     {
+        private readonly ICommonNetworkServices _commonNetworkServices;
+        private readonly IPureLogger _logger;
         private readonly Dictionary<IPAddressSubnet, INetwork> _networks = new Dictionary<IPAddressSubnet, INetwork>();
         private INetwork _primaryNetwork;
-        
+
+        public LocalNetworkCollection(ICommonNetworkServices commonNetworkServices)
+        {
+            _commonNetworkServices =
+                commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
+
+            _logger = commonNetworkServices.LoggerFactory?.CreatePureLogger<LocalNetworkCollection>();
+        }
+
         public INetwork PrimaryNetwork
         {
             get => _primaryNetwork ?? (_primaryNetwork = GetPrimaryNetworkInternal());
@@ -24,21 +34,6 @@ namespace PureActive.Network.Devices.Network
         }
 
         public int Count => _networks.Count;
-
-        private readonly ICommonNetworkServices _commonNetworkServices;
-        private readonly IPureLogger _logger;
-        
-        public LocalNetworkCollection(ICommonNetworkServices commonNetworkServices)
-        {
-            _commonNetworkServices = commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
-
-            _logger = commonNetworkServices.LoggerFactory?.CreatePureLogger<LocalNetworkCollection>();
-        }
-
-        private INetwork GetPrimaryNetworkInternal()
-        {
-            return _networks.FirstOrDefault().Value;
-        }
 
         public INetwork AddAdapterToNetwork(INetworkAdapter networkAdapter)
         {
@@ -81,7 +76,7 @@ namespace PureActive.Network.Devices.Network
                     return localNetwork.AdapterCount != 0 || RemoveNetwork(localNetwork);
                 }
             }
-            
+
             _logger?.LogDebug("RemoveAdapterFromNetwork: networkAdapter not found");
 
             return false;
@@ -95,6 +90,11 @@ namespace PureActive.Network.Devices.Network
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        private INetwork GetPrimaryNetworkInternal()
+        {
+            return _networks.FirstOrDefault().Value;
         }
     }
 }

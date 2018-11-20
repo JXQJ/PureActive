@@ -14,14 +14,12 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
     {
         public PureObjectBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         private class PureObjectTest : PureObjectBase
         {
-            public PureObjectTest(IPureLoggerFactory loggerFactory): base(loggerFactory)
+            public PureObjectTest(IPureLoggerFactory loggerFactory) : base(loggerFactory)
             {
-               
             }
 
             public ulong IncreaseObjectVersion()
@@ -31,19 +29,15 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
         }
 
         [Fact]
-        public void PureObjectBase_ToString()
+        public void PureObjectBase_Clone()
         {
-            var objectBase  = new PureObjectTest(TestLoggerFactory);
+            var objectBase1 = new PureObjectTest(TestLoggerFactory);
+            var objectBase2 = objectBase1.CloneInstance();
 
-            TestOutputHelper.WriteLine(objectBase.ToString());
-        }
-
-        [Fact]
-        public void PureObjectBase_ToStringLoggable()
-        {
-            var objectBase = new PureObjectTest(TestLoggerFactory);
-
-            TestOutputHelper.WriteLine(objectBase.ToString(LogLevel.Debug, LoggableFormat.ToStringWithParents));
+            // Objects version is the same but everyone else
+            Assert.False(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");
+            Assert.False(objectBase1.IsSameObjectId(objectBase2), "objectBase1.IsSameObjectId(objectBase2)");
+            Assert.True(objectBase1.IsSameObjectVersion(objectBase2), "objectBase1.IsSameObjectVersion(objectBase2)");
         }
 
         [Fact]
@@ -54,6 +48,18 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
 
             Assert.False(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");
             Assert.False(objectBase1.IsSameObjectId(objectBase2), "objectBase1.IsSameObjectId(objectBase2)");
+            Assert.True(objectBase1.IsSameObjectVersion(objectBase2), "objectBase1.IsSameObjectVersion(objectBase2)");
+        }
+
+        [Fact]
+        public void PureObjectBase_CopyInstance()
+        {
+            var objectBase1 = new PureObjectTest(TestLoggerFactory);
+            var objectBase2 = objectBase1.CopyInstance();
+
+            // Objects version is the same but everyone else
+            Assert.True(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");
+            Assert.True(objectBase1.IsSameObjectId(objectBase2), "objectBase1.IsSameObjectId(objectBase2)");
             Assert.True(objectBase1.IsSameObjectVersion(objectBase2), "objectBase1.IsSameObjectVersion(objectBase2)");
         }
 
@@ -70,29 +76,6 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
         }
 
         [Fact]
-        public void PureObjectBase_Clone()
-        {
-            var objectBase1 = new PureObjectTest(TestLoggerFactory);
-            var objectBase2 = objectBase1.CloneInstance();
-
-            // Objects version is the same but everyone else
-            Assert.False(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");
-            Assert.False(objectBase1.IsSameObjectId(objectBase2), "objectBase1.IsSameObjectId(objectBase2)");
-            Assert.True(objectBase1.IsSameObjectVersion(objectBase2), "objectBase1.IsSameObjectVersion(objectBase2)");
-        }
-        [Fact]
-        public void PureObjectBase_CopyInstance()
-        {
-            var objectBase1 = new PureObjectTest(TestLoggerFactory);
-            var objectBase2 = objectBase1.CopyInstance();
-
-            // Objects version is the same but everyone else
-            Assert.True(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");
-            Assert.True(objectBase1.IsSameObjectId(objectBase2), "objectBase1.IsSameObjectId(objectBase2)");
-            Assert.True(objectBase1.IsSameObjectVersion(objectBase2), "objectBase1.IsSameObjectVersion(objectBase2)");
-        }
-
-        [Fact]
         public void PureObjectBase_IncrementObjectVersion()
         {
             var objectBase1 = new PureObjectTest(TestLoggerFactory);
@@ -100,6 +83,22 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
 
             objectBase1.IncreaseObjectVersion().Should().Be(objectVersion + 1);
             objectBase1.ObjectVersion.Should().Be(objectVersion + 1);
+        }
+
+        [Fact]
+        public void PureObjectBase_ToString()
+        {
+            var objectBase = new PureObjectTest(TestLoggerFactory);
+
+            TestOutputHelper.WriteLine(objectBase.ToString());
+        }
+
+        [Fact]
+        public void PureObjectBase_ToStringLoggable()
+        {
+            var objectBase = new PureObjectTest(TestLoggerFactory);
+
+            TestOutputHelper.WriteLine(objectBase.ToString(LogLevel.Debug, LoggableFormat.ToStringWithParents));
         }
     }
 }

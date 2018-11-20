@@ -4,6 +4,7 @@
     {
         Docker,
         Kestrel,
+
         // ReSharper disable once InconsistentNaming
         IISExpress
     }

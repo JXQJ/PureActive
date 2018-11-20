@@ -12,27 +12,34 @@ namespace PureActive.Core.Extensions
         ///     Changes the first character of a string to lower-case,
         ///     if it is not already.
         /// </summary>
-        public static string ToCamelCase(this string str) => string.IsNullOrEmpty(str) ? str : str.Substring(0, 1).ToLower() + str.Substring(1);
+        public static string ToCamelCase(this string str) =>
+            string.IsNullOrEmpty(str) ? str : str.Substring(0, 1).ToLower() + str.Substring(1);
 
         /// <summary>
         ///     Changes the first character of a string to upper-case,
         ///     if it is not already.
         /// </summary>
-        public static string ToPascalCase(this string str) => string.IsNullOrEmpty(str) ? str : str.Substring(0, 1).ToUpper() + str.Substring(1);
+        public static string ToPascalCase(this string str) =>
+            string.IsNullOrEmpty(str) ? str : str.Substring(0, 1).ToUpper() + str.Substring(1);
 
         /// <summary>
         ///     Returns a version of the string with non-alpha-numeric
         ///     characters stripped out.
         /// </summary>
-        public static string ToAlphaNumeric(this string str) => string.IsNullOrEmpty(str) ? str: new string(str.Where(char.IsLetterOrDigit).ToArray());
+        public static string ToAlphaNumeric(this string str) => string.IsNullOrEmpty(str)
+            ? str
+            : new string(str.Where(char.IsLetterOrDigit).ToArray());
 
-        public static string RemoveWhitespace(this string str) => string.IsNullOrEmpty(str) ? str : new string(str.Where(c => !char.IsWhiteSpace(c)).ToArray());
+        public static string RemoveWhitespace(this string str) => string.IsNullOrEmpty(str)
+            ? str
+            : new string(str.Where(c => !char.IsWhiteSpace(c)).ToArray());
 
         /// <summary>
         ///     Returns a version of the string with non-numeric
         ///     characters stripped out.
         /// </summary>
-        public static string ToNumeric(this string str) => string.IsNullOrEmpty(str) ? str : new string(str.Where(char.IsDigit).ToArray());
+        public static string ToNumeric(this string str) =>
+            string.IsNullOrEmpty(str) ? str : new string(str.Where(char.IsDigit).ToArray());
 
 
         /// <summary>
@@ -77,7 +84,7 @@ namespace PureActive.Core.Extensions
 
         public static string[] SplitOnFirstDelim(this string str, char chDelim)
         {
-            return string.IsNullOrEmpty(str) ? new string[2]: ProcessSplits(str, str.IndexOf(chDelim));
+            return string.IsNullOrEmpty(str) ? new string[2] : ProcessSplits(str, str.IndexOf(chDelim));
         }
 
         public static string[] SplitOnLastDelim(this string str, char chDelim)

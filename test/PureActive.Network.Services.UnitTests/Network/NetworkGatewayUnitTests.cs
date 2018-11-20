@@ -13,15 +13,15 @@ namespace PureActive.Network.Services.UnitTests.Network
     [Trait("Category", "Unit")]
     public class NetworkGatewayUnitTests : TestBaseLoggable<NetworkGatewayUnitTests>
     {
-        private readonly ICommonNetworkServices _commonNetworkServices;
-
-        private static readonly IPAddressSubnet TestIPAddressSubnet =
-            new IPAddressSubnet(IPAddress.Parse("10.1.10.1"), IPAddressExtensions.SubnetClassC);
-
         public NetworkGatewayUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayUnitTests");
         }
+
+        private readonly ICommonNetworkServices _commonNetworkServices;
+
+        private static readonly IPAddressSubnet TestIPAddressSubnet =
+            new IPAddressSubnet(IPAddress.Parse("10.1.10.1"), IPAddressExtensions.SubnetClassC);
 
         [Fact]
         public void NetworkGateway_Constructor()

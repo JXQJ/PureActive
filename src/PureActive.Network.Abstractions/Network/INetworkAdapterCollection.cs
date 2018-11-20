@@ -2,11 +2,11 @@
 
 namespace PureActive.Network.Abstractions.Network
 {
-    public interface INetworkAdapterCollection :IEnumerable<INetworkAdapter>
+    public interface INetworkAdapterCollection : IEnumerable<INetworkAdapter>
     {
+        int Count { get; }
         bool Add(INetworkAdapter networkAdapter);
         bool Remove(int index);
         bool Remove(INetworkAdapter networkAdapter);
-        int Count { get; }
     }
 }

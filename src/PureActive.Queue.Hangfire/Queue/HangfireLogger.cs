@@ -1,7 +1,6 @@
 ﻿using System;
 using Hangfire.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
-using LogLevel = Hangfire.Logging.LogLevel;
 
 namespace PureActive.Queue.Hangfire.Queue
 {

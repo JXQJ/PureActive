@@ -3,23 +3,41 @@ using PureActive.Network.Abstractions.PureObject;
 
 namespace PureActive.Network.Devices.PureObjectGraph
 {
-    public class  PureObjectEdge<T>: IComparable<PureObjectEdge<T>> where T : class, IPureObject
+    public class PureObjectEdge<T> : IComparable<PureObjectEdge<T>> where T : class, IPureObject
     {
+        private bool _directed;
+
         /// <summary>
-        /// Gets the edge's ID.
+        ///     Creates an instance of the edge.
+        /// </summary>
+        /// <param name="tail">The tail vertex.</param>
+        /// <param name="head">The head vertex.</param>
+        /// <param name="directed">Indicates if the edge is directed (true) or undirected (false).</param>
+        /// <param name="weight">The weight of the edge. Default is 0 (unweighted).</param>
+        private PureObjectEdge(PureObjectVertex<T> tail, PureObjectVertex<T> head, bool directed = false,
+            double weight = 0)
+        {
+            EndPoints = new Tuple<PureObjectVertex<T>, PureObjectVertex<T>>(tail, head);
+            _directed = directed;
+            Weight = weight;
+            SetId();
+        }
+
+        /// <summary>
+        ///     Gets the edge's ID.
         /// </summary>
         /// <remarks>
-        /// The ID is a tuple of Tail.ID, directed indicator (0 means undirected and 1 means directed), and Head.ID.
+        ///     The ID is a tuple of Tail.ID, directed indicator (0 means undirected and 1 means directed), and Head.ID.
         /// </remarks>
         public (Guid tail, int directed, Guid head) Id { get; internal set; }
 
         /// <summary>
-        /// Gets the endpoints of the edge.
+        ///     Gets the endpoints of the edge.
         /// </summary>
         public Tuple<PureObjectVertex<T>, PureObjectVertex<T>> EndPoints { get; }
 
         /// <summary>
-        /// Gets the tail of the edge.
+        ///     Gets the tail of the edge.
         /// </summary>
         public PureObjectVertex<T> Tail
         {
@@ -27,7 +45,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Gets the head of the edge.
+        ///     Gets the head of the edge.
         /// </summary>
         public PureObjectVertex<T> Head
         {
@@ -35,15 +53,12 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Gets or sets the weight of the edge.
+        ///     Gets or sets the weight of the edge.
         /// </summary>
         public double Weight { get; set; }
 
-
-        private bool _directed;
-
         /// <summary>
-        /// Gets or sets if the edge is directed (true) or undirected (false).
+        ///     Gets or sets if the edge is directed (true) or undirected (false).
         /// </summary>
         public bool Directed
         {
@@ -58,33 +73,24 @@ namespace PureActive.Network.Devices.PureObjectGraph
             }
         }
 
-        /// <summary>
-        /// Creates an instance of the edge.
-        /// </summary>
-        /// <param name="tail">The tail vertex.</param>
-        /// <param name="head">The head vertex.</param>
-        /// <param name="directed">Indicates if the edge is directed (true) or undirected (false).</param>
-        /// <param name="weight">The weight of the edge. Default is 0 (unweighted).</param>
-        private PureObjectEdge(PureObjectVertex<T> tail, PureObjectVertex<T> head, bool directed = false, double weight = 0)
+        public int CompareTo(PureObjectEdge<T> other)
         {
-            EndPoints = new Tuple<PureObjectVertex<T>, PureObjectVertex<T>>(tail, head);
-            _directed = directed;
-            Weight = weight;
-            SetId();
+            return Id.CompareTo(other.Id);
         }
 
         /// <summary>
-        /// Creates an edge.
+        ///     Creates an edge.
         /// </summary>
         /// <param name="tail">The tail vertex.</param>
         /// <param name="head">The head vertex.</param>
         /// <param name="directed">Indicates if the edge is directed or not.</param>
         /// <param name="weight">The weight of the edge. Default is 0 (unweighted).</param>
         /// <returns>The edge created.</returns>
-        internal static PureObjectEdge<T> Create(PureObjectVertex<T> tail, PureObjectVertex<T> head, bool directed = false, double weight = 0) => new PureObjectEdge<T>(tail, head, directed, weight);
+        internal static PureObjectEdge<T> Create(PureObjectVertex<T> tail, PureObjectVertex<T> head,
+            bool directed = false, double weight = 0) => new PureObjectEdge<T>(tail, head, directed, weight);
 
         /// <summary>
-        /// Deconstructs an edge to its ID parts.
+        ///     Deconstructs an edge to its ID parts.
         /// </summary>
         /// <param name="tail">The tail ID.</param>
         /// <param name="directed">An indicator if directed (1) or undirected (0).</param>
@@ -97,7 +103,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Sets the edge's ID.
+        ///     Sets the edge's ID.
         /// </summary>
         private void SetId()
         {
@@ -106,18 +112,10 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Translates a directed flag to its indicator equivalent.
+        ///     Translates a directed flag to its indicator equivalent.
         /// </summary>
         /// <param name="directed">The directed flag.</param>
         /// <returns>The directed flag's indicator equivalent.</returns>
         public static int ToDirectedIndicator(bool directed) => directed ? 1 : 0;
-
-        public int CompareTo(PureObjectEdge<T> other)
-        {
-            return Id.CompareTo(other.Id);
-        }
-
     }
-
-
 }

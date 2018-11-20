@@ -9,14 +9,12 @@ namespace PureActive.Network.Services.DhcpService.UnitTests.Server
     {
         public DhcpServerUnitTests(ITestOutputHelper output) : base(output)
         {
-  
         }
 
 
         [Fact]
         public void DhcpServer_Create()
         {
-
         }
     }
 }

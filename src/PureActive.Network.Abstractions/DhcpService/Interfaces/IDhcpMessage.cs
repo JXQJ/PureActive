@@ -120,7 +120,5 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
         ///     Converts dhcp message into a byte array.
         /// </summary>
         byte[] ToArray();
-
-       
     }
 }

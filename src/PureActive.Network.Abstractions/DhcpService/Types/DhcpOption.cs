@@ -1,9 +1,7 @@
-
-// ReSharper disable InconsistentNaming
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// The dhcp defined options.
+    ///     The dhcp defined options.
     /// </summary>
     public enum DhcpOption : byte
     {
@@ -92,7 +90,7 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
         ISns = 83,
         NdsServers = 85,
         NdsTreeName = 86,
-        NdsContext            = 87,
+        NdsContext = 87,
         Authentication = 90,
         ClientSystem = 93,
         ClientNdi = 94,
@@ -127,6 +125,6 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
         Serial = 252,
         BpFile = 253,
         NextServer = 254,
-        End = 255,
+        End = 255
     }
 }

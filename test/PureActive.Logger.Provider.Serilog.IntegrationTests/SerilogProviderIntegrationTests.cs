@@ -19,22 +19,26 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
     [Trait("Category", "Integration")]
     public class SerilogProviderIntegrationTests : TestBaseLoggable<SerilogProviderIntegrationTests>
     {
-        private readonly IFileSystem _fileSystem;
-
         public SerilogProviderIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _fileSystem = new FileSystem(typeof(SerilogProviderIntegrationTests));
         }
 
-        private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel, LoggingOutputFlags loggingOutputFlags, string logFileName)
+        private readonly IFileSystem _fileSystem;
+
+        private IPureLoggerFactory CreatePureLoggerFactory(LogEventLevel logEventLevel,
+            LoggingOutputFlags loggingOutputFlags, string logFileName)
         {
             var loggerSettings = new SerilogLoggerSettings(_fileSystem, logEventLevel, loggingOutputFlags);
-            var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration((string)null, logFileName, loggerSettings, b => true);
+            var loggerConfiguration =
+                LoggerConfigurationFactory.CreateLoggerConfiguration((string) null, logFileName, loggerSettings,
+                    b => true);
 
             return LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
         }
 
-        private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string logFileName, Action<string, LogLevel> testAction)
+        private void AssertLogFileEntry(IPureLoggerSettings loggerSettings, LogLevel logLevel, string logFileName,
+            Action<string, LogLevel> testAction)
         {
             string partialName = _fileSystem.GetFileNameWithoutExtension(logFileName);
             DirectoryInfo hdDirectoryInWhichToSearch = new DirectoryInfo(loggerSettings.TestLogFolderPath);
@@ -58,52 +62,11 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
 
 
         [Fact]
-        public void SerilogProvider_CreateLoggers_AppConsoleFile()
-        {
-            var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
-            
-            // Validate IPureLoggerFactory Interface
-            loggerFactory.Should().NotBeNull();
-            loggerFactory.PureLoggerSettings.Should().NotBeNull();
-            loggerFactory.WrappedLoggerFactory.Should().NotBeNull();
-
-            // Validate creation of loggers
-            var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
-            pureLogger.Should().NotBeNull();
-
-            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
-            logger.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void SerilogProvider_CreateLogger_AppConsoleFile_LogLevel()
-        {
-            var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
-            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
-
-            const string msg = "Test";
-            logger.LogDebug(msg);
-
-            // Dispose Logger Factory so we can access log file
-            loggerFactory.Dispose();
-
-            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, logFileName, 
-                (logContents, logLevel) =>
-                {
-                    logContents.Should().EndWith($"{msg}{Environment.NewLine}");
-                    logContents.Should().Contain($"[{logLevel}]");
-                }
-            );
-        }
-
-
-        [Fact]
         public void SerilogProvider_CreateLogger_AppConsoleFile_BadLogLevel()
         {
             var logFileName = FileExtensions.GetRandomFileName("", ".log");
-            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile, logFileName);
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile,
+                logFileName);
             var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
 
             const string msg = "Test";
@@ -119,6 +82,50 @@ namespace PureActive.Logger.Provider.Serilog.IntegrationTests
                     logContents.Should().NotContain($"[{logLevel}]");
                 }
             );
+        }
+
+        [Fact]
+        public void SerilogProvider_CreateLogger_AppConsoleFile_LogLevel()
+        {
+            var logFileName = FileExtensions.GetRandomFileName("", ".log");
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile,
+                logFileName);
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
+
+            const string msg = "Test";
+            logger.LogDebug(msg);
+
+            // Dispose Logger Factory so we can access log file
+            loggerFactory.Dispose();
+
+            AssertLogFileEntry(loggerFactory.PureLoggerSettings, LogLevel.Debug, logFileName,
+                (logContents, logLevel) =>
+                {
+                    logContents.Should().EndWith($"{msg}{Environment.NewLine}");
+                    logContents.Should().Contain($"[{logLevel}]");
+                }
+            );
+        }
+
+
+        [Fact]
+        public void SerilogProvider_CreateLoggers_AppConsoleFile()
+        {
+            var logFileName = FileExtensions.GetRandomFileName("", ".log");
+            var loggerFactory = CreatePureLoggerFactory(LogEventLevel.Debug, LoggingOutputFlags.TestingAppConsoleFile,
+                logFileName);
+
+            // Validate IPureLoggerFactory Interface
+            loggerFactory.Should().NotBeNull();
+            loggerFactory.PureLoggerSettings.Should().NotBeNull();
+            loggerFactory.WrappedLoggerFactory.Should().NotBeNull();
+
+            // Validate creation of loggers
+            var pureLogger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
+            pureLogger.Should().NotBeNull();
+
+            var logger = loggerFactory.CreatePureLogger<SerilogProviderIntegrationTests>();
+            logger.Should().NotBeNull();
         }
     }
 }

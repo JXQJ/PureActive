@@ -9,7 +9,7 @@ namespace PureActive.Network.Core.Sockets
     public class ClientDisconnectedEventArgs : EventArgs
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ClientDisconnectedEventArgs"/> class.
+        ///     Initializes a new instance of the <see cref="ClientDisconnectedEventArgs" /> class.
         /// </summary>
         /// <param name="socket">The channel that disconnected.</param>
         /// <param name="exception">The exception that was caught.</param>
@@ -20,15 +20,15 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Channel that was disconnected
+        ///     Channel that was disconnected
         /// </summary>
         public Socket Socket { get; private set; }
 
         /// <summary>
-        /// Exception that was caught (is SocketException if the connection failed or if the remote end point disconnected).
+        ///     Exception that was caught (is SocketException if the connection failed or if the remote end point disconnected).
         /// </summary>
         /// <remarks>
-        /// <c>SocketException</c> with status <c>Success</c> is created for graceful disconnects.
+        ///     <c>SocketException</c> with status <c>Success</c> is created for graceful disconnects.
         /// </remarks>
         public Exception Exception { get; private set; }
     }

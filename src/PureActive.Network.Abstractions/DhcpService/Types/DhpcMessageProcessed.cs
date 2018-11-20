@@ -1,4 +1,3 @@
-
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     public enum DhcpMessageProcessed
@@ -8,7 +7,6 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
         Duplicate,
         Failed,
         Ignored
-        
     }
 
     public static class DhcpMessageProcessedString

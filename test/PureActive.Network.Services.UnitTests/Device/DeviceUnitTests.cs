@@ -13,19 +13,18 @@ namespace PureActive.Network.Services.UnitTests.Device
     [Trait("Category", "Unit")]
     public class DeviceUnitTests : TestBaseLoggable<DeviceUnitTests>
     {
-        private readonly ICommonServices _commonServices;
-
         public DeviceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _commonServices = CommonServices.CreateInstance(TestLoggerFactory, "DeviceUnitTests");
         }
 
+        private readonly ICommonServices _commonServices;
+
         private class DeviceTest : DeviceBase
         {
-            public DeviceTest(ICommonServices commonServices, DeviceType deviceType) : 
+            public DeviceTest(ICommonServices commonServices, DeviceType deviceType) :
                 base(commonServices, deviceType)
             {
-
             }
         }
 
@@ -37,6 +36,14 @@ namespace PureActive.Network.Services.UnitTests.Device
             TestOutputHelper.WriteLine(deviceTest.ToString(LogLevel.Debug, LoggableFormat.ToLog));
         }
 
+        [Fact]
+        public void Device_ToLogParents()
+        {
+            var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
+
+            TestOutputHelper.WriteLine(deviceTest.ToString(LogLevel.Debug, LoggableFormat.ToLogWithParents));
+        }
+
 
         [Fact]
         public void Device_ToString()
@@ -44,14 +51,6 @@ namespace PureActive.Network.Services.UnitTests.Device
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 
             TestOutputHelper.WriteLine(deviceTest.ToString(LogLevel.Debug, LoggableFormat.ToString));
-        }
-
-        [Fact]
-        public void Device_ToLogParents()
-        {
-            var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
-
-            TestOutputHelper.WriteLine(deviceTest.ToString(LogLevel.Debug, LoggableFormat.ToLogWithParents));
         }
 
         [Fact]

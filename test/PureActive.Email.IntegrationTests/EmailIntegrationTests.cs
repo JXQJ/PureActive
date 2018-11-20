@@ -1,4 +1,5 @@
 using System;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Email.Office365.Providers;
@@ -13,7 +14,6 @@ namespace PureActive.Email.IntegrationTests
     {
         public EmailIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
@@ -21,13 +21,15 @@ namespace PureActive.Email.IntegrationTests
         {
             try
             {
-                var office365EmailProvider = new Office365EmailProvider("stevebu@bushchang.com", "Steve Bush", "stevebu@bushchang.com", "*");
+                var office365EmailProvider = new Office365EmailProvider("stevebu@bushchang.com", "Steve Bush",
+                    "stevebu@bushchang.com", "*");
 
-                await office365EmailProvider.SendEmailAsync("stevebu@stevebu.com", "Testing Email", "<HTML><BODY>Testing</BODY></HTML>");
+                await office365EmailProvider.SendEmailAsync("stevebu@stevebu.com", "Testing Email",
+                    "<HTML><BODY>Testing</BODY></HTML>");
             }
             catch (Exception e)
             {
-                e.Should().BeOfType<System.Net.Mail.SmtpException>();
+                e.Should().BeOfType<SmtpException>();
             }
         }
     }

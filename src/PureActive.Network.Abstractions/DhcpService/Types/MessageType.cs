@@ -1,8 +1,7 @@
- 
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// The message type.
+    ///     The message type.
     /// </summary>
     public enum MessageType : byte
     {
@@ -14,11 +13,11 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
         Ack = 0x05,
         Nak = 0x06,
         Release = 0x07,
-        Inform = 0x08,
+        Inform = 0x08
     }
 
     /// <summary>
-    /// A class that gets the name of the Message Type.
+    ///     A class that gets the name of the Message Type.
     /// </summary>
     public static class MessageTypeString
     {

@@ -9,13 +9,11 @@ namespace PureActive.Archive.UnitTests
     {
         public ArchiveUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void Archive_Constructor()
         {
-
         }
     }
 }

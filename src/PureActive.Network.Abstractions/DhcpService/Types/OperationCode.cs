@@ -1,7 +1,7 @@
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// The operation code (OP) type.
+    ///     The operation code (OP) type.
     /// </summary>
     public enum OperationCode : byte
     {
@@ -10,7 +10,7 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
     }
 
     /// <summary>
-    /// A class that gets the name of the Operations Code (OP).
+    ///     A class that gets the name of the Operations Code (OP).
     /// </summary>
     public static class OperationString
     {

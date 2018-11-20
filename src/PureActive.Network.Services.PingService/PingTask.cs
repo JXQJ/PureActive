@@ -19,20 +19,33 @@ namespace PureActive.Network.Services.PingService
     {
         public class PingTaskImpl : IPingTask
         {
-            private readonly ICommonServices _commonServices;
             private const string DefaultDataBuffer = "abcdefghijklmnopqrstuvwxyz012345";
 
-            private const int WindowsDefaultTimeout = 5000; // Wait a default of 5 seconds for a reply (same as Windows Ping)
+            private const int
+                WindowsDefaultTimeout = 5000; // Wait a default of 5 seconds for a reply (same as Windows Ping)
 
-            public int DefaultTimeout => WindowsDefaultTimeout;
+            private readonly ICommonServices _commonServices;
+
+            private readonly IPureLogger _logger;
 
             private readonly Ping _ping;
 
             private readonly PingOptions _pingOptions;
 
-            public event PingReplyEventHandler OnPingReply;
+            private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
 
-            private SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1,1);
+            public PingTaskImpl(ICommonServices commonServices, IPureLogger<PingTaskImpl> logger = null)
+            {
+                _commonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
+                _ping = new Ping();
+                _pingOptions = new PingOptions(64, true);
+
+                _logger = logger ?? commonServices.LoggerFactory.CreatePureLogger<PingTaskImpl>();
+            }
+
+            public int DefaultTimeout => WindowsDefaultTimeout;
+
+            public event PingReplyEventHandler OnPingReply;
 
             public int Timeout { get; set; } = WindowsDefaultTimeout;
             public int WaitBetweenPings { get; set; } = 0; // No wait between pings
@@ -49,27 +62,17 @@ namespace PureActive.Network.Services.PingService
                 set => _pingOptions.DontFragment = value;
             }
 
-            private readonly IPureLogger _logger;
 
-            public PingTaskImpl(ICommonServices commonServices, IPureLogger<PingTaskImpl> logger = null)
-            {
-                _commonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
-                _ping = new Ping();
-                _pingOptions = new PingOptions(64, true);
-
-                _logger = logger ?? commonServices.LoggerFactory.CreatePureLogger<PingTaskImpl>();
-            }
-
-
-            public async Task<PingReply> PingIpAddressAsync(IPAddress ipAddress, int timeout, byte[] buffer, PingOptions pingOptions)
+            public async Task<PingReply> PingIpAddressAsync(IPAddress ipAddress, int timeout, byte[] buffer,
+                PingOptions pingOptions)
             {
                 await _semaphoreSlim.WaitAsync();
                 PingReply pingReply = null;
 
                 Task pingTask = Task.Run(async () =>
-                    {
-                        pingReply = await _ping.SendPingAsync(ipAddress, timeout, buffer, pingOptions);
-                    });
+                {
+                    pingReply = await _ping.SendPingAsync(ipAddress, timeout, buffer, pingOptions);
+                });
 
                 await pingTask.ContinueWith(t => { _semaphoreSlim.Release(); });
 
@@ -136,9 +139,11 @@ namespace PureActive.Network.Services.PingService
                 }
             }
 
-            public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle)
+            public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken,
+                int timeout, int pingCallLimit, bool shuffle)
             {
-                    return PingNetworkAsync(ipAddressSubnet, cancellationToken, timeout, _pingOptions, pingCallLimit, shuffle);
+                return PingNetworkAsync(ipAddressSubnet, cancellationToken, timeout, _pingOptions, pingCallLimit,
+                    shuffle);
             }
         }
     }

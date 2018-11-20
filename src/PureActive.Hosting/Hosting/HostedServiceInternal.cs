@@ -15,21 +15,8 @@ namespace PureActive.Hosting.Hosting
 {
     public abstract class HostedServiceInternal<T> : PureLoggableBase<T>, IHostedServiceInternal
     {
-        private IApplicationLifetime ApplicationLifetime { get; }
-        public ICommonServices CommonServices { get; }
-
-        public ServiceHostStatus ServiceHostStatus { get; protected set; } = ServiceHostStatus.Stopped;
-
-        public ServiceHost ServiceHost { get; protected set; }
-
-        // IApplicationLifetime support
-        // ReSharper disable NotAccessedField.Local
-        private readonly CancellationTokenRegistration _cancellationTokenOnStarted;
-        private readonly CancellationTokenRegistration _cancellationTokenOnStopping;
-        private readonly CancellationTokenRegistration _cancellationTokenOnStopped;
-        // ReSharper restore NotAccessedField.Local
-
-        protected HostedServiceInternal(ICommonServices commonServices, IApplicationLifetime applicationLifetime, ServiceHost serviceHost):
+        protected HostedServiceInternal(ICommonServices commonServices, IApplicationLifetime applicationLifetime,
+            ServiceHost serviceHost) :
             base(commonServices?.LoggerFactory)
         {
             CommonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
@@ -45,7 +32,15 @@ namespace PureActive.Hosting.Hosting
             }
         }
 
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        private IApplicationLifetime ApplicationLifetime { get; }
+        public ICommonServices CommonServices { get; }
+
+        public ServiceHost ServiceHost { get; protected set; }
+
+        public ServiceHostStatus ServiceHostStatus { get; protected set; } = ServiceHostStatus.Stopped;
+
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -53,15 +48,11 @@ namespace PureActive.Hosting.Hosting
 
             if (logLevel <= LogLevel.Information)
             {
-                logPropertyLevels?.Add(new PureLogPropertyLevel($"{ServiceHost}HostStatus", ServiceHostStatus, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel($"{ServiceHost}HostStatus", ServiceHostStatus,
+                    LogLevel.Information));
             }
 
             return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
-        }
-
-        public virtual void RequestStopService()
-        {
-            ApplicationLifetime?.StopApplication();
         }
 
         public virtual Task StartAsync(CancellationToken cancellationToken)
@@ -78,6 +69,11 @@ namespace PureActive.Hosting.Hosting
             return Task.CompletedTask;
         }
 
+        public virtual void RequestStopService()
+        {
+            ApplicationLifetime?.StopApplication();
+        }
+
         protected virtual void OnStarted()
         {
             Logger?.LogInformation("{ServiceHost} OnStarted", ServiceHost);
@@ -92,5 +88,13 @@ namespace PureActive.Hosting.Hosting
         {
             Logger?.LogInformation("{ServiceHost} OnStopped", ServiceHost);
         }
+
+        // IApplicationLifetime support
+        // ReSharper disable NotAccessedField.Local
+        private readonly CancellationTokenRegistration _cancellationTokenOnStarted;
+        private readonly CancellationTokenRegistration _cancellationTokenOnStopping;
+
+        private readonly CancellationTokenRegistration _cancellationTokenOnStopped;
+        // ReSharper restore NotAccessedField.Local
     }
 }

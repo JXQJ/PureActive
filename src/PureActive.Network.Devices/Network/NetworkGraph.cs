@@ -8,6 +8,30 @@ namespace PureActive.Network.Devices.Network
 {
     public class NetworkGraph : INetworkGraph
     {
+        public NetworkGraph(INetworkGateway networkGateway, ILocalNetworkDevice localNetworkDevice)
+        {
+            NetworkGateway = networkGateway ?? throw new ArgumentNullException(nameof(networkGateway));
+            LocalNetworkDevice = localNetworkDevice ?? throw new ArgumentNullException(nameof(localNetworkDevice));
+        }
+
+        public bool AddDeviceToGateway(IDevice device)
+        {
+            lock (_deviceGraphLock)
+            {
+                if (device.Equals(NetworkGateway))
+                {
+                }
+                else if (device.Equals(LocalNetworkDevice))
+                {
+                }
+                else if (_deviceGraph.AddVertex(device))
+                {
+                    _deviceGraph.AddEdge(device.ObjectId, NetworkGateway.ObjectId);
+                }
+            }
+
+            return false;
+        }
 
         #region Private Fields
 
@@ -61,34 +85,5 @@ namespace PureActive.Network.Devices.Network
         }
 
         #endregion
-
-        public NetworkGraph(INetworkGateway networkGateway, ILocalNetworkDevice localNetworkDevice)
-        {
-            NetworkGateway = networkGateway ?? throw new ArgumentNullException(nameof(networkGateway));
-            LocalNetworkDevice = localNetworkDevice ?? throw new ArgumentNullException(nameof(localNetworkDevice));
-        }
-
-        public bool AddDeviceToGateway(IDevice device)
-        {
-            lock (_deviceGraphLock)
-            {
-                if (device.Equals(NetworkGateway))
-                {
-
-                }
-                else if (device.Equals(LocalNetworkDevice))
-                {
-
-                }
-                else if (_deviceGraph.AddVertex(device))
-                {
-                    _deviceGraph.AddEdge(device.ObjectId, NetworkGateway.ObjectId);
-                }
-
-            }
-
-            return false;
-        }
-
     }
 }

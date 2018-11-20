@@ -4,6 +4,5 @@ namespace PureActive.Serilog.Sink.Xunit.Interfaces
 {
     public interface IPureTestLoggerFactory : IPureLoggerFactory
     {
-        
     }
 }

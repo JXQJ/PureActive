@@ -17,9 +17,6 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
     [Trait("Category", "Integration")]
     public class ArpServiceIntegrationTests : TestBaseLoggable<ArpServiceIntegrationTests>
     {
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly IArpService _arpService;
-
         public ArpServiceIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceIntegrationTests");
@@ -27,15 +24,25 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
             IPingService pingService = new PingService.PingService(commonServices);
             _arpService = new ArpService(commonServices, pingService);
         }
-    
+
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly IArpService _arpService;
+
         [Fact]
-        public async Task ArpService_StartStopAsync()
+        public async Task ArpService_BogusPhysicalAddress()
         {
-            Assert.Equal(ServiceHostStatus.Stopped ,_arpService.ServiceHostStatus);
+            // Start ArpService
+            Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
             await _arpService.StartAsync(_cancellationTokenSource.Token);
             Assert.Equal(ServiceHostStatus.StartPending, _arpService.ServiceHostStatus);
+
+            var ipAddress = IPAddress.Parse("203.0.113.1");
+
+            var physicalAddress = _arpService.GetPhysicalAddress(ipAddress);
+
+            Assert.Equal(PhysicalAddress.None, physicalAddress);
+
             await _arpService.StopAsync(_cancellationTokenSource.Token);
-            Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
         }
 
         [Fact]
@@ -55,20 +62,13 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
         }
 
         [Fact]
-        public async Task ArpService_BogusPhysicalAddress()
+        public async Task ArpService_StartStopAsync()
         {
-            // Start ArpService
             Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
             await _arpService.StartAsync(_cancellationTokenSource.Token);
             Assert.Equal(ServiceHostStatus.StartPending, _arpService.ServiceHostStatus);
-
-            var ipAddress = IPAddress.Parse("203.0.113.1");
-
-            var physicalAddress = _arpService.GetPhysicalAddress(ipAddress);
-
-            Assert.Equal(PhysicalAddress.None, physicalAddress);
-
             await _arpService.StopAsync(_cancellationTokenSource.Token);
+            Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
         }
     }
 }

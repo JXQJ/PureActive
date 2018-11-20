@@ -5,7 +5,7 @@ namespace PureActive.Network.Abstractions.Extensions
 {
     public static class PhysicalAddressExtensions
     {
-        private static readonly char[] PhysicalAddressDelims = new char[]
+        private static readonly char[] PhysicalAddressDelims =
         {
             ':', '-'
         };
@@ -19,14 +19,14 @@ namespace PureActive.Network.Abstractions.Extensions
         public static PhysicalAddress NormalizedParse(string physicalAddressString)
         {
             // Need to normalize the Physical address
-             if (string.IsNullOrWhiteSpace(physicalAddressString))
+            if (string.IsNullOrWhiteSpace(physicalAddressString))
                 return PhysicalAddress.None;
 
             var parts = physicalAddressString.Trim().ToUpper().Split(PhysicalAddressDelims);
 
             if (parts.Length == 0)
                 return PhysicalAddress.None;
-            else if (parts.Length == 1)
+            if (parts.Length == 1)
                 return PhysicalAddress.Parse(parts[0]);
 
             var sb = new StringBuilder();
@@ -43,7 +43,6 @@ namespace PureActive.Network.Abstractions.Extensions
             sb.Length -= 1;
 
             return PhysicalAddress.Parse(sb.ToString());
-
         }
 
 
@@ -70,4 +69,3 @@ namespace PureActive.Network.Abstractions.Extensions
         public static string ToDashString(this PhysicalAddress physicalAddress) => ToDelimString(physicalAddress, '-');
     }
 }
-

@@ -22,7 +22,6 @@ namespace PureActive.Logging.UnitTests.Extensions
         public static void QuoteAdded(this IPureLogger logger, string quote)
         {
             QuoteAddedMessage(logger, quote, null);
-
         }
     }
 
@@ -31,9 +30,8 @@ namespace PureActive.Logging.UnitTests.Extensions
     {
         public LoggerMessageUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
- 
+
         [Fact]
         public void LoggerExtensions_TestQuoteAdded()
         {

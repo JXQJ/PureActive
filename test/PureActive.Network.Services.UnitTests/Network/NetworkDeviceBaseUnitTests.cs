@@ -12,17 +12,19 @@ namespace PureActive.Network.Services.UnitTests.Network
     [Trait("Category", "Unit")]
     public class NetworkDeviceBaseUnitTests : TestBaseLoggable<NetworkDeviceBaseUnitTests>
     {
-        private readonly ICommonNetworkServices _commonNetworkServices;
-
         public NetworkDeviceBaseUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-            _commonNetworkServices = CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkDeviceBaseUnitTests");
+            _commonNetworkServices =
+                CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkDeviceBaseUnitTests");
         }
+
+        private readonly ICommonNetworkServices _commonNetworkServices;
 
         [Fact]
         public void NetworkDeviceBase_Constructor()
         {
-            NetworkDeviceBase networkDeviceBase = new NetworkDeviceBase(_commonNetworkServices, DeviceType.LocalComputer);
+            NetworkDeviceBase networkDeviceBase =
+                new NetworkDeviceBase(_commonNetworkServices, DeviceType.LocalComputer);
             networkDeviceBase.Should().NotBeNull().And.Subject.Should().BeAssignableTo<INetworkDevice>();
         }
     }

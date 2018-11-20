@@ -8,16 +8,15 @@ namespace PureActive.Network.Devices.Computer
 {
     public abstract class ComputerBase : NetworkDeviceBase, IComputer
     {
-        protected ComputerBase(ICommonNetworkServices commonNetworkServices, DeviceType deviceType, IPureLogger logger = null) : 
+        protected ComputerBase(ICommonNetworkServices commonNetworkServices, DeviceType deviceType,
+            IPureLogger logger = null) :
             base(commonNetworkServices, deviceType, logger)
         {
-
         }
 
-        protected ComputerBase(ICommonNetworkServices commonNetworkServices) : this(commonNetworkServices, DeviceType.Computer)
+        protected ComputerBase(ICommonNetworkServices commonNetworkServices) : this(commonNetworkServices,
+            DeviceType.Computer)
         {
-
         }
-
     }
 }

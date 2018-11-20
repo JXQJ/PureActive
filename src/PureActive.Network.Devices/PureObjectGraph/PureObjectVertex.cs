@@ -3,8 +3,14 @@ using PureActive.Network.Abstractions.PureObject;
 
 namespace PureActive.Network.Devices.PureObjectGraph
 {
-    public class PureObjectVertex<T> : IComparable<PureObjectVertex<T>> where T : class, IPureObject, IComparable<IPureObject>
+    public class PureObjectVertex<T> : IComparable<PureObjectVertex<T>>
+        where T : class, IPureObject, IComparable<IPureObject>
     {
+        public PureObjectVertex(T value)
+        {
+            Value = value;
+        }
+
         public T Value { get; set; }
 
         public Guid Id
@@ -15,12 +21,8 @@ namespace PureActive.Network.Devices.PureObjectGraph
 
         public double Weight { get; set; }
 
-        public PureObjectVertex(T value)
-        {
-            Value = value;
-        }
-
         #region Overrides
+
         public override bool Equals(object obj)
         {
             if (!(obj is PureObjectVertex<T>))
@@ -36,6 +38,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         #endregion
 
         #region Implements
+
         public int CompareTo(IPureObject other)
         {
             return Value.CompareTo(other);

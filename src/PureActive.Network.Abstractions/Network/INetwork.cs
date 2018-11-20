@@ -8,10 +8,10 @@ namespace PureActive.Network.Abstractions.Network
         INetworkAdapterCollection NetworkAdapterCollection { get; }
         INetworkGateway NetworkGateway { get; }
 
+        int AdapterCount { get; }
+
         bool AddAdapterToNetwork(INetworkAdapter networkAdapter);
         bool RemoveAdapterFromNetwork(INetworkAdapter networkAdapter);
         bool AdapterConnectedToNetwork(INetworkAdapter networkAdapter);
-
-        int AdapterCount { get; }
     }
 }

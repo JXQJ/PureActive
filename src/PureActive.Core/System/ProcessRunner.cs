@@ -104,7 +104,7 @@ namespace PureActive.Core.System
 
             _logger?.LogTrace("Process {processName} with arguments {arguments} truncated output: \n{output}",
                 process.StartInfo.FileName,
-                process.StartInfo.Arguments, 
+                process.StartInfo.Arguments,
                 truncatedOutputStr);
 
             return new ProcessResult(completed, outputStr);

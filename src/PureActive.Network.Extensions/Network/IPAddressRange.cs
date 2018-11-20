@@ -8,9 +8,6 @@ namespace PureActive.Network.Extensions.Network
 {
     public class IPAddressRange : IEnumerable<IPAddress>
     {
-        public IPAddress IpAddressLowerInclusive { get; set; }
-        public IPAddress IpAddressUpperInclusive { get; set; }
-
         public IPAddressRange(IPAddress ipAddressLowerInclusive, IPAddress ipAddressUpperInclusive)
         {
             IpAddressLowerInclusive = ipAddressLowerInclusive;
@@ -21,6 +18,26 @@ namespace PureActive.Network.Extensions.Network
         {
             IpAddressLowerInclusive = ipAddressSubnet.NetworkAddress;
             IpAddressUpperInclusive = ipAddressSubnet.BroadcastAddress;
+        }
+
+        public IPAddress IpAddressLowerInclusive { get; set; }
+        public IPAddress IpAddressUpperInclusive { get; set; }
+
+        public IEnumerator<IPAddress> GetEnumerator()
+        {
+            var ipAddress = IpAddressLowerInclusive;
+            var ipAddressStop = IpAddressUpperInclusive.Increment();
+
+            while (!ipAddress.Equals(ipAddressStop))
+            {
+                yield return ipAddress;
+                ipAddress = ipAddress.Increment();
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
 
         public bool IsInRange(IPAddress address)
@@ -48,23 +65,6 @@ namespace PureActive.Network.Extensions.Network
             }
 
             return true;
-        }
-
-        public IEnumerator<IPAddress> GetEnumerator()
-        {
-            var ipAddress = IpAddressLowerInclusive;
-            var ipAddressStop = IpAddressUpperInclusive.Increment();
-
-            while (!ipAddress.Equals(ipAddressStop))
-            {
-                yield return ipAddress;
-                ipAddress = ipAddress.Increment();
-            }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

@@ -22,6 +22,17 @@ namespace PureActive.Network.Services.DhcpService
 {
     public class DhcpService : HostedServiceInternal<DhcpService>, IDhcpService, IDhcpSessionMgr
     {
+        public DhcpService(ICommonNetworkServices commonNetworkServices,
+            IApplicationLifetime applicationLifetime = null) :
+            base(commonNetworkServices?.CommonServices, applicationLifetime, ServiceHost.DhcpService)
+        {
+            CommonNetworkServices =
+                commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
+            _hostedSocketService =
+                new HostedSocketService(commonNetworkServices.CommonServices?.LoggerFactory
+                    ?.CreatePureLogger<SocketService>());
+        }
+
         public ICommonNetworkServices CommonNetworkServices { get; }
 
         #region Private Properties
@@ -30,7 +41,8 @@ namespace PureActive.Network.Services.DhcpService
 
         private UdpListener _listenerDhcpServer;
 
-        private readonly Dictionary<PhysicalAddress, DhcpSession> _dhcpSessions = new Dictionary<PhysicalAddress, DhcpSession>();
+        private readonly Dictionary<PhysicalAddress, DhcpSession> _dhcpSessions =
+            new Dictionary<PhysicalAddress, DhcpSession>();
 
         private readonly object _sessionsLock = new object();
 
@@ -39,7 +51,7 @@ namespace PureActive.Network.Services.DhcpService
         #region Public Properties
 
         /// <summary>
-        /// Interface IP address.
+        ///     Interface IP address.
         /// </summary>
         public IPAddress InterfaceAddress
         {
@@ -51,16 +63,9 @@ namespace PureActive.Network.Services.DhcpService
 
         #endregion Public Properties
 
-        public DhcpService(ICommonNetworkServices commonNetworkServices, IApplicationLifetime applicationLifetime = null):
-            base(commonNetworkServices?.CommonServices, applicationLifetime, ServiceHost.DhcpService)
-        {
-            CommonNetworkServices = commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
-            _hostedSocketService = new HostedSocketService(commonNetworkServices.CommonServices?.LoggerFactory?.CreatePureLogger<SocketService>());
-        }
-
         #region Methods
 
-    public override Task StartAsync(CancellationToken cancellationToken)
+        public override Task StartAsync(CancellationToken cancellationToken)
         {
             ServiceHostStatus = ServiceHostStatus.StartPending;
 
@@ -78,9 +83,11 @@ namespace PureActive.Network.Services.DhcpService
             var retVal = _listenerDhcpServer.Start(DhcpConstants.DhcpServicePort, true);
 
             if (retVal)
-                Logger?.LogInformation("DhcpService started listening on port {DhcpServicePort}", DhcpConstants.DhcpServicePort);
+                Logger?.LogInformation("DhcpService started listening on port {DhcpServicePort}",
+                    DhcpConstants.DhcpServicePort);
             else
-                Logger?.LogDebug("DhcpService failed to start listening on port {DhcpServicePort}", DhcpConstants.DhcpServicePort);
+                Logger?.LogDebug("DhcpService failed to start listening on port {DhcpServicePort}",
+                    DhcpConstants.DhcpServicePort);
 
             ServiceHostStatus = ServiceHostStatus.Running;
 
@@ -118,7 +125,7 @@ namespace PureActive.Network.Services.DhcpService
         }
 
         /// <summary>
-        ///  Remote client connects and makes a request.
+        ///     Remote client connects and makes a request.
         /// </summary>
         private void OnDhcpServerClientConnect(object sender, ClientConnectedEventArgs args)
         {
@@ -129,7 +136,8 @@ namespace PureActive.Network.Services.DhcpService
                 && channelBuffer.BytesTransferred >= DhcpConstants.DhcpMinMessageSize
                 && channelBuffer.BytesTransferred <= DhcpConstants.DhcpMaxMessageSize)
             {
-                Logger?.LogTrace("DHCP PACKET received on {LocalEndPoint} with channel id {ChannelId} was received from {RemoteEndPoint} and queued for processing...",
+                Logger?.LogTrace(
+                    "DHCP PACKET received on {LocalEndPoint} with channel id {ChannelId} was received from {RemoteEndPoint} and queued for processing...",
                     args.Channel.Socket.LocalEndPoint,
                     args.Channel.ChannelId,
                     args.Channel.RemoteEndpoint);
@@ -159,7 +167,8 @@ namespace PureActive.Network.Services.DhcpService
             {
                 if (_dhcpSessions.TryGetValue(physicalAddress, out var dhcpSession)) return dhcpSession;
 
-                dhcpSession = new DhcpSession(this, CommonServices.LoggerFactory.CreatePureLogger<DhcpSession>(), physicalAddress);
+                dhcpSession = new DhcpSession(this, CommonServices.LoggerFactory.CreatePureLogger<DhcpSession>(),
+                    physicalAddress);
                 _dhcpSessions.Add(physicalAddress, dhcpSession);
 
                 return dhcpSession;
@@ -168,7 +177,7 @@ namespace PureActive.Network.Services.DhcpService
 
 
         /// <summary>
-        ///  Remote client is disconnected.
+        ///     Remote client is disconnected.
         /// </summary>
         private void OnDhcpServerClientDisconnect(object sender, ClientDisconnectedEventArgs args)
         {
@@ -193,11 +202,11 @@ namespace PureActive.Network.Services.DhcpService
         }
 
         /// <summary>
-        ///  Process boot REQUEST and send reply back to remote client.
+        ///     Process boot REQUEST and send reply back to remote client.
         /// </summary>
-        private void ProcessRequest(Object state)
+        private void ProcessRequest(object state)
         {
-            DhcpMessageEventArgs args = (DhcpMessageEventArgs)state;
+            DhcpMessageEventArgs args = (DhcpMessageEventArgs) state;
 
             if (args.RequestMessage.Operation == OperationCode.BootRequest ||
                 args.RequestMessage.Operation == OperationCode.BootReply)
@@ -216,30 +225,32 @@ namespace PureActive.Network.Services.DhcpService
                             break;
 
                         case MessageType.Request:
+                        {
+                            dhcpMessageProcessed = dhcpSession.ProcessRequest(args.RequestMessage);
+
+                            if (dhcpMessageProcessed == DhcpMessageProcessed.Success)
                             {
-                                dhcpMessageProcessed = dhcpSession.ProcessRequest(args.RequestMessage);
+                                var dhcpDiscoveredDevice = dhcpSession.DhcpDiscoveredDevice;
 
-                                if (dhcpMessageProcessed == DhcpMessageProcessed.Success)
+                                if (dhcpDiscoveredDevice != null)
                                 {
-                                    var dhcpDiscoveredDevice = dhcpSession.DhcpDiscoveredDevice;
-
-                                    if (dhcpDiscoveredDevice != null)
+                                    // Fix up IPAddress by calling ArpService
+                                    if (dhcpDiscoveredDevice.IpAddress.Equals(IPAddress.None))
                                     {
-                                        // Fix up IPAddress by calling ArpService
-                                        if (dhcpDiscoveredDevice.IpAddress.Equals(IPAddress.None))
-                                        {
-                                            dhcpDiscoveredDevice.IpAddress =
-                                                dhcpDiscoveredDevice.PhysicalAddress.Equals(PhysicalAddress.None)
-                                                    ? IPAddress.None
-                                                    : CommonNetworkServices.ArpService.GetIPAddress(
-                                                        dhcpDiscoveredDevice.PhysicalAddress, true);
-                                        }
-                                        OnDhcpDiscoveredDevice(this, new DhcpDiscoveredDeviceEvent(this, dhcpDiscoveredDevice));
+                                        dhcpDiscoveredDevice.IpAddress =
+                                            dhcpDiscoveredDevice.PhysicalAddress.Equals(PhysicalAddress.None)
+                                                ? IPAddress.None
+                                                : CommonNetworkServices.ArpService.GetIPAddress(
+                                                    dhcpDiscoveredDevice.PhysicalAddress, true);
                                     }
-                                }
 
-                                break;
+                                    OnDhcpDiscoveredDevice(this,
+                                        new DhcpDiscoveredDeviceEvent(this, dhcpDiscoveredDevice));
+                                }
                             }
+
+                            break;
+                        }
 
                         case MessageType.Decline:
                             dhcpMessageProcessed = dhcpSession.ProcessDecline(args.RequestMessage);
@@ -270,7 +281,7 @@ namespace PureActive.Network.Services.DhcpService
                 {
                     Logger?.Log(msgLogLevel,
                         "DHCP {DhcpMessageType} message with session id {DhcpSessionId} from client {ClientHardwareAddress} with status {DhcpMessageProcessed} on thread #{ThreadId}",
-                        args.MessageType, args.RequestMessage.SessionId, 
+                        args.MessageType, args.RequestMessage.SessionId,
                         args.RequestMessage.ClientHardwareAddress.ToColonString(),
                         DhcpMessageProcessedString.GetName(dhcpMessageProcessed),
                         Thread.CurrentThread.ManagedThreadId);
@@ -285,6 +296,7 @@ namespace PureActive.Network.Services.DhcpService
                 }
             }
         }
+
         #endregion Methods
 
         #region Events

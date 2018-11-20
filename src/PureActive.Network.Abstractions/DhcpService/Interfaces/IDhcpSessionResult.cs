@@ -11,6 +11,12 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
         DhcpSessionState DhcpSessionStateCurrent { get; set; }
         DhcpSessionState DhcpSessionStateStart { get; set; }
 
+        IDhcpDiscoveredDevice DhcpDiscoveredDevice { get; }
+
+        IDeviceInfo DeviceInfo { get; }
+
+        INetworkDeviceInfo NetworkDeviceInfo { get; }
+
 
         void UpdateSessionState(uint sessionId, DhcpSessionState dhcpSessionState, PhysicalAddress physicalAddress);
 
@@ -18,11 +24,5 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
         bool IsCurrentSession(uint sessionId);
 
         bool IsDuplicateRequest(IDhcpMessage dhcpMessage);
-
-        IDhcpDiscoveredDevice DhcpDiscoveredDevice { get; }
-
-        IDeviceInfo DeviceInfo { get; }
-
-        INetworkDeviceInfo NetworkDeviceInfo { get; }
     }
 }

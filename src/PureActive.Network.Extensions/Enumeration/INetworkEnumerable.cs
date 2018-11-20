@@ -8,6 +8,5 @@ namespace PureActive.Network.Extensions.Enumeration
     /// </summary>
     public interface INetworkEnumerable : IEnumerable<IPAddress>
     {
-        
     }
 }

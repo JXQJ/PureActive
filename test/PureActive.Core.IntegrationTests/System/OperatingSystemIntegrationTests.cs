@@ -11,12 +11,12 @@ namespace PureActive.Core.IntegrationTests.System
     [Trait("Category", "Integration")]
     public class OperatingSystemIntegrationTests : TestBaseLoggable<OperatingSystemIntegrationTests>
     {
-        private readonly IOperatingSystem _operatingSystem;
-
         public OperatingSystemIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _operatingSystem = new OperatingSystem();
         }
+
+        private readonly IOperatingSystem _operatingSystem;
 
         [Fact]
         public void OperatingSystem_IsLinux()
@@ -44,7 +44,8 @@ namespace PureActive.Core.IntegrationTests.System
 
             if (_operatingSystem.IsWindows())
             {
-                Assert.True(osVersion.Platform == PlatformID.Win32NT || osVersion.Platform == PlatformID.Win32S || osVersion.Platform == PlatformID.Win32Windows);
+                Assert.True(osVersion.Platform == PlatformID.Win32NT || osVersion.Platform == PlatformID.Win32S ||
+                            osVersion.Platform == PlatformID.Win32Windows);
             }
         }
     }

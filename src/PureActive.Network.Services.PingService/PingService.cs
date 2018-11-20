@@ -19,13 +19,10 @@ namespace PureActive.Network.Services.PingService
 {
     public partial class PingService : BackgroundServiceInternal<PingService>, IPingService
     {
-        public event PingReplyEventHandler OnPingReply;
-        public bool EnableLogging { get; set; } = true;
-
-        private readonly IPingTask _pingTask;
-
         private static readonly int DefaultTtl = 30;
         private static readonly int DefaultNetworkTimeout = 250;
+
+        private readonly IPingTask _pingTask;
 
         public PingService(ICommonServices commonServices, IApplicationLifetime applicationLifetime = null) :
             base(commonServices, applicationLifetime, ServiceHost.PingService)
@@ -38,41 +35,12 @@ namespace PureActive.Network.Services.PingService
             _pingTask.OnPingReply += OnPingReply;
         }
 
-        private void PingReplyLoggingEventHandler(object sender, PingReplyEventArgs args)
-        {
-            if (args != null && EnableLogging)
-            {
-                using (Logger?.BeginScope("[{Timestamp}:{JobId}:{TaskId}]", args.PingJob.Timestamp, args.PingJob.JobGuid, args.PingJob.TaskId))
-                {
-                    var pingReply = args.PingReply;
-
-                    if (pingReply.Status == IPStatus.Success)
-                    {
-                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
-                        {
-                            Logger?.LogDebug("Ping {Status} to {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
-                        }
-                    }
-                    else if (pingReply.Status == IPStatus.TimedOut)
-                    {
-                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Trace, LoggableFormat.ToLog)))
-                        {
-                            Logger?.LogTrace("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
-                        }
-                    }
-                    else
-                    {
-                        using (Logger?.PushLogProperties(pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
-                        {
-                            Logger?.LogDebug("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status, args.PingJob.IPAddressSubnet);
-                        }
-                    }
-                }
-            }
-        }
+        public event PingReplyEventHandler OnPingReply;
+        public bool EnableLogging { get; set; } = true;
 
 
-        public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout, int pingCallLimit, bool shuffle)
+        public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout,
+            int pingCallLimit, bool shuffle)
         {
             var iPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
 
@@ -84,7 +52,48 @@ namespace PureActive.Network.Services.PingService
             return _pingTask.PingIpAddressAsync(ipAddress, timeout);
         }
 
-        public Task<PingReply> PingIpAddressAsync(IPAddress ipAddress) => PingIpAddressAsync(ipAddress, _pingTask.DefaultTimeout);
+        public Task<PingReply> PingIpAddressAsync(IPAddress ipAddress) =>
+            PingIpAddressAsync(ipAddress, _pingTask.DefaultTimeout);
+
+        private void PingReplyLoggingEventHandler(object sender, PingReplyEventArgs args)
+        {
+            if (args != null && EnableLogging)
+            {
+                using (Logger?.BeginScope("[{Timestamp}:{JobId}:{TaskId}]", args.PingJob.Timestamp,
+                    args.PingJob.JobGuid, args.PingJob.TaskId))
+                {
+                    var pingReply = args.PingReply;
+
+                    if (pingReply.Status == IPStatus.Success)
+                    {
+                        using (Logger?.PushLogProperties(
+                            pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
+                        {
+                            Logger?.LogDebug("Ping {Status} to {IPAddressSubnet}", args.PingReply.Status,
+                                args.PingJob.IPAddressSubnet);
+                        }
+                    }
+                    else if (pingReply.Status == IPStatus.TimedOut)
+                    {
+                        using (Logger?.PushLogProperties(
+                            pingReply.GetLogPropertyListLevel(LogLevel.Trace, LoggableFormat.ToLog)))
+                        {
+                            Logger?.LogTrace("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status,
+                                args.PingJob.IPAddressSubnet);
+                        }
+                    }
+                    else
+                    {
+                        using (Logger?.PushLogProperties(
+                            pingReply.GetLogPropertyListLevel(LogLevel.Debug, LoggableFormat.ToLog)))
+                        {
+                            Logger?.LogDebug("Ping {Status} for {IPAddressSubnet}", args.PingReply.Status,
+                                args.PingJob.IPAddressSubnet);
+                        }
+                    }
+                }
+            }
+        }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -94,7 +103,8 @@ namespace PureActive.Network.Services.PingService
                 {
                     var iPAddressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
 
-                    await _pingTask.PingNetworkAsync(iPAddressSubnet, stoppingToken, DefaultNetworkTimeout, new PingOptions(DefaultTtl, true), Int32.MaxValue, true);
+                    await _pingTask.PingNetworkAsync(iPAddressSubnet, stoppingToken, DefaultNetworkTimeout,
+                        new PingOptions(DefaultTtl, true), int.MaxValue, true);
                 }
             }, stoppingToken);
         }

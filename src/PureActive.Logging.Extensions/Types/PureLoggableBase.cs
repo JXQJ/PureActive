@@ -9,28 +9,20 @@ using PureActive.Logging.Abstractions.Types;
 
 namespace PureActive.Logging.Extensions.Types
 {
-    public abstract class PureLoggableBase<T>: IPureLoggable
+    public abstract class PureLoggableBase<T> : IPureLoggable
     {
-        public IPureLoggerFactory LoggerFactory { get; }
-        public IPureLoggerSettings LoggerSettings => LoggerFactory.PureLoggerSettings;
-        public IPureLogger Logger { get; protected set; }
-
         public PureLoggableBase(IPureLoggerFactory loggerFactory, IPureLogger logger = null)
         {
             LoggerFactory = loggerFactory ?? throw new ArgumentNullException(nameof(loggerFactory));
             Logger = logger ?? loggerFactory.CreatePureLogger<T>();
         }
 
-        /// <summary>
-        /// Converts derived class into string object.
-        /// </summary>
-        public override string ToString()
-        {
-            return ToString(LogLevel.Debug);
-        }
+        public IPureLoggerFactory LoggerFactory { get; }
+        public IPureLoggerSettings LoggerSettings => LoggerFactory.PureLoggerSettings;
+        public IPureLogger Logger { get; protected set; }
 
         /// <summary>
-        /// Converts derived class into string object.
+        ///     Converts derived class into string object.
         /// </summary>
         public virtual string ToString(LogLevel logLevel)
         {
@@ -46,20 +38,31 @@ namespace PureActive.Logging.Extensions.Types
 
         public virtual StringBuilder FormatLogString(StringBuilder sb, LogLevel logLevel, LoggableFormat loggableFormat)
         {
-            PureLogPropertyLevel.FormatPropertyList(sb, loggableFormat, GetLogPropertyListLevel(logLevel, loggableFormat), logLevel);
+            PureLogPropertyLevel.FormatPropertyList(sb, loggableFormat,
+                GetLogPropertyListLevel(logLevel, loggableFormat), logLevel);
 
             return sb;
         }
 
 
-        public virtual IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public virtual IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logProperties = new List<IPureLogPropertyLevel>
             {
-                {new PureLogPropertyLevel("ObjectType", TypeNameHelper.GetTypeDisplayName(GetType()), LogLevel.Information)}
+                new PureLogPropertyLevel("ObjectType", TypeNameHelper.GetTypeDisplayName(GetType()),
+                    LogLevel.Information)
             };
 
             return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
+        }
+
+        /// <summary>
+        ///     Converts derived class into string object.
+        /// </summary>
+        public override string ToString()
+        {
+            return ToString(LogLevel.Debug);
         }
     }
 }

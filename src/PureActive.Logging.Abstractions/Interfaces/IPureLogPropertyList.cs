@@ -2,7 +2,7 @@
 
 namespace PureActive.Logging.Abstractions.Interfaces
 {
-    public interface IPureLogPropertyList: IEnumerable<IPureLogProperty>
+    public interface IPureLogPropertyList : IEnumerable<IPureLogProperty>
     {
         IList<IPureLogProperty> GetLogPropertyList { get; }
     }

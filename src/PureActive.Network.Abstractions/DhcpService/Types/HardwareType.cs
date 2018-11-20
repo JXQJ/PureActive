@@ -1,8 +1,7 @@
-
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// The Hardware address (htype) type.
+    ///     The Hardware address (htype) type.
     /// </summary>
     public enum HardwareType : byte
     {
@@ -10,7 +9,7 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
     }
 
     /// <summary>
-    /// A class that gets the name of the hardware address type.
+    ///     A class that gets the name of the hardware address type.
     /// </summary>
     public static class HardwareString
     {

@@ -8,10 +8,19 @@ using PureActive.Logging.Abstractions.Interfaces;
 namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
-    /// Represents a socket connection between two end points.
+    ///     Represents a socket connection between two end points.
     /// </summary>
     public class SocketChannel : IDisposable
     {
+        #region Events
+
+        /// <summary>
+        ///     An internal error occured
+        /// </summary>
+        public event ErrorHandler ChannelError = delegate { };
+
+        #endregion Events
+
         #region Private Properties
 
         private Socket _socket;
@@ -54,10 +63,10 @@ namespace PureActive.Network.Core.Sockets
         /// <remarks>
         ///     <para>All data is lost when the channel is closed.</para>
         /// </remarks>
-        public Byte[] Data { get; set; }
+        public byte[] Data { get; set; }
 
         /// <summary>
-        /// Gets if channel is connected
+        ///     Gets if channel is connected
         /// </summary>
         public bool IsConnected
         {
@@ -139,7 +148,7 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Handles object cleanup for GC finalization.
+        ///     Handles object cleanup for GC finalization.
         /// </summary>
         ~SocketChannel()
         {
@@ -147,16 +156,16 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Handles object cleanup.
+        ///     Handles object cleanup.
         /// </summary>
         public void Dispose()
-        {          
+        {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
         /// <summary>
-        /// Handles object cleanup
+        ///     Handles object cleanup
         /// </summary>
         /// <param name="disposing">True if called from Dispose(); false if called from GC finalization.</param>
         protected virtual void Dispose(bool disposing)
@@ -167,7 +176,7 @@ namespace PureActive.Network.Core.Sockets
                 _socket = null;
             }
         }
-        
+
         #endregion  Constructors / Deconstructors
 
         #region Methods
@@ -205,6 +214,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -226,6 +236,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -248,6 +259,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -271,6 +283,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -302,6 +315,7 @@ namespace PureActive.Network.Core.Sockets
                     {
                         bytesSent += _socket.Send(sendBuffer, sentBytes, SocketFlags.None);
                     }
+
                     _socket.Close();
                     _connected = false;
                     _messageSent(this, new SocketEventArgs(_socket, Logger));
@@ -311,11 +325,12 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
         /// <summary>
-        ///      Send a new message to a connected socket.
+        ///     Send a new message to a connected socket.
         /// </summary>
         /// <param name="message">An array of type byte that contains the data to be sent.</param>
         public int Send(byte[] message)
@@ -330,9 +345,10 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
-        
+
         /// <summary>
         ///     Send a new message to a connected socket.
         /// </summary>
@@ -350,6 +366,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -371,6 +388,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -395,6 +413,7 @@ namespace PureActive.Network.Core.Sockets
             {
                 ChannelFailure(this, ex);
             }
+
             return bytesSent;
         }
 
@@ -408,14 +427,14 @@ namespace PureActive.Network.Core.Sockets
         }
 
         /// <summary>
-        /// Detected a disconnect
+        ///     Detected a disconnect
         /// </summary>
         /// <param name="socketError">Socket failure reason.</param>
         protected void HandleDisconnect(SocketError socketError) =>
             HandleDisconnect(socketError, new SocketException((int) socketError));
 
         /// <summary>
-        /// Detected a disconnect
+        ///     Detected a disconnect
         /// </summary>
         /// <param name="socketError">Socket failure reason.</param>
         /// <param name="exception">Why it was disconnected.</param>
@@ -435,15 +454,5 @@ namespace PureActive.Network.Core.Sockets
         }
 
         #endregion Methods
-        
-        #region Events
-
-        /// <summary>
-        ///     An internal error occured
-        /// </summary>
-        public event ErrorHandler ChannelError = delegate { };
-
-        #endregion Events
-
     }
 }

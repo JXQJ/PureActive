@@ -6,6 +6,6 @@
         Running,
         Processed,
         Completed,
-        Cancelled,
+        Cancelled
     }
 }

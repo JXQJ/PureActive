@@ -11,21 +11,10 @@ namespace PureActive.Network.Devices.PureObject
 {
     public abstract class PureObjectBase : PureLoggableBase<PureObjectBase>, IPureObject, IEquatable<PureObjectBase>
     {
-        public Guid ObjectId { get; set; }
-
-        public DateTimeOffset CreatedTimestamp { get; set; }
-
-        public DateTimeOffset ModifiedTimestamp { get; set; }
-        
-        public ulong ObjectVersion { get; set; }
-
         protected static readonly ulong ObjectVersionStart = 1;
         protected static readonly ulong ObjectVersionDefaultIncrement = 1;
 
-        protected ulong IncrementObjectVersion() => IncrementObjectVersion(ObjectVersionDefaultIncrement);
-        protected ulong IncrementObjectVersion(ulong incAmt) => ObjectVersion = ObjectVersion + incAmt;
-
-        protected PureObjectBase(IPureLoggerFactory loggerFactory, IPureLogger logger = null):
+        protected PureObjectBase(IPureLoggerFactory loggerFactory, IPureLogger logger = null) :
             base(loggerFactory, logger)
         {
             if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
@@ -37,9 +26,28 @@ namespace PureActive.Network.Devices.PureObject
             Logger = logger ?? LoggerFactory.CreatePureLogger<PureObjectBase>();
         }
 
-        public bool IsSameObjectId(IPureObject objectOther) => objectOther != null && ObjectId.Equals(objectOther.ObjectId);
+        public bool Equals(PureObjectBase other)
+        {
+            return other != null &&
+                   ObjectId.Equals(other.ObjectId) &&
+                   CreatedTimestamp == other.CreatedTimestamp &&
+                   ModifiedTimestamp == other.ModifiedTimestamp &&
+                   ObjectVersion == other.ObjectVersion;
+        }
 
-        public bool IsSameObjectVersion(IPureObject objectOther) => objectOther != null && ObjectVersion == objectOther.ObjectVersion;
+        public Guid ObjectId { get; set; }
+
+        public DateTimeOffset CreatedTimestamp { get; set; }
+
+        public DateTimeOffset ModifiedTimestamp { get; set; }
+
+        public ulong ObjectVersion { get; set; }
+
+        public bool IsSameObjectId(IPureObject objectOther) =>
+            objectOther != null && ObjectId.Equals(objectOther.ObjectId);
+
+        public bool IsSameObjectVersion(IPureObject objectOther) =>
+            objectOther != null && ObjectVersion == objectOther.ObjectVersion;
 
         public virtual IPureObject CopyInstance()
         {
@@ -48,7 +56,7 @@ namespace PureActive.Network.Devices.PureObject
 
         public virtual IPureObject CloneInstance()
         {
-            var objectClone = (PureObjectBase)MemberwiseClone();
+            var objectClone = (PureObjectBase) MemberwiseClone();
 
             // Establishes new ObjectId, CreatedTimestamp and ModifiedTimestamp
             objectClone.ObjectId = Guid.NewGuid();
@@ -72,7 +80,8 @@ namespace PureActive.Network.Devices.PureObject
             }
             else
             {
-                Logger?.LogDebug("UpdateInstance called when {CurObjectId} != {UpdateObjectId}", ObjectId, objectUpdate.ObjectId);
+                Logger?.LogDebug("UpdateInstance called when {CurObjectId} != {UpdateObjectId}", ObjectId,
+                    objectUpdate.ObjectId);
             }
 
             return this;
@@ -84,7 +93,8 @@ namespace PureActive.Network.Devices.PureObject
         }
 
 
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -93,26 +103,23 @@ namespace PureActive.Network.Devices.PureObject
             if (logLevel <= LogLevel.Information)
             {
                 logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ObjectId), ObjectId, LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ObjectVersion), ObjectVersion, LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(CreatedTimestamp), CreatedTimestamp, LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ModifiedTimestamp), ModifiedTimestamp, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ObjectVersion), ObjectVersion,
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(CreatedTimestamp), CreatedTimestamp,
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel(nameof(ModifiedTimestamp), ModifiedTimestamp,
+                    LogLevel.Information));
             }
 
             return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
         }
 
+        protected ulong IncrementObjectVersion() => IncrementObjectVersion(ObjectVersionDefaultIncrement);
+        protected ulong IncrementObjectVersion(ulong incAmt) => ObjectVersion = ObjectVersion + incAmt;
+
         public override bool Equals(object obj)
         {
             return Equals(obj as PureObjectBase);
-        }
-
-        public bool Equals(PureObjectBase other)
-        {
-            return other != null &&
-                   ObjectId.Equals(other.ObjectId) &&
-                   CreatedTimestamp == other.CreatedTimestamp &&
-                   ModifiedTimestamp == other.ModifiedTimestamp &&
-                   ObjectVersion == other.ObjectVersion;
         }
 
         public override int GetHashCode()

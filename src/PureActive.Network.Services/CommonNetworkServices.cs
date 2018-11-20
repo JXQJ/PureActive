@@ -20,6 +20,14 @@ namespace PureActive.Network.Services
 {
     public class CommonNetworkServices : PureLoggableBase<CommonNetworkServices>, ICommonNetworkServices
     {
+        public CommonNetworkServices(ICommonServices commonServices, IPingService pingService, IArpService arpService) :
+            base(commonServices?.LoggerFactory)
+        {
+            CommonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
+            PingService = pingService ?? throw new ArgumentNullException(nameof(pingService));
+            ArpService = arpService ?? throw new ArgumentNullException(nameof(arpService));
+        }
+
         // Implementation of ICommonServices
         public IProcessRunner ProcessRunner => CommonServices?.ProcessRunner;
         public IFileSystem FileSystem => CommonServices?.FileSystem;
@@ -33,39 +41,14 @@ namespace PureActive.Network.Services
 
         public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
 
-        public CommonNetworkServices(ICommonServices commonServices, IPingService pingService, IArpService arpService) :
-            base(commonServices?.LoggerFactory)
-        {
-            CommonServices = commonServices ?? throw new ArgumentNullException(nameof(commonServices));
-            PingService = pingService ?? throw new ArgumentNullException(nameof(pingService));
-            ArpService = arpService ?? throw new ArgumentNullException(nameof(arpService));
-        }
-
-        public static ICommonNetworkServices CreateInstance(IPureLoggerFactory loggerFactory, ICommonServices commonServices)
-        {
-            if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
-            if (commonServices == null) throw new ArgumentNullException(nameof(commonServices));
-
-            // Common Network Services
-            var pingService = new PingService.PingService(commonServices);
-            var arpService = new ArpService.ArpService(commonServices, pingService);
-  
-            return new CommonNetworkServices(commonServices, pingService, arpService);
-        }
-
-        public static ICommonNetworkServices CreateInstance(IPureLoggerFactory loggerFactory, string appName)
-        {
-            return CreateInstance(loggerFactory, Hosting.CommonServices.CommonServices.CreateInstance(loggerFactory, appName));
-        }
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             ServiceHostStatus = ServiceHostStatus.StartPending;
-            var tasks = new List<Task>()
+            var tasks = new List<Task>
             {
                 CommonServices.StartAsync(cancellationToken),
                 PingService.StartAsync(cancellationToken),
-                ArpService.StartAsync(cancellationToken),
+                ArpService.StartAsync(cancellationToken)
             };
 
             var result = tasks.WaitForTasks(cancellationToken, Logger);
@@ -78,7 +61,7 @@ namespace PureActive.Network.Services
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            var tasks = new List<Task>()
+            var tasks = new List<Task>
             {
                 ArpService.StopAsync(cancellationToken),
                 PingService.StopAsync(cancellationToken),
@@ -95,8 +78,9 @@ namespace PureActive.Network.Services
             return result;
         }
 
-     
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -104,10 +88,30 @@ namespace PureActive.Network.Services
 
             if (logLevel <= LogLevel.Information)
             {
-                logPropertyLevels?.Add(new PureLogPropertyLevel("CommonNetworkServicesHostStatus", ServiceHostStatus, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("CommonNetworkServicesHostStatus", ServiceHostStatus,
+                    LogLevel.Information));
             }
 
             return logPropertyLevels;
+        }
+
+        public static ICommonNetworkServices CreateInstance(IPureLoggerFactory loggerFactory,
+            ICommonServices commonServices)
+        {
+            if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
+            if (commonServices == null) throw new ArgumentNullException(nameof(commonServices));
+
+            // Common Network Services
+            var pingService = new PingService.PingService(commonServices);
+            var arpService = new ArpService.ArpService(commonServices, pingService);
+
+            return new CommonNetworkServices(commonServices, pingService, arpService);
+        }
+
+        public static ICommonNetworkServices CreateInstance(IPureLoggerFactory loggerFactory, string appName)
+        {
+            return CreateInstance(loggerFactory,
+                Hosting.CommonServices.CommonServices.CreateInstance(loggerFactory, appName));
         }
     }
 }

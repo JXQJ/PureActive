@@ -10,7 +10,7 @@ namespace PureActive.Core.Extensions
 {
     public static class TaskExtensions
     {
-        public static Task WaitForTasks(this List<Task> tasks, CancellationToken cancellationToken, 
+        public static Task WaitForTasks(this List<Task> tasks, CancellationToken cancellationToken,
             IPureLogger logger = null, [CallerMemberName] string memberName = "")
         {
             Task t = Task.WhenAll(tasks);
@@ -23,7 +23,7 @@ namespace PureActive.Core.Extensions
             {
                 logger?.LogError("Task {Method} timed out", memberName);
 
-                t =  Task.FromException(ex);
+                t = Task.FromException(ex);
             }
             catch (Exception ex)
             {

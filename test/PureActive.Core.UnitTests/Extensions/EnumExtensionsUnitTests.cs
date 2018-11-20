@@ -13,7 +13,6 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public EnumExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Theory]
@@ -25,17 +24,6 @@ namespace PureActive.Core.UnitTests.Extensions
         {
             testString.ToEnumString().Should().Be(expectedString);
         }
-
-        // ReSharper disable InconsistentNaming
-        private enum TestEnum
-        {
-            [Description("First Second")]
-            First_Second,
-
-            [Description("First Second Third")]
-            First_Second_Third
-        }
-        // ReSharper restore InconsistentNaming
 
         [Theory]
         [InlineData(TestEnum.First_Second, "First Second")]
@@ -52,6 +40,14 @@ namespace PureActive.Core.UnitTests.Extensions
         {
             testEnum.GetDescription().Should().Be(expectedString);
         }
+
+        // ReSharper disable InconsistentNaming
+        private enum TestEnum
+        {
+            [Description("First Second")] First_Second,
+
+            [Description("First Second Third")] First_Second_Third
+        }
+        // ReSharper restore InconsistentNaming
     }
 }
- 

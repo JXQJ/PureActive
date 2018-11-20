@@ -1,12 +1,12 @@
 namespace PureActive.Core.Extensions
 {
     /// <summary>
-    /// Extension methods for Integers
+    ///     Extension methods for Integers
     /// </summary>
     public static class IntegerExtensions
     {
         /// <summary>
-        /// Converts a Integer to Hex string
+        ///     Converts a Integer to Hex string
         /// </summary>
         /// <param name="value">Integer to convert</param>
         /// <param name="prefix">String'0x' to include before the Hex value.</param>
@@ -17,7 +17,7 @@ namespace PureActive.Core.Extensions
         }
 
         /// <summary>
-        /// Converts a Integer to Hex string
+        ///     Converts a Integer to Hex string
         /// </summary>
         /// <param name="value">Integer to convert</param>
         /// <param name="prefix">String'0x' to include before the Hex value.</param>
@@ -28,7 +28,7 @@ namespace PureActive.Core.Extensions
         }
 
         /// <summary>
-        /// Converts a Integer to Hex string
+        ///     Converts a Integer to Hex string
         /// </summary>
         /// <param name="value">Integer to convert</param>
         /// <param name="prefix">String'0x' to include before the Hex value.</param>
@@ -39,7 +39,7 @@ namespace PureActive.Core.Extensions
         }
 
         /// <summary>
-        /// Converts a Integer to Hex string
+        ///     Converts a Integer to Hex string
         /// </summary>
         /// <param name="value">Integer to convert</param>
         /// <param name="prefix">String'0x' to include before the Hex value.</param>

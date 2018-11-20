@@ -10,7 +10,7 @@ namespace PureActive.Logging.Abstractions.Types
         ToLog = 1 << 1,
         WithParents = 1 << 2,
         ToLogWithParents = ToLog | WithParents,
-        ToStringWithParents = ToString | WithParents,
+        ToStringWithParents = ToString | WithParents
     }
 
     public static class LoggableFormatUtils

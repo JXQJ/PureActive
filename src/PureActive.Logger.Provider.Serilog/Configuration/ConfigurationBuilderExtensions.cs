@@ -17,21 +17,23 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         //        }
         //    }
 
-        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config, LogEventLevel initialMinimumLevel)
+        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config,
+            LogEventLevel initialMinimumLevel)
         {
             config.AddInMemoryCollection(
-                new Dictionary<string, string>()
+                new Dictionary<string, string>
                 {
                     ["Serilog:MinimumLevel:Default"] = initialMinimumLevel.ToString(),
                     ["Serilog:MinimumLevel:Override:Microsoft"] = "Information",
-                    ["Serilog:MinimumLevel:Override:System"] = "Warning",
+                    ["Serilog:MinimumLevel:Override:System"] = "Warning"
                 }
             );
 
             return config;
         }
 
-        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config, LogLevel initialMinimumLevel) =>
+        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config,
+            LogLevel initialMinimumLevel) =>
             AddLoggerSettings(config, SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLevel));
     }
 }

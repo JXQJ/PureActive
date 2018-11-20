@@ -10,15 +10,15 @@ namespace PureActive.Network.Abstractions.PingService.Extensions
 {
     public static class PingReplyExtensions
     {
-     
-        public static IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(this PingReply pingReply, LogLevel logLevel, LoggableFormat loggableFormat)
+        public static IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(this PingReply pingReply,
+            LogLevel logLevel, LoggableFormat loggableFormat)
         {
-            return new List<IPureLogPropertyLevel>()
-            {
-                {new PureLogPropertyLevel("Status", pingReply.Status, LogLevel.Information) },
-                {new PureLogPropertyLevel("IPAddress", pingReply.Address, LogLevel.Information) },
-                {new PureLogPropertyLevel("RoundtripTime", pingReply.RoundtripTime, LogLevel.Trace) },
-            }
+            return new List<IPureLogPropertyLevel>
+                {
+                    new PureLogPropertyLevel("Status", pingReply.Status, LogLevel.Information),
+                    new PureLogPropertyLevel("IPAddress", pingReply.Address, LogLevel.Information),
+                    new PureLogPropertyLevel("RoundtripTime", pingReply.RoundtripTime, LogLevel.Trace)
+                }
                 .Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
         }
     }

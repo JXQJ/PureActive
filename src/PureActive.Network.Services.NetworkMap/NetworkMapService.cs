@@ -13,24 +13,12 @@ using PureActive.Network.Abstractions.NetworkMapService;
 
 namespace PureActive.Network.Services.NetworkMap
 {
-    public class NetworkMapService: HostedServiceInternal<NetworkMapService>, INetworkMapService
+    public class NetworkMapService : HostedServiceInternal<NetworkMapService>, INetworkMapService
     {
         private static INetworkMapService _networkMapService;
 
-        private static INetworkMapService Instance
-        {
-            get => _networkMapService;
-            set => _networkMapService = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        // Common Services
-        public INetworkMap NetworkMap { get; }
-
-        public ICommonNetworkServices CommonNetworkServices => NetworkMap?.CommonNetworkServices;
-        
-        public IDhcpService DhcpService { get; }
-
-        public NetworkMapService(INetworkMap networkMap, IDhcpService dhcpService, IApplicationLifetime applicationLifetime = null) :
+        public NetworkMapService(INetworkMap networkMap, IDhcpService dhcpService,
+            IApplicationLifetime applicationLifetime = null) :
             base(networkMap?.CommonServices, applicationLifetime, ServiceHost.NetworkMap)
         {
             if (_networkMapService != null)
@@ -42,13 +30,26 @@ namespace PureActive.Network.Services.NetworkMap
             _networkMapService = this;
         }
 
+        private static INetworkMapService Instance
+        {
+            get => _networkMapService;
+            set => _networkMapService = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        public IDhcpService DhcpService { get; }
+
+        // Common Services
+        public INetworkMap NetworkMap { get; }
+
+        public ICommonNetworkServices CommonNetworkServices => NetworkMap?.CommonNetworkServices;
+
         public override Task StartAsync(CancellationToken cancellationToken)
         {
-            var tasks = new List<Task>()
+            var tasks = new List<Task>
             {
                 CommonNetworkServices.StartAsync(cancellationToken),
                 DhcpService.StartAsync(cancellationToken),
-                NetworkMap.StartAsync(cancellationToken),
+                NetworkMap.StartAsync(cancellationToken)
             };
 
             var result = tasks.WaitForTasks(cancellationToken, Logger);
@@ -60,11 +61,11 @@ namespace PureActive.Network.Services.NetworkMap
 
         public override Task StopAsync(CancellationToken cancellationToken)
         {
-            var tasks = new List<Task>()
+            var tasks = new List<Task>
             {
                 NetworkMap.StopAsync(cancellationToken),
                 CommonNetworkServices.StopAsync(cancellationToken),
-                DhcpService.StopAsync(cancellationToken),
+                DhcpService.StopAsync(cancellationToken)
             };
 
             var result = tasks.WaitForTasks(cancellationToken, Logger);
@@ -76,8 +77,6 @@ namespace PureActive.Network.Services.NetworkMap
 
         public Task DiscoverNetworkDevices()
         {
-
-
             return Task.CompletedTask;
         }
     }

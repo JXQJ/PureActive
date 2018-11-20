@@ -1,8 +1,7 @@
-
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// The dhcp defined options.
+    ///     The dhcp defined options.
     /// </summary>
     public enum DhcpOptionType : byte
     {
@@ -18,6 +17,6 @@ namespace PureActive.Network.Abstractions.DhcpService.Types
         UInt16,
         UInt32,
         UInt16Network,
-        UInt32Network,
+        UInt32Network
     }
 }

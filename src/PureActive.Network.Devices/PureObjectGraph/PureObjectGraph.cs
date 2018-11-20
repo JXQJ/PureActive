@@ -9,58 +9,25 @@ namespace PureActive.Network.Devices.PureObjectGraph
 {
     public class PureObjectGraph<T> where T : class, IPureObject
     {
-        private readonly object _oLock = new object();
-        private readonly object _ivLock = new object();
         private readonly object _ieLock = new object();
+        private readonly object _ivLock = new object();
+        private readonly object _oLock = new object();
+        private readonly ReadOnlyDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> _readOnlyEdges;
+
+        private readonly ConcurrentDictionary<Guid, PureObjectVertex<T>> _vertices =
+            new ConcurrentDictionary<Guid, PureObjectVertex<T>>();
+
         private volatile int _directedEdgeCount;
 
-        private readonly ConcurrentDictionary<Guid, PureObjectVertex<T>> _vertices = new ConcurrentDictionary<Guid, PureObjectVertex<T>>();
+        private readonly ConcurrentDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> _edges =
+            new ConcurrentDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>>();
 
-        /// <summary>
-        /// Gets the vertices of the graph.
-        /// </summary>
-        public ReadOnlyDictionary<Guid, PureObjectVertex<T>> Vertices { get; }
+        private PureObjectEdge<T>[] _indexedEdges;
 
         private PureObjectVertex<T>[] _indexedVertices;
 
         /// <summary>
-        /// Gets the order of the graph.
-        /// </summary>
-        public int Order
-        {
-            get => _vertices.Count;
-        }
-
-        private ConcurrentDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> _edges = new ConcurrentDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>>();
-        private readonly ReadOnlyDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> _readOnlyEdges;
-        /// <summary>
-        /// Gets the edges of the graph.
-        /// </summary>
-        public ReadOnlyDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> Edges
-        {
-            get => _readOnlyEdges;
-        }
-
-        private PureObjectEdge<T>[] _indexedEdges;
-
-        /// <summary>
-        /// Gets the size of the graph.
-        /// </summary>
-        public int Size
-        {
-            get => _edges.Count;
-        }
-
-        /// <summary>
-        /// Gets the count of directed edges.
-        /// </summary>
-        public int DirectedEdgeCount
-        {
-            get => _directedEdgeCount;
-        }
-
-        /// <summary>
-        /// Constructor to create an instance of the graph.
+        ///     Constructor to create an instance of the graph.
         /// </summary>
         public PureObjectGraph()
         {
@@ -69,14 +36,51 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Creates a vertex given its value and adds it to the graph.
+        ///     Gets the vertices of the graph.
+        /// </summary>
+        public ReadOnlyDictionary<Guid, PureObjectVertex<T>> Vertices { get; }
+
+        /// <summary>
+        ///     Gets the order of the graph.
+        /// </summary>
+        public int Order
+        {
+            get => _vertices.Count;
+        }
+
+        /// <summary>
+        ///     Gets the edges of the graph.
+        /// </summary>
+        public ReadOnlyDictionary<(Guid tail, int directed, Guid head), PureObjectEdge<T>> Edges
+        {
+            get => _readOnlyEdges;
+        }
+
+        /// <summary>
+        ///     Gets the size of the graph.
+        /// </summary>
+        public int Size
+        {
+            get => _edges.Count;
+        }
+
+        /// <summary>
+        ///     Gets the count of directed edges.
+        /// </summary>
+        public int DirectedEdgeCount
+        {
+            get => _directedEdgeCount;
+        }
+
+        /// <summary>
+        ///     Creates a vertex given its value and adds it to the graph.
         /// </summary>
         /// <param name="value">The value of the vertex to create and add.</param>
         /// <returns>True if successful, otherwise, false.</returns>
         public bool AddVertex(T value) => AddVertex(new PureObjectVertex<T>(value));
 
         /// <summary>
-        /// Adds a vertex to the graph.
+        ///     Adds a vertex to the graph.
         /// </summary>
         /// <param name="vertex">The vertex to add.</param>
         /// <returns>True if successful, otherwise, false.</returns>
@@ -90,14 +94,16 @@ namespace PureActive.Network.Devices.PureObjectGraph
                     {
                         _indexedVertices = null;
                     }
+
                     return true;
                 }
+
                 return false;
             }
         }
 
         /// <summary>
-        /// Removes a vertex from the graph.
+        ///     Removes a vertex from the graph.
         /// </summary>
         /// <param name="id">The ID of the vertex to remove.</param>
         /// <returns>The vertex removed.</returns>
@@ -112,14 +118,15 @@ namespace PureActive.Network.Devices.PureObjectGraph
                     {
                         _indexedVertices = null;
                     }
+
                     bool removed = false;
                     if (_edges.Count > 0)
                     {
                         object obj = new object();
                         _edges
                             .AsParallel()
-                            .Where((edge) => edge.Value.Tail.Id == id || edge.Value.Head.Id == id)
-                            .ForAll((edge) =>
+                            .Where(edge => edge.Value.Tail.Id == id || edge.Value.Head.Id == id)
+                            .ForAll(edge =>
                             {
                                 lock (obj)
                                 {
@@ -131,6 +138,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
                                 }
                             });
                     }
+
                     if (removed)
                     {
                         lock (_ieLock)
@@ -139,33 +147,35 @@ namespace PureActive.Network.Devices.PureObjectGraph
                         }
                     }
                 }
+
                 return removedVertex;
             }
         }
 
         /// <summary>
-        /// Removes a vertex from the graph.
+        ///     Removes a vertex from the graph.
         /// </summary>
         /// <param name="vertex">The vertex to remove.</param>
         /// <returns>The vertex removed.</returns>
         public PureObjectVertex<T> RemoveVertex(PureObjectVertex<T> vertex) => RemoveVertex(vertex.Id);
 
         /// <summary>
-        /// Returns a Vertex given a vertex ID.
+        ///     Returns a Vertex given a vertex ID.
         /// </summary>
         /// <param name="id">The vertex ID.</param>
         /// <returns>The Vertex with the given vertex ID.</returns>
         public PureObjectVertex<T> GetVertex(Guid id) => _vertices[id];
 
         /// <summary>
-        /// Creates and adds an edge to the graph.
+        ///     Creates and adds an edge to the graph.
         /// </summary>
         /// <param name="tailId">The vertex ID of the tail.</param>
         /// <param name="headId">The vertex ID of the head.</param>
         /// <param name="directed">Indicates if the edge is directed or not.</param>
         /// <param name="weight">The weight of the edge. Default is 0 (unweighted).</param>
         /// <returns>True if the edge is added successfully. Otherwise, false.</returns>
-        public bool AddEdge(Guid tailId, Guid headId, bool directed = false, double weight = 0) => AddEdge(PureObjectEdge<T>.Create(_vertices[tailId], _vertices[headId], directed, weight));
+        public bool AddEdge(Guid tailId, Guid headId, bool directed = false, double weight = 0) =>
+            AddEdge(PureObjectEdge<T>.Create(_vertices[tailId], _vertices[headId], directed, weight));
 
         public bool AddEdge(T tail, T head, bool directed = false, double weight = 0)
         {
@@ -176,7 +186,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
         }
 
         /// <summary>
-        /// Adds an edge to the graph.
+        ///     Adds an edge to the graph.
         /// </summary>
         /// <param name="edge">The edge to add.</param>
         /// <returns>True if the edge is added successfully. Otherwise, false.</returns>
@@ -190,18 +200,21 @@ namespace PureActive.Network.Devices.PureObjectGraph
                     {
                         _indexedEdges = null;
                     }
+
                     if (edge.Directed)
                     {
                         Interlocked.Increment(ref _directedEdgeCount);
                     }
+
                     return true;
                 }
+
                 return false;
             }
         }
 
         /// <summary>
-        /// Removes an edge from the graph.
+        ///     Removes an edge from the graph.
         /// </summary>
         /// <param name="id">The ID of the edge to remove.</param>
         /// <returns>The edge removed.</returns>
@@ -215,35 +228,37 @@ namespace PureActive.Network.Devices.PureObjectGraph
                     {
                         _indexedEdges = null;
                     }
+
                     if (removedEdge.Directed)
                     {
                         Interlocked.Decrement(ref _directedEdgeCount);
                     }
                 }
+
                 return removedEdge;
             }
         }
 
         /// <summary>
-        /// Removes an edge from the graph.
+        ///     Removes an edge from the graph.
         /// </summary>
         /// <param name="edge">The edge to remove.</param>
         /// <returns>The edge removed.</returns>
         public PureObjectEdge<T> RemoveEdge(PureObjectEdge<T> edge) => RemoveEdge(edge.Id);
 
         /// <summary>
-        /// Returns an Edge given an edge id.
+        ///     Returns an Edge given an edge id.
         /// </summary>
         /// <param name="id">The edge ID.</param>
         /// <returns>The Edge with the given edge id.</returns>
         public PureObjectEdge<T> GetEdge((Guid tail, int directed, Guid head) id) => _edges[id];
 
         /// <summary>
-        /// Creates an index of vertices.
+        ///     Creates an index of vertices.
         /// </summary>
         /// <returns>The indexed vertices.</returns>
         /// <remarks>
-        /// It is recommended that IndexVertices() is called after all Add*()/Remove*() calls are done.
+        ///     It is recommended that IndexVertices() is called after all Add*()/Remove*() calls are done.
         /// </remarks>
         public PureObjectVertex<T>[] IndexVertices()
         {
@@ -252,18 +267,19 @@ namespace PureActive.Network.Devices.PureObjectGraph
                 if (_indexedVertices == null)
                 {
                     _indexedVertices = _vertices.Values.ToArray();
-                   Array.Sort(_indexedVertices);
+                    Array.Sort(_indexedVertices);
                 }
+
                 return _indexedVertices;
             }
         }
 
         /// <summary>
-        /// Creates an index of edges.
+        ///     Creates an index of edges.
         /// </summary>
         /// <returns>The indexed edges.</returns>
         /// <remarks>
-        /// It is recommended that IndexEdges() is called after all Add*()/Remove*() calls are done.
+        ///     It is recommended that IndexEdges() is called after all Add*()/Remove*() calls are done.
         /// </remarks>
         public PureObjectEdge<T>[] IndexEdges()
         {
@@ -274,6 +290,7 @@ namespace PureActive.Network.Devices.PureObjectGraph
                     _indexedEdges = _edges.Values.ToArray();
                     Array.Sort(_indexedEdges);
                 }
+
                 return _indexedEdges;
             }
         }

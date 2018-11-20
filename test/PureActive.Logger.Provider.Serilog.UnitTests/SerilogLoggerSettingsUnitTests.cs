@@ -36,12 +36,16 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             loggerSettings.LoggingOutputFlags.Should().Be(LoggingOutputFlags.Default);
 
             // Serilog LogEventLevels
-            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).MinimumLogEventLevel.Should().Be(logEventLevel);
-            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).InitialLogEventLevel.Should().Be(logEventLevel);
+            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).MinimumLogEventLevel.Should()
+                .Be(logEventLevel);
+            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).InitialLogEventLevel.Should()
+                .Be(logEventLevel);
 
             // Msft LogLevels
-            loggerSettings.GetLogLevel(LoggingOutputFlags.Default).MinimumLogLevel.Should().Be(SerilogLogLevel.SerilogToMsftLogLevel(logEventLevel));
-            loggerSettings.GetLogLevel(LoggingOutputFlags.Default).InitialLogLevel.Should().Be(SerilogLogLevel.SerilogToMsftLogLevel(logEventLevel));
+            loggerSettings.GetLogLevel(LoggingOutputFlags.Default).MinimumLogLevel.Should()
+                .Be(SerilogLogLevel.SerilogToMsftLogLevel(logEventLevel));
+            loggerSettings.GetLogLevel(LoggingOutputFlags.Default).InitialLogLevel.Should()
+                .Be(SerilogLogLevel.SerilogToMsftLogLevel(logEventLevel));
         }
 
         [Theory]
@@ -59,8 +63,10 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests
             loggerSettings.LoggingOutputFlags.Should().Be(LoggingOutputFlags.Default);
 
             // Serilog LogEventLevels
-            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).MinimumLogEventLevel.Should().Be(SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
-            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).InitialLogEventLevel.Should().Be(SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
+            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).MinimumLogEventLevel.Should()
+                .Be(SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
+            loggerSettings.GetSerilogLogLevel(LoggingOutputFlags.Default).InitialLogEventLevel.Should()
+                .Be(SerilogLogLevel.MsftToSerilogLogLevel(logLevel));
 
             // Msft LogLevels
             loggerSettings.GetLogLevel(LoggingOutputFlags.Default).MinimumLogLevel.Should().Be(logLevel);

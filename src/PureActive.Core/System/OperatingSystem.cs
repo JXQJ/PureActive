@@ -1,6 +1,4 @@
-﻿// using System;
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using PureActive.Core.Abstractions.System;
 
 namespace PureActive.Core.System

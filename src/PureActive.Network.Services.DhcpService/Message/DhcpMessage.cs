@@ -61,8 +61,8 @@ namespace PureActive.Network.Services.DhcpService.Message
     #endregion RFC Specification
 
     /// <summary>
-    /// A class that represents a DHCP packet.
-    /// See http://www.faqs.org/rfcs/rfc2131.html for full details of protocol.
+    ///     A class that represents a DHCP packet.
+    ///     See http://www.faqs.org/rfcs/rfc2131.html for full details of protocol.
     /// </summary>
     public class DhcpMessage : PureLoggableBase<DhcpMessage>, IDhcpMessage
     {
@@ -77,16 +77,16 @@ namespace PureActive.Network.Services.DhcpService.Message
         private uint _xid;
         private ushort _secs;
         private byte[] _flags = new byte[2];
-        private byte[] _ciaddr = new byte[4];
-        private byte[] _yiaddr = new byte[4];
-        private byte[] _siaddr = new byte[4];
-        private byte[] _giaddr = new byte[4];
-        private byte[] _chaddr = new byte[16];
-        private byte[] _sname = new byte[64];
-        private byte[] _file = new byte[128];
+        private readonly byte[] _ciaddr = new byte[4];
+        private readonly byte[] _yiaddr = new byte[4];
+        private readonly byte[] _siaddr = new byte[4];
+        private readonly byte[] _giaddr = new byte[4];
+        private readonly byte[] _chaddr = new byte[16];
+        private readonly byte[] _sname = new byte[64];
+        private readonly byte[] _file = new byte[128];
 
-        private Dictionary<DhcpOption, byte[]> _options = new Dictionary<DhcpOption, byte[]>();
-        private byte[] _optionOrdering = new Byte[] { };
+        private readonly Dictionary<DhcpOption, byte[]> _options = new Dictionary<DhcpOption, byte[]>();
+        private byte[] _optionOrdering = { };
         private int _optionDataSize;
 
         #endregion Private Properties
@@ -94,18 +94,18 @@ namespace PureActive.Network.Services.DhcpService.Message
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DhcpMessage"/> class.
+        ///     Initializes a new instance of the <see cref="DhcpMessage" /> class.
         /// </summary>
         public DhcpMessage(IPureLoggerFactory loggerFactory, IPureLogger logger = null) :
-            base (loggerFactory, logger)
+            base(loggerFactory, logger)
         {
             CreatedTimestamp = DateTimeOffset.Now;
 
-            _op = (byte)OperationCode.BootReply;
-            _htype = (byte)HardwareType.Ethernet;
+            _op = (byte) OperationCode.BootReply;
+            _htype = (byte) HardwareType.Ethernet;
             _hlen = 0;
             _hops = 0;
-            _xid = (ushort)Random.Next(ushort.MaxValue);
+            _xid = (ushort) Random.Next(ushort.MaxValue);
             _secs = 0;
             Array.Clear(_flags, 0, _flags.Length);
             Array.Clear(_ciaddr, 0, _ciaddr.Length);
@@ -118,11 +118,11 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DhcpMessage"/> class.
-        /// <param name="data">Array containing the data to decode.</param>
+        ///     Initializes a new instance of the <see cref="DhcpMessage" /> class.
+        ///     <param name="data">Array containing the data to decode.</param>
         /// </summary>
         public DhcpMessage(byte[] data, IPureLoggerFactory loggerFactory, IPureLogger logger = null)
-            :base(loggerFactory, logger)
+            : base(loggerFactory, logger)
         {
             ByteReader byteReader = new ByteReader(data, ByteOrder.Network);
 
@@ -149,14 +149,14 @@ namespace PureActive.Network.Services.DhcpService.Message
             // if magic number is valid then process options
             if (offset + 4 < rawOptions.Length &&
                 (BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DhcpOptionsMagicNumber
-                || BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DhcpWinOptionsMagicNumber))
+                 || BitConverter.ToUInt32(rawOptions, offset) == DhcpConstants.DhcpWinOptionsMagicNumber))
             {
                 offset += 4;
-                Boolean end = false;
+                bool end = false;
 
                 while (!end && offset < rawOptions.Length)
                 {
-                    DhcpOption option = (DhcpOption)rawOptions[offset];
+                    DhcpOption option = (DhcpOption) rawOptions[offset];
                     offset++;
 
                     int optionLen;
@@ -190,67 +190,68 @@ namespace PureActive.Network.Services.DhcpService.Message
         #region Public Properties
 
         /// <summary>
-        /// The timestamp when cached.
+        ///     The timestamp when cached.
         /// </summary>
         public DateTimeOffset CreatedTimestamp { get; set; }
 
-        ///<summary>
-        /// The operation code of whatever last altered the packet (op).
-        ///</summary>
+        /// <summary>
+        ///     The operation code of whatever last altered the packet (op).
+        /// </summary>
         public OperationCode Operation
         {
-            get { return (OperationCode)_op; }
-            set { _op = (byte)value; }
+            get { return (OperationCode) _op; }
+            set { _op = (byte) value; }
         }
 
-        ///<summary>
-        /// The hardware address type (htype).
-        ///</summary>
+        /// <summary>
+        ///     The hardware address type (htype).
+        /// </summary>
         public HardwareType Hardware
         {
-            get { return (HardwareType)_htype; }
-            set { _htype = (byte)value; }
+            get { return (HardwareType) _htype; }
+            set { _htype = (byte) value; }
         }
 
-        ///<summary>
-        /// The hardware address length (hlen).
-        ///</summary>
+        /// <summary>
+        ///     The hardware address length (hlen).
+        /// </summary>
         public byte HardwareAddressLength
         {
             get { return _hlen; }
             set { _hlen = value; }
         }
 
-        ///<summary>
-        ///  Optionally used by relay agents when booting via a relay agent (hops).
-        ///</summary>
+        /// <summary>
+        ///     Optionally used by relay agents when booting via a relay agent (hops).
+        /// </summary>
         public byte Hops
         {
             get { return _hops; }
             set { _hops = value; }
         }
 
-        ///<summary>
-        /// A random number chosen by the client, to associate messages and responses between a client and a server (xid).
-        ///</summary>
+        /// <summary>
+        ///     A random number chosen by the client, to associate messages and responses between a client and a server (xid).
+        /// </summary>
         public uint SessionId
         {
             get { return _xid; }
             set { _xid = value; }
         }
 
-        ///<summary>
-        /// The seconds elapsed since client began address acquisition or renewal process (secs).
-        ///</summary>
+        /// <summary>
+        ///     The seconds elapsed since client began address acquisition or renewal process (secs).
+        /// </summary>
         public ushort SecondsElapsed
         {
             get { return _secs; }
             set { _secs = value; }
         }
 
-        ///<summary>
-        /// The leftmost bit is defined as the BROADCAST (B) flag.   The remaining bits of the flags field are reserved for future use.
-        ///</summary>
+        /// <summary>
+        ///     The leftmost bit is defined as the BROADCAST (B) flag.   The remaining bits of the flags field are reserved for
+        ///     future use.
+        /// </summary>
         public byte[] Flags
         {
             get { return _flags; }
@@ -258,7 +259,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// Is Broadcast(true) / Unicast(false) flag 
+        ///     Is Broadcast(true) / Unicast(false) flag
         /// </summary>
         public bool IsBroadcast
         {
@@ -276,50 +277,50 @@ namespace PureActive.Network.Services.DhcpService.Message
             }
         }
 
-        ///<summary>
-        /// The client IP address (ciaddr).
-        ///</summary>
+        /// <summary>
+        ///     The client IP address (ciaddr).
+        /// </summary>
         public InternetAddress ClientAddress
         {
             get { return new InternetAddress(_ciaddr); }
             set { CopyData(value.ToArray(), _ciaddr); }
         }
 
-        ///<summary>
-        /// The assigned client IP address (yiaddr).
-        ///</summary>
+        /// <summary>
+        ///     The assigned client IP address (yiaddr).
+        /// </summary>
         public InternetAddress AssignedAddress
         {
             get { return new InternetAddress(_yiaddr); }
             set { CopyData(value.ToArray(), _yiaddr); }
         }
 
-        ///<summary>
-        /// The server IP address (siaddr).
-        ///</summary>
+        /// <summary>
+        ///     The server IP address (siaddr).
+        /// </summary>
         public InternetAddress NextServerAddress
         {
             get { return new InternetAddress(_siaddr); }
             set { CopyData(value.ToArray(), _siaddr); }
         }
 
-        ///<summary>
-        /// The gateway IP address (giaddr);
-        ///</summary>
+        /// <summary>
+        ///     The gateway IP address (giaddr);
+        /// </summary>
         public InternetAddress RelayAgentAddress
         {
             get { return new InternetAddress(_giaddr); }
             set { CopyData(value.ToArray(), _giaddr); }
         }
 
-        ///<summary>
-        /// The client hardware address (chaddr).
-        ///</summary>
+        /// <summary>
+        ///     The client hardware address (chaddr).
+        /// </summary>
         public PhysicalAddress ClientHardwareAddress
         {
             get
             {
-                Byte[] hardwareAddress = new Byte[_hlen];
+                byte[] hardwareAddress = new byte[_hlen];
                 Array.Copy(_chaddr, hardwareAddress, _hlen);
                 return new PhysicalAddress(hardwareAddress);
             }
@@ -327,9 +328,9 @@ namespace PureActive.Network.Services.DhcpService.Message
             set
             {
                 CopyData(value.ToArray(), _chaddr);
-                _hlen = (Byte)value.ToArray().Length;
+                _hlen = (byte) value.ToArray().Length;
 
-                for (Int32 i = value.ToArray().Length; i < 16; i++)
+                for (int i = value.ToArray().Length; i < 16; i++)
                 {
                     _chaddr[i] = 0;
                 }
@@ -337,7 +338,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// The DNS hostname part that corresponds with the given IP address (sname).
+        ///     The DNS hostname part that corresponds with the given IP address (sname).
         /// </summary>
         public byte[] ServerName
         {
@@ -346,7 +347,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// The boot file name the clients may use (file).
+        ///     The boot file name the clients may use (file).
         /// </summary>
         public byte[] BootFileName
         {
@@ -355,7 +356,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// The option ordering parameter list.
+        ///     The option ordering parameter list.
         /// </summary>
         public byte[] OptionOrdering
         {
@@ -368,23 +369,21 @@ namespace PureActive.Network.Services.DhcpService.Message
         #region Methods
 
         /// <summary>
-        /// Get option data.
-        /// </summary> 
+        ///     Get option data.
+        /// </summary>
         public byte[] GetOptionData(DhcpOption option)
         {
             if (_options.ContainsKey(option))
             {
                 return _options[option];
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         /// <summary>
-        /// Remove all options.
-        /// </summary> 
+        ///     Remove all options.
+        /// </summary>
         public void ClearOptions()
         {
             _optionDataSize = 0;
@@ -392,9 +391,9 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// Add or define a new custom option type.
-        /// </summary>   
-        public void AddOption(DhcpOption option, params Byte[] data)
+        ///     Add or define a new custom option type.
+        /// </summary>
+        public void AddOption(DhcpOption option, params byte[] data)
         {
             if (option == DhcpOption.Pad || option == DhcpOption.End)
             {
@@ -413,7 +412,7 @@ namespace PureActive.Network.Services.DhcpService.Message
 
             foreach (var paramOptionItem in paramOptions)
             {
-                if (paramOptionItem == (byte)paramOption)
+                if (paramOptionItem == (byte) paramOption)
                     return true;
             }
 
@@ -421,8 +420,8 @@ namespace PureActive.Network.Services.DhcpService.Message
         }
 
         /// <summary>
-        /// Remove a custom option type.
-        /// </summary>  
+        ///     Remove a custom option type.
+        /// </summary>
         public bool RemoveOption(DhcpOption option)
         {
             if (_options.ContainsKey(option))
@@ -432,6 +431,7 @@ namespace PureActive.Network.Services.DhcpService.Message
                 _options.Remove(option);
                 return true;
             }
+
             return false;
         }
 
@@ -439,7 +439,7 @@ namespace PureActive.Network.Services.DhcpService.Message
         public IEnumerable<byte[]> DhcpOptionValues() => _options.Values;
 
         /// <summary>
-        /// Converts dhcp message into a byte array.
+        ///     Converts dhcp message into a byte array.
         /// </summary>
         public byte[] ToArray()
         {
@@ -468,9 +468,9 @@ namespace PureActive.Network.Services.DhcpService.Message
                 BitConverter.GetBytes(DhcpConstants.DhcpWinOptionsMagicNumber).CopyTo(data, offset);
                 offset += 4;
 
-                foreach (Byte optionId in _optionOrdering)
+                foreach (byte optionId in _optionOrdering)
                 {
-                    DhcpOption option = (DhcpOption)optionId;
+                    DhcpOption option = (DhcpOption) optionId;
                     if (_options.ContainsKey(option))
                     {
                         data[offset++] = optionId;
@@ -478,7 +478,7 @@ namespace PureActive.Network.Services.DhcpService.Message
 
                         if (_options[option] != null && optionValue.Length > 0)
                         {
-                            data[offset++] = (Byte)optionValue.Length;
+                            data[offset++] = (byte) optionValue.Length;
                             Array.Copy(_options[option], 0, data, offset, optionValue.Length);
                             offset += optionValue.Length;
                         }
@@ -487,33 +487,38 @@ namespace PureActive.Network.Services.DhcpService.Message
 
                 foreach (DhcpOption option in _options.Keys)
                 {
-                    if (Array.IndexOf(_optionOrdering, (Byte)option) == -1)
+                    if (Array.IndexOf(_optionOrdering, (byte) option) == -1)
                     {
-                        data[offset++] = (Byte)option;
+                        data[offset++] = (byte) option;
                         byte[] optionValue = _options[option];
 
                         if (_options[option] != null && optionValue.Length > 0)
                         {
-                            data[offset++] = (Byte)optionValue.Length;
+                            data[offset++] = (byte) optionValue.Length;
                             Array.Copy(_options[option], 0, data, offset, optionValue.Length);
                             offset += optionValue.Length;
                         }
                     }
                 }
 
-                data[offset] = (Byte)DhcpOption.End;
+                data[offset] = (byte) DhcpOption.End;
             }
+
             byteWriter.Write(data);
 
             return byteWriter.GetBytes();
         }
-        
-        private string GetDhcpOptionString(DhcpOption dhcpOption, DhcpOptionTypeMap.DhcpRequestListFormat dhcpRequestListFormat = DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated)
+
+        private string GetDhcpOptionString(DhcpOption dhcpOption,
+            DhcpOptionTypeMap.DhcpRequestListFormat dhcpRequestListFormat =
+                DhcpOptionTypeMap.DhcpRequestListFormat.StringNewlineIndentedSeparated)
         {
-            return DhcpOptionTypeMap.GetDhcpOptionString(dhcpOption, GetOptionData(dhcpOption), dhcpRequestListFormat, Logger);
+            return DhcpOptionTypeMap.GetDhcpOptionString(dhcpOption, GetOptionData(dhcpOption), dhcpRequestListFormat,
+                Logger);
         }
 
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -521,36 +526,56 @@ namespace PureActive.Network.Services.DhcpService.Message
 
             if (logLevel <= LogLevel.Information)
             {
-                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageTimeStamp", CreatedTimestamp.ToLocalTime(), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageOp", OperationString.GetName(Operation), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareType)", HardwareString.GetName(Hardware), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageTimeStamp", CreatedTimestamp.ToLocalTime(),
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("MessageOp", OperationString.GetName(Operation),
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareType)", HardwareString.GetName(Hardware),
+                    LogLevel.Trace));
                 logPropertyLevels?.Add(new PureLogPropertyLevel("Hops", ByteUtility.PrintByte(Hops), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("TrxId", SessionId.ToHexString("0x"), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("SecondsElapsed", SecondsElapsed.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("Flags", ByteUtility.PrintBytes(_flags), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("TrxId", SessionId.ToHexString("0x"),
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("SecondsElapsed", SecondsElapsed.ToString(),
+                    LogLevel.Trace));
+                logPropertyLevels?.Add(
+                    new PureLogPropertyLevel("Flags", ByteUtility.PrintBytes(_flags), LogLevel.Trace));
                 logPropertyLevels?.Add(new PureLogPropertyLevel("IsBroadcast", IsBroadcast.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("ClientAddress", ClientAddress.ToString(), LogLevel.Debug));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("AssignedAddress", AssignedAddress.ToString(), LogLevel.Debug));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("NextServerAddress", NextServerAddress.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("RelayAgentAddress", RelayAgentAddress.ToString(), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareAddress", ClientHardwareAddress.ToString(), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("ServerName", ByteUtility.GetSafeString(ServerName), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("BootFileName", ByteUtility.GetSafeString(BootFileName), LogLevel.Trace));
-                                           
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptMessageType", GetDhcpOptionString(DhcpOption.MessageType), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptClientId", GetDhcpOptionString(DhcpOption.ClientId), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptVendorClassId", GetDhcpOptionString(DhcpOption.VendorClassId), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptHostName", GetDhcpOptionString(DhcpOption.Hostname), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptAddressRequest", GetDhcpOptionString(DhcpOption.RequestedIpAddr), LogLevel.Information));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptServerIdentifier", GetDhcpOptionString(DhcpOption.ServerId), LogLevel.Trace));
-                logPropertyLevels?.Add(new PureLogPropertyLevel("OptParamReqList", GetDhcpOptionString(DhcpOption.ParamReqList), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("ClientAddress", ClientAddress.ToString(),
+                    LogLevel.Debug));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("AssignedAddress", AssignedAddress.ToString(),
+                    LogLevel.Debug));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("NextServerAddress", NextServerAddress.ToString(),
+                    LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("RelayAgentAddress", RelayAgentAddress.ToString(),
+                    LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("HardwareAddress", ClientHardwareAddress.ToString(),
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("ServerName", ByteUtility.GetSafeString(ServerName),
+                    LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("BootFileName", ByteUtility.GetSafeString(BootFileName),
+                    LogLevel.Trace));
+
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptMessageType",
+                    GetDhcpOptionString(DhcpOption.MessageType), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptClientId", GetDhcpOptionString(DhcpOption.ClientId),
+                    LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptVendorClassId",
+                    GetDhcpOptionString(DhcpOption.VendorClassId), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptHostName", GetDhcpOptionString(DhcpOption.Hostname),
+                    LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptAddressRequest",
+                    GetDhcpOptionString(DhcpOption.RequestedIpAddr), LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptServerIdentifier",
+                    GetDhcpOptionString(DhcpOption.ServerId), LogLevel.Trace));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("OptParamReqList",
+                    GetDhcpOptionString(DhcpOption.ParamReqList), LogLevel.Trace));
             }
 
             return logPropertyLevels?.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
         }
 
         /// <summary>
-        /// Copy byte array object.
+        ///     Copy byte array object.
         /// </summary>
         private void CopyData(byte[] source, byte[] dest)
         {

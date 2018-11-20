@@ -1,7 +1,7 @@
 namespace PureActive.Network.Abstractions.DhcpService.Types
 {
     /// <summary>
-    /// Contains global variables for project.
+    ///     Contains global variables for project.
     /// </summary>
     public static class DhcpConstants
     {

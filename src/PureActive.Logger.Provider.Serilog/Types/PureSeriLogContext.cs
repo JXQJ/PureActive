@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PureActive.Logging.Abstractions.Interfaces;
+using Serilog.Context;
 using Serilog.Core;
 using Serilog.Core.Enrichers;
 
@@ -18,7 +19,7 @@ namespace PureActive.Logger.Provider.Serilog.Types
         /// </summary>
         public IDisposable CreateLogScope(IList<KeyValuePair<string, string>> properties)
         {
-            return global::Serilog.Context.LogContext.Push
+            return LogContext.Push
             (
                 properties.Select
                     (

@@ -26,7 +26,7 @@ namespace PureActive.Core.Extensions
                 list[k] = list[n];
                 list[n] = value;
             }
-       }
+        }
 
         public static IList<T> AddItem<T>(this IList<T> list, T item)
         {
@@ -42,7 +42,7 @@ namespace PureActive.Core.Extensions
 
         public static IList<T> CloneList<T>(this IEnumerable<T> list) where T : ICloneable
         {
-            return list.Select(item => (T)item.Clone()).ToList();
+            return list.Select(item => (T) item.Clone()).ToList();
         }
     }
 }

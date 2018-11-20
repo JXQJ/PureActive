@@ -37,7 +37,7 @@ namespace PureActive.Core.Async
             Func<TSource, Task<TResult>> operation,
             CancellationToken cancellationToken,
             int maxSimultaneous
-            )
+        )
         {
             // Enumerate once to List and use twice below
             var sourcesList = sources.ToList();
@@ -115,7 +115,8 @@ namespace PureActive.Core.Async
                 }
                 catch (Exception ex)
                 {
-                    var tryAgain = attempt < numAttempts && shouldRetry(ex)  && !cancellationToken.IsCancellationRequested;
+                    var tryAgain = attempt < numAttempts && shouldRetry(ex) &&
+                                   !cancellationToken.IsCancellationRequested;
 
                     _logger?.LogWarning
                     (

@@ -12,16 +12,6 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public GuidExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
-        }
-
-        [Fact]
-        public void GuidExtensions_UpperCase()
-        {
-            var guid = Guid.NewGuid();
-            var guidNoDashes = guid.ToStringNoDashes();
-
-            guidNoDashes.Should().Be(guid.ToString().ToUpper().Replace("-", ""));
         }
 
         [Fact]
@@ -32,6 +22,15 @@ namespace PureActive.Core.UnitTests.Extensions
             var guidNoDashes = guid.ToStringNoDashes();
 
             guidNoDashes.Should().Be("00000000000000000000000000000000");
+        }
+
+        [Fact]
+        public void GuidExtensions_UpperCase()
+        {
+            var guid = Guid.NewGuid();
+            var guidNoDashes = guid.ToStringNoDashes();
+
+            guidNoDashes.Should().Be(guid.ToString().ToUpper().Replace("-", ""));
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IPureLoggerGlobal
     {
-       IPureLogger AppLogger { get; set; }
-       IPureLogger TestLogger { get; set; }
+        IPureLogger AppLogger { get; set; }
+        IPureLogger TestLogger { get; set; }
     }
 }

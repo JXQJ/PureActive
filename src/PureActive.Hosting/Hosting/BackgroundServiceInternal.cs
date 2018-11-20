@@ -13,29 +13,40 @@ namespace PureActive.Hosting.Hosting
         private readonly CancellationTokenSource _stoppingCts = new CancellationTokenSource();
         private Task _executingTask;
 
-        protected BackgroundServiceInternal(ICommonServices commonServices, IApplicationLifetime applicationLifetime, ServiceHost serviceHost) : 
+        protected BackgroundServiceInternal(ICommonServices commonServices, IApplicationLifetime applicationLifetime,
+            ServiceHost serviceHost) :
             base(commonServices, applicationLifetime, serviceHost)
         {
+        }
 
+        public virtual void Dispose()
+        {
+            _stoppingCts.Cancel();
         }
 
         /// <summary>
-        /// This method is called when the <see cref="T:Microsoft.Extensions.Hosting.IHostedService" /> starts. The implementation should return a task that represents
-        /// the lifetime of the long running operation(s) being performed.
+        ///     This method is called when the <see cref="T:Microsoft.Extensions.Hosting.IHostedService" /> starts. The
+        ///     implementation should return a task that represents
+        ///     the lifetime of the long running operation(s) being performed.
         /// </summary>
-        /// <param name="stoppingToken">Triggered when <see cref="M:Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)" /> is called.</param>
+        /// <param name="stoppingToken">
+        ///     Triggered when
+        ///     <see cref="M:Microsoft.Extensions.Hosting.IHostedService.StopAsync(System.Threading.CancellationToken)" /> is
+        ///     called.
+        /// </param>
         /// <returns>A <see cref="T:System.Threading.Tasks.Task" /> that represents the long running operations.</returns>
         protected abstract Task ExecuteAsync(CancellationToken stoppingToken);
 
         /// <summary>
-        /// Triggered when the application host is ready to start the service.
+        ///     Triggered when the application host is ready to start the service.
         /// </summary>
         /// <param name="cancellationToken">Indicates that the start process has been aborted.</param>
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             if (ServiceHostStatus != ServiceHostStatus.Stopped)
             {
-                Logger?.LogDebug("{ServiceHost}:Started Called with {ServiceHostStatus}", ServiceHost, ServiceHostStatus);
+                Logger?.LogDebug("{ServiceHost}:Started Called with {ServiceHostStatus}", ServiceHost,
+                    ServiceHostStatus);
             }
 
             ServiceHostStatus = ServiceHostStatus.StartPending;
@@ -58,7 +69,7 @@ namespace PureActive.Hosting.Hosting
         }
 
         /// <summary>
-        /// Triggered when the application host is performing a graceful shutdown.
+        ///     Triggered when the application host is performing a graceful shutdown.
         /// </summary>
         /// <param name="cancellationToken">Indicates that the shutdown process should no longer be graceful.</param>
         public override async Task StopAsync(CancellationToken cancellationToken)
@@ -76,11 +87,6 @@ namespace PureActive.Hosting.Hosting
                 await Task.WhenAny(_executingTask, Task.Delay(-1, cancellationToken));
                 ServiceHostStatus = ServiceHostStatus.Stopped;
             }
-        }
-
-        public virtual void Dispose()
-        {
-            _stoppingCts.Cancel();
         }
     }
 }

@@ -26,55 +26,36 @@ namespace PureActive.Network.Services.ArpService
 {
     public class ArpService : BackgroundServiceInternal<ArpService>, IArpService
     {
+        /// <summary>
+        ///     The number of times we will attempt run arp command
+        /// </summary>
+        private const int ArpRetryAttempts = 3;
+
+        private readonly Dictionary<IPAddress, ArpItem> _ipAddress2ArpItem = new Dictionary<IPAddress, ArpItem>();
+
+        private readonly Dictionary<PhysicalAddress, ArpItem> _physical2ArpItem =
+            new Dictionary<PhysicalAddress, ArpItem>();
+
         // ILoggable Interface
         private readonly IPingService _pingService;
-        
-        private readonly Dictionary<PhysicalAddress, ArpItem> _physical2ArpItem = new Dictionary<PhysicalAddress, ArpItem>();
-        private readonly Dictionary<IPAddress, ArpItem> _ipAddress2ArpItem = new Dictionary<IPAddress, ArpItem>();
-        private readonly object _updateLock = new object();
-
-        public TimeSpan Timeout { get; set; } = new TimeSpan(0, 3, 0);    // 3 minutes
-
-        public int Count => _physical2ArpItem.Count;
 
         private readonly int _processExitDelay = 100;
+        private readonly TimeSpan _retryAttemptDelay = TimeSpan.FromSeconds(1);
+        private readonly object _updateLock = new object();
 
-        public ArpRefreshStatus LastArpRefreshStatus { get; internal set; }
-        public DateTimeOffset LastUpdated { get; internal set; }
-
-        public ArpService(ICommonServices commonServices, IPingService pingService, IApplicationLifetime applicationLifetime = null) :
+        public ArpService(ICommonServices commonServices, IPingService pingService,
+            IApplicationLifetime applicationLifetime = null) :
             base(commonServices, applicationLifetime, ServiceHost.ArpService)
         {
             _pingService = pingService;
         }
 
-        /// <summary>
-        /// The number of times we will attempt run arp command
-        /// </summary>
-        private const int ArpRetryAttempts = 3;
-        private readonly TimeSpan _retryAttemptDelay = TimeSpan.FromSeconds(1);
+        public TimeSpan Timeout { get; set; } = new TimeSpan(0, 3, 0); // 3 minutes
 
-        private async Task<ProcessResult> RunArpAsync(TimeSpan timeout, CancellationToken cancellationToken)
-        {
-            var arpCommandPath = CommonServices.FileSystem.ArpCommandPath();
-            var args = new[] {$"-a"};
+        public int Count => _physical2ArpItem.Count;
 
-            var processResult = await CommonServices.OperationRunner.RetryOperationIfNeededAsync(
-                async () => await CommonServices.ProcessRunner.RunProcessAsync(arpCommandPath, args, timeout),
-                exception => true,
-                ArpRetryAttempts,
-                _retryAttemptDelay,
-                false,
-                cancellationToken
-            );
-
-            if (!processResult.Completed || string.IsNullOrWhiteSpace(processResult.Output))
-            {
-                Logger.LogError("RunArpAsync failed to produce output");
-            }
-
-            return processResult;
-        }
+        public ArpRefreshStatus LastArpRefreshStatus { get; internal set; }
+        public DateTimeOffset LastUpdated { get; internal set; }
 
         public void ClearArpCache()
         {
@@ -98,6 +79,120 @@ namespace PureActive.Network.Services.ArpService
         public Task RefreshArpCacheAsync(bool clearCache)
         {
             return RefreshArpCacheAsync(CancellationToken.None, clearCache);
+        }
+
+        public IEnumerator<ArpItem> GetEnumerator()
+        {
+            return _ipAddress2ArpItem.Values.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public async Task<ArpItem> GetArpItemAsync(IPAddress ipAddress, CancellationToken cancellationToken)
+        {
+            ArpItem arpItem;
+
+            lock (_updateLock)
+            {
+                if (_ipAddress2ArpItem.TryGetValue(ipAddress, out arpItem))
+                    return arpItem;
+            }
+
+            await _pingService.PingIpAddressAsync(ipAddress);
+
+            await RefreshInternalAsync(Timeout, cancellationToken);
+
+            lock (_updateLock)
+            {
+                _ipAddress2ArpItem.TryGetValue(ipAddress, out arpItem);
+            }
+
+            return arpItem;
+        }
+
+        public async Task<ArpItem> GetArpItemAsync(IPAddress ipAddress) =>
+            await GetArpItemAsync(ipAddress, CancellationToken.None);
+
+        public async Task<PhysicalAddress> GetPhysicalAddressAsync(IPAddress ipAddress,
+            CancellationToken cancellationToken)
+        {
+            var arpItem = await GetArpItemAsync(ipAddress, cancellationToken);
+
+            return arpItem?.PhysicalAddress ?? PhysicalAddress.None;
+        }
+
+        public async Task<PhysicalAddress> GetPhysicalAddressAsync(IPAddress ipAddress) =>
+            await GetPhysicalAddressAsync(ipAddress, CancellationToken.None);
+
+        public PhysicalAddress GetPhysicalAddress(IPAddress ipAddress) => GetPhysicalAddressAsync(ipAddress).Result;
+
+        public IPAddress GetIPAddress(PhysicalAddress physicalAddress, bool refreshCache)
+        {
+            lock (_updateLock)
+            {
+                if (_physical2ArpItem.TryGetValue(physicalAddress, out var arpItem))
+                    return arpItem.IPAddress;
+            }
+
+            if (refreshCache)
+            {
+                RefreshInternalAsync(Timeout, CancellationToken.None).Wait();
+
+                lock (_updateLock)
+                {
+                    if (_physical2ArpItem.TryGetValue(physicalAddress, out var arpItem))
+                        return arpItem.IPAddress;
+                }
+            }
+
+            return IPAddress.None;
+        }
+
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
+        {
+            var logProperties = new List<IPureLogPropertyLevel>
+            {
+                new PureLogPropertyLevel("DiscoveredDevices", _physical2ArpItem.Count, LogLevel.Information),
+                new PureLogPropertyLevel("ArpLastRefreshStatus", LastArpRefreshStatus, LogLevel.Information),
+                new PureLogPropertyLevel("ArpLastUpdated", LastUpdated, LogLevel.Information)
+            };
+
+            if (logLevel <= LogLevel.Debug)
+            {
+                foreach (var arpItem in this)
+                {
+                    logProperties.Add(new PureLogPropertyLevel(arpItem.IPAddress.ToString(),
+                        arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
+                }
+            }
+
+            return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
+        }
+
+        private async Task<ProcessResult> RunArpAsync(TimeSpan timeout, CancellationToken cancellationToken)
+        {
+            var arpCommandPath = CommonServices.FileSystem.ArpCommandPath();
+            var args = new[] {"-a"};
+
+            var processResult = await CommonServices.OperationRunner.RetryOperationIfNeededAsync(
+                async () => await CommonServices.ProcessRunner.RunProcessAsync(arpCommandPath, args, timeout),
+                exception => true,
+                ArpRetryAttempts,
+                _retryAttemptDelay,
+                false,
+                cancellationToken
+            );
+
+            if (!processResult.Completed || string.IsNullOrWhiteSpace(processResult.Output))
+            {
+                Logger.LogError("RunArpAsync failed to produce output");
+            }
+
+            return processResult;
         }
 
         private ArpItem _UpdateArpItem(PhysicalAddress physicalAddress, IPAddress ipAddress, DateTimeOffset timestamp)
@@ -134,11 +229,14 @@ namespace PureActive.Network.Services.ArpService
         }
 
         private ArpRefreshStatus _ProcessArpOutput(string arpResults, CancellationToken cancellationToken)
-        {     
+        {
             var timestamp = DateTimeOffset.Now;
 
-            Regex regexIpAddress = new Regex(@"\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\b", RegexOptions.IgnoreCase);
-            Regex regexPhysicalAddress = new Regex(@"(?<![\w\-:])[0-9A-F]{1,2}([-:]?)(?:[0-9A-F]{1,2}\1){4}[0-9A-F]{1,2}(?![\w\-:])", RegexOptions.IgnoreCase);
+            Regex regexIpAddress = new Regex(@"\b([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\b",
+                RegexOptions.IgnoreCase);
+            Regex regexPhysicalAddress =
+                new Regex(@"(?<![\w\-:])[0-9A-F]{1,2}([-:]?)(?:[0-9A-F]{1,2}\1){4}[0-9A-F]{1,2}(?![\w\-:])",
+                    RegexOptions.IgnoreCase);
 
             using (var stringReader = new StringReader(arpResults))
             {
@@ -172,7 +270,7 @@ namespace PureActive.Network.Services.ArpService
                     catch (Exception ex)
                     {
                         Logger?.LogError(ex, "ArpOutput parsing error with line {ArpOutputLine}", inputLine);
-                    }                                       
+                    }
                 }
             }
 
@@ -187,7 +285,7 @@ namespace PureActive.Network.Services.ArpService
 
             await Task.Delay(_processExitDelay, cancellationToken);
 
-            if (processResult.Completed  && !cancellationToken.IsCancellationRequested)
+            if (processResult.Completed && !cancellationToken.IsCancellationRequested)
             {
                 arpRefreshStatus = _ProcessArpOutput(processResult.Output, cancellationToken);
             }
@@ -207,99 +305,15 @@ namespace PureActive.Network.Services.ArpService
 
             using (this.PushLogProperties(LogLevel.Debug))
             {
-                Logger?.LogDebug("{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}", ServiceHost, arpRefreshStatus, Count);
+                Logger?.LogDebug(
+                    "{ServiceHost} Refresh Finished with Status: {ArpRefreshStatus}, Devices Discovered: {ArpDeviceCount}",
+                    ServiceHost, arpRefreshStatus, Count);
             }
         }
 
-        protected  override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             await RefreshInternalAsync(Timeout, stoppingToken);
-        }
-
-     public IEnumerator<ArpItem> GetEnumerator()
-        {
-            return _ipAddress2ArpItem.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public async Task<ArpItem> GetArpItemAsync(IPAddress ipAddress, CancellationToken cancellationToken)
-        {
-            ArpItem arpItem;
-
-            lock (_updateLock)
-            {
-                if (_ipAddress2ArpItem.TryGetValue(ipAddress, out arpItem))
-                    return arpItem;
-            }
-
-            await _pingService.PingIpAddressAsync(ipAddress);
-
-            await RefreshInternalAsync(Timeout, cancellationToken);
-
-            lock (_updateLock)
-            {
-                _ipAddress2ArpItem.TryGetValue(ipAddress, out arpItem);
-            }
-
-            return arpItem;
-        }
-
-         public async Task<ArpItem> GetArpItemAsync(IPAddress ipAddress) => await GetArpItemAsync(ipAddress, CancellationToken.None);
-
-        public async Task<PhysicalAddress> GetPhysicalAddressAsync(IPAddress ipAddress, CancellationToken cancellationToken)
-        {
-            var arpItem = await GetArpItemAsync(ipAddress, cancellationToken);
-
-            return arpItem?.PhysicalAddress ?? PhysicalAddress.None;
-        }
-
-        public async Task<PhysicalAddress> GetPhysicalAddressAsync(IPAddress ipAddress) => await GetPhysicalAddressAsync(ipAddress, CancellationToken.None);
-        public PhysicalAddress GetPhysicalAddress(IPAddress ipAddress) => GetPhysicalAddressAsync(ipAddress).Result;
-
-        public IPAddress GetIPAddress(PhysicalAddress physicalAddress, bool refreshCache)
-        {
-            lock (_updateLock)
-            {
-                if (_physical2ArpItem.TryGetValue(physicalAddress, out var arpItem))
-                    return arpItem.IPAddress;
-            }
-
-            if (refreshCache)
-            {
-                RefreshInternalAsync(Timeout, CancellationToken.None).Wait();
-
-                lock (_updateLock)
-                {
-                    if (_physical2ArpItem.TryGetValue(physicalAddress, out var arpItem))
-                        return arpItem.IPAddress;
-                }
-            }
-
-            return IPAddress.None;
-        }
-
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
-        {
-            var logProperties = new List<IPureLogPropertyLevel>
-            {
-                {new PureLogPropertyLevel("DiscoveredDevices", _physical2ArpItem.Count, LogLevel.Information)},
-                {new PureLogPropertyLevel("ArpLastRefreshStatus", LastArpRefreshStatus, LogLevel.Information)},
-                {new PureLogPropertyLevel("ArpLastUpdated", LastUpdated, LogLevel.Information)},
-            };
-
-            if (logLevel <= LogLevel.Debug)
-            {
-                foreach (var arpItem in this)
-                {
-                    logProperties.Add(new PureLogPropertyLevel(arpItem.IPAddress.ToString(), arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
-                }
-            }
-
-            return logProperties.Where(p => p.MinimumLogLevel.CompareTo(logLevel) >= 0);
         }
     }
 }

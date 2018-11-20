@@ -13,11 +13,11 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
         DateTimeOffset CreatedTimestamp { get; }
         DateTimeOffset UpdatedTimestamp { get; set; }
 
-        DateTimeOffset UpdateTimestamp();
-
         TimeSpan SessionTimeOut { get; set; }
 
         IDhcpDiscoveredDevice DhcpDiscoveredDevice { get; }
+
+        DateTimeOffset UpdateTimestamp();
 
         bool HasSessionExpired(DateTimeOffset timeStamp, TimeSpan timeSpan);
 

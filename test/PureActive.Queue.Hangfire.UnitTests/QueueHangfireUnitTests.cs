@@ -14,9 +14,8 @@ namespace PureActive.Queue.Hangfire.UnitTests
     {
         public QueueHangfireUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
-    
+
         [Fact]
         public void QueueHangfire_Logging()
         {

@@ -4,6 +4,5 @@ namespace PureActive.Network.Abstractions.Local
 {
     public interface ILocalComputer : IComputer, ILocalNetworkDevice
     {
-
     }
 }

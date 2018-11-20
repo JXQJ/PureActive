@@ -21,7 +21,8 @@ namespace PureActive.Hosting.Settings
         protected IContainer Container;
 
         protected StartupSettings(IConfiguration configuration, IHostingEnvironment hostingEnvironment,
-            IPureLoggerFactory loggerFactory, ServiceHost serviceHost, IFileSystem fileSystem, IOperatingSystem operatingSystem, ServiceHostConfig serviceHostConfig = ServiceHostConfig.Kestrel,
+            IPureLoggerFactory loggerFactory, ServiceHost serviceHost, IFileSystem fileSystem,
+            IOperatingSystem operatingSystem, ServiceHostConfig serviceHostConfig = ServiceHostConfig.Kestrel,
             ServiceDatabaseConfig serviceDatabaseConfig = ServiceDatabaseConfig.LocalHost)
         {
             Configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
@@ -35,6 +36,9 @@ namespace PureActive.Hosting.Settings
             ServiceDatabaseConfig = serviceDatabaseConfig;
         }
 
+        public IFileSystem FileSystem { get; internal set; }
+        public IOperatingSystem OperatingSystem { get; internal set; }
+
         // Public Interfaces
         public ServiceHost ServiceHost { get; internal set; }
         public ServiceHostConfig ServiceHostConfig { get; internal set; }
@@ -42,8 +46,6 @@ namespace PureActive.Hosting.Settings
         public IConfiguration Configuration { get; internal set; }
         public IHostingEnvironment HostingEnvironment { get; internal set; }
         public IPureLoggerFactory LoggerFactory { get; internal set; }
-        public IFileSystem FileSystem { get; internal set; }
-        public IOperatingSystem OperatingSystem { get; internal set; }
 
         public ContainerBuilder RegisterSharedServices(IServiceCollection services)
         {
@@ -83,7 +85,7 @@ namespace PureActive.Hosting.Settings
 
         private static string DatabaseName(ServiceHost serviceHost)
         {
-            return serviceHost.ToString() + ".db";
+            return serviceHost + ".db";
         }
 
         public static string GetConnectionString(IConfiguration configuration, IFileSystem fileSystem,

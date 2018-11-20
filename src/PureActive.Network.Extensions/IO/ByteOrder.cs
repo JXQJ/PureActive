@@ -11,10 +11,10 @@
         /// <summary>Use little-endian byte order, also known as Intel byte order.</summary>
         LittleEndian = 2,
 
-        /// <summary>Use Motorola byte order. Corresponds to <see cref="BigEndian"/>.</summary>
+        /// <summary>Use Motorola byte order. Corresponds to <see cref="BigEndian" />.</summary>
         Motorola = BigEndian,
 
-        /// <summary>Use Intel byte order. Corresponds to <see cref="LittleEndian"/>.</summary>
+        /// <summary>Use Intel byte order. Corresponds to <see cref="LittleEndian" />.</summary>
         Intel = LittleEndian,
 
         /// <summary>The order which multi-byte values are transmitted on a network.</summary>

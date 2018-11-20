@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.Async;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.Async;
@@ -19,14 +19,7 @@ namespace PureActive.Hosting.CommonServices
 {
     public class CommonServices : PureLoggableBase<CommonServices>, ICommonServices
     {
-        public IProcessRunner ProcessRunner { get; }
-        public IFileSystem FileSystem { get; }
-        public IOperationRunner OperationRunner { get; }
-        public IOperatingSystem OperatingSystem { get; }
-
-        public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
-
-        public CommonServices(IProcessRunner processRunner, IFileSystem fileSystem, IOperatingSystem operatingSystem, 
+        public CommonServices(IProcessRunner processRunner, IFileSystem fileSystem, IOperatingSystem operatingSystem,
             IOperationRunner operationRunner, IPureLoggerFactory loggerFactory) :
             base(loggerFactory)
         {
@@ -36,30 +29,12 @@ namespace PureActive.Hosting.CommonServices
             OperationRunner = operationRunner ?? throw new ArgumentNullException(nameof(operationRunner));
         }
 
-        private static ICommonServices CreateInstanceCore(IPureLoggerFactory loggerFactory, IFileSystem fileSystem)
-        {
-            if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
+        public IProcessRunner ProcessRunner { get; }
+        public IFileSystem FileSystem { get; }
+        public IOperationRunner OperationRunner { get; }
+        public IOperatingSystem OperatingSystem { get; }
 
-            var processRunner = new ProcessRunner(loggerFactory.CreatePureLogger<ProcessRunner>());
-            var operationRunner = new OperationRunner(loggerFactory.CreatePureLogger<OperationRunner>());
-
-            return new CommonServices(processRunner, fileSystem, fileSystem.OperatingSystem, operationRunner, loggerFactory);
-        }
-
-        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, string appFolderName)
-        {
-            return CreateInstanceCore(loggerFactory, new FileSystem(appFolderName));
-        }
-
-        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, Type type)
-        {
-            return CreateInstanceCore(loggerFactory, new FileSystem(type));
-        }
-
-        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, IConfigurationRoot configuration)
-        {
-            return CreateInstanceCore(loggerFactory, new FileSystem(configuration));
-        }
+        public ServiceHostStatus ServiceHostStatus { get; internal set; } = ServiceHostStatus.Stopped;
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
@@ -75,7 +50,8 @@ namespace PureActive.Hosting.CommonServices
             return Task.CompletedTask;
         }
 
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -83,10 +59,37 @@ namespace PureActive.Hosting.CommonServices
 
             if (logLevel <= LogLevel.Information)
             {
-                logPropertyLevels?.Add(new PureLogPropertyLevel("CommonServicesHostStatus", ServiceHostStatus, LogLevel.Information));
+                logPropertyLevels?.Add(new PureLogPropertyLevel("CommonServicesHostStatus", ServiceHostStatus,
+                    LogLevel.Information));
             }
 
             return logPropertyLevels;
+        }
+
+        private static ICommonServices CreateInstanceCore(IPureLoggerFactory loggerFactory, IFileSystem fileSystem)
+        {
+            if (loggerFactory == null) throw new ArgumentNullException(nameof(loggerFactory));
+
+            var processRunner = new ProcessRunner(loggerFactory.CreatePureLogger<ProcessRunner>());
+            var operationRunner = new OperationRunner(loggerFactory.CreatePureLogger<OperationRunner>());
+
+            return new CommonServices(processRunner, fileSystem, fileSystem.OperatingSystem, operationRunner,
+                loggerFactory);
+        }
+
+        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, string appFolderName)
+        {
+            return CreateInstanceCore(loggerFactory, new FileSystem(appFolderName));
+        }
+
+        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, Type type)
+        {
+            return CreateInstanceCore(loggerFactory, new FileSystem(type));
+        }
+
+        public static ICommonServices CreateInstance(IPureLoggerFactory loggerFactory, IConfigurationRoot configuration)
+        {
+            return CreateInstanceCore(loggerFactory, new FileSystem(configuration));
         }
     }
 }

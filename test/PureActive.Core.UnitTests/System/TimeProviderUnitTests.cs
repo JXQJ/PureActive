@@ -12,7 +12,6 @@ namespace PureActive.Core.UnitTests.System
     {
         public TimeProviderUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
@@ -22,6 +21,5 @@ namespace PureActive.Core.UnitTests.System
             var utcNow = DateTime.UtcNow;
             timeProvider.UtcNow.Should().BeCloseTo(utcNow);
         }
-
     }
 }

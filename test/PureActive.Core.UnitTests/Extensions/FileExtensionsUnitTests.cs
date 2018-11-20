@@ -11,7 +11,6 @@ namespace PureActive.Core.UnitTests.Extensions
     {
         public FileExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Theory]
@@ -31,22 +30,6 @@ namespace PureActive.Core.UnitTests.Extensions
 
 
         [Fact]
-        public void FileExtensions_NullPrefix()
-        {
-            string ext = ".ext";
-  
-            var randomFile = FileExtensions.GetRandomFileName(null, ext);
-
-            TestOutputHelper.WriteLine(randomFile);
-            randomFile.Should().EndWith(ext);
-
-            var randomFile2 = FileExtensions.GetRandomFileName(null, ext);
-            TestOutputHelper.WriteLine(randomFile2);
-            randomFile2.Should().NotBe(randomFile);
-        }
-
-
-        [Fact]
         public void FileExtensions_NullExt()
         {
             string prefix = "prefix";
@@ -59,6 +42,22 @@ namespace PureActive.Core.UnitTests.Extensions
             var randomFile2 = FileExtensions.GetRandomFileName(prefix, null);
             TestOutputHelper.WriteLine(randomFile2);
 
+            randomFile2.Should().NotBe(randomFile);
+        }
+
+
+        [Fact]
+        public void FileExtensions_NullPrefix()
+        {
+            string ext = ".ext";
+
+            var randomFile = FileExtensions.GetRandomFileName(null, ext);
+
+            TestOutputHelper.WriteLine(randomFile);
+            randomFile.Should().EndWith(ext);
+
+            var randomFile2 = FileExtensions.GetRandomFileName(null, ext);
+            TestOutputHelper.WriteLine(randomFile2);
             randomFile2.Should().NotBe(randomFile);
         }
     }

@@ -11,12 +11,13 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 {
     public class XUnitLogEventSink : ILogEventSink
     {
-        private readonly ITestOutputHelper _testOutputHelper;
         const int DefaultWriteBuffer = 256;
 
         private readonly ITextFormatter _formatter;
+        private readonly ITestOutputHelper _testOutputHelper;
 
-        public XUnitLogEventSink(ITestOutputHelper testOutputHelper, string outputTemplate, IFormatProvider formatProvider)
+        public XUnitLogEventSink(ITestOutputHelper testOutputHelper, string outputTemplate,
+            IFormatProvider formatProvider)
         {
             _testOutputHelper = testOutputHelper;
             _formatter = new MessageTemplateTextFormatter(outputTemplate, formatProvider);
@@ -33,7 +34,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
             var writer = new StringWriter(new StringBuilder(DefaultWriteBuffer)) {NewLine = ""};
 
             _formatter.Format(logEvent, writer);
-           
+
             _testOutputHelper.WriteLine(writer.ToString());
         }
     }

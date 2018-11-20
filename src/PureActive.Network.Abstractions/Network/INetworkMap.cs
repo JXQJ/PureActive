@@ -7,7 +7,7 @@ namespace PureActive.Network.Abstractions.Network
 {
     public interface INetworkMap : INetworkDevice, IHostedServiceInternal
     {
-        ILocalNetworkCollection LocalNetworks { get;}
+        ILocalNetworkCollection LocalNetworks { get; }
         INetwork PrimaryNetwork { get; }
 
         ILocalNetworkDevice LocalNetworkDevice { get; }

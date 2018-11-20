@@ -9,13 +9,11 @@ namespace PureActive.Network.UnitTests
     {
         public NetworkUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void Network_Constructor()
         {
-
         }
     }
 }

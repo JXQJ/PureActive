@@ -7,7 +7,6 @@ namespace PureActive.Network.Core.Sockets
     {
         public HostedSocketService(IPureLogger<SocketService> logger) : base(logger)
         {
-
         }
 
         public override bool Start()

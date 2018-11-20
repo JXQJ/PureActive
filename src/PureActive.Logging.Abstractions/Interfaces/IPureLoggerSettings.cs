@@ -7,6 +7,10 @@ namespace PureActive.Logging.Abstractions.Interfaces
     {
         LoggingOutputFlags LoggingOutputFlags { get; set; }
 
+        string LogFolderPath { get; }
+
+        string TestLogFolderPath { get; }
+
         IPureLogLevel RegisterLogLevel(string key, LogLevel logLevel);
         IPureLogLevel GetLogLevel(string key);
 
@@ -18,10 +22,5 @@ namespace PureActive.Logging.Abstractions.Interfaces
 
         IPureLogLevel GetOrRegisterLogLevel(LoggingOutputFlags loggingOutputFlag, LogLevel logLevel);
         IPureLogLevel GetOrRegisterDefaultLogLevel(LoggingOutputFlags loggingOutputFlag);
-
-        string LogFolderPath { get; }
-
-        string TestLogFolderPath { get; }
-
     }
 }

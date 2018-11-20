@@ -9,6 +9,6 @@
         Running = 4,
         StartPending = 2,
         Stopped = 1,
-        StopPending = 3,
+        StopPending = 3
     }
 }

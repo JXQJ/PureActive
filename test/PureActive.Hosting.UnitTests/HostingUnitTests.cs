@@ -9,13 +9,11 @@ namespace PureActive.Hosting.UnitTests
     {
         public HostingUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
 
         [Fact]
         public void Hosting_Constructor()
         {
-
         }
     }
 }

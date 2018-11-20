@@ -7,14 +7,14 @@ namespace PureActive.Network.Devices.Network
     public class NetworkAdapterCollection : INetworkAdapterCollection
     {
         private readonly List<INetworkAdapter> _networkAdapters = new List<INetworkAdapter>();
-  
-        public int Count => _networkAdapters?.Count ?? 0;
 
         public INetworkAdapter this[int index]
         {
             get => _networkAdapters[index];
             set => _networkAdapters.Insert(index, value);
         }
+
+        public int Count => _networkAdapters?.Count ?? 0;
 
         public bool Add(INetworkAdapter networkAdapter)
         {

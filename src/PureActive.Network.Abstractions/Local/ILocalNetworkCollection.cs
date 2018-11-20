@@ -7,7 +7,7 @@ namespace PureActive.Network.Abstractions.Local
     {
         int Count { get; }
 
-        INetwork PrimaryNetwork { get;}
+        INetwork PrimaryNetwork { get; }
 
         INetwork AddAdapterToNetwork(INetworkAdapter networkAdapter);
         bool RemoveAdapterFromNetwork(INetworkAdapter networkAdapter);

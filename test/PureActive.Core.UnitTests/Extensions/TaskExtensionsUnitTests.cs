@@ -14,10 +14,25 @@ namespace PureActive.Core.UnitTests.Extensions
     [Trait("Category", "Unit")]
     public class TaskExtensionsUnitTests : TestBaseLoggable<TaskExtensionsUnitTests>
     {
-
         public TaskExtensionsUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
+        }
 
+        [Fact]
+        public void TaskExtensions_Cancel()
+        {
+            List<Task> tasks = new List<Task>
+            {
+                Task.Delay(300)
+            };
+
+            var cts = new CancellationTokenSource();
+
+            cts.CancelAfter(100);
+
+            var result = tasks.WaitForTasks(cts.Token, Logger);
+
+            result.Status.Should().Be(TaskStatus.Faulted);
         }
 
 
@@ -27,6 +42,19 @@ namespace PureActive.Core.UnitTests.Extensions
             List<Task> tasks = new List<Task>();
 
             await tasks.WaitForTasks(CancellationToken.None, Logger);
+        }
+
+        [Fact]
+        public void TaskExtensions_Exception()
+        {
+            List<Task> tasks = new List<Task>
+            {
+                Task.Run(() => throw new InvalidOperationException())
+            };
+
+            var result = tasks.WaitForTasks(CancellationToken.None, Logger);
+
+            result.Status.Should().Be(TaskStatus.Faulted);
         }
 
         [Fact]
@@ -47,36 +75,5 @@ namespace PureActive.Core.UnitTests.Extensions
             stopWatch.ElapsedMilliseconds.Should().BeGreaterOrEqualTo(299);
             TestOutputHelper.WriteLine(stopWatch.ElapsedMilliseconds.ToString());
         }
-
-        [Fact]
-        public void TaskExtensions_Cancel()
-        {
-            List<Task> tasks = new List<Task>
-            {
-                Task.Delay(300),
-            };
-
-            var cts = new CancellationTokenSource();
-
-            cts.CancelAfter(100);
-
-            var result = tasks.WaitForTasks(cts.Token, Logger);
-
-            result.Status.Should().Be(TaskStatus.Faulted);
-        }
-
-        [Fact]
-        public void TaskExtensions_Exception()
-        {
-            List<Task> tasks = new List<Task>
-            {
-               Task.Run(() => throw new InvalidOperationException())
-            };
-
-            var result = tasks.WaitForTasks(CancellationToken.None, Logger);
-
-            result.Status.Should().Be(TaskStatus.Faulted);
-        }
-
     }
 }

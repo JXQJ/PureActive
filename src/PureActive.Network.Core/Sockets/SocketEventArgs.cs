@@ -6,7 +6,7 @@ using PureActive.Logging.Abstractions.Interfaces;
 namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
-    ///     Used by <see cref="SocketListener.ClientConnected"/>.
+    ///     Used by <see cref="SocketListener.ClientConnected" />.
     /// </summary>
     public class SocketEventArgs : EventArgs
     {
@@ -38,6 +38,5 @@ namespace PureActive.Network.Core.Sockets
         ///     Response (only if the client may not connect)
         /// </summary>
         public Stream Response { get; set; }
-
     }
 }

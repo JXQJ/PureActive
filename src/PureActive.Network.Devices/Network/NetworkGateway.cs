@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Microsoft.Extensions.Logging;
 using System.Net.NetworkInformation;
+using Microsoft.Extensions.Logging;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Types;
@@ -16,8 +16,22 @@ namespace PureActive.Network.Devices.Network
 {
     public class NetworkGateway : NetworkDeviceBase, INetworkGateway
     {
-        private PhysicalAddress _physicalAddress = PhysicalAddress.None;
         private IPAddressSubnet _ipAddressSubnet;
+        private PhysicalAddress _physicalAddress = PhysicalAddress.None;
+
+        public NetworkGateway(ICommonNetworkServices commonNetworkServices, IPAddressSubnet ipAddressSubnetGateway) :
+            base(commonNetworkServices, DeviceType.NetworkGateway,
+                commonNetworkServices?.LoggerFactory.CreatePureLogger<NetworkGateway>())
+        {
+            _ipAddressSubnet = ipAddressSubnetGateway ??
+                               throw new ArgumentNullException(nameof(ipAddressSubnetGateway));
+        }
+
+        public NetworkGateway(ICommonNetworkServices commonNetworkServices, IPAddress ipAddressGateway,
+            IPAddress subnetMask) :
+            this(commonNetworkServices, new IPAddressSubnet(ipAddressGateway, subnetMask))
+        {
+        }
 
         public IPAddressSubnet IPAddressSubnet
         {
@@ -50,19 +64,8 @@ namespace PureActive.Network.Devices.Network
             }
         }
 
-        public NetworkGateway(ICommonNetworkServices commonNetworkServices, IPAddressSubnet ipAddressSubnetGateway) : 
-            base(commonNetworkServices, DeviceType.NetworkGateway, commonNetworkServices?.LoggerFactory.CreatePureLogger<NetworkGateway>())
-        {
-            _ipAddressSubnet = ipAddressSubnetGateway ?? throw new ArgumentNullException(nameof(ipAddressSubnetGateway));
-        }
-
-        public NetworkGateway(ICommonNetworkServices commonNetworkServices, IPAddress ipAddressGateway, IPAddress subnetMask) :
-            this(commonNetworkServices, new IPAddressSubnet(ipAddressGateway, subnetMask))
-        {
-
-        }
-
-        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel, LoggableFormat loggableFormat)
+        public override IEnumerable<IPureLogPropertyLevel> GetLogPropertyListLevel(LogLevel logLevel,
+            LoggableFormat loggableFormat)
         {
             var logPropertyLevels = loggableFormat.IsWithParents()
                 ? base.GetLogPropertyListLevel(logLevel, loggableFormat)?.ToList()
@@ -70,8 +73,10 @@ namespace PureActive.Network.Devices.Network
 
             if (logLevel > LogLevel.Information) return logPropertyLevels;
 
-            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayIPAddressSubnet", IPAddressSubnet, LogLevel.Information));
-            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayPhysicalAddress", PhysicalAddress.ToDashString(), LogLevel.Information));
+            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayIPAddressSubnet", IPAddressSubnet,
+                LogLevel.Information));
+            logPropertyLevels?.Add(new PureLogPropertyLevel("GatewayPhysicalAddress", PhysicalAddress.ToDashString(),
+                LogLevel.Information));
 
             return logPropertyLevels;
         }

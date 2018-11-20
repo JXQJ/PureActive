@@ -13,11 +13,28 @@ namespace PureActive.Core.UnitTests.Async
     [Trait("Category", "Unit")]
     public class OperationRunnerUnitTests : TestBaseLoggable<OperationRunnerUnitTests>
     {
-        private readonly IOperationRunner _operationRunner;
-
         public OperationRunnerUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             _operationRunner = new OperationRunner(TestLoggerFactory.CreatePureLogger<OperationRunner>());
+        }
+
+        private readonly IOperationRunner _operationRunner;
+
+
+        [Fact]
+        public async Task OperationRunner_Delay()
+        {
+            // Test a delay of 2 secs on a 4 sec timeout
+            Assert.True(await _operationRunner.RunOperationWithTimeoutAsync(() => Task.Delay(2000),
+                new TimeSpan(0, 0, 4), CancellationToken.None));
+        }
+
+        [Fact]
+        public async Task OperationRunner_Timeout()
+        {
+            // Test a delay of 4 secs on a 2 sec timeout
+            Assert.False(await _operationRunner.RunOperationWithTimeoutAsync(() => Task.Delay(4000),
+                new TimeSpan(0, 0, 2), CancellationToken.None));
         }
 
         [Fact]
@@ -25,22 +42,5 @@ namespace PureActive.Core.UnitTests.Async
         {
             _operationRunner.Should().NotBeNull();
         }
-
-
-        [Fact]
-        public async Task OperationRunner_Delay()
-        {
-            // Test a delay of 2 secs on a 4 sec timeout
-            Assert.True(await _operationRunner.RunOperationWithTimeoutAsync(() => Task.Delay(2000), new TimeSpan(0, 0, 4), CancellationToken.None));
-        }
-
-        [Fact]
-        public async Task OperationRunner_Timeout()
-        {
-            // Test a delay of 4 secs on a 2 sec timeout
-            Assert.False(await _operationRunner.RunOperationWithTimeoutAsync(() => Task.Delay(4000), new TimeSpan(0,0,2), CancellationToken.None));
-        }
-
-
     }
 }

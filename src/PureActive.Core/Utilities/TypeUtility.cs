@@ -7,11 +7,10 @@ namespace PureActive.Core.Utilities
 {
     public static class TypeUtility
     {
-
         /// <summary>
-        /// High-level method that enumerates all Types in the loaded assembly,
-        /// and places their class names and properties in a hashtable.  At deserialization
-        /// time, this Hashtable (containing Property Names and Types).
+        ///     High-level method that enumerates all Types in the loaded assembly,
+        ///     and places their class names and properties in a hashtable.  At deserialization
+        ///     time, this Hashtable (containing Property Names and Types).
         /// </summary>
         /// <param name="types"></param>
         /// <returns></returns>
@@ -31,13 +30,14 @@ namespace PureActive.Core.Utilities
                     properties.Add(type.FullName, entry);
                 }
             }
+
             return properties;
         }
-           
+
         public static Hashtable GetProperties(Type type)
         {
             Hashtable properties = new Hashtable();
-            
+
             // Type dump
             //Debug.Print("Name: " + t.Name);
             //Debug.Print("    IsClass: " + t.IsClass);
@@ -101,10 +101,11 @@ namespace PureActive.Core.Utilities
                         properties.Add(method.Name.Substring(4), method.ReturnType);
                     }
                 }
+
                 return properties;
             }
 
             return null;
-        }  
+        }
     }
 }

@@ -24,16 +24,18 @@ namespace PureActive.Hosting.Configuration
             return config;
         }
 
-        public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config, IHostingEnvironment hostingEnvironment)
+        public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config,
+            IHostingEnvironment hostingEnvironment)
         {
             return AddAppSettings(config, hostingEnvironment.EnvironmentName);
         }
-        
-        public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config, Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment)
+
+        public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config,
+            Microsoft.Extensions.Hosting.IHostingEnvironment hostingEnvironment)
         {
             return AddAppSettings(config, hostingEnvironment.EnvironmentName);
         }
-        
+
         public static IConfigurationBuilder AddAppSettings(this IConfigurationBuilder config)
         {
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -53,22 +55,23 @@ namespace PureActive.Hosting.Configuration
         //        }
         //    }
 
-        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config, LogEventLevel initialMinimumLevel)
+        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config,
+            LogEventLevel initialMinimumLevel)
         {
             config.AddInMemoryCollection(
-                new Dictionary<string, string>()
+                new Dictionary<string, string>
                 {
                     ["Serilog:MinimumLevel:Default"] = initialMinimumLevel.ToString(),
                     ["Serilog:MinimumLevel:Override:Microsoft"] = "Information",
-                    ["Serilog:MinimumLevel:Override:System"] = "Warning",
+                    ["Serilog:MinimumLevel:Override:System"] = "Warning"
                 }
             );
 
             return config;
         }
 
-        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config, LogLevel initialMinimumLevel) =>
+        public static IConfigurationBuilder AddLoggerSettings(this IConfigurationBuilder config,
+            LogLevel initialMinimumLevel) =>
             AddLoggerSettings(config, SerilogLogLevel.MsftToSerilogLogLevel(initialMinimumLevel));
-
     }
 }

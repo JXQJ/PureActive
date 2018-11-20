@@ -12,13 +12,13 @@ namespace PureActive.Network.Services.PingService.UnitTests
     [Trait("Category", "Unit")]
     public class PingTaskUnitTests : TestBaseLoggable<PingTaskUnitTests>
     {
-        private readonly IPingService _pingService;
-
         public PingTaskUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskUnitTests");
             _pingService = new PingService(commonServices);
         }
+
+        private readonly IPingService _pingService;
 
         [Fact]
         public async Task TestPingTask()

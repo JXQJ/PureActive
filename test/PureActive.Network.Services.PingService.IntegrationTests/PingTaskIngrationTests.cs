@@ -15,12 +15,6 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
     [Trait("Category", "Integration")]
     public class PingTaskIntegrationTests : TestBaseLoggable<PingTaskIntegrationTests>
     {
-        private readonly CancellationTokenSource _cancellationTokenSource;
-        private readonly IPingService _pingService;
-        private const int DefaultNetworkTimeout = 250;
-        private const int DefaultPingCalls = 5;
-
-
         public PingTaskIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskIntegrationTests");
@@ -28,22 +22,10 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
             _pingService = new PingService(commonServices);
         }
 
-        [Fact]
-        public async Task PingService_PingNetworkWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
-
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
-
-        [Fact]
-        public async Task PingService_PingNetworkEventWithLogging()
-        {
-            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger), IPAddressExtensions.SubnetClassC);
-
-            _pingService.OnPingReply += PingReplyEventHandler;
-            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout, DefaultPingCalls, false);
-        }
+        private readonly CancellationTokenSource _cancellationTokenSource;
+        private readonly IPingService _pingService;
+        private const int DefaultNetworkTimeout = 250;
+        private const int DefaultPingCalls = 5;
 
         private void PingReplyEventHandler(object sender, PingReplyEventArgs args)
         {
@@ -51,8 +33,30 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
 
             if (args != null)
             {
-                TestOutputHelper.WriteLine($"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
+                TestOutputHelper.WriteLine(
+                    $"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
             }
+        }
+
+        [Fact]
+        public async Task PingService_PingNetworkEventWithLogging()
+        {
+            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger),
+                IPAddressExtensions.SubnetClassC);
+
+            _pingService.OnPingReply += PingReplyEventHandler;
+            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout,
+                DefaultPingCalls, false);
+        }
+
+        [Fact]
+        public async Task PingService_PingNetworkWithLogging()
+        {
+            var ipAddressSubnet = new IPAddressSubnet(IPAddressExtensions.GetDefaultLocalNetworkAddress(Logger),
+                IPAddressExtensions.SubnetClassC);
+
+            await _pingService.PingNetworkAsync(ipAddressSubnet, _cancellationTokenSource.Token, DefaultNetworkTimeout,
+                DefaultPingCalls, false);
         }
     }
 }

@@ -29,15 +29,19 @@ namespace PureActive.Hosting.Configuration
         }
 
 
-        public static IWebHostBuilder UseSystemSettings(this IWebHostBuilder webHostBuilder, string logFileName, Func<LogEvent, bool> includeLogEvent)
+        public static IWebHostBuilder UseSystemSettings(this IWebHostBuilder webHostBuilder, string logFileName,
+            Func<LogEvent, bool> includeLogEvent)
         {
             var operatingSystem = new OperatingSystem();
             var appConfiguration = GetAppConfiguration();
             var fileSystem = new FileSystem(appConfiguration, operatingSystem);
 
             var loggerSettings = new SerilogLoggerSettings(fileSystem, appConfiguration, LoggingOutputFlags.AppFull);
-            var loggerConfiguration = LoggerConfigurationFactory.CreateLoggerConfiguration(appConfiguration, logFileName, loggerSettings, includeLogEvent);
-            var loggerFactory = LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
+            var loggerConfiguration =
+                LoggerConfigurationFactory.CreateLoggerConfiguration(appConfiguration, logFileName, loggerSettings,
+                    includeLogEvent);
+            var loggerFactory =
+                LoggerConfigurationFactory.CreatePureSeriLoggerFactory(loggerSettings, loggerConfiguration);
 
             webHostBuilder.ConfigureServices(services =>
                 services.AddSingleton(loggerFactory));

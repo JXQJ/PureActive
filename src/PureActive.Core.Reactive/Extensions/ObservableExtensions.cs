@@ -7,7 +7,7 @@ namespace PureActive.Core.Reactive.Extensions
     public static class ObservableExtensions
     {
         /// <summary>
-        /// Adds a log that prints to the console the notification emitted by the <paramref name="observable"/>
+        ///     Adds a log that prints to the console the notification emitted by the <paramref name="observable" />
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="observable"></param>
@@ -26,7 +26,7 @@ namespace PureActive.Core.Reactive.Extensions
         }
 
         /// <summary>
-        /// Subscribe an observer that prints each notificatio to the console output
+        ///     Subscribe an observer that prints each notificatio to the console output
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="observable"></param>

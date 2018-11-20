@@ -15,12 +15,11 @@ namespace PureActive.Core.UnitTests.System
     [Trait("Category", "Unit")]
     public class FileSystemUnitTests : TestBaseLoggable<FileSystemUnitTests>
     {
-        private static readonly string AppFolderName = "FileSystemUnitTests";
-
         public FileSystemUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
-
         }
+
+        private static readonly string AppFolderName = "FileSystemUnitTests";
 
         private static IConfigurationRoot FileSystemConfigurationRoot(string appFolderName)
         {
@@ -28,20 +27,20 @@ namespace PureActive.Core.UnitTests.System
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddEnvironmentVariables()
                 .AddInMemoryCollection(
-                    new Dictionary<string, string>()
+                    new Dictionary<string, string>
                     {
-                        ["AppSettings:AppFolderName"] = appFolderName,
+                        ["AppSettings:AppFolderName"] = appFolderName
                     }
                 )
                 .Build();
         }
 
-
         [Fact]
-        public void FileSystem_Constructor_Default()
+        public void FileSystem_Constructor_AppFolderName()
         {
-            var fileSystem = new FileSystem();
-            fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should().Be("PureActive/Core");
+            var fileSystem = new FileSystem(AppFolderName);
+
+            fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should().Be(AppFolderName);
         }
 
 
@@ -75,12 +74,12 @@ namespace PureActive.Core.UnitTests.System
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
         }
 
-        [Fact]
-        public void FileSystem_Constructor_AppFolderName()
-        {
-            var fileSystem = new FileSystem(AppFolderName);
 
-            fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should().Be(AppFolderName);
+        [Fact]
+        public void FileSystem_Constructor_Default()
+        {
+            var fileSystem = new FileSystem();
+            fileSystem.Should().NotBeNull().And.Subject.As<IFileSystem>().AppFolderName.Should().Be("PureActive/Core");
         }
 
 

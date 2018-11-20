@@ -11,13 +11,14 @@ namespace PureActive.Network.Devices.Network
 {
     public class NetworkAdapter : NetworkDeviceBase, INetworkAdapter
     {
-        public NetworkInterface NetworkInterface { get; }
-
-        public NetworkAdapter(ICommonNetworkServices commonNetworkServices, NetworkInterface networkInterface, IPureLogger logger = null) : 
+        public NetworkAdapter(ICommonNetworkServices commonNetworkServices, NetworkInterface networkInterface,
+            IPureLogger logger = null) :
             base(commonNetworkServices, DeviceType.NetworkAdapter, logger)
         {
             NetworkInterface = networkInterface;
         }
+
+        public NetworkInterface NetworkInterface { get; }
 
         public OperationalStatus OperationalStatus => NetworkInterface.OperationalStatus;
         public NetworkInterfaceType NetworkInterfaceType => NetworkInterface.NetworkInterfaceType;
@@ -52,7 +53,7 @@ namespace PureActive.Network.Devices.Network
                 .Append("\tOperational Status: ").AppendLine(NetworkInterface.OperationalStatus.ToString())
                 .Append("\tNetwork Interface Type: ").AppendLine(NetworkInterface.NetworkInterfaceType.ToString())
                 .Append("\tDescription: ").AppendLine(NetworkInterface.Description);
-        
+
             return sb.ToString();
         }
     }

@@ -5,11 +5,18 @@ using System.Threading.Tasks;
 namespace PureActive.Core.Abstractions.System
 {
     /// <summary>
-    ///     Provides access to the file system.
+    ///     Provides access to the file system. All file system calls
+    ///     should be made from the IFileSystem interface.
     /// </summary>
     public interface IFileSystem
     {
         IOperatingSystem OperatingSystem { get; }
+
+        string AppFolderName { get; set; }
+
+        string AssemblyFolder { get; }
+
+        string SettingsFolder { get; }
 
         /// <summary>
         ///     Creates a new temporary file, and returns the corresponding
@@ -100,12 +107,6 @@ namespace PureActive.Core.Abstractions.System
 
         string DataFolderPath();
 
-        string AppFolderName { get; set; }
-
         string ArpCommandPath();
-
-        string AssemblyFolder { get; }
-
-        string SettingsFolder { get; }
     }
 }

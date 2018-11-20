@@ -6,10 +6,6 @@ namespace PureActive.Network.Abstractions.ArpService
 {
     public class ArpItem
     {
-        public PhysicalAddress PhysicalAddress { get; set; }
-        public IPAddress IPAddress { get; set; }
-        public DateTimeOffset CreatedTimestamp { get; set; }
-
         public ArpItem(PhysicalAddress physicalAddress, IPAddress ipAddress, DateTimeOffset createdTimestamp)
         {
             PhysicalAddress = physicalAddress;
@@ -17,6 +13,13 @@ namespace PureActive.Network.Abstractions.ArpService
             CreatedTimestamp = createdTimestamp;
         }
 
-        public ArpItem(PhysicalAddress physicalAddress, IPAddress ipAddress) : this(physicalAddress, ipAddress, DateTimeOffset.Now) { }
+        public ArpItem(PhysicalAddress physicalAddress, IPAddress ipAddress) : this(physicalAddress, ipAddress,
+            DateTimeOffset.Now)
+        {
+        }
+
+        public PhysicalAddress PhysicalAddress { get; set; }
+        public IPAddress IPAddress { get; set; }
+        public DateTimeOffset CreatedTimestamp { get; set; }
     }
 }

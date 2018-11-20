@@ -7,7 +7,7 @@ namespace PureActive.Network.Abstractions.DhcpService.Interfaces
 {
     public interface IDhcpService : IHostedServiceInternal
     {
-        IDhcpSessionMgr DhcpSessionMgr {get;}
+        IDhcpSessionMgr DhcpSessionMgr { get; }
 
         ICommonNetworkServices CommonNetworkServices { get; }
 

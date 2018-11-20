@@ -9,15 +9,17 @@ namespace PureActive.Network.Devices.Network
 {
     public class NetworkDeviceBase : DeviceBase, INetworkDevice
     {
-        public ICommonNetworkServices CommonNetworkServices { get; }
-
-        public NetworkDeviceBase(ICommonNetworkServices commonNetworkServices, DeviceType deviceType = DeviceType.UnknownDevice, IPureLogger logger = null) : 
+        public NetworkDeviceBase(ICommonNetworkServices commonNetworkServices,
+            DeviceType deviceType = DeviceType.UnknownDevice, IPureLogger logger = null) :
             base(commonNetworkServices, deviceType, logger)
         {
             CommonNetworkServices = commonNetworkServices;
         }
 
-        public static INetworkDevice NetworkDeviceFromType(ICommonNetworkServices commonNetworkServices, DeviceType deviceType)
+        public ICommonNetworkServices CommonNetworkServices { get; }
+
+        public static INetworkDevice NetworkDeviceFromType(ICommonNetworkServices commonNetworkServices,
+            DeviceType deviceType)
         {
             switch (deviceType)
             {
@@ -27,7 +29,8 @@ namespace PureActive.Network.Devices.Network
                 }
             }
 
-            return new NetworkDeviceBase(commonNetworkServices, deviceType, commonNetworkServices.LoggerFactory.CreatePureLogger<NetworkDeviceBase>());
+            return new NetworkDeviceBase(commonNetworkServices, deviceType,
+                commonNetworkServices.LoggerFactory.CreatePureLogger<NetworkDeviceBase>());
         }
     }
 }

@@ -17,24 +17,19 @@ namespace PureActive.Core.System
         ///     The buffer size for a file stream.
         /// </summary>
         private const int CBufferSize = 4000;
-        public IOperatingSystem OperatingSystem { get; }
-
-        public string AppFolderName { get; set; }
 
         public FileSystem() : this(new OperatingSystem())
         {
-
         }
 
-        public FileSystem(IOperatingSystem operatingSystem) : this(Assembly.GetExecutingAssembly().GetName().Name.Replace(".", "/"), operatingSystem)
+        public FileSystem(IOperatingSystem operatingSystem) : this(
+            Assembly.GetExecutingAssembly().GetName().Name.Replace(".", "/"), operatingSystem)
         {
-
         }
 
         public FileSystem(IConfigurationRoot configuration, IOperatingSystem operatingSystem) : this(
             configuration?.GetSection("AppSettings")?["AppFolderName"], operatingSystem)
         {
-
         }
 
         public FileSystem(string appFolderName, IOperatingSystem operatingSystem)
@@ -53,18 +48,19 @@ namespace PureActive.Core.System
 
         public FileSystem(Type type) : this(type, new OperatingSystem())
         {
-
         }
 
         public FileSystem(string appFolderName) : this(appFolderName, new OperatingSystem())
         {
-
         }
 
         public FileSystem(IConfigurationRoot configuration) : this(configuration, new OperatingSystem())
         {
-
         }
+
+        public IOperatingSystem OperatingSystem { get; }
+
+        public string AppFolderName { get; set; }
 
         public string GetCurrentDirectory() => Directory.GetCurrentDirectory();
 
@@ -176,32 +172,6 @@ namespace PureActive.Core.System
             return Environment.GetFolderPath(folder, option);
         }
 
-        private string ProcessSpecialFolder(Environment.SpecialFolderOption option, string folderPath)
-        {
-            switch (option)
-            {
-                case Environment.SpecialFolderOption.DoNotVerify:
-                    break;
-
-                case Environment.SpecialFolderOption.None:
-                    {
-                        if (!FolderExists(folderPath))
-                            return string.Empty;
-
-                        break;
-                    }
-
-                case Environment.SpecialFolderOption.Create:
-                    {
-                        CreateFolder(folderPath);
-
-                        break;
-                    }
-            }
-
-            return folderPath;
-        }
-
         /// <summary>
         ///     Returns the path for storing application data common to all users, allows option to verify or create
         /// </summary>
@@ -209,7 +179,6 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption option)
         {
-
             if (OperatingSystem.IsOsx())
             {
                 return ProcessSpecialFolder(option, "/Users/Shared/");
@@ -245,17 +214,6 @@ namespace PureActive.Core.System
         public string GetLocalApplicationDataFolderPath()
         {
             return GetSpecialFolderPath(Environment.SpecialFolder.LocalApplicationData);
-        }
-
-
-        public string GetCurrentApplicationDataFolderPath()
-        {
-            var commonApplicationFolder =
-                GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.Create) + $"/{AppFolderName}/";
-
-            CreateFolder(commonApplicationFolder);
-
-            return commonApplicationFolder;
         }
 
 
@@ -304,10 +262,8 @@ namespace PureActive.Core.System
             {
                 return GetSpecialFolderPath(Environment.SpecialFolder.System) + "\\arp.exe";
             }
-            else
-            {
-                return "/usr/sbin/arp";
-            }
+
+            return "/usr/sbin/arp";
         }
 
         public string AssemblyFolder
@@ -322,5 +278,42 @@ namespace PureActive.Core.System
         }
 
         public string SettingsFolder => AssemblyFolder + "/Settings/";
+
+        private string ProcessSpecialFolder(Environment.SpecialFolderOption option, string folderPath)
+        {
+            switch (option)
+            {
+                case Environment.SpecialFolderOption.DoNotVerify:
+                    break;
+
+                case Environment.SpecialFolderOption.None:
+                {
+                    if (!FolderExists(folderPath))
+                        return string.Empty;
+
+                    break;
+                }
+
+                case Environment.SpecialFolderOption.Create:
+                {
+                    CreateFolder(folderPath);
+
+                    break;
+                }
+            }
+
+            return folderPath;
+        }
+
+
+        public string GetCurrentApplicationDataFolderPath()
+        {
+            var commonApplicationFolder =
+                GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.Create) + $"/{AppFolderName}/";
+
+            CreateFolder(commonApplicationFolder);
+
+            return commonApplicationFolder;
+        }
     }
 }

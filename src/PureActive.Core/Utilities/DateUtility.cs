@@ -2,7 +2,6 @@ using System;
 
 namespace PureActive.Core.Utilities
 {
-
     //All HTTP date/time stamps MUST be represented in Greenwich Mean Time (GMT), without exception. For the purposes 
     //of HTTP, GMT is exactly equal to UTC (Coordinated Universal Time). This is indicated in the first two formats by
     //the inclusion of "GMT" as the three-letter abbreviation for time zone, and MUST be assumed when reading the asctime
@@ -29,17 +28,17 @@ namespace PureActive.Core.Utilities
     //                | "May" | "Jun" | "Jul" | "Aug"
     //                | "Sep" | "Oct" | "Nov" | "Dec"
 
-    
+
     /// <summary>
-    /// Provides additional datetime operations
+    ///     Provides additional datetime operations
     /// </summary>
     public static class DateUtility
     {
         /// <summary>
-        /// Attempt to parse the provided datetime value using RFC1123, RFC1036, or  ANSI C asctime() format.
+        ///     Attempt to parse the provided datetime value using RFC1123, RFC1036, or  ANSI C asctime() format.
         /// </summary>
         /// <param name="datetime">Datetime value to be parsed</param>
-        /// <returns>Datetime if parsing was successful or <see cref="DateTime.MinValue"/> if parse fails</returns>
+        /// <returns>Datetime if parsing was successful or <see cref="DateTime.MinValue" /> if parse fails</returns>
         public static DateTime Parse(string datetime)
         {
             if (string.IsNullOrEmpty(datetime))
@@ -66,11 +65,11 @@ namespace PureActive.Core.Utilities
                 case "sat":
                 case "sun":
                     return new DateTime(int.Parse(vals[3]),
-                                        MonthFromString(vals[2]), 
-                                        int.Parse(vals[1]), 
-                                        int.Parse(secs[0]), 
-                                        int.Parse(secs[1]),
-                                        int.Parse(secs[2]));
+                        MonthFromString(vals[2]),
+                        int.Parse(vals[1]),
+                        int.Parse(secs[0]),
+                        int.Parse(secs[1]),
+                        int.Parse(secs[2]));
             }
 
             // Short
@@ -78,11 +77,11 @@ namespace PureActive.Core.Utilities
             {
                 vals = datetime.Split('/');
                 return new DateTime(int.Parse(vals[2]),
-                                    int.Parse(vals[0]),
-                                    int.Parse(vals[1]),
-                                    int.Parse(secs[0]), 
-                                    int.Parse(secs[1]),
-                                    int.Parse(secs[2]));
+                    int.Parse(vals[0]),
+                    int.Parse(vals[1]),
+                    int.Parse(secs[0]),
+                    int.Parse(secs[1]),
+                    int.Parse(secs[2]));
             }
 
             return DateTime.MinValue;
@@ -160,7 +159,7 @@ namespace PureActive.Core.Utilities
 
                     // Add value
                     if (ret == null)
-                        ret = new[] { s };
+                        ret = new[] {s};
                     else
                     {
                         tmp = new string[ret.Length + 1];
@@ -189,6 +188,7 @@ namespace PureActive.Core.Utilities
                 if (res[i].Substring(0, 1) == "\"" && res[i].Substring(res[i].Length - 1) == "\"")
                     res[i] = res[i].Substring(1, res[i].Length - 2);
             }
+
             return res;
         }
 

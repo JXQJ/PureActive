@@ -51,6 +51,8 @@ namespace PureActive.Core.Abstractions.System
 
         string GetFileNameWithoutExtension(string path);
 
+        string GetFolderName(string path);
+
         /// <summary>
         ///     Returns a Special folder path given a special folder type
         /// </summary>

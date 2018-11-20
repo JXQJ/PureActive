@@ -111,5 +111,5 @@ namespace PureActive.Core.UnitTests.System
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
         }
-   }
+    }
 }

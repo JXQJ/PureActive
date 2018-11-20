@@ -89,6 +89,7 @@ namespace PureActive.Core.System
 
         public string GetTempFileName() => Path.GetTempFileName();
 
+
         /// <summary>
         ///     Reads the contents of a file.
         /// </summary>
@@ -151,6 +152,9 @@ namespace PureActive.Core.System
 
         public string GetFileNameWithoutExtension(string path) => Path.GetFileNameWithoutExtension(path);
 
+
+        public string GetFolderName(string path) => Path.GetDirectoryName(path);
+
         /// <summary>
         ///     Returns a Special folder path given a special folder type
         /// </summary>
@@ -182,7 +186,7 @@ namespace PureActive.Core.System
                 case Environment.SpecialFolderOption.None:
                     {
                         if (!FolderExists(folderPath))
-                            return "";
+                            return string.Empty;
 
                         break;
                     }
@@ -261,7 +265,7 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string LogFolderPath()
         {
-            var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/";
+            var logFolderPath = GetCurrentApplicationDataFolderPath() + "Logs/";
 
             CreateFolder(logFolderPath);
 
@@ -274,7 +278,7 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string TestLogFolderPath()
         {
-            var logFolderPath = GetCurrentApplicationDataFolderPath() + "/Logs/Test/";
+            var logFolderPath = GetCurrentApplicationDataFolderPath() + "Logs/Test/";
 
             CreateFolder(logFolderPath);
 
@@ -287,7 +291,7 @@ namespace PureActive.Core.System
         /// <returns></returns>
         public string DataFolderPath()
         {
-            var databaseFolderPath = GetCurrentApplicationDataFolderPath() + "/Data/";
+            var databaseFolderPath = GetCurrentApplicationDataFolderPath() + "Data/";
 
             CreateFolder(databaseFolderPath);
 

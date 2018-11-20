@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using FluentAssertions;
 using Moq;
 using PureActive.Core.Abstractions.System;
@@ -221,19 +223,6 @@ namespace PureActive.Core.IntegrationTests.System
         }
 
         [Fact]
-        public void FileSystem_GetCommonApplicationDataFolderPath()
-        {
-            var specialFolderPath = _fileSystem.GetCommonApplicationDataFolderPath(Environment.SpecialFolderOption.None);
-
-            specialFolderPath.Should().NotBeNull();
-
-            if (!string.IsNullOrEmpty(specialFolderPath))
-            {
-                _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
-            }
-        }
-
-        [Fact]
         public void FileSystem_GetCommonApplicationDataFolderPath_Osx()
         {
             Mock<IOperatingSystem> operatingSystemMock = new Mock<IOperatingSystem>();
@@ -251,6 +240,227 @@ namespace PureActive.Core.IntegrationTests.System
             {
                 _fileSystem.FolderExists(specialFolderPath).Should().BeTrue();
             }
+        }
+
+        [Fact]
+        public void FileSystem_DeleteFile_Null()
+        {
+            _fileSystem.Invoking(fs => fs.DeleteFile(null)).Should().Throw<ArgumentNullException>();
+        }
+
+
+        [Fact]
+        public void FileSystem_DeleteFile_NoFound()
+        {
+            _fileSystem.Invoking(fs => fs.DeleteFile("ZZ:\\")).Should().Throw<IOException>();
+        }
+
+
+        [Fact]
+        public void FileSystem_TempFolder_Create_Exists_Delete()
+        {
+            var tempFolderName = $"{_fileSystem.GetFolderName(_fileSystem.GetTempFileName())}\\{Guid.NewGuid().ToStringNoDashes()}";
+            _fileSystem.CreateFolder(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeTrue();
+            _fileSystem.DeleteFolder(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+        }
+
+
+        [Fact]
+        public void FileSystem_TempFile_Create_Exists_Delete()
+        {
+            var tempFileName = _fileSystem.GetTempFileName();
+
+            _fileSystem.FileExists(tempFileName).Should().BeTrue();
+            _fileSystem.DeleteFile(tempFileName);
+            _fileSystem.FileExists(tempFileName).Should().BeFalse();
+        }
+
+
+        [Fact]
+        public void FileSystem_GetFileNameWithExtension()
+        {
+            var tempFileNameWithOutExtension = FileExtensions.GetRandomFileName("Test_", "");
+            _fileSystem.GetFileNameWithoutExtension($"{tempFileNameWithOutExtension}.log").Should()
+                .Be(tempFileNameWithOutExtension);
+        }
+
+        [Fact]
+        public void FileSystem_GetFileNameWithExtension_Null()
+        {
+            _fileSystem.GetFileNameWithoutExtension(null).Should().BeNull();
+        }
+
+        [Fact]
+        public void FileSystem_GetFileNameWithExtension_Empty()
+        {
+            _fileSystem.GetFileNameWithoutExtension("").Should().BeEmpty();
+        }
+
+
+        [Fact]
+        public void FileSystem_GetFolderName_Null()
+        {
+            _fileSystem.GetFolderName(null).Should().BeNull();
+
+        }
+
+        [Fact]
+        public void FileSystem_GetFolderName_Empty()
+        {
+            _fileSystem.GetFolderName("").Should().BeNull();
+        }
+
+        [Fact]
+        public void FileSystem_GetFolderName_DriveLetter()
+        {
+            _fileSystem.GetFolderName("C:").Should().BeNull();
+        }
+
+
+        [Fact]
+        public void FileSystem_GetFolderName_DriveLetterPath()
+        {
+            _fileSystem.GetFolderName("C:\\").Should().BeNull();
+        }
+
+        [Fact]
+        public void FileSystem_GetFolderName_DriveLetterRootFolder()
+        {
+            _fileSystem.GetFolderName("C:\\Temp").Should().Be("C:\\");
+        }
+
+        [Fact]
+        public void FileSystem_GetFolderName_DriveLetterRootFolderPath()
+        {
+            _fileSystem.GetFolderName("C:\\Temp\\").Should().Be("C:\\Temp");
+        }
+
+        [Fact]
+        public void FileSystem_ProcessSpecialFolder_Private_None_Not_Exists()
+        {
+            var tempFolderName = $"{_fileSystem.GetFolderName(_fileSystem.GetTempFileName())}\\{Guid.NewGuid().ToStringNoDashes()}";
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+
+            MethodInfo methodInfo = typeof(FileSystem).GetMethod("ProcessSpecialFolder",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            object[] parameters = { Environment.SpecialFolderOption.None, tempFolderName };
+
+            methodInfo.Invoke(_fileSystem, parameters).Should().Be(string.Empty);
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+        }
+
+        [Fact]
+        public void FileSystem_ProcessSpecialFolder_Private_None_Exists()
+        {
+            var tempFolderName = $"{_fileSystem.GetFolderName(_fileSystem.GetTempFileName())}\\{Guid.NewGuid().ToStringNoDashes()}";
+            _fileSystem.CreateFolder(tempFolderName);
+
+            MethodInfo methodInfo = typeof(FileSystem).GetMethod("ProcessSpecialFolder",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            object[] parameters = { Environment.SpecialFolderOption.None, tempFolderName };
+
+            methodInfo.Invoke(_fileSystem, parameters).Should().Be(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeTrue();
+            _fileSystem.DeleteFolder(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+        }
+
+        [Fact]
+        public void FileSystem_ProcessSpecialFolder_Private_Create()
+        {
+            var tempFolderName = $"{_fileSystem.GetFolderName(_fileSystem.GetTempFileName())}\\{Guid.NewGuid().ToStringNoDashes()}";
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+
+            MethodInfo methodInfo = typeof(FileSystem).GetMethod("ProcessSpecialFolder",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            object[] parameters = { Environment.SpecialFolderOption.Create, tempFolderName };
+
+            methodInfo.Invoke(_fileSystem, parameters).Should().Be(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeTrue();
+            _fileSystem.DeleteFolder(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+        }
+
+        [Fact]
+        public void FileSystem_ProcessSpecialFolder_Private_DoNotVerify()
+        {
+            var tempFolderName = $"{_fileSystem.GetFolderName(_fileSystem.GetTempFileName())}\\{Guid.NewGuid().ToStringNoDashes()}";
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+
+            MethodInfo methodInfo = typeof(FileSystem).GetMethod("ProcessSpecialFolder",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            object[] parameters = { Environment.SpecialFolderOption.DoNotVerify, tempFolderName };
+
+            methodInfo.Invoke(_fileSystem, parameters).Should().Be(tempFolderName);
+            _fileSystem.FolderExists(tempFolderName).Should().BeFalse();
+        }
+
+
+        [Fact]
+        public void FileSystem_AssemblyFolder()
+        {
+ 
+            var assemblyFolder = _fileSystem.AssemblyFolder;
+            assemblyFolder.Should().NotBeNullOrEmpty();
+            assemblyFolder.Should().Contain("PureActive.Core.IntegrationTests");
+        }
+
+        [Fact]
+        public void FileSystem_DataFolderPath()
+        {
+             var dataFolderPath = _fileSystem.DataFolderPath();
+            dataFolderPath.Should().NotBeNullOrEmpty();
+            dataFolderPath.Should().EndWith($"/{nameof(FileSystemIntegrationTests)}/Data/");
+        }
+
+
+        [Fact]
+        public void FileSystem_SettingsFolder()
+        {
+            var settingFolderPath = _fileSystem.SettingsFolder;
+            settingFolderPath.Should().NotBeNullOrEmpty();
+            settingFolderPath.Should().EndWith($"/Settings/");
+        }
+
+        [Fact]
+        public void FileSystem_LogFolderPath()
+        {
+            var settingFolderPath = _fileSystem.LogFolderPath();
+            settingFolderPath.Should().NotBeNullOrEmpty();
+            settingFolderPath.Should().EndWith($"/{nameof(FileSystemIntegrationTests)}/Logs/");
+        }
+
+        [Fact]
+        public void FileSystem_TestLogFolderPath()
+        {
+            var settingFolderPath = _fileSystem.TestLogFolderPath();
+            settingFolderPath.Should().NotBeNullOrEmpty();
+            settingFolderPath.Should().EndWith($"/{nameof(FileSystemIntegrationTests)}/Logs/Test/");
+        }
+
+        [Fact]
+        public void FileSystem_GetLocalApplicationDataFolderPath()
+        {
+             var settingFolderPath = _fileSystem.GetLocalApplicationDataFolderPath();
+            settingFolderPath.Should().NotBeNullOrEmpty();
+            _fileSystem.FolderExists(settingFolderPath).Should().BeTrue();
+        }
+
+        [Fact]
+        public void FileSystem_GetLocalApplicationDataFolderPath_DoNotVerify()
+        {
+            var settingFolderPath = _fileSystem.GetLocalApplicationDataFolderPath(Environment.SpecialFolderOption.DoNotVerify);
+            settingFolderPath.Should().NotBeNullOrEmpty();
+        }
+
+        [Fact]
+        public void FileSystem_GetCommonApplicationDataFolderPath()
+        {
+            var settingFolderPath = _fileSystem.GetCommonApplicationDataFolderPath();
+            settingFolderPath.Should().NotBeNullOrEmpty();
+            _fileSystem.FolderExists(settingFolderPath).Should().BeTrue();
         }
     }
 }

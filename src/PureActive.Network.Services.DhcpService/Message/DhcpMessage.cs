@@ -211,9 +211,8 @@ namespace PureActive.Network.Services.DhcpService.Message
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DhcpMessage" /> class.
-        /// <param name="data">Array containing the data to decode.</param>
         /// </summary>
-        /// <param name="data">The data.</param>
+        /// <param name="data">Array containing the data to decode.</param>
         /// <param name="loggerFactory">The logger factory.</param>
         /// <param name="logger">The logger.</param>
         public DhcpMessage(byte[] data, IPureLoggerFactory loggerFactory, IPureLogger logger = null)

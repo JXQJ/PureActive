@@ -1,3 +1,17 @@
+// ***********************************************************************
+// Assembly         : PureActive.Core
+// Author           : SteveBu
+// Created          : 10-31-2018
+// License          : Licensed under MIT License, see https://github.com/PureActive/PureActive/blob/master/LICENSE
+//
+// Last Modified By : SteveBu
+// Last Modified On : 11-20-2018
+// ***********************************************************************
+// <copyright file="IntegerExtensions.cs" company="BushChang Corporation">
+//     © 2018 BushChang Corporation. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 namespace PureActive.Core.Extensions
 {
     /// <summary>

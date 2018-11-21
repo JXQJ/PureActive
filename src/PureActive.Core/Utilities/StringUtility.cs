@@ -1,4 +1,18 @@
-﻿using System;
+﻿// ***********************************************************************
+// Assembly         : PureActive.Core
+// Author           : SteveBu
+// Created          : 11-01-2018
+// License          : Licensed under MIT License, see https://github.com/PureActive/PureActive/blob/master/LICENSE
+//
+// Last Modified By : SteveBu
+// Last Modified On : 11-20-2018
+// ***********************************************************************
+// <copyright file="StringUtility.cs" company="BushChang Corporation">
+//     © 2018 BushChang Corporation. All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+using System;
 using System.Collections;
 using System.Text;
 
@@ -8,7 +22,7 @@ namespace PureActive.Core.Utilities
     /// Provides additional string operations
     /// </summary>
     public static class StringUtility
-    {          
+    {
         /// <summary>
         /// Check if the provided string is either null or empty
         /// </summary>
@@ -32,9 +46,9 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Split a string by deliminator
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="deliminator"></param>
-        /// <returns></returns>
+        /// <param name="source">The source.</param>
+        /// <param name="deliminator">The deliminator.</param>
+        /// <returns>System.String[].</returns>
         public static string[] SplitComponents(string source, char deliminator)
         {
             int iStart = 0;
@@ -63,7 +77,7 @@ namespace PureActive.Core.Utilities
 
                     // Add value
                     if (ret == null)
-                        ret = new[] { s };
+                        ret = new[] {s};
                     else
                     {
                         tmp = new string[ret.Length + 1];
@@ -86,9 +100,9 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Determine if a specific character is inside of a quote string
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="position"></param>
-        /// <returns></returns>
+        /// <param name="source">The source.</param>
+        /// <param name="position">The position.</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
         public static bool InQuotes(string source, int position)
         {
             int qcount = 0;
@@ -113,11 +127,11 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Determine if a string includes a pattern using "*" and "?" as wild cards 
+        /// Determine if a string includes a pattern using "*" and "?" as wild cards
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="pattern"></param>
-        /// <param name="caseSensitive"></param>
+        /// <param name="source">The source.</param>
+        /// <param name="pattern">The pattern.</param>
+        /// <param name="caseSensitive">if set to <c>true</c> [case sensitive].</param>
         /// <returns>True if pattern wild card matches</returns>
         public static bool MatchWildCard(string source, string pattern, bool caseSensitive)
         {
@@ -139,6 +153,7 @@ namespace PureActive.Core.Utilities
                 {
                     return false;
                 }
+
                 nPattern++;
                 nText++;
             }
@@ -152,6 +167,7 @@ namespace PureActive.Core.Utilities
                     {
                         return true;
                     }
+
                     mp = nPattern;
                     cp = nText + 1;
                 }
@@ -171,6 +187,7 @@ namespace PureActive.Core.Utilities
             {
                 nPattern++;
             }
+
             return nPattern >= pattern.Length;
         }
 
@@ -184,9 +201,9 @@ namespace PureActive.Core.Utilities
             // Pairs of 3 8-bit bytes will become pairs of 4 6-bit bytes
             // That's the whole trick of base64 encoding :-)
 
-            int blocks = value.Length / 3;           // The amount of original pairs
+            int blocks = value.Length / 3; // The amount of original pairs
             if (blocks * 3 < value.Length) ++blocks; // Fixes rounding issues; always round up
-            int bytes = blocks * 4;                  // The length of the base64 output
+            int bytes = blocks * 4; // The length of the base64 output
 
             // These characters will be used to represent the 6-bit bytes in ASCII
             char[] base64Characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=".ToCharArray();
@@ -199,15 +216,21 @@ namespace PureActive.Core.Utilities
             for (int block = 0; block < blocks; ++block)
             {
                 // Fetches the input pairs
-                byte input0 = (byte)(inputChars.Length > block * 3 ? inputChars[block * 3] : 0);
-                byte input1 = (byte)(inputChars.Length > block * 3 + 1 ? inputChars[block * 3 + 1] : 0);
-                byte input2 = (byte)(inputChars.Length > block * 3 + 2 ? inputChars[block * 3 + 2] : 0);
+                byte input0 = (byte) (inputChars.Length > block * 3 ? inputChars[block * 3] : 0);
+                byte input1 = (byte) (inputChars.Length > block * 3 + 1 ? inputChars[block * 3 + 1] : 0);
+                byte input2 = (byte) (inputChars.Length > block * 3 + 2 ? inputChars[block * 3 + 2] : 0);
 
                 // Generates the output pairs
-                byte output0 = (byte)(input0 >> 2);                           // The first 6 bits of the 1st byte
-                byte output1 = (byte)(((input0 & 0x3) << 4) + (input1 >> 4)); // The last 2 bits of the 1st byte followed by the first 4 bits of the 2nd byte
-                byte output2 = (byte)(((input1 & 0xf) << 2) + (input2 >> 6)); // The last 4 bits of the 2nd byte followed by the first 2 bits of the 3rd byte
-                byte output3 = (byte)(input2 & 0x3f);                         // The last 6 bits of the 3rd byte
+                byte output0 = (byte) (input0 >> 2); // The first 6 bits of the 1st byte
+                byte output1 =
+                    (byte) (((input0 & 0x3) << 4) +
+                            (input1 >>
+                             4)); // The last 2 bits of the 1st byte followed by the first 4 bits of the 2nd byte
+                byte output2 =
+                    (byte) (((input1 & 0xf) << 2) +
+                            (input2 >>
+                             6)); // The last 4 bits of the 2nd byte followed by the first 2 bits of the 3rd byte
+                byte output3 = (byte) (input2 & 0x3f); // The last 6 bits of the 3rd byte
 
                 // This prevents 0-bytes at the end
                 if (inputChars.Length < block * 3 + 2) output2 = 64;
@@ -227,11 +250,11 @@ namespace PureActive.Core.Utilities
         /// Return X.X Byte/KB/MB/GB/TB
         /// </summary>
         /// <param name="value">Size</param>
-        /// <returns></returns>
+        /// <returns>System.String.</returns>
         public static string FormatDiskSize(long value)
         {
             double cur = value;
-            string[] size = new string[] { "bytes", "kb", "mb", "gb", "tb" };
+            string[] size = {"bytes", "kb", "mb", "gb", "tb"};
             int i = 0;
 
             while (cur > 1024 && i < 4)
@@ -313,14 +336,15 @@ namespace PureActive.Core.Utilities
 
                 iStart = i + replace.Length;
             }
+
             return source;
         }
 
         /// <summary>
         /// Finds and replaces empty or null within a string
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="replaceWith"></param>
+        /// <param name="source">The source.</param>
+        /// <param name="replaceWith">The replace with.</param>
         /// <returns>source</returns>
         public static string ReplaceEmptyOrNull(string source, string replaceWith)
         {
@@ -330,8 +354,8 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Finds and replaces empty or null within a string
         /// </summary>
-        /// <param name="source"></param>
-        /// <param name="replaceWith"></param>
+        /// <param name="source">The source.</param>
+        /// <param name="replaceWith">The replace with.</param>
         /// <returns>Value</returns>
         public static string ReplaceEmptyOrNull(object source, string replaceWith)
         {
@@ -348,32 +372,28 @@ namespace PureActive.Core.Utilities
         /// <summary>
         /// Sorts an array of strings.
         /// </summary>
-        /// <remarks>
-        /// Original code by user "Jay Jay"
-        /// http://www.tinyclr.com/codeshare/entry/475
-        /// Modified to be specifically suites to sorting arrays of strings.    
-        /// </remarks>
         /// <param name="array">Array of string to be sorted.</param>
+        /// <remarks>Original code by user "Jay Jay"
+        /// http://www.tinyclr.com/codeshare/entry/475
+        /// Modified to be specifically suites to sorting arrays of strings.</remarks>
         public static void Sort(string[] array)
         {
             Sort(array, 0, array.Length - 1);
         }
 
         /// <summary>
-        /// This is a generic version of C.A.R Hoare's Quick Sort 
+        /// This is a generic version of C.A.R Hoare's Quick Sort
         /// algorithm.  This will handle arrays that are already
         /// sorted, and arrays with duplicate keys.
         /// </summary>
-        /// <remarks>
-        /// If you think of a one dimensional array as going from
-        /// the lowest index on the left to the highest index on the right
-        /// then the parameters to this function are lowest index or
-        /// left and highest index or right.  The first time you call
-        /// this function it will be with the parameters 0, a.length - 1.
-        /// </remarks>
         /// <param name="array">Array of string to be sorted.</param>
         /// <param name="l">Left boundary of array partition</param>
         /// <param name="r">Right boundary of array partition</param>
+        /// <remarks>If you think of a one dimensional array as going from
+        /// the lowest index on the left to the highest index on the right
+        /// then the parameters to this function are lowest index or
+        /// left and highest index or right.  The first time you call
+        /// this function it will be with the parameters 0, a.length - 1.</remarks>
         private static void Sort(string[] array, int l, int r)
         {
             int M = 4;
@@ -403,19 +423,21 @@ namespace PureActive.Core.Utilities
 
                 i = l;
                 v = array[j];
-                for (; ; )
+                for (;;)
                 {
                     while (string.CompareOrdinal(array[++i], v) < 0)
-                    { }
+                    {
+                    }
 
                     while (string.CompareOrdinal(array[--j], v) > 0)
-                    { }
+                    {
+                    }
 
                     if (j < i)
                         break;
                     Swap(array, i, j);
-
                 }
+
                 Swap(array, i, r - 1);
 
                 Sort(array, l, j);
@@ -423,6 +445,13 @@ namespace PureActive.Core.Utilities
             }
         }
 
+        /// <summary>
+        /// Insertions the sort.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="lo">The lo.</param>
+        /// <param name="hi">The hi.</param>
+        /// <autogeneratedoc />
         private static void InsertionSort(string[] array, int lo, int hi)
         {
             int i;
@@ -435,14 +464,21 @@ namespace PureActive.Core.Utilities
                 j = i;
                 while (j > lo && string.CompareOrdinal(array[j - 1], v) > 0)
                 {
-
                     array[j] = array[j - 1];
                     --j;
                 }
+
                 array[j] = v;
             }
         }
 
+        /// <summary>
+        /// Swaps the specified list.
+        /// </summary>
+        /// <param name="list">The list.</param>
+        /// <param name="left">The left.</param>
+        /// <param name="right">The right.</param>
+        /// <autogeneratedoc />
         private static void Swap(IList list, int left, int right)
         {
             object swap = list[left];
@@ -460,11 +496,12 @@ namespace PureActive.Core.Utilities
         /// <param name="format">A composite format string.</param>
         /// <param name="arg">The object to format.</param>
         /// <returns>A copy of format in which any format items are replaced by the string representation of arg0.</returns>
-        /// <exception cref="FormatException">format is invalid, or the index of a format item is less than zero, or greater than or equal to the length of the args array.</exception>
+        /// <exception cref="FormatException">format is invalid, or the index of a format item is less than zero, or greater than
+        /// or equal to the length of the args array.</exception>
         /// <exception cref="ArgumentNullException">format or args is null</exception>
         public static string Format(string format, object arg)
         {
-            return Format(format, new[] { arg });
+            return Format(format, new[] {arg});
         }
 
         /// <summary>
@@ -472,9 +509,13 @@ namespace PureActive.Core.Utilities
         /// </summary>
         /// <param name="format">A composite format string.</param>
         /// <param name="args">An object array that contains zero or more objects to format.</param>
-        /// <returns>A copy of format in which the format items have been replaced by the string representation of the corresponding objects in args.</returns>
-        /// <exception cref="FormatException">format is invalid, or the index of a format item is less than zero, or greater than or equal to the length of the args array.</exception>
+        /// <returns>A copy of format in which the format items have been replaced by the string representation of the
+        /// corresponding objects in args.</returns>
         /// <exception cref="ArgumentNullException">format or args is null</exception>
+        /// <exception cref="FormatException">
+        /// </exception>
+        /// <exception cref="FormatException">format is invalid, or the index of a format item is less than zero, or greater than
+        /// or equal to the length of the args array.</exception>
         /// <example>
         /// x = StringUtility.Format("Quick brown {0}","fox");
         /// </example>
@@ -536,7 +577,7 @@ namespace PureActive.Core.Utilities
                                     {
                                         fmt = fmt.Substring(1, fmt.Length - 2);
 
-                                        string[] indexFormat = fmt.Split(new char[] { ':' });
+                                        string[] indexFormat = fmt.Split(':');
 
                                         string formatString = string.Empty;
 
@@ -549,10 +590,6 @@ namespace PureActive.Core.Utilities
                                         if (ParseUtility.TryParseInt(indexFormat[0], out int index))
                                         {
                                             bld.Append(FormatParameter(args[index], formatString));
-                                        }
-                                        else
-                                        {
-                                            //throw new FormatException(FormatException.StringFormatErrorMessage);
                                         }
                                     }
 
@@ -579,9 +616,7 @@ namespace PureActive.Core.Utilities
                         // invalid
                         throw new FormatException(FormatException.StringFormatErrorMessage);
                     }
-
                 }
-
             }
 
             // copy any additional remaining part of the format string.
@@ -593,13 +628,18 @@ namespace PureActive.Core.Utilities
             return bld.ToString();
         }
 
+        /// <summary>
+        /// Validates the format string.
+        /// </summary>
+        /// <param name="format">The format.</param>
+        /// <autogeneratedoc />
         private static void ValidateFormatString(string format)
         {
             char expected = '{';
 
             int i = 0;
 
-            while ((i = format.IndexOfAny(new[] { '{', '}' }, i)) >= 0)
+            while ((i = format.IndexOfAny(new[] {'{', '}'}, i)) >= 0)
             {
                 if (i < format.Length - 1 && format[i] == format[i + 1])
                 {
@@ -629,9 +669,15 @@ namespace PureActive.Core.Utilities
                 // orpaned opening brace. Bad format.
                 //throw new FormatException(FormatException.StringFormatErrorMessage);
             }
-
         }
 
+        /// <summary>
+        /// Formats the parameter.
+        /// </summary>
+        /// <param name="p">The p.</param>
+        /// <param name="formatString">The format string.</param>
+        /// <returns>System.String.</returns>
+        /// <autogeneratedoc />
         private static string FormatParameter(object p, string formatString)
         {
             if (formatString == string.Empty)
@@ -639,63 +685,77 @@ namespace PureActive.Core.Utilities
 
             if (p as IFormattable != null)
             {
-                return ((IFormattable)p).ToString(formatString, null);
+                return ((IFormattable) p).ToString(formatString, null);
             }
-            else if (p is DateTime)
+
+            if (p is DateTime)
             {
-                return ((DateTime)p).ToString(formatString);
+                return ((DateTime) p).ToString(formatString);
             }
-            else if (p is Double)
+
+            if (p is double)
             {
-                return ((Double)p).ToString(formatString);
+                return ((double) p).ToString(formatString);
             }
-            else if (p is Int16)
+
+            if (p is short)
             {
-                return ((Int16)p).ToString(formatString);
+                return ((short) p).ToString(formatString);
             }
-            else if (p is Int32)
+
+            if (p is int)
             {
-                return ((Int32)p).ToString(formatString);
+                return ((int) p).ToString(formatString);
             }
-            else if (p is Int64)
+
+            if (p is long)
             {
-                return ((Int64)p).ToString(formatString);
+                return ((long) p).ToString(formatString);
             }
-            else if (p is SByte)
+
+            if (p is sbyte)
             {
-                return ((SByte)p).ToString(formatString);
+                return ((sbyte) p).ToString(formatString);
             }
-            else if (p is Single)
+
+            if (p is float)
             {
-                return ((Single)p).ToString(formatString);
+                return ((float) p).ToString(formatString);
             }
-            else if (p is UInt16)
+
+            if (p is ushort)
             {
-                return ((UInt16)p).ToString(formatString);
+                return ((ushort) p).ToString(formatString);
             }
-            else if (p is UInt32)
+
+            if (p is uint)
             {
-                return ((UInt32)p).ToString(formatString);
+                return ((uint) p).ToString(formatString);
             }
-            else if (p is UInt64)
+
+            if (p is ulong)
             {
-                return ((UInt64)p).ToString(formatString);
+                return ((ulong) p).ToString(formatString);
             }
-            else
-            {
-                return p.ToString();
-            }
+
+            return p.ToString();
         }
 
         #endregion Format method
-
     }
 
     /// <summary>
-    /// The exception that is thrown when the format of an argument does not meet the parameter specifications of the invoked method.
+    /// The exception that is thrown when the format of an argument does not meet the parameter specifications of the
+    /// invoked method.
+    /// Implements the <see cref="Exception" />
     /// </summary>
+    /// <seealso cref="Exception" />
     public class FormatException : Exception
     {
+        /// <summary>
+        /// The string format error message
+        /// </summary>
+        /// <autogeneratedoc />
         internal const string StringFormatErrorMessage = "String format is not valid";
 
         /// <summary>
@@ -715,10 +775,13 @@ namespace PureActive.Core.Utilities
         }
 
         /// <summary>
-        /// Initializes a new instance of the FormatException class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the FormatException class with a specified error message and a reference to the inner
+        /// exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
-        /// <param name="ex">The exception that is the cause of the current exception. If the innerException parameter is not a null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner exception. </param>
+        /// <param name="ex">The exception that is the cause of the current exception. If the innerException parameter is not a
+        /// null reference (Nothing in Visual Basic), the current exception is raised in a catch block that handles the inner
+        /// exception.</param>
         public FormatException(string message, Exception ex)
             : base(message, ex)
         {

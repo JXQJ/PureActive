@@ -44,7 +44,7 @@ namespace PureActive.Core.Reactive.Extensions
         }
 
         /// <summary>
-        /// Subscribe an observer that prints each notificatio to the console output
+        /// Subscribe an observer that prints each notification to the console output
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="observable">The observable.</param>

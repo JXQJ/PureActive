@@ -23,9 +23,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Represents a socket connection between two end points.
-    /// Implements the <see cref="System.IDisposable" />
+    /// Implements the <see cref="IDisposable" />
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public class SocketChannel : IDisposable
     {
         #region Events

@@ -19,9 +19,9 @@ namespace PureActive.Core.Serialization
 {
     /// <summary>
     /// Provides JSON settings used for all services.
-    /// Implements the <see cref="PureActive.Core.Abstractions.Serialization.IJsonSettingsProvider" />
+    /// Implements the <see cref="IJsonSettingsProvider" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.Serialization.IJsonSettingsProvider" />
+    /// <seealso cref="IJsonSettingsProvider" />
     public class JsonSettingsProvider : IJsonSettingsProvider
     {
         /// <summary>

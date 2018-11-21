@@ -19,9 +19,9 @@ namespace PureActive.Network.Extensions.IO
 {
     /// <summary>
     /// Class to read bytes from a byte array.
-    /// Implements the <see cref="System.IDisposable" />
+    /// Implements the <see cref="IDisposable" />
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public class ByteReader : IDisposable
     {
         /// <summary>

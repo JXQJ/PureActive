@@ -26,9 +26,9 @@ namespace PureActive.Core.Async
     /// <summary>
     /// Functionality to execute one or more generic operations
     /// with fallback behavior.
-    /// Implements the <see cref="PureActive.Core.Abstractions.Async.IOperationRunner" />
+    /// Implements the <see cref="IOperationRunner" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.Async.IOperationRunner" />
+    /// <seealso cref="IOperationRunner" />
     public class OperationRunner : IOperationRunner
     {
         /// <summary>

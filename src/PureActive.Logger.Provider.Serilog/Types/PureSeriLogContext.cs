@@ -25,9 +25,9 @@ namespace PureActive.Logger.Provider.Serilog.Types
     /// <summary>
     /// Allows for adding additional properties to all log messages
     /// logged within newly created scopes.
-    /// Implements the <see cref="PureActive.Logging.Abstractions.Interfaces.IPureLogContext" />
+    /// Implements the <see cref="IPureLogContext" />
     /// </summary>
-    /// <seealso cref="PureActive.Logging.Abstractions.Interfaces.IPureLogContext" />
+    /// <seealso cref="IPureLogContext" />
     public class PureSeriLogContext : IPureLogContext
     {
         /// <summary>

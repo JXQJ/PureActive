@@ -23,9 +23,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// A class that listen for remote clients.
-    /// Implements the <see cref="System.IDisposable" />
+    /// Implements the <see cref="IDisposable" />
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public abstract class SocketListener : IDisposable
     {
         #region Private Properties

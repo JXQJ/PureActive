@@ -21,9 +21,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Used by <see cref="SocketListener.ClientConnected" />.
-    /// Implements the <see cref="System.EventArgs" />
+    /// Implements the <see cref="EventArgs" />
     /// </summary>
-    /// <seealso cref="System.EventArgs" />
+    /// <seealso cref="EventArgs" />
     public class SocketEventArgs : EventArgs
     {
         /// <summary>

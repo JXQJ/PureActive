@@ -22,9 +22,9 @@ namespace PureActive.Logger.Provider.ApplicationInsights.Telemetry
     /// Filters out all exception logging handled at the platform level.
     /// This avoids duplicate exception traces being sent to Application
     /// Insights (as Serilog already sends enriched exception information).
-    /// Implements the <see cref="Microsoft.ApplicationInsights.Extensibility.ITelemetryProcessor" />
+    /// Implements the <see cref="ITelemetryProcessor" />
     /// </summary>
-    /// <seealso cref="Microsoft.ApplicationInsights.Extensibility.ITelemetryProcessor" />
+    /// <seealso cref="ITelemetryProcessor" />
     public class ExceptionFilterTelemetryProcessor : ITelemetryProcessor
     {
         /// <summary>

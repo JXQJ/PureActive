@@ -20,9 +20,9 @@ namespace PureActive.Core.Serialization
 {
     /// <summary>
     /// A collection of type maps for the JSON serializer.
-    /// Implements the <see cref="PureActive.Core.Abstractions.Serialization.ITypeMapCollection" />
+    /// Implements the <see cref="ITypeMapCollection" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.Serialization.ITypeMapCollection" />
+    /// <seealso cref="ITypeMapCollection" />
     public class TypeMapCollection : Dictionary<Type, IReadOnlyDictionary<string, Type>>, ITypeMapCollection
     {
     }

@@ -21,9 +21,9 @@ namespace PureActive.Logger.Provider.ApplicationInsights.Telemetry
 {
     /// <summary>
     /// Initializes the operation ID from the request header, if any.
-    /// Implements the <see cref="Microsoft.ApplicationInsights.Extensibility.ITelemetryInitializer" />
+    /// Implements the <see cref="ITelemetryInitializer" />
     /// </summary>
-    /// <seealso cref="Microsoft.ApplicationInsights.Extensibility.ITelemetryInitializer" />
+    /// <seealso cref="ITelemetryInitializer" />
     public class HostnameTelemetryInitializer : ITelemetryInitializer
     {
         /// <summary>

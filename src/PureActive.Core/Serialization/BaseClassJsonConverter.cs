@@ -23,9 +23,9 @@ namespace PureActive.Core.Serialization
 {
     /// <summary>
     /// A converter that reads and writes a custom type.
-    /// Implements the <see cref="Newtonsoft.Json.JsonConverter" />
+    /// Implements the <see cref="JsonConverter" />
     /// </summary>
-    /// <seealso cref="Newtonsoft.Json.JsonConverter" />
+    /// <seealso cref="JsonConverter" />
     public class BaseClassJsonConverter : JsonConverter
     {
         /// <summary>

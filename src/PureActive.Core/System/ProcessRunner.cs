@@ -24,9 +24,9 @@ namespace PureActive.Core.System
 {
     /// <summary>
     /// Runs a process.
-    /// Implements the <see cref="PureActive.Core.Abstractions.System.IProcessRunner" />
+    /// Implements the <see cref="IProcessRunner" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.System.IProcessRunner" />
+    /// <seealso cref="IProcessRunner" />
     public class ProcessRunner : IProcessRunner
     {
         /// <summary>

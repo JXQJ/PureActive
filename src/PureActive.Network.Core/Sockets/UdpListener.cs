@@ -23,9 +23,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// A class that listen for UDP packets from remote clients.
-    /// Implements the <see cref="PureActive.Network.Core.Sockets.SocketListener" />
+    /// Implements the <see cref="SocketListener" />
     /// </summary>
-    /// <seealso cref="PureActive.Network.Core.Sockets.SocketListener" />
+    /// <seealso cref="SocketListener" />
     public class UdpListener : SocketListener
     {
         /// <summary>

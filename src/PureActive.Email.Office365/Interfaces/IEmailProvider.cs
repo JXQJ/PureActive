@@ -21,9 +21,9 @@ namespace PureActive.Email.Office365.Interfaces
 {
     /// <summary>
     /// Sends mail messages.
-    /// Implements the <see cref="Microsoft.AspNetCore.Identity.UI.Services.IEmailSender" />
+    /// Implements the <see cref="IEmailSender" />
     /// </summary>
-    /// <seealso cref="Microsoft.AspNetCore.Identity.UI.Services.IEmailSender" />
+    /// <seealso cref="IEmailSender" />
     public interface IEmailProvider : IEmailSender
     {
         /// <summary>

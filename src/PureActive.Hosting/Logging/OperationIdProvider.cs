@@ -20,9 +20,9 @@ namespace PureActive.Hosting.Logging
 {
     /// <summary>
     /// Provides the operation ID of the current request.
-    /// Implements the <see cref="PureActive.Logging.Abstractions.Interfaces.IOperationIdProvider" />
+    /// Implements the <see cref="IOperationIdProvider" />
     /// </summary>
-    /// <seealso cref="PureActive.Logging.Abstractions.Interfaces.IOperationIdProvider" />
+    /// <seealso cref="IOperationIdProvider" />
     public class OperationIdProvider : IOperationIdProvider
     {
         /// <summary>

@@ -25,9 +25,9 @@ namespace PureActive.Core.Serialization
 {
     /// <summary>
     /// Serializes and deserializes json objects for APIs.
-    /// Implements the <see cref="Newtonsoft.Json.Serialization.DefaultContractResolver" />
+    /// Implements the <see cref="DefaultContractResolver" />
     /// </summary>
-    /// <seealso cref="Newtonsoft.Json.Serialization.DefaultContractResolver" />
+    /// <seealso cref="DefaultContractResolver" />
     public class ApiContractResolver : DefaultContractResolver
     {
         /// <summary>

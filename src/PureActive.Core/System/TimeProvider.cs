@@ -20,9 +20,9 @@ namespace PureActive.Core.System
     /// <summary>
     /// TimeProvider implementation that returns the current time,
     /// as reported by the system.
-    /// Implements the <see cref="PureActive.Core.Abstractions.System.ITimeProvider" />
+    /// Implements the <see cref="ITimeProvider" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.System.ITimeProvider" />
+    /// <seealso cref="ITimeProvider" />
     public class TimeProvider : ITimeProvider
     {
         /// <summary>

@@ -26,9 +26,9 @@ namespace PureActive.Email.Office365.Providers
 {
     /// <summary>
     /// Sends mail messages.
-    /// Implements the <see cref="PureActive.Email.Office365.Interfaces.IEmailProvider" />
+    /// Implements the <see cref="IEmailProvider" />
     /// </summary>
-    /// <seealso cref="PureActive.Email.Office365.Interfaces.IEmailProvider" />
+    /// <seealso cref="IEmailProvider" />
     public class Office365EmailProvider : IEmailProvider
     {
         /// <summary>

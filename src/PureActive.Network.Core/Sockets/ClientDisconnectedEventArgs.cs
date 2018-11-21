@@ -19,9 +19,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Event arguments for <see cref="SocketListener.ClientDisconnected" />.
-    /// Implements the <see cref="System.EventArgs" />
+    /// Implements the <see cref="EventArgs" />
     /// </summary>
-    /// <seealso cref="System.EventArgs" />
+    /// <seealso cref="EventArgs" />
     public class ClientDisconnectedEventArgs : EventArgs
     {
         /// <summary>

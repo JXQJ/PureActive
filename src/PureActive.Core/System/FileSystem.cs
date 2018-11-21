@@ -24,9 +24,9 @@ namespace PureActive.Core.System
 {
     /// <summary>
     /// Provides access to the file system.
-    /// Implements the <see cref="PureActive.Core.Abstractions.System.IFileSystem" />
+    /// Implements the <see cref="IFileSystem" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.System.IFileSystem" />
+    /// <seealso cref="IFileSystem" />
     public class FileSystem : IFileSystem
     {
         /// <summary>

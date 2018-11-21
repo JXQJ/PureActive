@@ -512,7 +512,7 @@ namespace PureActive.Core.Utilities
         /// <returns>A copy of format in which the format items have been replaced by the string representation of the
         /// corresponding objects in args.</returns>
         /// <exception cref="ArgumentNullException">format or args is null</exception>
-        /// <exception cref="PureActive.Core.Utilities.FormatException">
+        /// <exception cref="FormatException">
         /// </exception>
         /// <exception cref="FormatException">format is invalid, or the index of a format item is less than zero, or greater than
         /// or equal to the length of the args array.</exception>

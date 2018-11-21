@@ -21,9 +21,9 @@ namespace PureActive.Network.Core.Sockets
 {
     /// <summary>
     /// Implementation of <see cref="SocketService" /> that serves socket requests from remote clients.
-    /// Implements the <see cref="System.IDisposable" />
+    /// Implements the <see cref="IDisposable" />
     /// </summary>
-    /// <seealso cref="System.IDisposable" />
+    /// <seealso cref="IDisposable" />
     public abstract class SocketService : IDisposable
     {
         #region Private Properties

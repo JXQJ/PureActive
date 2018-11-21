@@ -20,9 +20,9 @@ namespace PureActive.Core.Serialization
 {
     /// <summary>
     /// Serializes and deserializes objects using json.
-    /// Implements the <see cref="PureActive.Core.Abstractions.Serialization.IJsonSerializer" />
+    /// Implements the <see cref="IJsonSerializer" />
     /// </summary>
-    /// <seealso cref="PureActive.Core.Abstractions.Serialization.IJsonSerializer" />
+    /// <seealso cref="IJsonSerializer" />
     public class ModelSerializer : IJsonSerializer
     {
         /// <summary>

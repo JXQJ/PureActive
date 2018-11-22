@@ -14,10 +14,8 @@
 // ***********************************************************************
 
 using System;
-using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Hosting.CommonServices;
-using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
@@ -66,10 +64,25 @@ namespace PureActive.Network.Services.PingService.UnitTests
         [Fact]
         public void PingService_Constructor_Null_CommonServices()
         {
-            Action act = () => new PingService(null);
+            Func<IPingService> act = () => new PingService(null);
+
             act.Should().Throw<ArgumentNullException>();
         }
 
+
+        /// <summary>
+        /// Tests the PingService  EnableLogging true/false
+        /// </summary>
+        [Fact]
+        public void PingService_Constructor_EnableLogging_Defaults_Get_Set()
+        {
+            _pingService.EnableLogging.Should().BeTrue();
+            _pingService.EnableLogging = false;
+            _pingService.EnableLogging.Should().BeFalse();
+            _pingService.EnableLogging = true;
+            _pingService.EnableLogging.Should().BeTrue();
+
+        }
 
     }
 }

@@ -104,8 +104,7 @@ namespace PureActive.Core.UnitTests.System
         {
             var fileSystemConfigurationRoot = FileSystemConfigurationRoot(null);
 
-            // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new FileSystem(fileSystemConfigurationRoot);
+            Func<IFileSystem> act = () => new FileSystem(fileSystemConfigurationRoot);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("appFolderName");
         }
@@ -119,9 +118,7 @@ namespace PureActive.Core.UnitTests.System
         {
             var fileSystemConfigurationRoot = FileSystemConfigurationRoot(AppFolderName);
 
-            // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new FileSystem(fileSystemConfigurationRoot, null);
-
+            Func<IFileSystem> act = () => new FileSystem(fileSystemConfigurationRoot, null);
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
         }
 
@@ -159,8 +156,7 @@ namespace PureActive.Core.UnitTests.System
         [Fact]
         public void FileSystem_Constructor_Type_Null()
         {
-            // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new FileSystem((Type) null);
+            Func<IFileSystem> act = () => new FileSystem((Type) null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("type");
         }
@@ -173,7 +169,7 @@ namespace PureActive.Core.UnitTests.System
         public void FileSystem_Constructor_Type_OperatingSystem_Null()
         {
             // ReSharper disable once ObjectCreationAsStatement
-            Action act = () => new FileSystem(typeof(FileSystemUnitTests), null);
+            Func<IFileSystem> act = () => new FileSystem(typeof(FileSystemUnitTests), null);
 
             act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("operatingSystem");
         }

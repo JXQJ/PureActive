@@ -161,7 +161,13 @@ namespace PureActive.Network.Services
             var logger = CommonServices?.LoggerFactory?.CreatePureLogger<CommonNetworkServices>();
             var result = tasks.WaitForTasks(cancellationToken, logger);
 
-            ServiceHostStatus = ServiceHostStatus.Stopped;
+            result.ContinueWith(t =>
+            {
+                if (result.IsCompleted)
+                {
+                    ServiceHostStatus = ServiceHostStatus.Stopped;
+                }
+            }, cancellationToken);
 
             return result;
         }

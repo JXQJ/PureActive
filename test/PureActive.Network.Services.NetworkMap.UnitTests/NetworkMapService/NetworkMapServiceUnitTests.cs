@@ -13,7 +13,6 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;

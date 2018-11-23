@@ -12,6 +12,10 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
+using System;
+using System.Reflection;
+using System.Threading;
 using FluentAssertions;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.ArpService;
@@ -68,5 +72,103 @@ namespace PureActive.Network.Services.ArpService.UnitTests
         {
             _arpService.Count.Should().Be(0);
         }
+
+        private readonly MethodInfo _methodInfoProcessArpOutput = typeof(ArpService).GetMethod("_ProcessArpOutput", BindingFlags.NonPublic | BindingFlags.Instance);
+
+        private ArpRefreshStatus InvokeArpRefreshStatus(string arpResults, CancellationToken cancellationToken)
+        {
+            object[] parameters = { arpResults, cancellationToken };
+
+            return (ArpRefreshStatus)_methodInfoProcessArpOutput.Invoke(_arpService, parameters);
+        }
+
+        [Fact]
+        public void ArpService_ProcessArpOutput_Null()
+        {
+            Func<ArpRefreshStatus> fx = () => InvokeArpRefreshStatus(null, CancellationToken.None);
+            fx.Should().Throw<TargetInvocationException>().And.InnerException.Message.Should()
+                .Contain("Value cannot be null.");
+        }
+
+        [Fact]
+        public void ArpService_ProcessArpOutput_Arp()
+        {
+            Func<ArpRefreshStatus> fx = () => InvokeArpRefreshStatus(null, CancellationToken.None);
+            fx.Should().Throw<TargetInvocationException>().And.InnerException.Message.Should()
+                .Contain("Value cannot be null.");
+        }
+
+        private readonly string _arpresultsTest = @"
+
+Interface: 169.254.80.80 --- 0x24
+  Internet Address      Physical Address      Type
+  169.254.255.255       ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.7             01-00-5e-00-00-07     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.1.1             01-00-5e-00-01-01     static    
+  224.0.1.60            01-00-5e-00-01-3c     static    
+  224.0.1.178           01-00-5e-00-01-b2     static    
+  229.111.112.12        01-00-5e-6f-70-0c     static    
+  230.0.0.1             01-00-5e-00-00-01     static    
+  234.5.6.7             01-00-5e-05-06-07     static    
+  239.0.0.250           01-00-5e-00-00-fa     static    
+  239.255.250.250       01-00-5e-7f-fa-fa     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+  239.255.255.253       01-00-5e-7f-ff-fd     static    
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static    
+
+Interface: 10.0.75.1 --- 0x2c
+  Internet Address      Physical Address      Type
+  10.0.75.2             00-15-5d-0a-19-1d     dynamic   
+  10.0.75.255           ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.7             01-00-5e-00-00-07     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+  224.0.1.1             01-00-5e-00-01-01     static    
+  224.0.1.60            01-00-5e-00-01-3c     static    
+  239.0.0.250           01-00-5e-00-00-fa     static    
+  239.255.250.250       01-00-5e-7f-fa-fa     static    
+  239.255.255.250       01-00-5e-7f-ff-fa     static    
+  255.255.255.255       ff-ff-ff-ff-ff-ff     static    
+
+";
+
+        private readonly string _arpresultsError = @"
+
+Interface: 169.254.80.80 --- 0x24
+  Internet Address      Physical Address      Type
+  169.254.255.255       ff-ff-ff-ff-ff-ff     static    
+  224.0.0.2             01-00-5e-00-00-02     static    
+  224.0.0.256           01-00-5e-00-00-07     static    
+
+";
+
+
+        [Fact]
+        public void ArpService_ProcessArpOutput_String()
+        {
+            _arpService.ClearArpCache();
+            var arpRefreshStatus = InvokeArpRefreshStatus(_arpresultsTest, CancellationToken.None);
+            arpRefreshStatus.Should().NotBeNull();
+
+        }
+
+
+        [Fact]
+        public void ArpService_ProcessArpOutput_Error()
+        {
+            _arpService.ClearArpCache();
+            var arpRefreshStatus = InvokeArpRefreshStatus(_arpresultsError, CancellationToken.None);
+            arpRefreshStatus.Should().NotBeNull();
+
+        }
+
     }
+
+
 }

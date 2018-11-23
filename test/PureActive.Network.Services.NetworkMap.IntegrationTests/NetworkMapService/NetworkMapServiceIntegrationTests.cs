@@ -16,7 +16,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Hosting.Abstractions.Types;
-using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.NetworkMapService;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

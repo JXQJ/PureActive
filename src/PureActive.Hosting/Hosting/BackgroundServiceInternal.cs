@@ -92,6 +92,7 @@ namespace PureActive.Hosting.Hosting
 
             ServiceHostStatus = ServiceHostStatus.StartPending;
             _executingTask = ExecuteAsync(_stoppingCts.Token);
+            ServiceHostStatus = ServiceHostStatus.Running;
 
             _executingTask.ContinueWith(t =>
             {
@@ -119,7 +120,12 @@ namespace PureActive.Hosting.Hosting
             ServiceHostStatus = ServiceHostStatus.StopPending;
 
             if (_executingTask == null)
+            {
+                ServiceHostStatus = ServiceHostStatus.Stopped;
+
                 return;
+            }
+      
             try
             {
                 _stoppingCts.Cancel();

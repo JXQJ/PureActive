@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\src\PureActive.Network.Services.ArpService\PureActive.Network.Services.ArpService.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Network.Services\PureActive.Network.Services.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj" />
+    <ProjectReference Include="..\PureActive.Hosting.UnitTests\PureActive.Hosting.UnitTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -65,7 +65,7 @@ namespace PureActive.Network.Services.DhcpService.Session
             PhysicalAddress = physicalAddress;
             _dhcpSessionResult = new DhcpSessionResult(physicalAddress);
 
-            Logger = logger;
+            Logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             CreatedTimestamp = UpdatedTimestamp = DateTimeOffset.Now;
             SessionTimeOut = sessionTimeOut;
@@ -211,7 +211,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 
             var addressRequest = dhcpMessage.GetOptionData(DhcpOption.RequestedIpAddr);
 
-            var requestState = RequestState.Unknown;
+            RequestState requestState;  // RequestState.Unknown
 
             #region Pre-Processing
 
@@ -251,7 +251,7 @@ namespace PureActive.Network.Services.DhcpService.Session
             {
                 if (addressRequest == null)
                 {
-                    Logger?.LogDebug(
+                    Logger.LogDebug(
                         "Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is null",
                         MessageType.Request, RequestStateString.GetName(requestState));
                     //return; // if processing should not continue
@@ -262,7 +262,7 @@ namespace PureActive.Network.Services.DhcpService.Session
                 // type == Renewing or Rebinding
                 if (addressRequest != null)
                 {
-                    Logger?.LogDebug(
+                    Logger.LogDebug(
                         "Ignoring {DhcpMessageType} {DhcpRequestState} message: Requested IP option is not null",
                         MessageType.Request, RequestStateString.GetName(requestState));
                     //return; // if processing should not continue
@@ -273,7 +273,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 
             #endregion Pre-Processing
 
-            Logger?.LogTrace("Processing {DhcpMessageType} {DhcpRequestState} message", MessageType.Request,
+            Logger.LogTrace("Processing {DhcpMessageType} {DhcpRequestState} message", MessageType.Request,
                 RequestStateString.GetName(requestState));
 
             DhcpSessionState = DhcpSessionState.Request;
@@ -281,7 +281,7 @@ namespace PureActive.Network.Services.DhcpService.Session
 
             if (!dhcpMessage.ClientHardwareAddress.Equals(PhysicalAddress))
             {
-                Logger?.LogError(
+                Logger.LogError(
                     "ClientHardwareAddress {ClientHardwareAddress} does not equal PhysicalAddress {PhysicalAddress}",
                     dhcpMessage.ClientHardwareAddress, PhysicalAddress);
             }
@@ -295,6 +295,11 @@ namespace PureActive.Network.Services.DhcpService.Session
             bool routerDiscoveryParamExists = dhcpMessage.ParamOptionExists(DhcpOption.RouterDiscovery);
 
             // Figure out INetworkDeviceInfo
+
+            if (routerDiscoveryParamExists)
+            {
+
+            }
 
 
             // TODO: Handle DhcpRequest

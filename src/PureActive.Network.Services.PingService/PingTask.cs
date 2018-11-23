@@ -157,10 +157,13 @@ namespace PureActive.Network.Services.PingService
             {
                 await _semaphoreSlim.WaitAsync();
                 PingReply pingReply = null;
+                var pingJob = new PingJob(Guid.NewGuid(), 0, ipAddress, DateTimeOffset.Now);
 
                 Task pingTask = Task.Run(async () =>
                 {
                     pingReply = await _ping.SendPingAsync(ipAddress, timeout, buffer, pingOptions);
+
+                    OnPingReplyTask?.Invoke(this, new PingReplyEventArgs(pingJob, pingReply, CancellationToken.None));
                 });
 
                 await pingTask.ContinueWith(t => { _semaphoreSlim.Release(); });

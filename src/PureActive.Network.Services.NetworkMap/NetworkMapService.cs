@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using PureActive.Core.Extensions;
+using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
 using PureActive.Network.Abstractions.CommonNetworkServices;
@@ -95,17 +95,15 @@ namespace PureActive.Network.Services.NetworkMap
                 NetworkMap.StartAsync(cancellationToken)
             };
 
-            var result = tasks.WaitForTasks(cancellationToken, Logger);
-
-            result.ContinueWith(t =>
-            {
-                if (result.IsCompleted)
+            return tasks.WaitForTasksAction(cancellationToken,
+                (t) =>
                 {
-                    ServiceHostStatus = ServiceHostStatus.Running;
-                }
-            }, cancellationToken);
-
-            return result;
+                    if (t.IsCompleted && t.Status == TaskStatus.RanToCompletion)
+                    {
+                        ServiceHostStatus = ServiceHostStatus.Running;
+                    }
+                },
+                Logger);
         }
 
         /// <summary>
@@ -123,17 +121,14 @@ namespace PureActive.Network.Services.NetworkMap
                 DhcpService.StopAsync(cancellationToken)
             };
 
-            var result = tasks.WaitForTasks(cancellationToken, Logger);
-
-            result.ContinueWith(t =>
-            {
-                if (result.IsCompleted)
+            return tasks.WaitForTasksAction(cancellationToken, (t) =>
                 {
-                    ServiceHostStatus = ServiceHostStatus.Stopped;
+                    if (t.IsCompleted)
+                    {
+                        ServiceHostStatus = ServiceHostStatus.Stopped;
+                    }
                 }
-            }, cancellationToken);
-
-            return result;
+                , Logger);
         }
 
         /// <summary>

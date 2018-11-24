@@ -110,19 +110,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Core.Reactive.Un
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Email.IntegrationTests", "test\PureActive.Email.IntegrationTests\PureActive.Email.IntegrationTests.csproj", "{DC5713D0-1CBB-4706-898D-534B5908CAF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.PingService.IntegrationTests", "test\PureActive.Network.Services.PingService.IntegrationTests\PureActive.Network.Services.PingService.IntegrationTests.csproj", "{F33F2702-B279-433A-ABF4-18F7CCF96E68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.PingService.IntegrationTests", "test\PureActive.Network.Services.PingService.IntegrationTests\PureActive.Network.Services.PingService.IntegrationTests.csproj", "{F33F2702-B279-433A-ABF4-18F7CCF96E68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Core.IntegrationTests", "test\PureActive.Core.IntegrationTests\PureActive.Core.IntegrationTests.csproj", "{0E256735-CCC4-46F2-8D41-703892EFD2A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Core.IntegrationTests", "test\PureActive.Core.IntegrationTests\PureActive.Core.IntegrationTests.csproj", "{0E256735-CCC4-46F2-8D41-703892EFD2A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Logger.Provider.Serilog.IntegrationTests", "test\PureActive.Logger.Provider.Serilog.IntegrationTests\PureActive.Logger.Provider.Serilog.IntegrationTests.csproj", "{CF43F55D-B1CD-45F2-96A3-6CC928767909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.Serilog.IntegrationTests", "test\PureActive.Logger.Provider.Serilog.IntegrationTests\PureActive.Logger.Provider.Serilog.IntegrationTests.csproj", "{CF43F55D-B1CD-45F2-96A3-6CC928767909}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.ArpService.IntegrationTests", "test\PureActive.Network.Services.ArpService.IntegrationTests\PureActive.Network.Services.ArpService.IntegrationTests.csproj", "{05E7B7D3-86E0-4442-8A0F-05A08935D2F2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.ArpService.IntegrationTests", "test\PureActive.Network.Services.ArpService.IntegrationTests\PureActive.Network.Services.ArpService.IntegrationTests.csproj", "{05E7B7D3-86E0-4442-8A0F-05A08935D2F2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.NetworkMap.IntegrationTests", "test\PureActive.Network.Services.NetworkMap.IntegrationTests\PureActive.Network.Services.NetworkMap.IntegrationTests.csproj", "{8255A8DE-B32C-4FBE-B41D-3AF3F8C38E34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.NetworkMap.IntegrationTests", "test\PureActive.Network.Services.NetworkMap.IntegrationTests\PureActive.Network.Services.NetworkMap.IntegrationTests.csproj", "{8255A8DE-B32C-4FBE-B41D-3AF3F8C38E34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.Services.IntegrationTests", "test\PureActive.Network.Services.IntegrationTests\PureActive.Network.Services.IntegrationTests.csproj", "{4E56FC2B-398C-4037-A64D-38B3B1765E56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services.IntegrationTests", "test\PureActive.Network.Services.IntegrationTests\PureActive.Network.Services.IntegrationTests.csproj", "{4E56FC2B-398C-4037-A64D-38B3B1765E56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Queue.Hangfire.IntegrationTests", "test\PureActive.Queue.Hangfire.IntegrationTests\PureActive.Queue.Hangfire.IntegrationTests.csproj", "{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Queue.Hangfire.IntegrationTests", "test\PureActive.Queue.Hangfire.IntegrationTests\PureActive.Queue.Hangfire.IntegrationTests.csproj", "{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Logging.IntegrationTests", "test\PureActive.Logging.IntegrationTests\PureActive.Logging.IntegrationTests.csproj", "{363EB9F6-D402-49BD-A451-A3E5B9D66977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -322,6 +324,10 @@ Global
 		{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{363EB9F6-D402-49BD-A451-A3E5B9D66977}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{363EB9F6-D402-49BD-A451-A3E5B9D66977}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{363EB9F6-D402-49BD-A451-A3E5B9D66977}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{363EB9F6-D402-49BD-A451-A3E5B9D66977}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -375,6 +381,7 @@ Global
 		{8255A8DE-B32C-4FBE-B41D-3AF3F8C38E34} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{4E56FC2B-398C-4037-A64D-38B3B1765E56} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{363EB9F6-D402-49BD-A451-A3E5B9D66977} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

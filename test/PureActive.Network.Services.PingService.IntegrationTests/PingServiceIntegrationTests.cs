@@ -164,9 +164,10 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
             var cancellationTokenSource = new CancellationTokenSource();
 
             Assert.Equal(ServiceHostStatus.Stopped, _pingService.ServiceHostStatus);
-#pragma warning disable 4014
-            _pingService.StartAsync(cancellationTokenSource.Token);
-#pragma warning restore 4014
+
+            var startTask = _pingService.StartAsync(cancellationTokenSource.Token);
+            startTask.Should().NotBeNull();
+
             Assert.Equal(ServiceHostStatus.Running, _pingService.ServiceHostStatus);
             await _pingService.StopAsync(cancellationTokenSource.Token);
             Assert.Equal(ServiceHostStatus.Stopped, _pingService.ServiceHostStatus);

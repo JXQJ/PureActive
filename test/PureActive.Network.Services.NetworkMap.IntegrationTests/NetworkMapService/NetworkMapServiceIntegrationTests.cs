@@ -68,7 +68,7 @@ namespace PureActive.Network.Services.NetworkMap.IntegrationTests.NetworkMapServ
 
             Assert.Equal(ServiceHostStatus.Stopped, _networkMapService.ServiceHostStatus);
             await _networkMapService.StartAsync(cancellationTokenSource.Token);
-            Assert.Equal(ServiceHostStatus.StartPending, _networkMapService.ServiceHostStatus);
+            Assert.Equal(ServiceHostStatus.Running, _networkMapService.ServiceHostStatus);
             await _networkMapService.StopAsync(cancellationTokenSource.Token);
             await Task.Delay(1000, cancellationTokenSource.Token);
             Assert.Equal(ServiceHostStatus.Stopped, _networkMapService.ServiceHostStatus);
@@ -85,10 +85,11 @@ namespace PureActive.Network.Services.NetworkMap.IntegrationTests.NetworkMapServ
             var cancellationTokenSource = new CancellationTokenSource();
 
             Assert.Equal(ServiceHostStatus.Stopped, _networkMapService.ServiceHostStatus);
-#pragma warning disable 4014
-            _networkMapService.StartAsync(cancellationTokenSource.Token);
-#pragma warning restore 4014
-            Assert.Equal(ServiceHostStatus.StartPending, _networkMapService.ServiceHostStatus);
+
+            var startTask = _networkMapService.StartAsync(cancellationTokenSource.Token);
+            startTask.Should().NotBeNull();
+
+            Assert.Equal(ServiceHostStatus.Running, _networkMapService.ServiceHostStatus);
             await _networkMapService.StopAsync(cancellationTokenSource.Token);
             await Task.Delay(1000, cancellationTokenSource.Token);
             Assert.Equal(ServiceHostStatus.Stopped, _networkMapService.ServiceHostStatus);

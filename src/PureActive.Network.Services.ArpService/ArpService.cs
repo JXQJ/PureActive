@@ -23,7 +23,6 @@ using System.Net.NetworkInformation;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Hangfire.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;

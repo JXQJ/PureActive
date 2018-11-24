@@ -102,12 +102,7 @@ namespace PureActive.Hosting.Hosting
                 }
             }, cancellationToken);
 
-            if (_executingTask.IsCompleted)
-            {
-                return _executingTask;
-            }
-
-            return Task.CompletedTask;
+            return _executingTask.IsCompleted ? _executingTask : Task.CompletedTask;
         }
 
         /// <summary>

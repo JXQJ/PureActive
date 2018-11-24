@@ -154,9 +154,9 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
             var cancellationTokenSource = new CancellationTokenSource();
 
             Assert.Equal(ServiceHostStatus.Stopped, _arpService.ServiceHostStatus);
-#pragma warning disable 4014
-            _arpService.StartAsync(cancellationTokenSource.Token);
-#pragma warning restore 4014
+
+            var startTask = _arpService.StartAsync(cancellationTokenSource.Token);
+            startTask.Should().NotBeNull();
 
             Assert.Equal(ServiceHostStatus.Running, _arpService.ServiceHostStatus);
             await _arpService.StopAsync(cancellationTokenSource.Token);

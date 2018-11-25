@@ -310,12 +310,14 @@ namespace PureActive.Network.Services.ArpService
 
             if (logLevel <= LogLevel.Debug)
             {
-                var arpItems = this.ToList();
-
-                foreach (var arpItem in arpItems)
+                lock (_updateLock)
                 {
-                    logProperties.Add(new PureLogPropertyLevel(arpItem.IPAddress.ToString(),
-                        arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
+                    var arpItems = this.ToList();
+
+                    foreach (var arpItem in arpItems)
+                    {
+                        logProperties.Add(new PureLogPropertyLevel(arpItem.IPAddress.ToString(), arpItem.PhysicalAddress.ToDashString(), LogLevel.Information));
+                    }
                 }
             }
 

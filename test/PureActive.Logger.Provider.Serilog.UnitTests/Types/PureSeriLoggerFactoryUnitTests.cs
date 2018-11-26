@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
-using PureActive.Core.Extensions;
 using PureActive.Logger.Provider.Serilog.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Logging.Extensions.Types;
 using PureActive.Serilog.Sink.Xunit.TestBase;
-using Serilog.Sinks.TestCorrelator;
 using Xunit;
 using Xunit.Abstractions;
 

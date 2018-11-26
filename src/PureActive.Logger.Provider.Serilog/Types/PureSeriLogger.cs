@@ -177,6 +177,9 @@ namespace PureActive.Logger.Provider.Serilog.Types
         public IDisposable PushLogProperties(IEnumerable<IPureLogPropertyLevel> logPropertyList,
             Func<IPureLogPropertyLevel, bool> includeLogProperty)
         {
+            if (logPropertyList == null) throw new ArgumentNullException(nameof(logPropertyList));
+            if (includeLogProperty == null) throw new ArgumentNullException(nameof(includeLogProperty));
+
             return LogContext.Push
             (
                 logPropertyList

@@ -95,7 +95,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
 
             var pingReply = await _pingTask.PingIpAddressAsync(ipAddressSubnet);
             pingReply.Should().NotBeNull();
-            pingReply.Status.Should().Be(IPStatus.Success);
+            pingReply.Status.Should().Match<IPStatus>(ips => ips == IPStatus.Success || ips == IPStatus.TimedOut);
         }
 
         /// <summary>

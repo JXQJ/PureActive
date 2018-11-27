@@ -232,10 +232,6 @@ namespace PureActive.Network.Services.ArpService
             {
                 Logger.LogDebug(ex, "GetArpItemAsync task cancelled");
             }
-            catch (Exception ex)
-            {
-                Logger.LogDebug(ex, "GetArpItemAsync task threw exception");
-            }
 
             return arpItem;
         }

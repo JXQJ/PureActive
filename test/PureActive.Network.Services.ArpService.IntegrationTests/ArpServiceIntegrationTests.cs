@@ -180,7 +180,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
 
             var cts = new CancellationTokenSource();
 
-            cts.CancelAfter(100);
+            cts.CancelAfter(10);
             _arpService.ClearArpCache();
             var arpItem = await _arpService.GetArpItemAsync(_defaultGatewayIPAddressSubnet.IPAddress, cts.Token);
             arpItem.Should().BeNull();

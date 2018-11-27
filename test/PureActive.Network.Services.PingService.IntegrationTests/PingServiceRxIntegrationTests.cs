@@ -51,7 +51,8 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
 
                     var pingReply = await observable.FirstAsync();
                     pingReply.Should().NotBeNull().And.Subject.Should().BeOfType<PingReply>()
-                        .And.Subject.As<PingReply>().Status.Should().Be(IPStatus.Success);
+                        .And.Subject.As<PingReply>().Status.Should()
+                        .Match<IPStatus>(ips => ips == IPStatus.Success || ips == IPStatus.TimedOut);
 
                     // Give up time for Logging to Propagate
                     await Task.Delay(1000);

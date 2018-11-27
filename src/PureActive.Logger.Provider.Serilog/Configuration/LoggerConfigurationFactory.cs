@@ -181,6 +181,8 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         public static ILoggerFactory CreateSerilogFactory(ISerilogLoggerSettings loggerSettings,
             LoggerConfiguration loggerConfiguration = null, bool useStaticLogger = true)
         {
+            if (loggerSettings == null) throw new ArgumentNullException(nameof(loggerSettings));
+
             if (loggerConfiguration == null)
                 loggerConfiguration = CreateDefaultLoggerConfiguration(loggerSettings);
 

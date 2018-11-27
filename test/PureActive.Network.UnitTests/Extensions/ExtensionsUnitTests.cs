@@ -58,8 +58,8 @@ namespace PureActive.Network.UnitTests.Extensions
         [InlineData("", null)]
         [InlineData(null, null)]
         [InlineData("3:4:5", "03-04-05")]
-        public void PhysicalAddress_NormalizedParse(string physicalAddressString,
-            string physicalAddressStringExpectedValue)
+        [InlineData("3:4", "03-04")]
+        public void PhysicalAddress_NormalizedParse(string physicalAddressString, string physicalAddressStringExpectedValue)
         {
             var physicalAddressExpectedValue = string.IsNullOrEmpty(physicalAddressStringExpectedValue)
                 ? PhysicalAddress.None

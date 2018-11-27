@@ -79,6 +79,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
 
             if (args != null)
             {
+                args.CancellationToken.Should().NotBeNull();
                 TestOutputHelper.WriteLine(
                     $"Job: {args.PingJob.JobGuid}, TaskId: {args.PingJob.TaskId}, IPAddressSubnet: {args.PingJob.IPAddressSubnet}, Status: {args.PingReply.Status}");
             }

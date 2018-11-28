@@ -58,10 +58,7 @@ namespace PureActive.Network.Abstractions.Extensions
 
             var parts = physicalAddressString.Trim().ToUpper().Split(PhysicalAddressDelims);
 
-            if (parts.Length == 0)
-                return PhysicalAddress.None;
-            if (parts.Length == 1)
-                return PhysicalAddress.Parse(parts[0]);
+            if (parts.Length == 1) return PhysicalAddress.Parse(parts[0]);
 
             var sb = new StringBuilder();
 

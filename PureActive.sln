@@ -41,7 +41,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Serilog.Sink.Xun
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.ApplicationInsights", "src\PureActive.Logger.Provider.ApplicationInsights\PureActive.Logger.Provider.ApplicationInsights.csproj", "{BB8DB1A7-AB86-4F65-AC95-29546B0A0416}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.ApplicationInsights.UnitTests", "test\PureActive.Logger.Provider.ApplicationInsights.UnitTests\PureActive.Logger.Provider.ApplicationInsights.UnitTests.csproj", "{E31BB884-D272-44CD-984C-253786927B68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logger.Provider.ApplicationInsights.IntegrationTests", "test\PureActive.Logger.Provider.ApplicationInsights.UnitTests\PureActive.Logger.Provider.ApplicationInsights.IntegrationTests.csproj", "{E31BB884-D272-44CD-984C-253786927B68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Serilog.Sink.Xunit", "src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj", "{D0F2ED72-F3B5-4FBA-BC19-F906EB009DB9}"
 EndProject
@@ -124,7 +124,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.Services
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Queue.Hangfire.IntegrationTests", "test\PureActive.Queue.Hangfire.IntegrationTests\PureActive.Queue.Hangfire.IntegrationTests.csproj", "{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Logging.IntegrationTests", "test\PureActive.Logging.IntegrationTests\PureActive.Logging.IntegrationTests.csproj", "{363EB9F6-D402-49BD-A451-A3E5B9D66977}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logging.IntegrationTests", "test\PureActive.Logging.IntegrationTests\PureActive.Logging.IntegrationTests.csproj", "{363EB9F6-D402-49BD-A451-A3E5B9D66977}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

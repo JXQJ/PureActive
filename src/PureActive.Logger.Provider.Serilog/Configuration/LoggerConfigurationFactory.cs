@@ -13,6 +13,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.Extensions.Configuration;
@@ -67,6 +68,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
         /// <param name="loggerSettings">The logger settings.</param>
         /// <param name="includeLogEvent">The include log event.</param>
         /// <returns>LoggerConfiguration.</returns>
+        [ExcludeFromCodeCoverage]
         public static LoggerConfiguration CreateLoggerConfiguration(
             string appInsightsKey,
             string logFileName,
@@ -98,8 +100,7 @@ namespace PureActive.Logger.Provider.Serilog.Configuration
                         .MinimumLogEventLevel,
                     null /*formatProvider*/,
                    
-                    (logEvent, formatProvider) =>
-                        ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)
+                    (logEvent, formatProvider) => ConvertLogEventsToCustomTraceTelemetry(logEvent, formatProvider, includeLogEvent)
                 );
             }
 

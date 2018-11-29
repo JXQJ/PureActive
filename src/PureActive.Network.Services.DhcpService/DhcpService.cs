@@ -251,8 +251,7 @@ namespace PureActive.Network.Services.DhcpService
             {
                 if (_dhcpSessions.TryGetValue(physicalAddress, out var dhcpSession)) return dhcpSession;
 
-                dhcpSession = new DhcpSession(this, CommonServices.LoggerFactory.CreatePureLogger<DhcpSession>(),
-                    physicalAddress);
+                dhcpSession = new DhcpSession(this, physicalAddress);
                 _dhcpSessions.Add(physicalAddress, dhcpSession);
 
                 return dhcpSession;

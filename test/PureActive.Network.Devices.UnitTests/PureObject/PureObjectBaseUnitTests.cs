@@ -124,7 +124,7 @@ namespace PureActive.Network.Devices.UnitTests.PureObject
         public void PureObjectBase_Equals()
         {
             var objectBase1 = new PureObjectTest(TestLoggerFactory);
-            var objectBase2 = new PureObjectTest(TestLoggerFactory) {ObjectId = objectBase1.ObjectId};
+            var objectBase2 = objectBase1.CloneInstance();
 
             // ObjectId's are same but Creation and Modification dates are different
             Assert.False(objectBase1.Equals(objectBase2), "objectBase1.Equals(objectBase2)");

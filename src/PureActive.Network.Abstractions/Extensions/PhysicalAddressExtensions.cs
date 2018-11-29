@@ -45,7 +45,7 @@ namespace PureActive.Network.Abstractions.Extensions
         }
 
         /// <summary>
-        /// Normalizeds the parse.
+        /// Normalizes the parse.
         /// </summary>
         /// <param name="physicalAddressString">The physical address string.</param>
         /// <returns>PhysicalAddress.</returns>

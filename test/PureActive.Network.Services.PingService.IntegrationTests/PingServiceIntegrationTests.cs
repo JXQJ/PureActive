@@ -99,8 +99,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingService_PingNetworkEvent_WithLogging()
         {
-            var ipAddressSubnet = new IPAddressSubnet(_networkingService.GetDefaultLocalNetworkAddress(),
-                IPAddressExtensions.SubnetClassC);
+            var ipAddressSubnet = new IPAddressSubnet(_networkingService.GetDefaultLocalNetworkAddress(), IPAddressExtensions.SubnetClassC);
 
             await _pingService.PingNetworkAsync(ipAddressSubnet, CancellationToken.None, DefaultNetworkTimeout, DefaultPingCalls, 0, false);
         }
@@ -113,8 +112,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingService_PingNetworkEvent_Delay()
         {
-            var ipAddressSubnet = new IPAddressSubnet(_networkingService.GetDefaultLocalNetworkAddress(),
-                IPAddressExtensions.SubnetClassC);
+            var ipAddressSubnet = new IPAddressSubnet(_networkingService.GetDefaultLocalNetworkAddress(), IPAddressExtensions.SubnetClassC);
 
             await _pingService.PingNetworkAsync(ipAddressSubnet, CancellationToken.None, DefaultNetworkTimeout, DefaultPingCalls, 1, false);
         }

@@ -18,12 +18,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Networking;
-using PureActive.Network.Abstractions.Types;
 
-namespace PureActive.Network.Services.Networking
+namespace PureActive.Hosting.Networking
 {
     /// <summary>
     /// Class NetworkingService.
@@ -64,18 +64,18 @@ namespace PureActive.Network.Services.Networking
         // ReSharper disable once InconsistentNaming
         public IPAddressSubnet IPv4AddressSubnetFromNetworkInterface(NetworkInterface networkInterface)
         {
+            if (networkInterface == null) throw new ArgumentNullException(nameof(networkInterface));
+
             // Is the network up and have a Network Gateway
             if (networkInterface.OperationalStatus == OperationalStatus.Up &&
-                networkInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+                networkInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback && 
+                networkInterface.GetIPProperties().GatewayAddresses.IPv4OrDefault() != null)
             {
-                if (networkInterface.GetIPProperties().GatewayAddresses.IPv4OrDefault() != null)
+                foreach (var unicastIpAddress in networkInterface.GetIPProperties().UnicastAddresses)
                 {
-                    foreach (var unicastIpAddress in networkInterface.GetIPProperties().UnicastAddresses)
+                    if (unicastIpAddress.Address.AddressFamily == AddressFamily.InterNetwork)
                     {
-                        if (unicastIpAddress.Address.AddressFamily == AddressFamily.InterNetwork)
-                        {
-                            return new IPAddressSubnet(unicastIpAddress.Address, unicastIpAddress.IPv4Mask);
-                        }
+                        return new IPAddressSubnet(unicastIpAddress.Address, unicastIpAddress.IPv4Mask);
                     }
                 }
             }
@@ -94,7 +94,7 @@ namespace PureActive.Network.Services.Networking
 
             try
             {
-                foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+                foreach (var networkInterface in GetAllNetworkInterfaces())
                 {
                     ipAddressSubnet = IPv4AddressSubnetFromNetworkInterface(networkInterface);
 
@@ -163,7 +163,7 @@ namespace PureActive.Network.Services.Networking
         {
             try
             {
-                foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+                foreach (var networkInterface in GetAllNetworkInterfaces())
                 {
                     // Is the network up and have a Network Gateway
                     if (networkInterface.OperationalStatus == OperationalStatus.Up &&

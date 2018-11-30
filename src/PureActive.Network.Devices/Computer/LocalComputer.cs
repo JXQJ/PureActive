@@ -113,7 +113,7 @@ namespace PureActive.Network.Devices.Computer
             {
                 if (_isInitialized) return _networkAdapterCollection;
 
-                foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
+                foreach (var networkInterface in CommonNetworkServices.NetworkingService.GetAllNetworkInterfaces())
                 {
                     var networkAdapter = new NetworkAdapter(CommonNetworkServices, networkInterface);
 

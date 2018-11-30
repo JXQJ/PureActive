@@ -13,6 +13,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Linq;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Local;

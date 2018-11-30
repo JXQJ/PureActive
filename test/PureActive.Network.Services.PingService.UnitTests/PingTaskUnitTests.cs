@@ -17,7 +17,6 @@ using System;
 using FluentAssertions;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.PingService;
-using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -41,9 +40,8 @@ namespace PureActive.Network.Services.PingService.UnitTests
         public PingTaskUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingTaskUnitTests");
-            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
 
-            _pingService = new PingService(commonServices, networkingService);
+            _pingService = new PingService(commonServices);
             _pingTask = new PingService.PingTaskImpl(commonServices);
         }
 

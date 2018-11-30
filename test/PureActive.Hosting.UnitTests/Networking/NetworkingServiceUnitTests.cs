@@ -14,14 +14,17 @@
 // ***********************************************************************
 
 
+using System;
+using System.Net;
 using FluentAssertions;
-using PureActive.Network.Abstractions.Networking;
-using PureActive.Network.Services.Networking;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.UnitTests.Networking
+namespace PureActive.Hosting.UnitTests.Networking
 {
     /// <summary>
     /// Class NetworkingServiceUnitTests.
@@ -49,5 +52,24 @@ namespace PureActive.Network.UnitTests.Networking
         {
             _networkingService.Should().NotBeNull().And.Subject.Should().BeAssignableTo<INetworkingService>();
         }
-   }
+        
+
+        [Fact]
+        public void NetworkingService_GetNetworkAddress_InvalidSubnet()
+        {
+            IPAddress ipAddressV6 = IPAddress.IPv6None;
+
+            Func<IPAddress> fx = () => ipAddressV6.GetNetworkAddress(IPAddress.Broadcast);
+            fx.Should().Throw<ArgumentException>();
+        }
+
+        [Fact]
+        public void NetworkingService_GetBroadcastAddress_InvalidSubnet()
+        {
+            IPAddress ipAddressV6 = IPAddress.IPv6None;
+
+            Func<IPAddress> fx = () => ipAddressV6.GetBroadcastAddress(IPAddress.Broadcast);
+            fx.Should().Throw<ArgumentException>();
+        }
+    }
 }

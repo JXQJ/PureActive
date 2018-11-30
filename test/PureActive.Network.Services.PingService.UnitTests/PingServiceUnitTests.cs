@@ -17,7 +17,6 @@ using System;
 using FluentAssertions;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.PingService;
-using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -41,8 +40,7 @@ namespace PureActive.Network.Services.PingService.UnitTests
         public PingServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceUnitTests");
-            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
-            _pingService = new PingService(commonServices, networkingService);
+            _pingService = new PingService(commonServices);
         }
 
         /// <summary>
@@ -67,7 +65,7 @@ namespace PureActive.Network.Services.PingService.UnitTests
         [Fact]
         public void PingService_Constructor_Null_CommonServices()
         {
-            Func<IPingService> act = () => new PingService(null, null);
+            Func<IPingService> act = () => new PingService(null);
 
             act.Should().Throw<ArgumentNullException>();
         }

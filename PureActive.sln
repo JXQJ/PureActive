@@ -126,7 +126,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Queue.Hangfire.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Logging.IntegrationTests", "test\PureActive.Logging.IntegrationTests\PureActive.Logging.IntegrationTests.csproj", "{363EB9F6-D402-49BD-A451-A3E5B9D66977}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Network.IntegrationTests", "test\PureActive.Network.IntegrationTests\PureActive.Network.IntegrationTests.csproj", "{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Network.IntegrationTests", "test\PureActive.Network.IntegrationTests\PureActive.Network.IntegrationTests.csproj", "{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Hosting.IntegrationTests", "test\PureActive.Hosting.IntegrationTests\PureActive.Hosting.IntegrationTests.csproj", "{F2348582-4ABD-4F1F-8467-C07EFD0DC961}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -334,6 +336,10 @@ Global
 		{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2348582-4ABD-4F1F-8467-C07EFD0DC961}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2348582-4ABD-4F1F-8467-C07EFD0DC961}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2348582-4ABD-4F1F-8467-C07EFD0DC961}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2348582-4ABD-4F1F-8467-C07EFD0DC961}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -389,6 +395,7 @@ Global
 		{F81C9CAF-B3D8-4C97-9366-35DBB577E3A7} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{363EB9F6-D402-49BD-A451-A3E5B9D66977} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{D7AC0004-8E9C-40A2-BDD1-1214B4ACE0D8} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{F2348582-4ABD-4F1F-8467-C07EFD0DC961} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

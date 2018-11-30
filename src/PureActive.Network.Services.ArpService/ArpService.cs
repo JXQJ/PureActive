@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.System;
+using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
@@ -34,7 +35,6 @@ using PureActive.Logging.Abstractions.Types;
 using PureActive.Logging.Extensions.Extensions;
 using PureActive.Logging.Extensions.Types;
 using PureActive.Network.Abstractions.ArpService;
-using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.PingService;
 
 namespace PureActive.Network.Services.ArpService

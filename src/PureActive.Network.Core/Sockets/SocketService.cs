@@ -14,8 +14,8 @@
 // ***********************************************************************
 using System;
 using System.Net;
+using PureActive.Hosting.Abstractions.System;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Network.Abstractions.Networking;
 
 namespace PureActive.Network.Core.Sockets
 {
@@ -76,15 +76,15 @@ namespace PureActive.Network.Core.Sockets
         /// <summary>
         /// Initializes a new instance of the <see cref="SocketService" /> class.
         /// </summary>
-        /// <param name="networkingService">The networking service</param>
+        /// <param name="commonServices">The common services</param>
         /// <param name="logger">The logger.</param>
-        protected SocketService(INetworkingService networkingService, IPureLogger<SocketService> logger)
+        protected SocketService(ICommonServices commonServices, IPureLogger<SocketService> logger)
         {
-            if (networkingService == null) throw new ArgumentNullException(nameof(networkingService));
+            if (commonServices == null) throw new ArgumentNullException(nameof(commonServices));
 
             Logger = logger;
 
-            _interfaceAddress = networkingService.GetDefaultLocalAddress();
+            _interfaceAddress = commonServices.NetworkingService.GetDefaultLocalAddress();
         }
 
         /// <summary>

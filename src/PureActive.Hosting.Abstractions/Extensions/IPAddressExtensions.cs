@@ -12,10 +12,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System;
 using System.Net;
 
-namespace PureActive.Network.Abstractions.Extensions
+namespace PureActive.Hosting.Abstractions.Extensions
 {
     /// <summary>
     /// Class IPAddressExtensions.

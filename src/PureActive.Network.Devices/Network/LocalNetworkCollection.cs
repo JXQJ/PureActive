@@ -18,11 +18,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using Microsoft.Extensions.Logging;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.Local;
 using PureActive.Network.Abstractions.Network;
-using PureActive.Network.Abstractions.Types;
 
 namespace PureActive.Network.Devices.Network
 {

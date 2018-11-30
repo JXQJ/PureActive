@@ -12,7 +12,8 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
-using PureActive.Network.Abstractions.Types;
+
+using PureActive.Hosting.Abstractions.Types;
 
 namespace PureActive.Network.Abstractions.Network
 {

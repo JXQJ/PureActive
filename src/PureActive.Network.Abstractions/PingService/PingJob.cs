@@ -15,7 +15,7 @@
 using System;
 using System.Net;
 using System.Text;
-using PureActive.Network.Abstractions.Types;
+using PureActive.Hosting.Abstractions.Types;
 
 namespace PureActive.Network.Abstractions.PingService
 {

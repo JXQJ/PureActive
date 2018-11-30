@@ -60,8 +60,7 @@ namespace PureActive.Network.Services.DhcpService
             CommonNetworkServices =
                 commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
             _hostedSocketService =
-                new HostedSocketService(commonNetworkServices.CommonServices?.LoggerFactory
-                    ?.CreatePureLogger<SocketService>());
+                new HostedSocketService(commonNetworkServices.NetworkingService, commonNetworkServices.CommonServices?.LoggerFactory?.CreatePureLogger<SocketService>());
         }
 
         /// <summary>

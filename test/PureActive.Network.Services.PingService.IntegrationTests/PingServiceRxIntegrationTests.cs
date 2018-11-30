@@ -6,7 +6,8 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using PureActive.Hosting.CommonServices;
-using PureActive.Network.Abstractions.Extensions;
+using PureActive.Network.Abstractions.Networking;
+using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Serilog.Sinks.TestCorrelator;
@@ -23,9 +24,12 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceRxIntegrationTests");
 
             _pingServiceRx = new PingServiceRx(commonServices);
+            _networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
         }
 
         private readonly PingServiceRx _pingServiceRx;
+
+        private readonly INetworkingService _networkingService;
 
         [Fact]
         public void PingServiceRx_Constructor()
@@ -36,7 +40,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingServiceRx_PingDefaultGateway()
         {
-            var ipAddressDefaultGateway = IPAddressExtensions.GetDefaultGatewayAddress();
+            var ipAddressDefaultGateway = _networkingService.GetDefaultGatewayAddress();
             ipAddressDefaultGateway.Should().NotBeNull().And.Subject.Should().NotBe(IPAddress.None);
 
             using (TestCorrelator.CreateContext())

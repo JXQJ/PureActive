@@ -28,6 +28,5 @@ namespace PureActive.Hosting.Abstractions.System
     public interface IHostedServiceInternal : IHostedService, IPureLoggable, IServiceHostStatus
     {
 
-
     }
 }

@@ -92,7 +92,7 @@ namespace PureActive.Core.Serialization
         private static JsonProperty CamelCaseEnumValues(JsonProperty property)
         {
             if (property.PropertyType.GetTypeInfo().IsEnum)
-                property.Converter = new StringEnumConverter(true);
+                property.Converter = new StringEnumConverter(new CamelCaseNamingStrategy());
 
             return property;
         }

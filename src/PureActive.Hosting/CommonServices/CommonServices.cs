@@ -165,8 +165,7 @@ namespace PureActive.Hosting.CommonServices
             var processRunner = new ProcessRunner(loggerFactory.CreatePureLogger<ProcessRunner>());
             var operationRunner = new OperationRunner(loggerFactory.CreatePureLogger<OperationRunner>());
 
-            return new CommonServices(processRunner, fileSystem, fileSystem.OperatingSystem, operationRunner,
-                loggerFactory);
+            return new CommonServices(processRunner, fileSystem, fileSystem.OperatingSystem, operationRunner, loggerFactory);
         }
 
         /// <summary>

@@ -15,10 +15,9 @@
 
 using System;
 using System.Net;
-using System.Net.Sockets;
 using FluentAssertions;
-using Moq;
 using PureActive.Network.Abstractions.Extensions;
+using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -88,7 +87,9 @@ namespace PureActive.Network.UnitTests.Network
         [Fact]
         public void IPAddressExtensions_GetDefaultGatewayAddressSubnet()
         {
-            var addressSubnet = IPAddressExtensions.GetDefaultGatewayAddressSubnet(Logger);
+            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
+
+            var addressSubnet = networkingService.GetDefaultGatewayAddressSubnet();
             addressSubnet.Should().NotBeNull();
         }
 

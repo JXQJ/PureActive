@@ -21,6 +21,7 @@ using FluentAssertions;
 using PureActive.Hosting.CommonServices;
 using PureActive.Network.Abstractions.ArpService;
 using PureActive.Network.Abstractions.PingService;
+using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -44,7 +45,8 @@ namespace PureActive.Network.Services.ArpService.UnitTests
         public ArpServiceUnitTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "ArpServiceUnitTests");
-            IPingService pingService = new PingService.PingService(commonServices);
+            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
+            IPingService pingService = new PingService.PingService(commonServices, networkingService);
             _arpService = new ArpService(commonServices, pingService);
         }
 

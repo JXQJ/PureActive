@@ -1,9 +1,5 @@
 ﻿using System.Net.NetworkInformation;
-using System.Net.Sockets;
-using FluentAssertions;
-using Microsoft.Extensions.Logging;
 using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

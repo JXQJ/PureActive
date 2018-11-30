@@ -20,9 +20,9 @@ using System.Net.NetworkInformation;
 using System.Text;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Utilities;
+using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.DhcpService.Types;
-using PureActive.Network.Abstractions.Extensions;
 
 namespace PureActive.Network.Services.DhcpService.Types
 {

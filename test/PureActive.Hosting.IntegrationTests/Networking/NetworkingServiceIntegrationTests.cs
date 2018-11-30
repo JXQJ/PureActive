@@ -14,13 +14,13 @@
 // ***********************************************************************
 
 using FluentAssertions;
-using PureActive.Network.Abstractions.Networking;
-using PureActive.Network.Services.Networking;
+using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.IntegrationTests.Networking
+namespace PureActive.Hosting.IntegrationTests.Networking
 {
     /// <summary>
     /// Class NetworkingServiceIntegrationTests.

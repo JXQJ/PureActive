@@ -15,9 +15,9 @@
 
 using System.Net;
 using System.Net.NetworkInformation;
-using PureActive.Network.Abstractions.Types;
+using PureActive.Hosting.Abstractions.Types;
 
-namespace PureActive.Network.Abstractions.Networking
+namespace PureActive.Hosting.Abstractions.Networking
 {
     /// <summary>
     /// Interface INetworkSystem

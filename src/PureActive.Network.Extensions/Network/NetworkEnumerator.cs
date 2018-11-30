@@ -15,8 +15,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Network.Abstractions.Network;
-using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.Enumeration;
 
 namespace PureActive.Network.Extensions.Network

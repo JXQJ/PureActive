@@ -22,10 +22,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Extensions;
 using PureActive.Hosting.Abstractions.System;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.PingService;
 using PureActive.Network.Abstractions.PingService.Events;
-using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Extensions.Network;
 
 namespace PureActive.Network.Services.PingService

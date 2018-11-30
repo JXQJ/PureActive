@@ -14,8 +14,8 @@
 // ***********************************************************************
 using System.Net;
 using System.Net.NetworkInformation;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Network.Abstractions.NetworkDevice;
-using PureActive.Network.Abstractions.Types;
 
 namespace PureActive.Network.Abstractions.Network
 {

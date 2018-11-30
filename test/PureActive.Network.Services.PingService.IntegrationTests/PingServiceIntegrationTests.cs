@@ -17,14 +17,13 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using FluentAssertions;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Networking;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.CommonServices;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Networking;
+using PureActive.Hosting.Networking;
 using PureActive.Network.Abstractions.PingService;
 using PureActive.Network.Abstractions.PingService.Events;
-using PureActive.Network.Abstractions.Types;
-using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -48,8 +47,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         public PingServiceIntegrationTests(ITestOutputHelper testOutputHelper) : base(testOutputHelper)
         {
             var commonServices = CommonServices.CreateInstance(TestLoggerFactory, "PingServiceIntegrationTests");
-            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
-            _pingService = new PingService(commonServices, networkingService);
+            _pingService = new PingService(commonServices);
             _pingService.OnPingReplyService += PingReplyEventHandler;
             _networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
         }

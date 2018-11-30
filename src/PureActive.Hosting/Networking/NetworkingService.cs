@@ -18,12 +18,12 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using Microsoft.Extensions.Logging;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Networking;
-using PureActive.Network.Abstractions.Types;
 
-namespace PureActive.Network.Services.Networking
+namespace PureActive.Hosting.Networking
 {
     /// <summary>
     /// Class NetworkingService.

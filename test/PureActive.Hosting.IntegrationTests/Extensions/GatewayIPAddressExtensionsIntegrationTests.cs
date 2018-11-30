@@ -1,12 +1,11 @@
-﻿using System.Net.NetworkInformation;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Networking;
-using PureActive.Network.Services.Networking;
+﻿using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.Services.IntegrationTests.Network
+namespace PureActive.Hosting.IntegrationTests.Extensions
 {
     [Trait("Category", "Integration")]
     public class GatewayIPAddressExtensionsIntegrationTests : TestBaseLoggable<GatewayIPAddressExtensionsIntegrationTests>

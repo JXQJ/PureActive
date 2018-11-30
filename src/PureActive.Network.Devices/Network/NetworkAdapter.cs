@@ -15,9 +15,10 @@
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Text;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Network.Abstractions.CommonNetworkServices;
-using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Abstractions.Network;
 using PureActive.Network.Abstractions.Types;
 

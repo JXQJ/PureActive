@@ -20,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
+using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
 using PureActive.Logging.Extensions.Extensions;
@@ -27,7 +28,6 @@ using PureActive.Network.Abstractions.CommonNetworkServices;
 using PureActive.Network.Abstractions.DhcpService.Events;
 using PureActive.Network.Abstractions.DhcpService.Interfaces;
 using PureActive.Network.Abstractions.DhcpService.Types;
-using PureActive.Network.Abstractions.Extensions;
 using PureActive.Network.Core.Sockets;
 using PureActive.Network.Services.DhcpService.Events;
 using PureActive.Network.Services.DhcpService.Session;
@@ -60,7 +60,7 @@ namespace PureActive.Network.Services.DhcpService
             CommonNetworkServices =
                 commonNetworkServices ?? throw new ArgumentNullException(nameof(commonNetworkServices));
             _hostedSocketService =
-                new HostedSocketService(commonNetworkServices.NetworkingService, commonNetworkServices.CommonServices?.LoggerFactory?.CreatePureLogger<SocketService>());
+                new HostedSocketService(commonNetworkServices, commonNetworkServices.CommonServices?.LoggerFactory?.CreatePureLogger<SocketService>());
         }
 
         /// <summary>

@@ -17,8 +17,8 @@ using System.Net.NetworkInformation;
 using System.Threading;
 using System.Threading.Tasks;
 using PureActive.Hosting.Abstractions.System;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Network.Abstractions.PingService.Events;
-using PureActive.Network.Abstractions.Types;
 
 namespace PureActive.Network.Abstractions.PingService
 {

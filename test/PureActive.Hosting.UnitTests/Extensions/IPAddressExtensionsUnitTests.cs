@@ -13,16 +13,14 @@
 // <summary></summary>
 // ***********************************************************************
 
-using System;
 using System.Net;
 using FluentAssertions;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Services.Networking;
+using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace PureActive.Network.UnitTests.Network
+namespace PureActive.Hosting.UnitTests.Extensions
 {
     /// <summary>
     /// Class IPAddressExtensionsUnitTests.

@@ -12,10 +12,11 @@
 // </copyright>
 // <summary></summary>
 // ***********************************************************************
+
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 
-namespace PureActive.Network.Abstractions.Extensions
+namespace PureActive.Hosting.Abstractions.Extensions
 {
     /// <summary>
     /// Class GatewayIPAddressInformationCollectionExtensions.

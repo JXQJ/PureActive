@@ -14,9 +14,9 @@
 // ***********************************************************************
 using System.Net;
 using FluentAssertions;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Network.Abstractions.CommonNetworkServices;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Devices.Network;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

@@ -15,12 +15,12 @@
 using System.Net;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Types;
+using PureActive.Hosting.Networking;
 using PureActive.Logging.Extensions.Extensions;
 using PureActive.Network.Abstractions.CommonNetworkServices;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Types;
 using PureActive.Network.Devices.Network;
-using PureActive.Network.Services.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;

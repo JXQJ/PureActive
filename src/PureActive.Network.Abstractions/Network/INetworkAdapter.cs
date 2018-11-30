@@ -13,7 +13,7 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Net.NetworkInformation;
-using PureActive.Network.Abstractions.Types;
+using PureActive.Hosting.Abstractions.Types;
 
 namespace PureActive.Network.Abstractions.Network
 {

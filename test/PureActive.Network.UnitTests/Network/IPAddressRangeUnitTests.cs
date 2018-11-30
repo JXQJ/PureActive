@@ -13,8 +13,8 @@
 // <summary></summary>
 // ***********************************************************************
 using System.Net;
-using PureActive.Network.Abstractions.Extensions;
-using PureActive.Network.Abstractions.Types;
+using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Network.Extensions.Network;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;

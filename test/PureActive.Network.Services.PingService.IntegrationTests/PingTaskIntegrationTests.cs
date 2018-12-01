@@ -93,7 +93,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingTask_PingIpAddressAsync_DefaultNetworkGateway()
         {
-            var ipAddressSubnet = _commonServices.NetworkingService.GetDefaultGatewayAddress();
+            var ipAddressSubnet = _commonServices.NetworkingSystem.GetDefaultGatewayAddress();
 
             var pingReply = await _pingTask.PingIpAddressAsync(ipAddressSubnet);
             pingReply.Should().NotBeNull();
@@ -108,7 +108,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingTask_PingIpAddressAsync_Buffer_Null()
         {
-            var ipAddressSubnet = _commonServices.NetworkingService.GetDefaultLocalNetworkAddress();
+            var ipAddressSubnet = _commonServices.NetworkingSystem.GetDefaultLocalNetworkAddress();
 
             var pingReply = await _pingTask.PingIpAddressAsync(ipAddressSubnet, _pingTask.DefaultTimeout, null, _pingOptions);
             pingReply.Should().BeNull();

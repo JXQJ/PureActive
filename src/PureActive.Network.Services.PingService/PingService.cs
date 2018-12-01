@@ -102,7 +102,7 @@ namespace PureActive.Network.Services.PingService
         public Task PingNetworkAsync(IPAddressSubnet ipAddressSubnet, CancellationToken cancellationToken, int timeout,
             int pingCallLimit, int waitBetweenPings, bool shuffle)
         {
-            var iPAddressSubnet = CommonServices.NetworkingService.GetDefaultGatewayAddressSubnet();
+            var iPAddressSubnet = CommonServices.NetworkingSystem.GetDefaultGatewayAddressSubnet();
 
             return _pingTask.PingNetworkAsync(iPAddressSubnet, cancellationToken, timeout, pingCallLimit, waitBetweenPings, shuffle);
         }
@@ -194,7 +194,7 @@ namespace PureActive.Network.Services.PingService
             {
                 while (!stoppingToken.IsCancellationRequested)
                 {
-                    var iPAddressSubnet = CommonServices.NetworkingService.GetDefaultGatewayAddressSubnet();
+                    var iPAddressSubnet = CommonServices.NetworkingSystem.GetDefaultGatewayAddressSubnet();
 
                     await _pingTask.PingNetworkAsync(iPAddressSubnet, stoppingToken, DefaultNetworkTimeout,
                         new PingOptions(DefaultTtl, true), int.MaxValue, 0, true);

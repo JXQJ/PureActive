@@ -113,7 +113,7 @@ namespace PureActive.Hosting.Abstractions.Types
         public int CompareTo(object obj)
         {
             if (!(obj is IPAddressSubnet))
-                throw new ArgumentException("Object must be of type IPAddressSubnet.");
+                throw new ArgumentException("Object must be of type IPAddressSubnet.", nameof(obj));
 
             return CompareTo((IPAddressSubnet) obj);
         }

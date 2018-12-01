@@ -37,7 +37,7 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         [Fact]
         public async Task PingServiceRx_PingDefaultGateway()
         {
-            var ipAddressDefaultGateway = _commonServices.NetworkingService.GetDefaultGatewayAddress();
+            var ipAddressDefaultGateway = _commonServices.NetworkingSystem.GetDefaultGatewayAddress();
             ipAddressDefaultGateway.Should().NotBeNull().And.Subject.Should().NotBe(IPAddress.None);
 
             using (TestCorrelator.CreateContext())

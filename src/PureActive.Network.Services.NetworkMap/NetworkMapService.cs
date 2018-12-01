@@ -17,7 +17,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Core.Extensions;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Hosting;
 using PureActive.Network.Abstractions.CommonNetworkServices;
@@ -95,7 +95,7 @@ namespace PureActive.Network.Services.NetworkMap
                 NetworkMap.StartAsync(cancellationToken)
             };
 
-            return tasks.WaitForTasksAction(cancellationToken,
+            return tasks.WaitForTasks(cancellationToken,
                 (t) =>
                 {
                     if (t.IsCompleted && t.Status == TaskStatus.RanToCompletion)
@@ -121,14 +121,14 @@ namespace PureActive.Network.Services.NetworkMap
                 DhcpService.StopAsync(cancellationToken)
             };
 
-            return tasks.WaitForTasksAction(cancellationToken, (t) =>
+            return tasks.WaitForTasks(cancellationToken, (t) =>
                 {
                     if (t.IsCompleted)
                     {
                         ServiceHostStatus = ServiceHostStatus.Stopped;
                     }
-                }
-                , Logger);
+                }, 
+                Logger);
         }
 
         /// <summary>

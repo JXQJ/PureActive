@@ -45,8 +45,8 @@ namespace PureActive.Network.Services.IntegrationTests.Network
         {
             _commonNetworkServices =
                 CommonNetworkServices.CreateInstance(TestLoggerFactory, "NetworkGatewayIntegrationTests");
-            var networkingService = new NetworkingService(TestLoggerFactory.CreatePureLogger<NetworkingService>());
-            _gatewayIPAddressSubnet = networkingService.GetDefaultGatewayAddressSubnet();
+            var networkingSystem = new NetworkingSystem(TestLoggerFactory.CreatePureLogger<NetworkingSystem>());
+            _gatewayIPAddressSubnet = networkingSystem.GetDefaultGatewayAddressSubnet();
             
         }
 

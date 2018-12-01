@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.Async;
 using PureActive.Core.Abstractions.System;
-using PureActive.Hosting.Abstractions.Extensions;
+using PureActive.Core.Extensions;
 using PureActive.Hosting.Abstractions.Networking;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Abstractions.Types;
@@ -141,7 +141,7 @@ namespace PureActive.Network.Services
                 ArpService.StartAsync(cancellationToken)
             };
 
-            return tasks.WaitForTasksAction(cancellationToken,
+            return tasks.WaitForTasks(cancellationToken,
                 (t) =>
                 {
                     if (t.IsCompleted && t.Status == TaskStatus.RanToCompletion)
@@ -171,7 +171,7 @@ namespace PureActive.Network.Services
 
             var logger = CommonServices?.LoggerFactory?.CreatePureLogger<CommonNetworkServices>();
 
-            return tasks.WaitForTasksAction(cancellationToken, (t) =>
+            return tasks.WaitForTasks(cancellationToken, (t) =>
                 {
                     if (t.IsCompleted)
                     {

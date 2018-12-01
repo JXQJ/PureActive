@@ -84,7 +84,7 @@ namespace PureActive.Network.Core.Sockets
 
             Logger = logger;
 
-            _interfaceAddress = commonServices.NetworkingService.GetDefaultLocalAddress();
+            _interfaceAddress = commonServices.NetworkingSystem.GetDefaultLocalAddress();
         }
 
         /// <summary>

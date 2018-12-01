@@ -55,7 +55,7 @@ namespace PureActive.Network.Services.ArpService.IntegrationTests
             IPingService pingService = new PingService.PingService(_commonServices);
             _arpService = new ArpService(_commonServices, pingService);
 
-            _defaultGatewayIPAddressSubnet = _commonServices.NetworkingService.GetDefaultGatewayAddressSubnet();
+            _defaultGatewayIPAddressSubnet = _commonServices.NetworkingSystem.GetDefaultGatewayAddressSubnet();
         }
 
         /// <summary>

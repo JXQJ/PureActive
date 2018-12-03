@@ -20,6 +20,8 @@ using PureActive.Core.System;
 using PureActive.Logger.Provider.Serilog.Settings;
 using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
+using PureActive.Serilog.Sink.Xunit.Extensions;
+using PureActive.Serilog.Sink.Xunit.Interfaces;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog;
 using Serilog.Events;
@@ -185,6 +187,67 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
             fx = () => XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, null, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
 
             fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("loggerSettings");
+        }
+
+        [Fact]
+        public void XunitSink_CreateXUnitSerilogFactory_Null()
+        {
+            var fileSystem = new FileSystem(typeof(XunitSinkUnitTests));
+            var loggerSettings =
+                new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.TestCorrelator);
+            var loggerConfiguration = XunitLoggingSink.CreateXUnitLoggerConfiguration(_testOutputHelper, loggerSettings,
+                XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+
+            Func<IPureTestLoggerFactory> fx = () => XunitLoggingSink.CreateXUnitSerilogFactory(null, loggerConfiguration);
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("loggerSettings");
+
+            fx = () => XunitLoggingSink.CreateXUnitSerilogFactory(loggerSettings, null);
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("loggerConfiguration");
+        }
+
+
+        [Fact]
+        public void XunitSink_CreateXUnitSerilogFactory_Formatter()
+        {
+            var fileSystem = new FileSystem(typeof(XunitSinkUnitTests));
+            var loggerSettings =
+                new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.TestCorrelator);
+
+            var loggerFactory = XunitLoggingSink.CreateXUnitSerilogFactory(_testOutputHelper, loggerSettings,
+                XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+
+            loggerFactory.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IPureLoggerFactory>();
+        }
+
+        [Fact]
+        public void XunitSink_CreateXUnitSerilogFactory_Formatter_Null()
+        {
+            var fileSystem = new FileSystem(typeof(XunitSinkUnitTests));
+            var loggerSettings =
+                new SerilogLoggerSettings(fileSystem, LogEventLevel.Debug, LoggingOutputFlags.TestCorrelator);
+
+            Func<IPureTestLoggerFactory> fx = () => XunitLoggingSink.CreateXUnitSerilogFactory(null, loggerSettings, XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("testOutputHelper");
+
+            fx = () => XunitLoggingSink.CreateXUnitSerilogFactory(_testOutputHelper, null,
+                XUnitSerilogFormatter.RenderedCompactJsonFormatter);
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("loggerSettings");
+        }
+
+        [Fact]
+        public void XunitSink_Extensions_XUnit_Null()
+        {
+            Func<LoggerConfiguration> fx = () => XUnitLoggerConfigurationExtensions.XUnit(null, _testOutputHelper, null);
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("sinkConfiguration");
+
+            fx = () => XUnitLoggerConfigurationExtensions.XUnit(null, _testOutputHelper, LogEventLevel.Debug, "");
+
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("sinkConfiguration");
         }
     }
 }

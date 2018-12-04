@@ -22,6 +22,7 @@ using PureActive.Logging.Abstractions.Interfaces;
 using PureActive.Logging.Abstractions.Types;
 using PureActive.Serilog.Sink.Xunit.Extensions;
 using PureActive.Serilog.Sink.Xunit.Interfaces;
+using PureActive.Serilog.Sink.Xunit.Observers;
 using PureActive.Serilog.Sink.Xunit.Sink;
 using Serilog;
 using Serilog.Events;
@@ -248,6 +249,18 @@ namespace PureActive.Serilog.Sink.Xunit.UnitTests
             fx = () => XUnitLoggerConfigurationExtensions.XUnit(null, _testOutputHelper, LogEventLevel.Debug, "");
 
             fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("sinkConfiguration");
+        }
+
+        [Fact]
+        public void XunitSink_TestLoggerObserver()
+        {
+            var logger = CreatePureLogger(LogEventLevel.Debug);
+            
+            var testConsoleObserver = new TestConsoleObserver<int>(_testOutputHelper);
+            testConsoleObserver.OnError(new InvalidOperationException());
+
+            var testLoggerObserver = new TestLoggerObserver<int>(logger);
+            testLoggerObserver.OnError(new InvalidOperationException());
         }
     }
 }

@@ -35,7 +35,34 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
         }
 
         [Fact]
-        public async Task PingServiceRx_PingDefaultGateway()
+        public async Task PingServiceRx_PingDefaultGateway_TestConsole()
+        {
+            var ipAddressDefaultGateway = _commonServices.NetworkingSystem.GetDefaultGatewayAddress();
+            ipAddressDefaultGateway.Should().NotBeNull().And.Subject.Should().NotBe(IPAddress.None);
+
+            using (TestCorrelator.CreateContext())
+            {
+                var observable = _pingServiceRx.PingRequestAsync(ipAddressDefaultGateway);
+                observable.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IObservable<PingReply>>();
+
+                using (var subscription =
+                    observable.SubscribeTestConsole(TestOutputHelper, "PingServiceRxIntegrationTests"))
+                {
+                    subscription.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IDisposable>();
+
+                    var pingReply = await observable.FirstAsync();
+                    pingReply.Should().NotBeNull().And.Subject.Should().BeOfType<PingReply>()
+                        .And.Subject.As<PingReply>().Status.Should()
+                        .Match<IPStatus>(ips => ips == IPStatus.Success || ips == IPStatus.TimedOut);
+
+                    // Give up time for Logging to Propagate
+                    await Task.Delay(1000);
+                }
+            }
+        }
+
+        [Fact]
+        public async Task PingServiceRx_PingDefaultGateway_TestLogger()
         {
             var ipAddressDefaultGateway = _commonServices.NetworkingSystem.GetDefaultGatewayAddress();
             ipAddressDefaultGateway.Should().NotBeNull().And.Subject.Should().NotBe(IPAddress.None);
@@ -58,11 +85,12 @@ namespace PureActive.Network.Services.PingService.IntegrationTests
                     // Give up time for Logging to Propagate
                     await Task.Delay(1000);
 
-                    var logEventsList= TestCorrelator.GetLogEventsFromCurrentContext().ToList();
+                    var logEventsList = TestCorrelator.GetLogEventsFromCurrentContext().ToList();
 
                     logEventsList.Should().HaveCount(2);
                     logEventsList.First().MessageTemplate.IsLogEventOnNext().Should().BeTrue();
                     logEventsList.Last().MessageTemplate.IsLogEventOnCompleted().Should().BeTrue();
+                    logEventsList.Last().MessageTemplate.IsLogEventOnError().Should().BeFalse();
                 }
             }
         }

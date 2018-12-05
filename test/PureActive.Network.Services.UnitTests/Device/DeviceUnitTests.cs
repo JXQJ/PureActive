@@ -132,7 +132,7 @@ namespace PureActive.Network.Services.UnitTests.Device
         {
             var deviceTest = new DeviceTest(_commonServices, DeviceType.UnknownDevice);
 
-            deviceTest.CompareTo((DeviceBase) null).Should().Be(1);
+            deviceTest.CompareTo(null).Should().Be(1);
             deviceTest.CompareTo((IPureObject)null).Should().Be(1);
         }
 

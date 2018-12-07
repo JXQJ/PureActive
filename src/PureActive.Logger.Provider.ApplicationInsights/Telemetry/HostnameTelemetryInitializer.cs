@@ -37,6 +37,8 @@ namespace PureActive.Logger.Provider.ApplicationInsights.Telemetry
         /// <param name="telemetry">The telemetry.</param>
         public void Initialize(ITelemetry telemetry)
         {
+            if (telemetry == null) throw new ArgumentNullException(nameof(telemetry));
+            
             if (telemetry.Context.Cloud.RoleInstance == null) telemetry.Context.Cloud.RoleInstance = _hostName.Value;
         }
     }

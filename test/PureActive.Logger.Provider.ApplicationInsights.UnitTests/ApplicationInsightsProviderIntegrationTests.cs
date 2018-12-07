@@ -13,6 +13,10 @@
 // <summary></summary>
 // ***********************************************************************
 
+using System;
+using FluentAssertions;
+using Microsoft.ApplicationInsights.Extensibility;
+using PureActive.Logger.Provider.ApplicationInsights.Telemetry;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
 using Xunit.Abstractions;
@@ -45,5 +49,16 @@ namespace PureActive.Logger.Provider.ApplicationInsights.IntegrationTests
         public void ApplicationInsightsProvider_Constructor()
         {
         }
+
+        [Fact]
+        public void ApplicationInsightsProvider_HostnameTelemetryInitializer()
+        {
+            var hostnameTelemetryInitializer = new HostnameTelemetryInitializer();
+            hostnameTelemetryInitializer.Should().NotBeNull().And.Subject.Should().BeAssignableTo<ITelemetryInitializer>();
+
+            Action act = () => hostnameTelemetryInitializer.Initialize(null);
+            act.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("telemetry");
+        }
+
     }
 }

@@ -13,7 +13,6 @@
 // <summary></summary>
 // ***********************************************************************
 using System;
-using Microsoft.Extensions.Logging;
 using PureActive.Logger.Provider.Serilog.Configuration;
 using PureActive.Logger.Provider.Serilog.Interfaces;
 using PureActive.Logging.Abstractions.Types;
@@ -163,7 +162,7 @@ namespace PureActive.Serilog.Sink.Xunit.Sink
 
             var loggerFactory = LoggerConfigurationFactory.CreateSerilogFactory(loggerSettings, loggerConfiguration);
 
-            loggerFactory.AddDebug();
+            // loggerFactory.AddDebug();
 
             return new PureTestLoggerFactory(loggerFactory, loggerSettings);
         }

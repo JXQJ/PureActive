@@ -150,6 +150,8 @@ namespace PureActive.Hosting.Settings
             builder.RegisterOperationRunner();
             builder.RegisterCommonServices();
 
+            builder.RegisterInstance(this).As<IStartupSettings>();
+
             return builder;
         }
 

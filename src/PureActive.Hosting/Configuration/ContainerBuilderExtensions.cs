@@ -28,6 +28,7 @@ using PureActive.Core.System;
 using PureActive.Email.Office365.Interfaces;
 using PureActive.Email.Office365.Providers;
 using PureActive.Hosting.Abstractions.System;
+using PureActive.Hosting.Settings;
 using PureActive.Queue.Hangfire.Queue;
 
 namespace PureActive.Hosting.Configuration
@@ -104,6 +105,19 @@ namespace PureActive.Hosting.Configuration
             builder.RegisterType<ProcessRunner>().As<IProcessRunner>().InstancePerLifetimeScope();
             //builder.RegisterType<FileSystem>().As<IFileSystem>().InstancePerLifetimeScope();
             builder.RegisterType<TimeProvider>().As<ITimeProvider>().InstancePerLifetimeScope();
+        }
+
+        /// <summary>
+        /// Registers classes that interact with the system.
+        /// </summary>
+        /// <param name="builder">The builder.</param>
+        /// <param name="webAppSettings">Configuration section for WebSettings</param>
+        public static void RegisterWebAppSettings(this ContainerBuilder builder, IConfigurationSection webAppSettings)
+        {
+            builder.RegisterInstance(ConfigurationSectionExtensions.GetHostName(webAppSettings)).As<WebAppHost>();
+            builder.RegisterInstance(ConfigurationSectionExtensions.GetEmailAddress(webAppSettings)).As<WebAppEmail>();
+            builder.RegisterInstance(ConfigurationSectionExtensions.GetErrorSettings(webAppSettings))
+                .As<ErrorSettings>();
         }
 
         /// <summary>

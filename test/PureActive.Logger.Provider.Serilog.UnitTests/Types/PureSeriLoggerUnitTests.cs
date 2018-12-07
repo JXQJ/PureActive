@@ -180,10 +180,10 @@ namespace PureActive.Logger.Provider.Serilog.UnitTests.Types
         {
             const string testProperty = "Property";
 
-            Func<IDisposable> fx = () => _pureSeriLogger.PushProperty(null, (object) null);
+            Func<IDisposable> fx = () => _pureSeriLogger.PushProperty(null, null);
             fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("propertyName");
 
-            fx = () => _pureSeriLogger.PushProperty(testProperty, (object)null);
+            fx = () => _pureSeriLogger.PushProperty(testProperty, null);
             fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("value");
         }
 

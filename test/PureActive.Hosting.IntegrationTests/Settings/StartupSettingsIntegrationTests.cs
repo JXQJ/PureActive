@@ -98,8 +98,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
                 builder.RegisterJsonSerialization(new TypeMapCollection());
 
                 services.AddTelemetry(Configuration, typeof(StartupTelemetryInitializer));
-
-
+                
                 services.AddHangfireQueue(GetConnectionString(ServiceHost.Hangfire), LoggerFactory);
 
                 return BuildContainer(builder, services);

@@ -16,9 +16,12 @@
 
 using System;
 using System.Net;
+using System.Net.NetworkInformation;
 using FluentAssertions;
+using Moq;
 using PureActive.Hosting.Abstractions.Extensions;
 using PureActive.Hosting.Abstractions.Networking;
+using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Networking;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Xunit;
@@ -71,5 +74,24 @@ namespace PureActive.Hosting.UnitTests.Networking
             Func<IPAddress> fx = () => ipAddressV6.GetBroadcastAddress(IPAddress.Broadcast);
             fx.Should().Throw<ArgumentException>();
         }
+
+        [Fact]
+        public void NetworkingSystem_IPv4AddressSubnetFromNetworkInterface_Null()
+        {
+            Func<IPAddressSubnet> fx = () =>_networkingSystem.IPv4AddressSubnetFromNetworkInterface(null);
+            fx.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("networkInterface");
+        }
+        [Fact]
+        public void NetworkingSystem_IPv4AddressSubnetFromNetworkInterface()
+        {
+            Mock<NetworkInterface> networkInterfaceMock = new Mock<NetworkInterface>();
+            networkInterfaceMock.Setup(ni => ni.OperationalStatus).Returns(OperationalStatus.Down);
+
+            _networkingSystem.IPv4AddressSubnetFromNetworkInterface(networkInterfaceMock.Object).Should()
+                .Be(IPAddressSubnet.None);
+
+        }
+
+        
     }
 }

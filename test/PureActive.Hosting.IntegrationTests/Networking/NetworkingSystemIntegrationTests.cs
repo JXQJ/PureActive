@@ -65,5 +65,29 @@ namespace PureActive.Hosting.IntegrationTests.Networking
             var addressSubnet = networkingSystem.GetDefaultGatewayAddressSubnet();
             addressSubnet.Should().NotBeNull();
         }
+
+        [Fact]
+        public void NetworkingSystem_GetDefaultGateway()
+        {
+            _networkingSystem.GetDefaultGatewayAddress().Should().NotBeNull();
+        }
+
+        [Fact]
+        public void NetworkingSystem_GetDefaultGatewaySubnet()
+        {
+            _networkingSystem.GetDefaultGatewaySubnet().Should().NotBeNull();
+        }
+
+        [Fact]
+        public void NetworkingSystem_GetDefaultLocalNetworkSubnet()
+        {
+            _networkingSystem.GetDefaultLocalNetworkSubnet().Should().NotBeNull();
+        }
+
+        [Fact]
+        public void NetworkingSystem_GetDefaultLocalSubnet()
+        {
+            _networkingSystem.GetDefaultLocalSubnet().Should().NotBeNull();
+        }
     }
 }

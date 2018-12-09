@@ -67,16 +67,16 @@ namespace PureActive.Hosting.Networking
             if (networkInterface == null) throw new ArgumentNullException(nameof(networkInterface));
 
             // Is the network up and have a Network Gateway
-            if (networkInterface.OperationalStatus == OperationalStatus.Up &&
-                networkInterface.NetworkInterfaceType != NetworkInterfaceType.Loopback && 
-                networkInterface.GetIPProperties().GatewayAddresses.IPv4OrDefault() != null)
+            if (networkInterface.OperationalStatus != OperationalStatus.Up ||
+                networkInterface.NetworkInterfaceType == NetworkInterfaceType.Loopback ||
+                networkInterface.GetIPProperties().GatewayAddresses.IPv4OrDefault() == null)
+                return IPAddressSubnet.None;
+
+            foreach (var unicastIpAddress in networkInterface.GetIPProperties().UnicastAddresses)
             {
-                foreach (var unicastIpAddress in networkInterface.GetIPProperties().UnicastAddresses)
+                if (unicastIpAddress.Address.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    if (unicastIpAddress.Address.AddressFamily == AddressFamily.InterNetwork)
-                    {
-                        return new IPAddressSubnet(unicastIpAddress.Address, unicastIpAddress.IPv4Mask);
-                    }
+                    return new IPAddressSubnet(unicastIpAddress.Address, unicastIpAddress.IPv4Mask);
                 }
             }
 

@@ -29,7 +29,8 @@ namespace PureActive.Hosting.Configuration
         public bool Authorize(DashboardContext context)
         {
             // TODO: Make it Admin Only once roles established
-            return context.GetHttpContext().User.Identity.IsAuthenticated;
+
+            return _container != null && context.GetHttpContext().User.Identity.IsAuthenticated;
         }
     }
 

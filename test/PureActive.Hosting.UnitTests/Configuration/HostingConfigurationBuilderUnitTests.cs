@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using PureActive.Core.System;
@@ -42,23 +41,6 @@ namespace PureActive.Hosting.UnitTests.Configuration
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(fileSystem.GetCurrentDirectory())
                 .AddLoggerSettings(LogEventLevel.Debug)
-                .AddEnvironmentVariables()
-                .Build();
-
-            configuration.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void HostingConfigurationBuilderUnitTests_AddAppSettings_HostingEnvironment()
-        {
-
-            var fileSystem = new FileSystem();
-            var hostingEnvironment = new HostingEnvironment();
-
-            var configuration = new ConfigurationBuilder()
-                .SetBasePath(fileSystem.GetCurrentDirectory())
-                .AddLoggerSettings(LogEventLevel.Debug)
-                .AddAppSettings(hostingEnvironment)
                 .AddEnvironmentVariables()
                 .Build();
 

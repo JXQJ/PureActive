@@ -20,7 +20,6 @@ using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
-using Moq;
 using PureActive.Archive.Abstractions.System;
 using PureActive.Archive.Extensions;
 using PureActive.Archive.System;

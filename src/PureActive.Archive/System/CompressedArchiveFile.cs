@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using PureActive.Archive.Extensions;
@@ -24,6 +25,7 @@ namespace PureActive.Archive.System
         /// <summary>
         ///     Constructor.
         /// </summary>
+        [ExcludeFromCodeCoverage]
         public CompressedArchiveFile(ZipArchiveEntry entry, int stripInitialFolders)
         {
             if (!entry.IsFile())

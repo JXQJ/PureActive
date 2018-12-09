@@ -14,6 +14,7 @@
 // ***********************************************************************
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using FluentAssertions;
 using Microsoft.ApplicationInsights.Channel;
@@ -23,6 +24,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using PureActive.Core.Abstractions.System;
+using PureActive.Core.Serialization;
 using PureActive.Hosting.Abstractions.Settings;
 using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Configuration;
@@ -54,6 +56,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
 
         }
 
+        [ExcludeFromCodeCoverage]
         private class StartupTelemetryInitializer : ITelemetryInitializer
         {
             /// <inheritdoc />
@@ -63,6 +66,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             }
         }
 
+        [ExcludeFromCodeCoverage]
         private class StartupTest : StartupSettings
         {
             /// <inheritdoc />
@@ -90,6 +94,8 @@ namespace PureActive.Hosting.IntegrationTests.Settings
                 // Register Shared Services
                 builder.RegisterJobQueueClient();
                 builder.RegisterWebAppSettings(GetSection("StartupTestService"));
+
+                builder.RegisterJsonSerialization(new TypeMapCollection());
 
                 services.AddTelemetry(Configuration, typeof(StartupTelemetryInitializer));
 
@@ -132,6 +138,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             return webHostBuilder.Build();
         }
 
+        [ExcludeFromCodeCoverage]
         private static bool IncludeLogEvent(LogEvent logEvent)
         {
             return true;

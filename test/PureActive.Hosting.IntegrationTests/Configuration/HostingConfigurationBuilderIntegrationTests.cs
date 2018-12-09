@@ -1,7 +1,6 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Hosting.Internal;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using PureActive.Core.System;
 using PureActive.Hosting.Configuration;
 using PureActive.Serilog.Sink.Xunit.TestBase;

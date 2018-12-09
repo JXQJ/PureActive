@@ -16,6 +16,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+using Autofac.Core;
 using FluentAssertions;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -108,15 +111,64 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             {
                 if (app == null) throw new ArgumentNullException(nameof(app));
                 if (env == null) throw new ArgumentNullException(nameof(env));
+
+                app.UseHangfireQueueDashboard(Container);
+            }
+
+        }
+
+        private class StartupTestHangFire : StartupSettings
+        {
+            public StartupTestHangFire(IConfiguration configuration, IHostingEnvironment hostingEnvironment,
+                IPureLoggerFactory loggerFactory, IFileSystem fileSystem, IOperatingSystem operatingSystem) :
+                base(configuration, hostingEnvironment, loggerFactory, ServiceHost.StartupSettingsTest, fileSystem,
+                    operatingSystem)
+            {
+
+            }
+
+            public IServiceProvider ConfigureServices(IServiceCollection services)
+            {
+                if (services == null) throw new ArgumentNullException(nameof(services));
+
+                var builder = RegisterSharedServices(services);
+
+                // Register Shared Services
+                builder.RegisterJobQueueClient();
+                builder.RegisterWebAppSettings(GetSection("StartupTestService"));
+
+                builder.RegisterJsonSerialization(new TypeMapCollection());
+
+                services.AddTelemetry(Configuration, typeof(StartupTelemetryInitializer));
+
+                services.AddHangfireQueue("Bad", LoggerFactory);
+
+                return BuildContainer(builder, services);
+            }
+
+            /// <inheritdoc />
+            public override void ApplyDatabaseMigrations(IApplicationBuilder app)
+            {
+
+            }
+
+
+            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+            {
+                if (app == null) throw new ArgumentNullException(nameof(app));
+                if (env == null) throw new ArgumentNullException(nameof(env));
+
+                app.UseHangfireQueueDashboard(Container);
             }
 
         }
 
         private static readonly string LogFileName = "startup-settings-test.log";
 
-        private static IWebHost BuildWebHost(string[] args)
+        private static IWebHost BuildWebHost<TStartup>(string[] args) where TStartup : class
         {
             var webHostBuilder = new WebHostBuilder()
+                .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
@@ -131,9 +183,9 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             webHostBuilder
                 .UseSystemSettings(LogFileName, IncludeLogEvent)
                 .UseApplicationInsights()
-                .UseStartup<StartupTest>();
+                .UseStartup<TStartup>();
 
-
+            
             return webHostBuilder.Build();
         }
 
@@ -147,7 +199,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
         [Fact]
         public void StartupSettings_Constructor()
         {
-            var webHost = BuildWebHost(new string[0]);
+            var webHost = BuildWebHost<StartupTest>(new string[0]);
             webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
 
         }
@@ -156,7 +208,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
         [Fact]
         public void StartupSettings_Properties()
         {
-            var webHost = BuildWebHost(new string[0]);
+            var webHost = BuildWebHost<StartupTest>(new string[0]);
             webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
 
             var startupSettings = webHost.Services.GetService<IStartupSettings>();
@@ -179,7 +231,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
         [Fact]
         public void StartupSettings_Configuration()
         {
-            var webHost = BuildWebHost(new string[0]);
+            var webHost = BuildWebHost<StartupTest>(new string[0]);
             webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
             var startupSettings = webHost.Services.GetService<IStartupSettings>();
 
@@ -197,6 +249,35 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             var errorSettings = webHost.Services.GetService<ErrorSettings>();
             errorSettings.Should().NotBeNull();
             errorSettings.ShowExceptions.Should().BeTrue();
+
+        }
+
+
+        [Fact]
+        public async Task StartupSettings_Run()
+        {
+            var webHost = BuildWebHost<StartupTest>(new string[0]);
+            webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
+
+            var cts = new CancellationTokenSource();
+
+            cts.CancelAfter(500);
+            await webHost.RunAsync(cts.Token);
+            
+        }
+
+
+        [Fact]
+        public void StartupSettings_HangFire()
+        {
+            var webHost = BuildWebHost<StartupTestHangFire>(new string[0]);
+            webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
+
+            var cts = new CancellationTokenSource();
+
+            cts.CancelAfter(500);
+            Func<Task> fx = () => webHost.RunAsync(cts.Token);
+            fx.Should().Throw<DependencyResolutionException>();
 
         }
     }

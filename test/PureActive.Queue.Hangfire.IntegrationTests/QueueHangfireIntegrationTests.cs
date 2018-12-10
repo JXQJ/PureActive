@@ -33,7 +33,6 @@ using PureActive.Hosting.Abstractions.Types;
 using PureActive.Hosting.Configuration;
 using PureActive.Hosting.Settings;
 using PureActive.Logging.Abstractions.Interfaces;
-using PureActive.Queue.Hangfire.Queue;
 using PureActive.Serilog.Sink.Xunit.TestBase;
 using Serilog.Events;
 using Xunit;
@@ -232,11 +231,12 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
             {
                 server.Should().NotBeNull();
 
-                var jobIdString = BackgroundJob.Enqueue(() => Console.WriteLine($"Enqueued Task{Guid.NewGuid().ToStringNoDashes()}"));
+                var jobIdString = BackgroundJob.Enqueue(() => Console.WriteLine($"Enqueued Task ID: {Guid.NewGuid().ToStringNoDashes()}"));
                 jobIdString.Should().NotBeNull();
                 int.TryParse(jobIdString, out var jobId).Should().BeTrue();
-
-                await Task.Delay(10000);
+                jobId.Should().BeGreaterThan(0);
+                    
+                await Task.Delay(20000);
             }
         }
 

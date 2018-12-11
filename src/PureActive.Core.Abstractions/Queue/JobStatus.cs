@@ -44,5 +44,7 @@ namespace PureActive.Core.Abstractions.Queue
         /// </summary>
         /// <value>The state of the entered.</value>
         public DateTimeOffset EnteredState { get; }
+
+        public bool IsFinalState => State.IsFinalState();
     }
 }

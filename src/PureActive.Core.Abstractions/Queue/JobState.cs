@@ -36,10 +36,22 @@ namespace PureActive.Core.Abstractions.Queue
         /// </summary>
         InProgress,
         /// <summary>
-        /// Job completed
+        /// Job completed with Success
         /// </summary>
-        Completed,
+        Succeeded,
 
+        /// <summary>
+        /// Job Failed
+        /// </summary>
+        Failed,
 
+    }
+
+    public static class JobStateExtensions
+    {
+        public static bool IsFinalState(this JobState jobState)
+        {
+            return jobState != JobState.NotStarted && jobState != JobState.InProgress;
+        }
     }
 }

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
@@ -9,10 +7,7 @@ using Hangfire;
 using Hangfire.States;
 using Hangfire.Storage;
 using Hangfire.Storage.Monitoring;
-using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.Queue;
-using PureActive.Core.Extensions;
-using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Queue.Hangfire.Queue
 {
@@ -63,11 +58,16 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <summary>
         ///     Returns the status of the job with the given ID.
         /// </summary>
-        public Task<JobStatus> GetJobStatusAsync(string jobId)
+        public Task<JobStatus> GetJobStatusAsync(string jobId) => GetJobStatusAsync(_monitoringApi, jobId);
+
+        /// <summary>
+        ///     Returns the status of the job with the given ID.
+        /// </summary>
+        public static Task<JobStatus> GetJobStatusAsync(IMonitoringApi monitoringApi, string jobId)
         {
             // TODO: Make this actually asynchronous once HangFire supports it.
 
-            var jobDetails = _monitoringApi.JobDetails(jobId)
+            var jobDetails = monitoringApi.JobDetails(jobId)
                 .History
                 .OrderByDescending(h => h.CreatedAt)
                 .FirstOrDefault();
@@ -78,17 +78,54 @@ namespace PureActive.Queue.Hangfire.Queue
             return Task.FromResult(new JobStatus(jobState, enteredState));
         }
 
+        /// <summary>
+        /// Waits for the Job to Complete
+        /// </summary>
+        /// <param name="jobId">JobID</param>
+        /// <param name="timeout">Time out in milliseconds</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public JobStatus WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken) =>
+            WaitForJobToComplete(_monitoringApi, jobId, timeout, cancellationToken);
+
 
         /// <summary>
         /// Waits for the Job to Complete
         /// </summary>
-        /// <param name="jobId"></param>
-        /// <param name="timeout"></param>
+        /// <param name="monitoringApi"></param>
+        /// <param name="jobId">JobID</param>
+        /// <param name="timeout">Time out in milliseconds</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public JobStatus WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken)
+        public static JobStatus WaitForJobToComplete(IMonitoringApi monitoringApi, string jobId, int timeout, CancellationToken cancellationToken)
         {
-        
+            var jobStatus = GetJobStatusAsync(monitoringApi, jobId).Result;
+
+            // If job status is in a final state
+            if (jobStatus.IsFinalState)
+                return jobStatus;
+
+            var secs = timeout / 1000;
+
+            if (secs == 0)
+                secs = 1;
+            else if (timeout == -1)
+                secs = int.MaxValue;
+
+            // Poll for Completed Job
+            while (!jobStatus.IsFinalState && secs-- > 0)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                    return jobStatus;
+
+                // Wait 1 sec
+                Task.Delay(1000, cancellationToken).Wait(cancellationToken);
+
+                // Try again
+                jobStatus = GetJobStatusAsync(monitoringApi, jobId).Result;
+            }
+
+            return jobStatus;
         }
 
 
@@ -96,7 +133,7 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <summary>
         ///     Returns the job state for the given job.
         /// </summary>
-        private JobState GetJobState(StateHistoryDto jobDetails)
+        private static JobState GetJobState(StateHistoryDto jobDetails)
         {
             var stateName = jobDetails?.StateName;
 
@@ -105,6 +142,9 @@ namespace PureActive.Queue.Hangfire.Queue
 
             if (stateName == SucceededState.StateName)
                 return JobState.Succeeded;
+
+            if (stateName == FailedState.StateName)
+                return JobState.Failed;
 
             return stateName == ProcessingState.StateName ? JobState.InProgress : JobState.Unknown;
         }

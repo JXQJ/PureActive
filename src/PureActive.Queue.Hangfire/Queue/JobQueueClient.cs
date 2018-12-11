@@ -85,7 +85,7 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <param name="timeout">Time out in milliseconds</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public JobStatus WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken) =>
+        public Task<JobStatus> WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken) =>
             WaitForJobToComplete(_monitoringApi, jobId, timeout, cancellationToken);
 
 
@@ -97,7 +97,7 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <param name="timeout">Time out in milliseconds</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static JobStatus WaitForJobToComplete(IMonitoringApi monitoringApi, string jobId, int timeout, CancellationToken cancellationToken)
+        public static async Task<JobStatus> WaitForJobToComplete(IMonitoringApi monitoringApi, string jobId, int timeout, CancellationToken cancellationToken)
         {
             var jobStatus = GetJobStatusAsync(monitoringApi, jobId).Result;
 
@@ -119,10 +119,10 @@ namespace PureActive.Queue.Hangfire.Queue
                     return jobStatus;
 
                 // Wait 1 sec
-                Task.Delay(1000, cancellationToken).Wait(cancellationToken);
+                await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 
                 // Try again
-                jobStatus = GetJobStatusAsync(monitoringApi, jobId).Result;
+                jobStatus = await GetJobStatusAsync(monitoringApi, jobId);
             }
 
             return jobStatus;
@@ -145,6 +145,9 @@ namespace PureActive.Queue.Hangfire.Queue
 
             if (stateName == FailedState.StateName)
                 return JobState.Failed;
+
+            if (stateName == ScheduledState.StateName)
+                return JobState.Scheduled;
 
             return stateName == ProcessingState.StateName ? JobState.InProgress : JobState.Unknown;
         }

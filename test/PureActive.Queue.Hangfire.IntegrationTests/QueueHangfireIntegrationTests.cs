@@ -16,12 +16,15 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
 using FluentAssertions;
 using Hangfire;
 using Hangfire.SQLite;
+using Hangfire.States;
+using Hangfire.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -196,19 +199,19 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
             const string testValue = "TestValue";
 
             var hangFireJob = new HangfireJob(testValue);
+
+            var cts = new CancellationTokenSource();
+
+            var runTask = webHost.RunAsync(cts.Token);
+
             var jobId = await jobQueueClient.EnqueueAsync<IHangFireTestService>(
                 service => service.ExecuteHangfireTestJobAsync(hangFireJob));
 
             var jobState = await jobQueueClient.GetJobStatusAsync(jobId);
-            jobState.Should().NotBeNull();
-
-            var cts = new CancellationTokenSource();
+            jobState.Should().NotBeNull().And.Subject.As<JobStatus>().State.Should().Be(JobState.NotStarted);
 
             cts.CancelAfter(5000);
-            await webHost.RunAsync(cts.Token);
-
-            jobState = await jobQueueClient.GetJobStatusAsync(jobId);
-            jobState.Should().NotBeNull();
+            await runTask;
         }
 
         private string GetConnectionString(ServiceHost serviceHost)
@@ -225,18 +228,47 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
         [Fact]
         public async Task QueueHangfire_Standalone_JobQueue()
         {
-            GlobalConfiguration.Configuration.UseSQLiteStorage(GetConnectionString(ServiceHost.HangfireTest));
+            var storage = new SQLiteStorage(GetConnectionString(ServiceHost.HangfireTest));
+            GlobalConfiguration.Configuration.UseStorage(storage);
 
             using (var server = new BackgroundJobServer())
             {
                 server.Should().NotBeNull();
 
+
+                var apiMonitoring = storage.GetMonitoringApi();
+                apiMonitoring.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IMonitoringApi>();
+
                 var jobIdString = BackgroundJob.Enqueue(() => Console.WriteLine($"Enqueued Task ID: {Guid.NewGuid().ToStringNoDashes()}"));
                 jobIdString.Should().NotBeNull();
                 int.TryParse(jobIdString, out var jobId).Should().BeTrue();
                 jobId.Should().BeGreaterThan(0);
-                    
-                await Task.Delay(20000);
+
+
+                var jobStateName = apiMonitoring.JobDetails(jobIdString)
+                    .History
+                    .OrderByDescending(h => h.CreatedAt)
+                    .FirstOrDefault()?.StateName;
+
+
+                jobStateName.Should().Be(EnqueuedState.StateName);
+
+                int secs = 10;
+
+                // Poll for Completed Job
+                while (jobStateName != SucceededState.StateName && secs-- > 0)
+                {
+                    // Wait 1 sec
+                    await Task.Delay(1000);
+
+                    // Try again
+                    jobStateName = apiMonitoring.JobDetails(jobIdString)
+                        .History
+                        .OrderByDescending(h => h.CreatedAt)
+                        .FirstOrDefault()?.StateName;
+                }
+
+                jobStateName.Should().Be(SucceededState.StateName);
             }
         }
 

@@ -39,5 +39,7 @@ namespace PureActive.Core.Abstractions.Queue
         /// Job completed
         /// </summary>
         Completed,
+
+
     }
 }

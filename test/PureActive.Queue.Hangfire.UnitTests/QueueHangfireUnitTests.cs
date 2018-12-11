@@ -14,6 +14,7 @@
 // ***********************************************************************
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Hangfire.Logging;
 using PureActive.Core.Extensions;
@@ -92,15 +93,20 @@ namespace PureActive.Queue.Hangfire.UnitTests
             logger.Log(logLevel, () => testString);
         }
 
+        [ExcludeFromCodeCoverage]
+        private string TestString()
+        {
+            return string.Empty;
+        }
+
         [Fact]
         public void QueueHangfire_Logging_LogLevels_Bogus()
         {
             var hangFireLogger = new HangfireLogProvider(TestLoggerFactory);
             var sourceContext = "QueueHangfireUnitTests";
             var logger = hangFireLogger.GetLogger(sourceContext);
-            var testString = "Test: QueueHangfire_Logging";
-
-            Func<bool> fx = () => logger.Log((LogLevel)100, () => testString);
+  
+            Func<bool> fx = () => logger.Log((LogLevel)100, TestString);
             fx.Should().Throw<ArgumentOutOfRangeException>();
         }
     }

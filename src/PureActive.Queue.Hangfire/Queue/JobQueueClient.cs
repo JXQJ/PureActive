@@ -1,12 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using Hangfire;
 using Hangfire.States;
 using Hangfire.Storage;
 using Hangfire.Storage.Monitoring;
+using Microsoft.Extensions.Logging;
 using PureActive.Core.Abstractions.Queue;
+using PureActive.Core.Extensions;
+using PureActive.Logging.Abstractions.Interfaces;
 
 namespace PureActive.Queue.Hangfire.Queue
 {
@@ -72,6 +78,21 @@ namespace PureActive.Queue.Hangfire.Queue
             return Task.FromResult(new JobStatus(jobState, enteredState));
         }
 
+
+        /// <summary>
+        /// Waits for the Job to Complete
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <param name="timeout"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public JobStatus WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken)
+        {
+        
+        }
+
+
+   
         /// <summary>
         ///     Returns the job state for the given job.
         /// </summary>
@@ -81,6 +102,9 @@ namespace PureActive.Queue.Hangfire.Queue
 
             if (stateName == EnqueuedState.StateName)
                 return JobState.NotStarted;
+
+            if (stateName == SucceededState.StateName)
+                return JobState.Succeeded;
 
             return stateName == ProcessingState.StateName ? JobState.InProgress : JobState.Unknown;
         }

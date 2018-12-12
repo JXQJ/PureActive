@@ -20,9 +20,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\PureActive.Hosting.Hangfire\PureActive.Hosting.Hangfire.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Hosting\PureActive.Hosting.csproj" />
-    <ProjectReference Include="..\..\src\PureActive.Queue.Hangfire\PureActive.Queue.Hangfire.csproj" />
     <ProjectReference Include="..\..\src\PureActive.Serilog.Sink.Xunit\PureActive.Serilog.Sink.Xunit.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Settings\appsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Settings\sharedsettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

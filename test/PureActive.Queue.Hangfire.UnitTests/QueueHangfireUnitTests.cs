@@ -20,7 +20,6 @@ using FluentAssertions;
 using Hangfire.Logging;
 using Hangfire.States;
 using Hangfire.Storage.Monitoring;
-using Microsoft.ApplicationInsights.Channel;
 using PureActive.Core.Abstractions.Queue;
 using PureActive.Core.Extensions;
 using PureActive.Queue.Hangfire.Queue;

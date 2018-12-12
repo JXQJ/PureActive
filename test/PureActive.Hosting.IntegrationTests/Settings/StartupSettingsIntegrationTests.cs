@@ -18,7 +18,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Autofac.Core;
 using FluentAssertions;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -95,14 +94,11 @@ namespace PureActive.Hosting.IntegrationTests.Settings
                 var builder = RegisterSharedServices(services);
 
                 // Register Shared Services
-                builder.RegisterJobQueueClient();
                 builder.RegisterWebAppSettings(GetSection("StartupTestService"));
 
                 builder.RegisterJsonSerialization(new TypeMapCollection());
 
                 services.AddTelemetry(Configuration, typeof(StartupTelemetryInitializer));
-                
-                services.AddHangfireQueue(GetConnectionString(ServiceHost.Hangfire), LoggerFactory);
 
                 return BuildContainer(builder, services);
             }
@@ -111,58 +107,10 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             {
                 if (app == null) throw new ArgumentNullException(nameof(app));
                 if (env == null) throw new ArgumentNullException(nameof(env));
-
-                app.UseHangfireQueueDashboard(Container);
             }
 
         }
 
-        [ExcludeFromCodeCoverage]
-        private class StartupTestHangFire : StartupSettings
-        {
-            public StartupTestHangFire(IConfiguration configuration, IHostingEnvironment hostingEnvironment,
-                IPureLoggerFactory loggerFactory, IFileSystem fileSystem, IOperatingSystem operatingSystem) :
-                base(configuration, hostingEnvironment, loggerFactory, ServiceHost.StartupSettingsTest, fileSystem,
-                    operatingSystem)
-            {
-
-            }
-
-            public IServiceProvider ConfigureServices(IServiceCollection services)
-            {
-                if (services == null) throw new ArgumentNullException(nameof(services));
-
-                var builder = RegisterSharedServices(services);
-
-                // Register Shared Services
-                builder.RegisterJobQueueClient();
-                builder.RegisterWebAppSettings(GetSection("StartupTestService"));
-
-                builder.RegisterJsonSerialization(new TypeMapCollection());
-
-                services.AddTelemetry(Configuration, typeof(StartupTelemetryInitializer));
-
-                services.AddHangfireQueue("Bad", LoggerFactory);
-
-                return BuildContainer(builder, services);
-            }
-
-            /// <inheritdoc />
-            public override void ApplyDatabaseMigrations(IApplicationBuilder app)
-            {
-
-            }
-
-
-            public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-            {
-                if (app == null) throw new ArgumentNullException(nameof(app));
-                if (env == null) throw new ArgumentNullException(nameof(env));
-
-                app.UseHangfireQueueDashboard(Container);
-            }
-
-        }
 
         private static readonly string LogFileName = "startup-settings-test.log";
 
@@ -265,21 +213,6 @@ namespace PureActive.Hosting.IntegrationTests.Settings
             cts.CancelAfter(500);
             await webHost.RunAsync(cts.Token);
             
-        }
-
-
-        [Fact]
-        public void StartupSettings_HangFire()
-        {
-            var webHost = BuildWebHost<StartupTestHangFire>(new string[0]);
-            webHost.Should().NotBeNull().And.Subject.Should().BeAssignableTo<IWebHost>();
-
-            var cts = new CancellationTokenSource();
-
-            cts.CancelAfter(500);
-            Func<Task> fx = () => webHost.RunAsync(cts.Token);
-            fx.Should().Throw<DependencyResolutionException>();
-
         }
     }
 }

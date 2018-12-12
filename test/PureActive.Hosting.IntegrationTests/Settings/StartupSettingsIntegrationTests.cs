@@ -117,6 +117,7 @@ namespace PureActive.Hosting.IntegrationTests.Settings
 
         }
 
+        [ExcludeFromCodeCoverage]
         private class StartupTestHangFire : StartupSettings
         {
             public StartupTestHangFire(IConfiguration configuration, IHostingEnvironment hostingEnvironment,

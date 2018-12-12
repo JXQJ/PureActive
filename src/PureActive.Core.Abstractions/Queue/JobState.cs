@@ -23,33 +23,52 @@ namespace PureActive.Core.Abstractions.Queue
         /// Job state unknown or initialized to default
         /// </summary>
         Unknown,
+        
         /// <summary>
         /// Job not found
         /// </summary>
         NotFound,
+        
         /// <summary>
-        /// Job not started
+        /// Defines the intermediate state of a background job when it is placed on a message queue to
+        /// be processed by the Worker background process as soon as possible. 
         /// </summary>
         NotStarted,
+        
         /// <summary>
-        /// Job in progress
+        /// Defines the intermediate state of a background job when a Worker has started to process it. 
         /// </summary>
         InProgress,
+
         /// <summary>
-        /// Job completed with Success
+        /// Defines the final state of a background job when a Worker performed an enqueued job
+        /// without any exception thrown during the performance. 
         /// </summary>
         Succeeded,
 
         /// <summary>
-        /// Job Failed
+        /// Defines the intermediate state of a background job when its processing was interrupted
+        /// by an exception and it is a developer's responsibility to decide what to do with it next. 
         /// </summary>
         Failed,
 
         /// <summary>
-        /// Job Scheduled
+        /// Defines the intermediate state of a background job when it is placed on a schedule to be
+        /// moved to the EnqueuedState in the future by DelayedJobScheduler background process. 
         /// </summary>
-        Scheduled
+        Scheduled,
 
+        /// <summary>
+        /// Defines the final state of a background job when nobody is interested whether it was performed or not. 
+        /// </summary>
+        Deleted,
+
+
+        /// <summary>
+        /// Defines the intermediate state of a background job when it is waiting for a parent background job
+        /// to be finished before it is moved to the EnqueuedState by the ContinuationsSupportAttribute filter. 
+        /// </summary>
+        Awaiting
     }
 
 

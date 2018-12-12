@@ -15,8 +15,13 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using FluentAssertions;
 using Hangfire.Logging;
+using Hangfire.States;
+using Hangfire.Storage.Monitoring;
+using Microsoft.ApplicationInsights.Channel;
+using PureActive.Core.Abstractions.Queue;
 using PureActive.Core.Extensions;
 using PureActive.Queue.Hangfire.Queue;
 using PureActive.Serilog.Sink.Xunit.TestBase;
@@ -108,6 +113,35 @@ namespace PureActive.Queue.Hangfire.UnitTests
   
             Func<bool> fx = () => logger.Log((LogLevel)100, TestString);
             fx.Should().Throw<ArgumentOutOfRangeException>();
+        }
+
+
+        private readonly MethodInfo _methodInfoGetJobState = typeof(JobQueueClient).GetMethod("GetJobState", BindingFlags.NonPublic | BindingFlags.Static);
+
+        private JobState InvokeGetJobState(StateHistoryDto jobDetails)
+        {
+            object[] parameters = { jobDetails };
+
+            return (JobState)_methodInfoGetJobState.Invoke(null, parameters);
+        }
+
+        public static TheoryData<StateHistoryDto, JobState> StateHistoryDtoData => new TheoryData<StateHistoryDto, JobState>
+        {
+            {new StateHistoryDto(){StateName = EnqueuedState.StateName}, JobState.NotStarted },
+            {new StateHistoryDto(){StateName = AwaitingState.StateName}, JobState.Awaiting },
+            {new StateHistoryDto(){StateName = SucceededState.StateName}, JobState.Succeeded },
+            {new StateHistoryDto(){StateName = FailedState.StateName}, JobState.Failed },
+            {new StateHistoryDto(){StateName = ScheduledState.StateName}, JobState.Scheduled },
+            {new StateHistoryDto(){StateName = DeletedState.StateName}, JobState.Deleted },
+            {new StateHistoryDto(){StateName = ProcessingState.StateName}, JobState.InProgress },
+            {new StateHistoryDto(){StateName = "Foobar"}, JobState.Unknown },
+        };
+
+        [Theory]
+        [MemberData(nameof(StateHistoryDtoData))]
+        public void QueueHangfire_GetJobState(StateHistoryDto jobDetails, JobState jobStateExpected)
+        {
+            InvokeGetJobState(jobDetails).Should().Be(jobStateExpected);
         }
     }
 }

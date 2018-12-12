@@ -140,6 +140,9 @@ namespace PureActive.Queue.Hangfire.Queue
             if (stateName == EnqueuedState.StateName)
                 return JobState.NotStarted;
 
+            if (stateName == AwaitingState.StateName)
+                return JobState.Awaiting;
+
             if (stateName == SucceededState.StateName)
                 return JobState.Succeeded;
 
@@ -148,6 +151,9 @@ namespace PureActive.Queue.Hangfire.Queue
 
             if (stateName == ScheduledState.StateName)
                 return JobState.Scheduled;
+
+            if (stateName == DeletedState.StateName)
+                return JobState.Deleted;
 
             return stateName == ProcessingState.StateName ? JobState.InProgress : JobState.Unknown;
         }

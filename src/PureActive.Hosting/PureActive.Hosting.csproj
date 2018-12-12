@@ -47,7 +47,6 @@
     <ProjectReference Include="..\PureActive.Logger.Provider.Serilog\PureActive.Logger.Provider.Serilog.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
-    <ProjectReference Include="..\PureActive.Queue.Hangfire\PureActive.Queue.Hangfire.csproj" />
   </ItemGroup>
 
   <ItemGroup>

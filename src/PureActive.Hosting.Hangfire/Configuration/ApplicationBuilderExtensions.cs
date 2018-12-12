@@ -3,7 +3,7 @@ using Hangfire;
 using Hangfire.Dashboard;
 using Microsoft.AspNetCore.Builder;
 
-namespace PureActive.Hosting.Configuration
+namespace PureActive.Hosting.Hangfire.Configuration
 {
     /// <summary>
     ///     An authorization filter for the Hangfire dashboard.

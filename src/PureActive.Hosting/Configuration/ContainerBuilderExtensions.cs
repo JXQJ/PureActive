@@ -19,7 +19,6 @@ using Microsoft.Extensions.Configuration;
 using PureActive.Archive.Abstractions.System;
 using PureActive.Archive.System;
 using PureActive.Core.Abstractions.Async;
-using PureActive.Core.Abstractions.Queue;
 using PureActive.Core.Abstractions.Serialization;
 using PureActive.Core.Abstractions.System;
 using PureActive.Core.Async;
@@ -29,7 +28,6 @@ using PureActive.Email.Office365.Interfaces;
 using PureActive.Email.Office365.Providers;
 using PureActive.Hosting.Abstractions.System;
 using PureActive.Hosting.Settings;
-using PureActive.Queue.Hangfire.Queue;
 
 namespace PureActive.Hosting.Configuration
 {
@@ -127,15 +125,6 @@ namespace PureActive.Hosting.Configuration
         public static void RegisterOperationRunner(this ContainerBuilder builder)
         {
             builder.RegisterType<OperationRunner>().As<IOperationRunner>().InstancePerLifetimeScope();
-        }
-
-        /// <summary>
-        /// Registers the operation runner.
-        /// </summary>
-        /// <param name="builder">The builder.</param>
-        public static void RegisterJobQueueClient(this ContainerBuilder builder)
-        {
-            builder.RegisterType<JobQueueClient>().As<IJobQueueClient>().InstancePerLifetimeScope();
         }
 
         /// <summary>

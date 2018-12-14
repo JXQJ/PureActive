@@ -29,7 +29,7 @@ namespace PureActive.Hosting.Hangfire.Configuration
         public bool Authorize(DashboardContext context)
         {
             // TODO: Make it Admin Only once roles established
-
+            
             return _container != null && context.GetHttpContext().User.Identity.IsAuthenticated;
         }
     }

@@ -14,6 +14,7 @@
 // ***********************************************************************
 using System;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PureActive.Core.Abstractions.Queue
@@ -38,5 +39,26 @@ namespace PureActive.Core.Abstractions.Queue
         /// <param name="jobId">The job identifier.</param>
         /// <returns>Task&lt;JobStatus&gt;.</returns>
         Task<JobStatus> GetJobStatusAsync(string jobId);
+
+        /// <summary>
+        /// Waits for a Job to Complete
+        /// </summary>
+        /// <param name="jobId">ID of job</param>
+        /// <param name="timeout">Timeout in milliseconds</param>
+        /// <param name="cancellationToken">Cancellation token</param>
+        /// <returns></returns>
+        Task<JobStatus> WaitForJobToComplete(string jobId, int timeout, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="jobId"></param>
+        /// <returns></returns>
+        bool DeleteBackgroundJob(string jobId);
+
+        /// <summary>
+        /// Removes all recurring jobs from queue
+        /// </summary>
+        void DeleteAllEnqueuedJobs(string queue = "default");
     }
 }

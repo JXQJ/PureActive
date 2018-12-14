@@ -48,12 +48,38 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <returns>The job ID.</returns>
         public Task<string> EnqueueAsync<TInterface>(Expression<Func<TInterface, Task>> job)
         {
-            // TODO: Make this actually asynchronous once HangFire supports it.
-
             var jobId = _backgroundJobClient.Enqueue(job);
 
             return Task.FromResult(jobId);
         }
+
+        /// <summary>
+        /// Deletes a background job
+        /// </summary>
+        /// <param name="jobId">ID of job</param>
+        /// <returns>True if successful</returns>
+        public bool DeleteBackgroundJob(string jobId) => BackgroundJob.Delete(jobId);
+
+        /// <summary>
+        /// Removes all recurring jobs from queue
+        /// </summary>
+        public static void DeleteAllEnqueuedJobs(IMonitoringApi monitoringApi, string queue = "default")
+        {
+            var enqueuedJobs = monitoringApi.EnqueuedJobs(queue, 0, Int32.MaxValue).ToList();
+
+            foreach (var enqueuedJob in enqueuedJobs)
+            {
+                BackgroundJob.Delete(enqueuedJob.Key);
+            }
+        }
+
+        /// <summary>
+        /// Deletes 
+        /// </summary>
+        /// <param name="queue"></param>
+        public void DeleteAllEnqueuedJobs(string queue = "default") =>
+            DeleteAllEnqueuedJobs(_monitoringApi, queue);
+
 
         /// <summary>
         ///     Returns the status of the job with the given ID.
@@ -65,17 +91,19 @@ namespace PureActive.Queue.Hangfire.Queue
         /// </summary>
         public static Task<JobStatus> GetJobStatusAsync(IMonitoringApi monitoringApi, string jobId)
         {
-            // TODO: Make this actually asynchronous once HangFire supports it.
-
-            var jobDetails = monitoringApi.JobDetails(jobId)
+            var jobDetails = monitoringApi.JobDetails(jobId)?
                 .History
                 .OrderByDescending(h => h.CreatedAt)
                 .FirstOrDefault();
 
-            var jobState = GetJobState(jobDetails);
-            var enteredState = jobDetails?.CreatedAt ?? DateTime.MinValue;
+            if (jobDetails == null)
+            {
+                return Task.FromResult(new JobStatus(JobState.NotFound, DateTime.MinValue));
+            }
 
-            return Task.FromResult(new JobStatus(jobState, enteredState));
+            var jobState = GetJobState(jobDetails);
+
+            return Task.FromResult(new JobStatus(jobState, jobDetails.CreatedAt));
         }
 
         /// <summary>
@@ -105,6 +133,8 @@ namespace PureActive.Queue.Hangfire.Queue
             if (jobStatus.IsFinalState)
                 return jobStatus;
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             var secs = timeout / 1000;
 
             if (secs == 0)
@@ -115,9 +145,6 @@ namespace PureActive.Queue.Hangfire.Queue
             // Poll for Completed Job
             while (!jobStatus.IsFinalState && secs-- > 0)
             {
-                if (cancellationToken.IsCancellationRequested)
-                    return jobStatus;
-
                 // Wait 1 sec
                 await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 

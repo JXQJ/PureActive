@@ -138,16 +138,6 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
                 Task.Delay(startupDelay).Wait();
             }
 
-            private void CleanupDatabaseFile()
-            {
-                var databaseFileName = GetDatabaseFileName();
-
-                if (_fileSystem.FileExists(databaseFileName))
-                {
-                    _fileSystem.DeleteFile(databaseFileName);
-                }
-            }
-
             public static string GetDatabasePath(IFileSystem fileSystem, ServiceHost serviceHost)
             {
                 var databasePath = $"{fileSystem.DataFolderPath()}\\{serviceHost}";

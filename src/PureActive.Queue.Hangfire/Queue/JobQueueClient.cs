@@ -125,7 +125,8 @@ namespace PureActive.Queue.Hangfire.Queue
         /// <param name="timeout">Time out in milliseconds</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public static async Task<JobStatus> WaitForJobToComplete(IMonitoringApi monitoringApi, string jobId, int timeout, CancellationToken cancellationToken)
+        public static async Task<JobStatus> WaitForJobToComplete(IMonitoringApi monitoringApi, string jobId,
+            int timeout, CancellationToken cancellationToken)
         {
             var jobStatus = GetJobStatusAsync(monitoringApi, jobId).Result;
 
@@ -133,13 +134,12 @@ namespace PureActive.Queue.Hangfire.Queue
             if (jobStatus.IsFinalState)
                 return jobStatus;
 
-
             var secs = timeout / 1000;
 
-            if (secs == 0)
-                secs = 1;
-            else if (timeout == -1)
+            if (timeout == -1)
                 secs = int.MaxValue;
+            else if (secs == 0)
+                secs = 1;
 
             // Poll for Completed Job
             while (!jobStatus.IsFinalState && secs-- > 0)
@@ -157,7 +157,7 @@ namespace PureActive.Queue.Hangfire.Queue
         }
 
 
-   
+
         /// <summary>
         ///     Returns the job state for the given job.
         /// </summary>

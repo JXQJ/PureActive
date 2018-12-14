@@ -228,7 +228,7 @@ namespace PureActive.Archive.UnitTests
         [Fact]
         public void Archive_GetArchive_Uncompressed_FromZipFile()
         {
-            var archive = GetMemoryBackedArchiveFromFile("Files\\KDTree.zip");
+            var archive = GetMemoryBackedArchiveFromFile("Files/KDTree.zip");
             archive.Should().NotBeNull();
 
             foreach (var archiveFile in archive.Files)
@@ -253,7 +253,7 @@ namespace PureActive.Archive.UnitTests
         [Fact]
         public void Archive_GetArchive_Compressed_FromZipFile()
         {
-            var archive = CreateCompressedArchiveFromFile("Files\\KDTree.zip", 1);
+            var archive = CreateCompressedArchiveFromFile("Files/KDTree.zip", 1);
             archive.Should().NotBeNull();
 
             foreach (var archiveFile in archive.Files)
@@ -272,7 +272,7 @@ namespace PureActive.Archive.UnitTests
         [Fact]
         public void Archive_GetArchive_Compressed_FromZipFile_Dispose()
         {
-            var archive = CreateCompressedArchiveFromFile("Files\\KDTree.zip", 1);
+            var archive = CreateCompressedArchiveFromFile("Files/KDTree.zip", 1);
             archive.Should().NotBeNull();
 
             archive.Dispose();

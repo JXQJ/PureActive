@@ -227,15 +227,15 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
                 var jobIdString = BackgroundJob.Enqueue<IHangFireTestService>(service =>
                     service.ExecuteHangfireInfiniteJobAsync(hangFireJob));
 
-                CancellationTokenSource cts = new CancellationTokenSource();
+                var cts = new CancellationTokenSource();
 
                 jobIdString.Should().NotBeNull();
                 int.TryParse(jobIdString, out var jobId).Should().BeTrue();
                 jobId.Should().BeGreaterThan(0);
 
-                cts.CancelAfter(500);
-
                 var monitoringApi = server.MonitoringApi;
+
+                cts.CancelAfter(1500);
 
                 Func<Task<JobStatus>> fx = async () =>
                     await JobQueueClient.WaitForJobToComplete(monitoringApi, jobIdString, -1, cts.Token);

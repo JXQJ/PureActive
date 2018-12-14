@@ -140,7 +140,7 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
 
             public static string GetDatabasePath(IFileSystem fileSystem, ServiceHost serviceHost)
             {
-                var databasePath = $"{fileSystem.DataFolderPath()}\\{serviceHost}";
+                var databasePath = $"{fileSystem.DataFolderPath()}/{serviceHost}";
                 fileSystem.CreateFolder(databasePath);
 
                 return databasePath;
@@ -150,7 +150,7 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
 
             private string GetDatabaseFileName()
             {
-               return $"{GetDatabasePath()}\\{ _memberName}.db";
+               return $"{GetDatabasePath()}/{ _memberName}.db";
             }
 
             private string GetConnectionString()
@@ -235,7 +235,7 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
 
                 var monitoringApi = server.MonitoringApi;
 
-                cts.CancelAfter(1500);
+                cts.CancelAfter(1000);
 
                 Func<Task<JobStatus>> fx = async () =>
                     await JobQueueClient.WaitForJobToComplete(monitoringApi, jobIdString, -1, cts.Token);
@@ -256,8 +256,6 @@ namespace PureActive.Queue.Hangfire.IntegrationTests
             using (var server = new TestBackgroundJobServer(FileSystem, ServiceHost.HangfireTest))
             {
                 server.Should().NotBeNull();
-
-                JobQueueClient.DeleteAllEnqueuedJobs(server.MonitoringApi);
 
                 const string testValue = "TestValue";
 

@@ -37,15 +37,6 @@ namespace PureActive.Queue.Hangfire.Queue
             _monitoringApi = jobStorage.GetMonitoringApi();
         }
 
-        /// <summary>
-        ///     Enqueues a job.
-        /// </summary>
-        /// <typeparam name="TInterface">An interface containing the method to run.</typeparam>
-        /// <param name="job">
-        ///     A call to a method on the given interface.
-        ///     All parameters to the method must be serializable.
-        /// </param>
-        /// <returns>The job ID.</returns>
         public Task<string> EnqueueAsync<TInterface>(Expression<Func<TInterface, Task>> job)
         {
             var jobId = _backgroundJobClient.Enqueue(job);

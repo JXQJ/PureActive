@@ -133,7 +133,6 @@ namespace PureActive.Queue.Hangfire.Queue
             if (jobStatus.IsFinalState)
                 return jobStatus;
 
-            cancellationToken.ThrowIfCancellationRequested();
 
             var secs = timeout / 1000;
 
@@ -145,6 +144,8 @@ namespace PureActive.Queue.Hangfire.Queue
             // Poll for Completed Job
             while (!jobStatus.IsFinalState && secs-- > 0)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 // Wait 1 sec
                 await Task.Delay(1000, cancellationToken).ConfigureAwait(false);
 

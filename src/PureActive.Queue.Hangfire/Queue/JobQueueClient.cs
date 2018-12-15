@@ -37,6 +37,7 @@ namespace PureActive.Queue.Hangfire.Queue
             _monitoringApi = jobStorage.GetMonitoringApi();
         }
 
+        /// <inheritdoc />
         public Task<string> EnqueueAsync<TInterface>(Expression<Func<TInterface, Task>> job)
         {
             var jobId = _backgroundJobClient.Enqueue(job);

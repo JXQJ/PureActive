@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>PureActive.Database.Abstractions.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Database Abstractions</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveDatabase256.png</PackageIconUrl>
+    <PackageId>PureActive.Database.Abstractions</PackageId>
+    <PackageTags>PureActive database abstractions</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>PureActive Database Abstractions Libraries</Title>
+    <AssemblyTitle>PureActive Database Abstractions Libraries</AssemblyTitle>
+
+    <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS8002</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AsyncFriendlyStackTrace" Version="1.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Nerdbank.GitVersioning" Version="2.3.38">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

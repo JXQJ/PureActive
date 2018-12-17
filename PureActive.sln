@@ -134,6 +134,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Hosting.Hangfire
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Hosting.Hangfire.IntegrationTests", "test\PureActive.Hosting.Hangfire.IntegrationTests\PureActive.Hosting.Hangfire.IntegrationTests.csproj", "{3281527E-7CE1-4F51-8C26-98A43BAB2D8D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.Core", "src\PureActive.Database.Core\PureActive.Database.Core.csproj", "{9AF734BC-B614-465B-9584-7F777B6727C3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.IntegrationTests", "test\PureActive.Database.IntegrationTests\PureActive.Database.IntegrationTests.csproj", "{541200F1-F4C3-4330-B81E-F98CEDEE1553}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.UnitTests", "test\PureActive.Database.UnitTests\PureActive.Database.UnitTests.csproj", "{73B0585D-55A1-4F92-A897-23F72F54987D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Database.Abstractions", "src\PureActive.Database.Abstractions\PureActive.Database.Abstractions.csproj", "{59496A60-C60C-4BC5-99E7-A9B449B5140B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -352,6 +360,22 @@ Global
 		{3281527E-7CE1-4F51-8C26-98A43BAB2D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3281527E-7CE1-4F51-8C26-98A43BAB2D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3281527E-7CE1-4F51-8C26-98A43BAB2D8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AF734BC-B614-465B-9584-7F777B6727C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AF734BC-B614-465B-9584-7F777B6727C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AF734BC-B614-465B-9584-7F777B6727C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AF734BC-B614-465B-9584-7F777B6727C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541200F1-F4C3-4330-B81E-F98CEDEE1553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541200F1-F4C3-4330-B81E-F98CEDEE1553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541200F1-F4C3-4330-B81E-F98CEDEE1553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541200F1-F4C3-4330-B81E-F98CEDEE1553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B0585D-55A1-4F92-A897-23F72F54987D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B0585D-55A1-4F92-A897-23F72F54987D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B0585D-55A1-4F92-A897-23F72F54987D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B0585D-55A1-4F92-A897-23F72F54987D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -410,6 +434,10 @@ Global
 		{F2348582-4ABD-4F1F-8467-C07EFD0DC961} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{A7F0CD15-88D3-4EDD-B6D1-EB41CA9320BE} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 		{3281527E-7CE1-4F51-8C26-98A43BAB2D8D} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{9AF734BC-B614-465B-9584-7F777B6727C3} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{541200F1-F4C3-4330-B81E-F98CEDEE1553} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{73B0585D-55A1-4F92-A897-23F72F54987D} = {139040C5-C1DA-443E-9904-A3288626E24C}
+		{59496A60-C60C-4BC5-99E7-A9B449B5140B} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}

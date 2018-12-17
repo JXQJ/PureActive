@@ -1,16 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>PureActive.Database.Core.snk</AssemblyOriginatorKeyFile>
-    <Description>PureActive Database Core</Description>
+    <AssemblyOriginatorKeyFile>PureActive.Database.SQLite.snk</AssemblyOriginatorKeyFile>
+    <Description>PureActive Database SQLite</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIconUrl>https://raw.githubusercontent.com/PureActive/PureWebAssets/master/icon/PureActiveDatabase256.png</PackageIconUrl>
-    <PackageId>PureActive.Database.Core</PackageId>
-    <PackageTags>PureActive database core</PackageTags>
+    <PackageId>PureActive.Database.SQLite</PackageId>
+    <PackageTags>PureActive database SQLite</PackageTags>
     <SignAssembly>true</SignAssembly>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Title>PureActive Database Core Libraries</Title>
-    <AssemblyTitle>PureActive Database Core Libraries</AssemblyTitle>
+    <Title>PureActive Database SQLite Libraries</Title>
+    <AssemblyTitle>PureActive Database SQLite Libraries</AssemblyTitle>
 
     <PackageReleaseNotes>Bug fixes and performance improvements.</PackageReleaseNotes>
   </PropertyGroup>
@@ -23,6 +23,8 @@
     <PackageReference Include="AsyncFriendlyStackTrace" Version="1.6.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -34,7 +36,7 @@
     <ProjectReference Include="..\PureActive.Core.Abstractions\PureActive.Core.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Core\PureActive.Core.csproj" />
     <ProjectReference Include="..\PureActive.Database.Abstractions\PureActive.Database.Abstractions.csproj" />
-    <ProjectReference Include="..\PureActive.Hosting.Abstractions\PureActive.Hosting.Abstractions.csproj" />
+    <ProjectReference Include="..\PureActive.Database.Core\PureActive.Database.Core.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Abstractions\PureActive.Logging.Abstractions.csproj" />
     <ProjectReference Include="..\PureActive.Logging.Extensions\PureActive.Logging.Extensions.csproj" />
   </ItemGroup>

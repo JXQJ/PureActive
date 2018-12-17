@@ -140,7 +140,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.Integra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.UnitTests", "test\PureActive.Database.UnitTests\PureActive.Database.UnitTests.csproj", "{73B0585D-55A1-4F92-A897-23F72F54987D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Database.Abstractions", "src\PureActive.Database.Abstractions\PureActive.Database.Abstractions.csproj", "{59496A60-C60C-4BC5-99E7-A9B449B5140B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.Abstractions", "src\PureActive.Database.Abstractions\PureActive.Database.Abstractions.csproj", "{59496A60-C60C-4BC5-99E7-A9B449B5140B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PureActive.Database.SQLite", "src\PureActive.Database.SQLite\PureActive.Database.SQLite.csproj", "{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PureActive.Database.SQLite.IntegrationTests", "test\PureActive.Database.SQLite.IntegrationTests\PureActive.Database.SQLite.IntegrationTests.csproj", "{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -376,6 +380,14 @@ Global
 		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{59496A60-C60C-4BC5-99E7-A9B449B5140B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -438,6 +450,8 @@ Global
 		{541200F1-F4C3-4330-B81E-F98CEDEE1553} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{73B0585D-55A1-4F92-A897-23F72F54987D} = {139040C5-C1DA-443E-9904-A3288626E24C}
 		{59496A60-C60C-4BC5-99E7-A9B449B5140B} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{F4318FD6-6A06-4F26-81AF-E9619DFCE3BC} = {67D1DB8E-E642-45ED-B773-AA31D4094D80}
+		{55C4BA2A-C7A6-4F56-B1CF-A24F3066B999} = {139040C5-C1DA-443E-9904-A3288626E24C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3BB9CD1D-F443-4CAE-96A1-CA24FBF0D348}
